@@ -10,3 +10,7 @@ plugins {
     id 'com.appdynamics.gradle.plugins.appd-version' version '2.2.22'
     id 'org.sonarqube' version '3.2.0'
 }
+
+pipeline {
+   teamcityParent = "EUM"
+}

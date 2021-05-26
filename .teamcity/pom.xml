@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <project>
     <modelVersion>4.0.0</modelVersion>
-    <name>Eum_RumFlutter Config DSL Script</name>
-    <groupId>Eum_RumFlutter</groupId>
-    <artifactId>Eum_RumFlutter</artifactId>
+    <name>EUM_RumFlutter Config DSL Script</name>
+    <groupId>EUM_RumFlutter</groupId>
+    <artifactId>EUM_RumFlutter</artifactId>
     <version>1.0-SNAPSHOT</version>
 
   <parent>
