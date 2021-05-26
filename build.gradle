@@ -12,5 +12,7 @@ plugins {
 }
 
 pipeline {
-   teamcityParent = "EUM"
+    teamcityParent = "EUM"
+    bitbucketProject = "EUM"
+    projectName = "Flutter Agent"
 }
