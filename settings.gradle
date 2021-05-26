@@ -23,4 +23,20 @@ pluginManagement {
     }
 }
 
+// Needed for now since as of Gradle 4.7 plugin DSL not supported for settings plugins
+buildscript {
+    repositories {
+        // Always prefer a local published version
+        mavenLocal()
+
+        nexus3PluginRepos.split().each { repo ->
+            maven { url(nexus3BaseUrl + repo) }
+        }
+
+        nexus3BuildRepos.split().each { repo ->
+            maven { url(nexus3BaseUrl + repo) }
+        }
+    }
+}
+
 rootProject.name = 'rum-flutter'
