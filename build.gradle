@@ -12,7 +12,14 @@ plugins {
     id 'org.sonarqube' version '3.2.0'
 }
 
+// pipelinePlugin
 pipeline {
     teamcityParent = "EUM"
     projectName = "Flutter Agent"
+}
+
+// appd-publish
+group = 'com.appdynamics.eum'
+appdVersion {
+    baseVersion = '1.0' // This would only be declared in a root project, so this must be a single project build
 }
