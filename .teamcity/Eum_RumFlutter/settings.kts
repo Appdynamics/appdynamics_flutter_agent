@@ -4,7 +4,7 @@ import com.appdynamics.build.teamcity.pipelib.*
 
 AppdBuildSettings.Builder(AppdBuild.PipeLibType.JAVA_LIB)
         .teamcityParent("EUM")
-        .bitbucketProject("EUM")
+        .bitbucketProject("eum")
         .repo("rum-flutter")
         .projectID("EUM_RumFlutter")
         .testTargets()
