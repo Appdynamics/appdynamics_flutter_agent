@@ -15,7 +15,6 @@ plugins {
 // pipelinePlugin
 pipeline {
     teamcityParent = "EUM"
-    projectName = "Flutter Agent"
 }
 
 // appd-publish
