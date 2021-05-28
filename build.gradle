@@ -16,12 +16,14 @@ plugins {
 pipeline {
     teamcityParent = "EUM"
     projectName = "Flutter Agent"
+
+    buildTasks = ["build", "analyze", "runTests", ":example:buildAndroid", ":example:buildiOS"]
 }
 
 // appd-publish
 group = 'com.appdynamics.eum'
 appdVersion {
-    baseVersion = '1.0' // This would only be declared in a root project, so this must be a single project build
+    baseVersion = '1.0'
 }
 
 sonarqube {
@@ -29,4 +31,12 @@ sonarqube {
         property "sonar.projectName", project.name
         property "sonar.projectVersion", version
     }
+}
+
+task analyze(type: Exec) {
+    commandLine "flutter", "analyze"
+}
+
+task runTests(type: Exec) {
+    commandLine "flutter", "test"
 }

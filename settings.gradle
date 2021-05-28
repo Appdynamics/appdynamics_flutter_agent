@@ -40,3 +40,4 @@ buildscript {
 }
 
 rootProject.name = 'rum-flutter'
+include 'example'
