@@ -1,0 +1,4 @@
+# exclude local flutter folder from dart linting
+analyzer:
+  exclude:
+    - flutter

@@ -11,6 +11,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  package_info_plus: ^1.0.1
 
 dev_dependencies:
   flutter_test:
@@ -29,9 +30,9 @@ flutter:
     platforms:
       android:
         package: com.appdynamics.appdynamics_mobilesdk
-        pluginClass: AppdynamicsMobilesdkPlugin
+        pluginClass: AppDynamicsMobileSdkPlugin
       ios:
-        pluginClass: AppdynamicsMobilesdkPlugin
+        pluginClass: AppDynamicsMobileSdkPlugin
 
   # To add assets to your plugin package, add an assets section, like this:
   # assets:

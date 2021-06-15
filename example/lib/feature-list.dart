@@ -1,3 +1,9 @@
+/*
+ * Copyright (c) 2021. AppDynamics LLC and its affiliates.
+ * All rights reserved.
+ *
+ */
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -9,6 +15,7 @@ class FeatureList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        key: Key("featureListAppBar"),
         title: Text('Feature list'),
       ),
       body: Center(
@@ -17,7 +24,7 @@ class FeatureList extends StatelessWidget {
             SizedBox(height: 30),
             ElevatedButton(
               child: Text('Open first feature'),
-              onPressed: pushWithContext(context, FirstFeature()),
+              onPressed: () => pushWithContext(context, FirstFeature()),
             ),
           ],
         ),

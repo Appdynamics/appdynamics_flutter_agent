@@ -1,13 +1,8 @@
-import 'dart:async';
+/*
+ * Copyright (c) 2021. AppDynamics LLC and its affiliates.
+ * All rights reserved.
+ *
+ */
 
-import 'package:flutter/services.dart';
-
-class AppdynamicsMobilesdk {
-  static const MethodChannel _channel =
-      const MethodChannel('appdynamics_mobilesdk');
-
-  static Future<String> get platformVersion async {
-    final String version = await _channel.invokeMethod('getPlatformVersion');
-    return version;
-  }
-}
+export 'src/agent-configuration.dart';
+export 'src/instrumentation.dart';

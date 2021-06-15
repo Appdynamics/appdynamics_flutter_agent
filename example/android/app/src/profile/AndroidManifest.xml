@@ -1,3 +1,9 @@
+<!--
+  ~ Copyright (c) 2021. AppDynamics LLC and its affiliates.
+  ~ All rights reserved.
+  ~
+  -->
+
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.appdynamics.appdynamics_mobilesdk_example">
     <!-- Flutter needs it to communicate with the running application

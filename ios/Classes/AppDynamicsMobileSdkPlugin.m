@@ -1,4 +1,4 @@
-#import "AppdynamicsMobilesdkPlugin.h"
+#import "AppdynamicsMobileSdkPlugin.h"
 #if __has_include(<appdynamics_mobilesdk/appdynamics_mobilesdk-Swift.h>)
 #import <appdynamics_mobilesdk/appdynamics_mobilesdk-Swift.h>
 #else
@@ -8,8 +8,8 @@
 #import "appdynamics_mobilesdk-Swift.h"
 #endif
 
-@implementation AppdynamicsMobilesdkPlugin
+@implementation AppDynamicsMobileSdkPlugin
 + (void)registerWithRegistrar:(NSObject<FlutterPluginRegistrar>*)registrar {
-  [SwiftAppdynamicsMobilesdkPlugin registerWithRegistrar:registrar];
+  [SwiftAppDynamicsMobileSdkPlugin registerWithRegistrar:registrar];
 }
 @end

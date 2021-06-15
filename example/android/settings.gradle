@@ -1,3 +1,9 @@
+/*
+ * Copyright (c) 2021. AppDynamics LLC and its affiliates.
+ * All rights reserved.
+ *
+ */
+
 include ':app'
 
 def localPropertiesFile = new File(rootProject.projectDir, "local.properties")
