@@ -39,8 +39,7 @@ sonarqube {
     }
 }
 
-// Point to local flutter install due to missing flutter on CI/CD
-ext.execPath = "$System.env.PATH" + System.getProperty("path.separator") + "$projectDir/flutter/bin"
+def execPath = "$System.env.PATH" + System.getProperty("path.separator") + "$projectDir/flutter/bin"
 
 task downloadFlutter(type: Exec) {
     commandLine "./scripts/flutter-download.sh"

@@ -34,7 +34,7 @@ class AgentConfiguration {
 
   AgentConfiguration({
     @required this.appKey,
-    this.loggingLevel,
+    this.loggingLevel = LoggingLevel.none,
   });
 
   AgentConfiguration copyWith({
@@ -42,7 +42,8 @@ class AgentConfiguration {
     LoggingLevel loggingLevel,
   }) {
     return AgentConfiguration(
-        appKey: appKey ?? this.appKey,
-        loggingLevel: loggingLevel ?? this.loggingLevel);
+      appKey: appKey ?? this.appKey,
+      loggingLevel: loggingLevel ?? this.loggingLevel,
+    );
   }
 }

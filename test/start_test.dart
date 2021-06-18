@@ -49,6 +49,9 @@ void main() {
         arguments: <String, dynamic>{
           "appKey": appKey,
           "version": packageInfo.version,
+          "loggingLevel": 0,
+          "anrDetectionEnabled": true,
+          "anrStackTraceEnabled": true,
           "type": "Flutter",
         },
       ),

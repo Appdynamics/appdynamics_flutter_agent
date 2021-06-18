@@ -19,7 +19,7 @@ class AppDynamicsMobileSdkPlugin : FlutterPlugin, MethodCallHandler {
     private lateinit var context: android.content.Context
 
     override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
-        context = flutterPluginBinding.applicationContext;
+        context = flutterPluginBinding.applicationContext
         channel = MethodChannel(flutterPluginBinding.binaryMessenger, "appdynamics_mobilesdk")
         channel.setMethodCallHandler(this)
     }
@@ -39,7 +39,7 @@ class AppDynamicsMobileSdkPlugin : FlutterPlugin, MethodCallHandler {
 
     private fun start(@NonNull result: Result, arguments: Any) {
         try {
-            val properties = arguments as HashMap<String, Any>
+            val properties = arguments as HashMap<*, *>
             val agentVersion = properties["version"] as String
             val agentName = properties["type"] as String
             val appKey = properties["appKey"] as? String
@@ -51,13 +51,14 @@ class AppDynamicsMobileSdkPlugin : FlutterPlugin, MethodCallHandler {
             }
 
             val builder: AgentConfiguration.Builder =
-                    AgentConfiguration.builder()
-                            .withAppKey(appKey)
-                            .withContext(context)
+                AgentConfiguration.builder()
+                    .withAppKey(appKey)
+                    .withContext(context)
 
             if (loggingLevel != null) {
                 builder.withLoggingLevel(loggingLevel)
             }
+            builder.withApplicationName("com.appdynamics.flutter-everyfeature-android")
             Instrumentation.startFromHybrid(builder.build(), agentName, agentVersion)
 
             result.success(null)
@@ -65,5 +66,6 @@ class AppDynamicsMobileSdkPlugin : FlutterPlugin, MethodCallHandler {
             result.error("500", e.message, "Agent start() failed.")
         }
     }
+
     // endregion
 }

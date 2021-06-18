@@ -16,7 +16,7 @@ def integration_tests_path = "integration_test/"
 def iOS_device = "iPhone 12"
 def android_device = "sdk gphone x86 arm"
 
-ext.execPath = "$System.env.PATH" + System.getProperty("path.separator") + "$projectDir/../flutter/bin"
+def execPath = "$System.env.PATH" + System.getProperty("path.separator") + "$projectDir/../flutter/bin"
 
 task buildiOS(type: Exec) {
     environment "PATH", execPath

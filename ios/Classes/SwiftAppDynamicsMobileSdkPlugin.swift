@@ -18,7 +18,6 @@ public class SwiftAppDynamicsMobileSdkPlugin: NSObject, FlutterPlugin {
         }
     }
     
-    
     // MARK: Agent methods
     
     public func start(result: @escaping FlutterResult, arguments: Any?) {
@@ -38,7 +37,18 @@ public class SwiftAppDynamicsMobileSdkPlugin: NSObject, FlutterPlugin {
             let levels = [ADEumLoggingLevel.off,  ADEumLoggingLevel.info, ADEumLoggingLevel.all]
             configuration.loggingLevel = levels[loggingLevel]
         }
+
+        if let anrDetectionEnabled = properties["anrDetectionEnabled"] as? Bool {
+            configuration.anrDetectionEnabled = anrDetectionEnabled
+        }
         
+        if let anrStackTraceEnabled = properties["anrStackTraceEnabled"] as? Bool {
+            configuration.anrStackTraceEnabled = anrStackTraceEnabled
+        }
+        
+        configuration.collectorURL = "https://eum-shadow-master-col.saas.appd-test.com"
+        configuration.screenshotsEnabled = false
+        configuration.applicationName = "com.appdynamics.flutter-everyfeature-ios"
         ADEumInstrumentation.initWith(configuration)
         
         result(nil)

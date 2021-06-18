@@ -7,7 +7,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'features/first-feature.dart';
+import 'features/ANR.dart';
 import 'utils/push-with-context.dart';
 
 class FeatureList extends StatelessWidget {
@@ -23,8 +23,8 @@ class FeatureList extends StatelessWidget {
           children: [
             SizedBox(height: 30),
             ElevatedButton(
-              child: Text('Open first feature'),
-              onPressed: () => pushWithContext(context, FirstFeature()),
+              child: Text('Test ANR'),
+              onPressed: () => pushWithContext(context, ANR()),
             ),
           ],
         ),

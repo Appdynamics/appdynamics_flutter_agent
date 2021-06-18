@@ -23,6 +23,10 @@ class Instrumentation {
       Map<String, dynamic> arguments = {
         "appKey": config.appKey,
         "loggingLevel": config.loggingLevel?.index,
+        "anrDetectionEnabled": true,
+        // hardcoded until it's implemented on Android agent too
+        "anrStackTraceEnabled": true,
+        // hardcoded until it's implemented on Android agent too
         "version": version,
         "type": type,
       }..removeWhere((key, value) => value == null);

@@ -17,7 +17,7 @@ class Settings extends StatefulWidget {
 }
 
 class _SettingsState extends State<Settings> {
-  final appKeyFieldController = TextEditingController(text: "AA-BBB-CCC");
+  final appKeyFieldController = TextEditingController(text: "SM-ADY-BDT");
 
   @override
   void dispose() {
