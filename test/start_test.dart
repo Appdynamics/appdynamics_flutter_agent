@@ -31,9 +31,6 @@ void main() {
       switch (methodCall.method) {
         case 'start':
           return true;
-        default:
-          throw PlatformException(
-              code: "500", message: "Method not implemented.");
       }
     });
 
@@ -50,6 +47,7 @@ void main() {
           "appKey": appKey,
           "version": packageInfo.version,
           "loggingLevel": 0,
+          "collectorURL": "https://mobile.eum-appdynamics.com",
           "anrDetectionEnabled": true,
           "anrStackTraceEnabled": true,
           "type": "Flutter",

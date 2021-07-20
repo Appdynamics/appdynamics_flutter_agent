@@ -4,8 +4,6 @@
  *
  */
 
-import 'package:flutter/cupertino.dart';
-
 enum LoggingLevel { none, info, verbose }
 
 /// Configuration object for the AppDynamics SDK.
@@ -27,22 +25,31 @@ class AgentConfiguration {
   /// Sets the application key used by the SDK. (required)
   final String appKey;
 
+  /// The URL of the collector. It should be compliant with "1.4. Hierarchical URI and
+  /// Relative Forms" of [RFC2396](https://www.ietf.org/rfc/rfc2396.txt).
+  ///
+  /// The SDK will send beacons to this collector.
+  final String collectorURL;
+
   /// Sets the logging level of the agent. Default is {@link LoggingLevel.none}.
   ///
   /// **WARNING:** Not recommended for production use.
   final LoggingLevel loggingLevel;
 
   AgentConfiguration({
-    @required this.appKey,
+    required this.appKey,
+    this.collectorURL = "https://mobile.eum-appdynamics.com",
     this.loggingLevel = LoggingLevel.none,
   });
 
   AgentConfiguration copyWith({
-    String appKey,
-    LoggingLevel loggingLevel,
+    String? appKey,
+    String? collectorURL,
+    LoggingLevel? loggingLevel,
   }) {
     return AgentConfiguration(
       appKey: appKey ?? this.appKey,
+      collectorURL: collectorURL ?? this.collectorURL,
       loggingLevel: loggingLevel ?? this.loggingLevel,
     );
   }

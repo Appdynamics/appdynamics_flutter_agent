@@ -11,10 +11,7 @@
  * Learn more about Gradle by exploring our samples at https://docs.gradle.org/7.0.2/samples
  */
 
-def test_driver_path = "test_driver/integration_test.dart"
-def integration_tests_path = "integration_test/"
-def iOS_device = "iPhone 12"
-def android_device = "sdk gphone x86 arm"
+apply from: "integration_test/tests.gradle"
 
 def execPath = "$System.env.PATH" + System.getProperty("path.separator") + "$projectDir/../flutter/bin"
 
@@ -29,24 +26,15 @@ task buildAndroid(type: Exec) {
 }
 
 task runIntegrationTestsiOS {
-    doLast {
-        exec {
-            commandLine "flutter", "drive", "--driver", test_driver_path, "--target",
-                    integration_tests_path + "start_test.dart", "-d", iOS_device
-        }
-    }
+    dependsOn runStartIntegrationTestiOS
+    dependsOn runRequestTrackerIntegrationTestiOS
 }
 
 task runIntegrationTestsAndroid {
-    doLast {
-        exec {
-            commandLine "flutter", "drive", "--driver", test_driver_path, "--target",
-                    integration_tests_path + "/start_test.dart", "-d", android_device
-        }
-    }
+    dependsOn runStartIntegrationTestAndroid
+    dependsOn runRequestTrackerIntegrationTestAndroid
 }
 
 task generateMocks(type: Exec) {
     commandLine "flutter", "pub", "run", "build_runner", "build"
 }
-

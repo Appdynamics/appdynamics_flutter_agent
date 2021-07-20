@@ -4,4 +4,5 @@
 # All rights reserved.
 #
 #
-flutter build appbundle
+flutter build apk
+cp build/app/outputs/flutter-apk/app-release.apk build/app/reports

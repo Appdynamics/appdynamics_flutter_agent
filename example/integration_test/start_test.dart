@@ -4,28 +4,30 @@
  *
  */
 
-import 'package:appdynamics_mobilesdk_example/main.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
+
+import 'utils.dart';
+import 'wiremock_utils.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
+  setUp(() async {
+    await clearServer();
+    await mapAgentInitToReturnSuccess();
+  });
+
   testWidgets("Instrumentation.start() changes screen",
       (WidgetTester tester) async {
-    await tester.pumpWidget(MyApp());
+    await jumpStartInstrumentation(tester);
 
-    final startButtonFinder = find.byKey(Key("startInstrumentationButton"));
+    final requests =
+        await findRequestsBy(type: "system-event", event: "Agent init");
+    expect(requests.length, 1);
+  });
 
-    expect(startButtonFinder, findsOneWidget);
-
-    final featureListBarFinder = find.byKey(Key("featureListAppBar"));
-    expect(featureListBarFinder, findsNothing);
-
-    await tester.tap(startButtonFinder);
-    await tester.pumpAndSettle();
-
-    expect(featureListBarFinder, findsOneWidget);
+  tearDown(() async {
+    await clearServer();
   });
 }

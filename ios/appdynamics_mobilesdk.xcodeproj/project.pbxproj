@@ -7,17 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		96AC791D26820A5C0035C226 /* ManualRequestTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96AC791C26820A5C0035C226 /* ManualRequestTracker.swift */; };
 		96EAFA3E266521AB00A3CFC5 /* AppdynamicsMobilesdkPlugin.h in Headers */ = {isa = PBXBuildFile; fileRef = 96EAFA3B266521AB00A3CFC5 /* AppdynamicsMobilesdkPlugin.h */; };
 		96EAFA3F266521AB00A3CFC5 /* AppdynamicsMobilesdkPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 96EAFA3C266521AB00A3CFC5 /* AppdynamicsMobilesdkPlugin.m */; };
 		96EAFA40266521AB00A3CFC5 /* SwiftAppdynamicsMobilesdkPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96EAFA3D266521AB00A3CFC5 /* SwiftAppdynamicsMobilesdkPlugin.swift */; };
-		B898811ACDB10CAEA7DB308E /* libPods-appdynamics_mobilesdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FB9D69C859B7E0E8A9101A7 /* libPods-appdynamics_mobilesdk.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		3FB9D69C859B7E0E8A9101A7 /* libPods-appdynamics_mobilesdk.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-appdynamics_mobilesdk.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		96AC791C26820A5C0035C226 /* ManualRequestTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ManualRequestTracker.swift; path = Classes/ManualRequestTracker.swift; sourceTree = "<group>"; };
 		96EAFA302665218500A3CFC5 /* appdynamics_mobilesdk.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = appdynamics_mobilesdk.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		96EAFA3B266521AB00A3CFC5 /* AppdynamicsMobilesdkPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppdynamicsMobilesdkPlugin.h; path = Classes/AppdynamicsMobilesdkPlugin.h; sourceTree = "<group>"; };
-		96EAFA3C266521AB00A3CFC5 /* AppdynamicsMobilesdkPlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppdynamicsMobilesdkPlugin.m; path = Classes/AppdynamicsMobilesdkPlugin.m; sourceTree = "<group>"; };
+		96EAFA3B266521AB00A3CFC5 /* AppdynamicsMobilesdkPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppdynamicsMobilesdkPlugin.h; sourceTree = "<group>"; };
+		96EAFA3C266521AB00A3CFC5 /* AppdynamicsMobilesdkPlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppdynamicsMobilesdkPlugin.m; sourceTree = "<group>"; };
 		96EAFA3D266521AB00A3CFC5 /* SwiftAppdynamicsMobilesdkPlugin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SwiftAppdynamicsMobilesdkPlugin.swift; path = Classes/SwiftAppdynamicsMobilesdkPlugin.swift; sourceTree = "<group>"; };
 		EFF9E957E56BC13D1F5F110A /* Pods-appdynamics_mobilesdk.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-appdynamics_mobilesdk.debug.xcconfig"; path = "Target Support Files/Pods-appdynamics_mobilesdk/Pods-appdynamics_mobilesdk.debug.xcconfig"; sourceTree = "<group>"; };
 		FA144E64A7DFEF201023D472 /* Pods-appdynamics_mobilesdk.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-appdynamics_mobilesdk.release.xcconfig"; path = "Target Support Files/Pods-appdynamics_mobilesdk/Pods-appdynamics_mobilesdk.release.xcconfig"; sourceTree = "<group>"; };
@@ -28,7 +28,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B898811ACDB10CAEA7DB308E /* libPods-appdynamics_mobilesdk.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -44,23 +43,23 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
-		3E0B9556E8DABB3686A66DDA /* Frameworks */ = {
+		96AC791E268217E20035C226 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				3FB9D69C859B7E0E8A9101A7 /* libPods-appdynamics_mobilesdk.a */,
+				96EAFA3B266521AB00A3CFC5 /* AppdynamicsMobilesdkPlugin.h */,
+				96EAFA3C266521AB00A3CFC5 /* AppdynamicsMobilesdkPlugin.m */,
 			);
-			name = Frameworks;
+			path = Utils;
 			sourceTree = "<group>";
 		};
 		96EAFA262665218500A3CFC5 = {
 			isa = PBXGroup;
 			children = (
-				96EAFA3B266521AB00A3CFC5 /* AppdynamicsMobilesdkPlugin.h */,
-				96EAFA3C266521AB00A3CFC5 /* AppdynamicsMobilesdkPlugin.m */,
+				96AC791C26820A5C0035C226 /* ManualRequestTracker.swift */,
 				96EAFA3D266521AB00A3CFC5 /* SwiftAppdynamicsMobilesdkPlugin.swift */,
+				96AC791E268217E20035C226 /* Utils */,
 				96EAFA312665218500A3CFC5 /* Products */,
 				253F0927B62E97A2FAAEE77F /* Pods */,
-				3E0B9556E8DABB3686A66DDA /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -177,6 +176,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				96AC791D26820A5C0035C226 /* ManualRequestTracker.swift in Sources */,
 				96EAFA3F266521AB00A3CFC5 /* AppdynamicsMobilesdkPlugin.m in Sources */,
 				96EAFA40266521AB00A3CFC5 /* SwiftAppdynamicsMobilesdkPlugin.swift in Sources */,
 			);

@@ -6,3 +6,4 @@
 
 export 'src/agent-configuration.dart';
 export 'src/instrumentation.dart';
+export 'src/request-tracker.dart';

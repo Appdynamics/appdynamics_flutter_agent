@@ -1,0 +1,56 @@
+/*
+ * Copyright (c) 2021. AppDynamics LLC and its affiliates.
+ * All rights reserved.
+ *
+ */
+
+// TODO: split iOS and Android tests to separate files
+// WARNING: Possible gradle duplicate task error if creating shared gradle file.
+
+def test_driver_path = "test_driver/integration_test.dart"
+def integration_tests_path = "integration_test/"
+def android_device = "sdk gphone x86 arm"
+def iOS_device = "iPhone 12"
+def wiremock_path = "integration_test/wiremock/wiremock-jre8-standalone-2.29.0.jar"
+
+task startIntegrationTestServer() {
+    description 'Open a mock server in background that will be used in the integration tests.'
+    ant.exec(
+            executable: 'java',
+            spawn: true
+    ) {
+        arg(value: "-jar")
+        arg(value: wiremock_path)
+        arg(value: "--port")
+        arg(value: '9999')
+    }
+    println("Wiremock server started.")
+}
+
+// iOS tests
+
+task runStartIntegrationTestiOS(type: Exec) {
+    dependsOn startIntegrationTestServer
+    commandLine "flutter", "drive", "--driver", test_driver_path, "--target",
+            integration_tests_path + "start_test.dart", "-d", iOS_device
+}
+
+task runRequestTrackerIntegrationTestiOS(type: Exec) {
+    dependsOn startIntegrationTestServer
+    commandLine "flutter", "drive", "--driver", test_driver_path, "--target",
+            integration_tests_path + "request_tracker_test.dart", "-d", iOS_device
+}
+
+// Android tests
+
+task runStartIntegrationTestAndroid(type: Exec) {
+    dependsOn startIntegrationTestServer
+    commandLine "flutter", "drive", "--driver", test_driver_path, "--target",
+            integration_tests_path + "start_test.dart", "-d", android_device
+}
+
+task runRequestTrackerIntegrationTestAndroid(type: Exec) {
+    dependsOn startIntegrationTestServer
+    commandLine "flutter", "drive", "--driver", test_driver_path, "--target",
+            integration_tests_path + "request_tracker_test.dart", "-d", android_device
+}

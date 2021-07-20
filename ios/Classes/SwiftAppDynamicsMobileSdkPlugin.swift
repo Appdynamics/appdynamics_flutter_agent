@@ -3,17 +3,33 @@ import UIKit
 import ADEUMInstrumentation
 
 public class SwiftAppDynamicsMobileSdkPlugin: NSObject, FlutterPlugin {
+    var customRequestTracker: ADEumHTTPRequestTracker?
+
     public static func register(with registrar: FlutterPluginRegistrar) {
         let channel = FlutterMethodChannel(name: "appdynamics_mobilesdk", binaryMessenger: registrar.messenger())
         let instance = SwiftAppDynamicsMobileSdkPlugin()
         registrar.addMethodCallDelegate(instance, channel: channel)
     }
     
+
+    typealias AdeumMethod = (@escaping FlutterResult, Any?) -> ()
     public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
-        switch call.method {
-        case "start":
-            start(result: result, arguments: call.arguments)
-        default:
+        let methods: [String: AdeumMethod] = [
+            "start": start,
+            
+            // Manual request tracking
+            "getRequestTrackerWithUrl": getRequestTrackerWithUrl,
+            "setRequestTrackerErrorInfo": setRequestTrackerErrorInfo,
+            "setRequestTrackerStatusCode": setRequestTrackerStatusCode,
+            "setRequestTrackerResponseHeaders": setRequestTrackerResponseHeaders,
+            "setRequestTrackerRequestHeaders": setRequestTrackerRequestHeaders,
+            "getServerCorrelationHeaders": getServerCorrelationHeaders,
+            "requestTrackerReport": requestTrackerReport,
+        ]
+
+        if let method = methods[call.method] {
+            method(result, call.arguments)
+        } else {
             result(FlutterMethodNotImplemented)
         }
     }
@@ -46,11 +62,15 @@ public class SwiftAppDynamicsMobileSdkPlugin: NSObject, FlutterPlugin {
             configuration.anrStackTraceEnabled = anrStackTraceEnabled
         }
         
-        configuration.collectorURL = "https://eum-shadow-master-col.saas.appd-test.com"
+        if let collectorURL = properties["collectorURL"] as? String {
+            configuration.collectorURL = collectorURL
+        }
+        
         configuration.screenshotsEnabled = false
-        configuration.applicationName = "com.appdynamics.flutter-everyfeature-ios"
+        configuration.applicationName = "com.appdynamics.FlutterEveryfeatureiOS"
         ADEumInstrumentation.initWith(configuration)
         
         result(nil)
     }
+
 }

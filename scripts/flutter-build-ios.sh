@@ -4,4 +4,5 @@
 # All rights reserved.
 #
 #
-flutter build ios --release --no-codesign
+flutter build ios --simulator
+cp /build/ios/iphonesimulator build/app/reports

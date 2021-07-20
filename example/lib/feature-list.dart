@@ -4,6 +4,7 @@
  *
  */
 
+import 'package:appdynamics_mobilesdk_example/features/manual-network-requests.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -19,14 +20,25 @@ class FeatureList extends StatelessWidget {
         title: Text('Feature list'),
       ),
       body: Center(
-        child: Column(
-          children: [
-            SizedBox(height: 30),
-            ElevatedButton(
-              child: Text('Test ANR'),
-              onPressed: () => pushWithContext(context, ANR()),
-            ),
-          ],
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(50, 0, 50, 0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              SizedBox(height: 30),
+              ElevatedButton(
+                child: Text('ANR'),
+                onPressed: () => pushWithContext(context, ANR()),
+              ),
+              SizedBox(height: 10),
+              ElevatedButton(
+                child: Text('Manual network requests'),
+                key: Key("manualNetworkRequestsButton"),
+                onPressed: () =>
+                    pushWithContext(context, ManualNetworkRequests()),
+              ),
+            ],
+          ),
         ),
       ),
     );

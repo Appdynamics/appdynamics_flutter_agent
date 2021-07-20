@@ -24,6 +24,8 @@ pipeline {
     projectName = "Flutter Agent"
 
     buildTasks = ["build", "downloadFlutter", "installPackages", "analyze", "runTests", ":example:buildAndroid"]
+
+    param("env.ARTIFACT_MAPPING", "example/build/app/outputs/flutter-apk")
 }
 
 // appd-publish
