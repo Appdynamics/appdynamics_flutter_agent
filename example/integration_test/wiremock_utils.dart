@@ -20,6 +20,7 @@ Future<List<Map<String, dynamic>>> findRequestsBy({
   String? hrc,
   String? event,
   String? timerName,
+  String? text,
   String? $is, // "$" -> reserved keyword workaround
 }) async {
   final response = await http.get(Uri.parse(serverRequestsUrl));
@@ -34,6 +35,7 @@ Future<List<Map<String, dynamic>>> findRequestsBy({
     event: "event",
     hrc: "hrc",
     $is: "is",
+    text: "text",
     timerName: "timerName"
   };
 

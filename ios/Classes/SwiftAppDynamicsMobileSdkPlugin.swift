@@ -28,6 +28,9 @@ public class SwiftAppDynamicsMobileSdkPlugin: NSObject, FlutterPlugin {
             // Custom timers
             "startTimer": startTimer,
             "stopTimer": stopTimer,
+            
+            // Breadcrumbs
+            "leaveBreadcrumb": leaveBreadcrumb
         ]
         
         if let method = methods[call.method] {
@@ -36,5 +39,4 @@ public class SwiftAppDynamicsMobileSdkPlugin: NSObject, FlutterPlugin {
             result(FlutterMethodNotImplemented)
         }
     }
-
 }

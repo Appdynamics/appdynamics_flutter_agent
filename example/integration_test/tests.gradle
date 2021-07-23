@@ -7,10 +7,12 @@
 // TODO: split iOS and Android tests to separate files
 // WARNING: Possible gradle duplicate task error if creating shared gradle file.
 
-def test_driver_path = "test_driver/integration_test.dart"
-def integration_tests_path = "integration_test/features/"
+// Configure these based on your system's emulator/simulator names.
 def android_device = "sdk gphone x86 arm"
 def iOS_device = "iPhone 12"
+
+def test_driver_path = "test_driver/integration_test.dart"
+def integration_tests_path = "integration_test/features/"
 def wiremock_path = "integration_test/wiremock/wiremock-jre8-standalone-2.29.0.jar"
 
 task startIntegrationTestServer() {
@@ -47,6 +49,12 @@ task runCustomTimersIntegrationTestiOS(type: Exec) {
             integration_tests_path + "custom_timers_test.dart", "-d", iOS_device
 }
 
+task runBreadcrumbsIntegrationTestiOS(type: Exec) {
+    dependsOn startIntegrationTestServer
+    commandLine "flutter", "drive", "--driver", test_driver_path, "--target",
+            integration_tests_path + "breadcrumbs_test.dart", "-d", iOS_device
+}
+
 // Android tests
 
 task runStartIntegrationTestAndroid(type: Exec) {
@@ -65,4 +73,10 @@ task runCustomTimersIntegrationTestAndroid(type: Exec) {
     dependsOn startIntegrationTestServer
     commandLine "flutter", "drive", "--driver", test_driver_path, "--target",
             integration_tests_path + "custom_timers_test.dart", "-d", android_device
+}
+
+task runBreadcrumbsIntegrationTestAndroid(type: Exec) {
+    dependsOn startIntegrationTestServer
+    commandLine "flutter", "drive", "--driver", test_driver_path, "--target",
+            integration_tests_path + "breadcrumbs_test.dart", "-d", android_device
 }

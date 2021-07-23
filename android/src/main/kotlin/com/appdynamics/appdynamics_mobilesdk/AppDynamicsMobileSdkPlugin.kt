@@ -44,7 +44,10 @@ open class AppDynamicsMobileSdkPlugin : FlutterPlugin, MethodCallHandler {
 
             // Custom timers
             "startTimer" to ::startTimer,
-            "stopTimer" to ::stopTimer
+            "stopTimer" to ::stopTimer,
+
+            // Breadcrumbs
+            "leaveBreadcrumb" to ::leaveBreadcrumb
         )
 
         methods[call.method]?.let { method ->

@@ -4,6 +4,7 @@
  *
  */
 
+import 'package:appdynamics_mobilesdk_example/features/breadcrumbs.dart';
 import 'package:appdynamics_mobilesdk_example/features/custom-timers.dart';
 import 'package:appdynamics_mobilesdk_example/features/manual-network-requests.dart';
 import 'package:appdynamics_mobilesdk_example/utils/flush-beacons-app-bar.dart';
@@ -44,6 +45,12 @@ class FeatureList extends StatelessWidget {
                 child: Text('Custom timers'),
                 key: Key("customTimersButton"),
                 onPressed: () => pushWithContext(context, CustomTimers()),
+              ),
+              SizedBox(height: 10),
+              ElevatedButton(
+                child: Text('Breadcrumbs'),
+                key: Key("breadcrumbsButton"),
+                onPressed: () => pushWithContext(context, Breadcrumbs()),
               ),
             ],
           ),
