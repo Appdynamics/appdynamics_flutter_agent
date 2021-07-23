@@ -28,11 +28,13 @@ task buildAndroid(type: Exec) {
 task runIntegrationTestsiOS {
     dependsOn runStartIntegrationTestiOS
     dependsOn runRequestTrackerIntegrationTestiOS
+    dependsOn runCustomTimersIntegrationTestiOS
 }
 
 task runIntegrationTestsAndroid {
     dependsOn runStartIntegrationTestAndroid
     dependsOn runRequestTrackerIntegrationTestAndroid
+    dependsOn runCustomTimersIntegrationTestAndroid
 }
 
 task generateMocks(type: Exec) {

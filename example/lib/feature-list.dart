@@ -4,7 +4,9 @@
  *
  */
 
+import 'package:appdynamics_mobilesdk_example/features/custom-timers.dart';
 import 'package:appdynamics_mobilesdk_example/features/manual-network-requests.dart';
+import 'package:appdynamics_mobilesdk_example/utils/flush-beacons-app-bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -15,9 +17,9 @@ class FeatureList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
+      appBar: FlushBeaconsAppBar(
         key: Key("featureListAppBar"),
-        title: Text('Feature list'),
+        title: 'Feature list',
       ),
       body: Center(
         child: Padding(
@@ -36,6 +38,12 @@ class FeatureList extends StatelessWidget {
                 key: Key("manualNetworkRequestsButton"),
                 onPressed: () =>
                     pushWithContext(context, ManualNetworkRequests()),
+              ),
+              SizedBox(height: 10),
+              ElevatedButton(
+                child: Text('Custom timers'),
+                key: Key("customTimersButton"),
+                onPressed: () => pushWithContext(context, CustomTimers()),
               ),
             ],
           ),

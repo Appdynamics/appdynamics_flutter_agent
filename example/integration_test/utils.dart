@@ -4,6 +4,8 @@
  *
  */
 
+import 'dart:convert';
+
 import 'package:appdynamics_mobilesdk/appdynamics_mobilesdk.dart';
 import 'package:appdynamics_mobilesdk_example/main.dart';
 import 'package:flutter/cupertino.dart';
@@ -41,4 +43,10 @@ Future<void> flushBeacons() async {
   final tracker = await RequestTracker.create("http://flush-beacons.com");
   tracker.setResponseStatusCode(200);
   tracker.reportDone();
+}
+
+// Shortcut to get body of beacon requests.
+Map<String, dynamic> getBeaconRequestBody(Map<String, dynamic> request) {
+  final List<dynamic> bodyList = jsonDecode(request["request"]["body"]);
+  return Map<String, dynamic>.from(bodyList[0]);
 }

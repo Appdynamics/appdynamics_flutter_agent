@@ -4,9 +4,8 @@
  *
  */
 
-import 'dart:convert';
-
 import 'package:appdynamics_mobilesdk/appdynamics_mobilesdk.dart';
+import 'package:appdynamics_mobilesdk_example/utils/flush-beacons-app-bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -28,7 +27,35 @@ class _ManualNetworkRequestsState extends State<ManualNetworkRequests> {
     super.dispose();
   }
 
-  Future<void> sendManualReportedRequest(
+  Future<void> _sendGetRequestButtonPressed() async {
+    var urlString = urlFieldController.text;
+    if (urlString.trim().isNotEmpty) {
+      final url = Uri.parse(urlString);
+
+      var headers = null;
+      if (addServerCorrelation) {
+        headers = await RequestTracker.getServerCorrelationHeaders();
+      }
+      final request = http.get(url, headers: headers);
+      _sendManualReportedRequest(request, urlString);
+    }
+  }
+
+  Future<void> _sendPostRequestButtonPressed() async {
+    var urlString = urlFieldController.text;
+    if (urlString.trim().isNotEmpty) {
+      final url = Uri.parse(urlString);
+
+      var headers = null;
+      if (addServerCorrelation) {
+        headers = await RequestTracker.getServerCorrelationHeaders();
+      }
+      final request = http.get(url, headers: headers);
+      _sendManualReportedRequest(request, urlString);
+    }
+  }
+
+  Future<void> _sendManualReportedRequest(
       Future<http.Response> request, String urlString) async {
     setState(() {
       responseText = "Loading...";
@@ -56,8 +83,8 @@ class _ManualNetworkRequestsState extends State<ManualNetworkRequests> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Manual network requests'),
+      appBar: FlushBeaconsAppBar(
+        title: 'Manual network requests',
       ),
       body: Center(
         child: Column(
@@ -81,6 +108,7 @@ class _ManualNetworkRequestsState extends State<ManualNetworkRequests> {
             Padding(
               padding: const EdgeInsets.fromLTRB(50, 80, 50, 10),
               child: TextFormField(
+                key: Key("requestTextField"),
                 controller: urlFieldController,
                 decoration: InputDecoration(
                     border: OutlineInputBorder(),
@@ -99,43 +127,13 @@ class _ManualNetworkRequestsState extends State<ManualNetworkRequests> {
               height: 30,
             ),
             ElevatedButton(
-              key: Key("manualGETRequestButton"),
-              child: Text('Manual track GET request'),
-              onPressed: () async {
-                var urlString = urlFieldController.text;
-                if (urlString.trim().isNotEmpty) {
-                  final url = Uri.parse(urlString);
-
-                  var headers = null;
-                  if (addServerCorrelation) {
-                    headers =
-                        await RequestTracker.getServerCorrelationHeaders();
-                  }
-                  final request = http.get(url, headers: headers);
-                  sendManualReportedRequest(request, urlString);
-                }
-              },
-            ),
+                key: Key("manualGETRequestButton"),
+                child: Text('Manual track GET request'),
+                onPressed: _sendGetRequestButtonPressed),
             ElevatedButton(
-              key: Key("manualPOSTRequestButton"),
-              child: Text('Manual track POST request'),
-              onPressed: () async {
-                var urlString = urlFieldController.text;
-                if (urlString.trim().isNotEmpty) {
-                  final url = Uri.parse(urlString);
-
-                  var headers = null;
-                  if (addServerCorrelation) {
-                    headers =
-                        await RequestTracker.getServerCorrelationHeaders();
-                  }
-
-                  final request = http.post(url,
-                      headers: headers, body: jsonEncode({"foo": "bar"}));
-                  sendManualReportedRequest(request, urlString);
-                }
-              },
-            ),
+                key: Key("manualPOSTRequestButton"),
+                child: Text('Manual track POST request'),
+                onPressed: _sendPostRequestButtonPressed),
             SizedBox(
               height: 30,
             ),

@@ -8,6 +8,8 @@ import 'dart:io';
 
 import 'package:http/http.dart' as http;
 
+import 'utils.dart';
+
 final serverUrl = "http://${Platform.isIOS ? "localhost" : "10.0.2.2"}:9999";
 final serverRequestsUrl = "$serverUrl/__admin/requests";
 final serverMappingsUrl = "$serverUrl/__admin/mappings";
@@ -17,7 +19,8 @@ Future<List<Map<String, dynamic>>> findRequestsBy({
   String? type,
   String? hrc,
   String? event,
-  String? $is, // "$" to workaround reserved keyword
+  String? timerName,
+  String? $is, // "$" -> reserved keyword workaround
 }) async {
   final response = await http.get(Uri.parse(serverRequestsUrl));
   final Map<String, dynamic> json = jsonDecode(response.body);
@@ -31,11 +34,11 @@ Future<List<Map<String, dynamic>>> findRequestsBy({
     event: "event",
     hrc: "hrc",
     $is: "is",
+    timerName: "timerName"
   };
 
   final requests = jsonRequests.where((request) {
-    final List<dynamic> bodyList = jsonDecode(request["request"]["body"]);
-    final Map<String, dynamic> body = Map<String, dynamic>.from(bodyList[0]);
+    final body = getBeaconRequestBody(request);
 
     // checks if non-null parameters match the ones from the request.
     final bool results = requestParameterMapping.entries

@@ -8,8 +8,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
-import 'utils.dart';
-import 'wiremock_utils.dart';
+import '../utils.dart';
+import '../wiremock_utils.dart';
 
 void main() {
   setUp(() async {
@@ -33,17 +33,22 @@ void main() {
     final manualPOSTRequestButton = find.byKey(Key("manualPOSTRequestButton"));
     expect(manualPOSTRequestButton, findsOneWidget);
 
-    // TODO: Mock http request as to not have to wait for it anymore.
+    final requestTextField = find.byKey(Key("requestTextField"));
+    expect(requestTextField, findsOneWidget);
+
+    final randomSuccessURL = serverRequestsUrl;
+    await tester.enterText(requestTextField, randomSuccessURL);
     await tester.tap(manualPOSTRequestButton);
-    await tester.pumpAndSettle(Duration(seconds: 5));
+    await tester.pump(Duration(seconds: 2));
 
     final requestSentLabel = find.text("Success with 200.");
     expect(requestSentLabel, findsOneWidget);
 
     await flushBeacons();
+    await tester.pump(Duration(seconds: 2));
 
     final requests = await findRequestsBy(
-        url: "www.appdynamics.com",
+        url: serverRequestsUrl,
         type: "network-request",
         hrc: "200",
         $is: "Manual HttpTracker");

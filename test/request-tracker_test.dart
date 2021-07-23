@@ -25,7 +25,6 @@ void main() {
 
   test('Manual HTTP tracker success methods are called natively', () async {
     channel.setMockMethodCallHandler((MethodCall methodCall) async {
-      log.add(methodCall);
       switch (methodCall.method) {
         case 'getRequestTrackerWithUrl':
         case "setRequestTrackerErrorInfo":
@@ -33,8 +32,10 @@ void main() {
         case "setRequestTrackerResponseHeaders":
         case "setRequestTrackerRequestHeaders":
         case "requestTrackerReport":
-          return true;
+          log.add(methodCall);
+          return null;
         case "getServerCorrelationHeaders":
+          log.add(methodCall);
           return {"foo": "bar"};
       }
     });

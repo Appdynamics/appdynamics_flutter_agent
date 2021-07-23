@@ -27,10 +27,10 @@ void main() {
 
   test('start() is called natively', () async {
     channel.setMockMethodCallHandler((MethodCall methodCall) async {
-      log.add(methodCall);
       switch (methodCall.method) {
         case 'start':
-          return true;
+          log.add(methodCall);
+          return null;
       }
     });
 

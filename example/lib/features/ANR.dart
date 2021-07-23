@@ -4,6 +4,7 @@
  *
  */
 
+import 'package:appdynamics_mobilesdk_example/utils/flush-beacons-app-bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -41,8 +42,8 @@ class _ANRState extends State<ANR> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('ANR'),
+      appBar: FlushBeaconsAppBar(
+        title: 'ANR',
       ),
       body: Center(
         child: Column(
