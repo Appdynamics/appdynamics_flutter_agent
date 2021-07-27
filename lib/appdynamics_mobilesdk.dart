@@ -4,6 +4,6 @@
  *
  */
 
-export 'src/agent-configuration.dart';
+export 'src/agent_configuration.dart';
 export 'src/instrumentation.dart';
-export 'src/request-tracker.dart';
+export 'src/request_tracker.dart';

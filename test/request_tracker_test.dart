@@ -46,12 +46,12 @@ void main() {
     final errorMessage = "foo";
     final stackTrace = "bar";
 
-    var tracker = await RequestTracker.create("http://www.appdynamics.com");
-    tracker.setRequestHeaders(headers);
-    tracker.setResponseStatusCode(responseCode);
-    tracker.setResponseHeaders(headers);
-    tracker.setError(errorMessage, stackTrace);
-    tracker.reportDone();
+    await RequestTracker.create("http://www.appdynamics.com")
+      ..setRequestHeaders(headers)
+      ..setResponseStatusCode(responseCode)
+      ..setResponseHeaders(headers)
+      ..setError(errorMessage, stackTrace)
+      ..reportDone();
 
     RequestTracker.getServerCorrelationHeaders();
 

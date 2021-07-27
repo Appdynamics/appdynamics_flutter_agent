@@ -11,8 +11,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_picker/flutter_picker.dart';
 
-import 'feature-list.dart';
-import 'utils/push-with-context.dart';
+import 'feature_list.dart';
 
 var localServerURL = "http://${Platform.isIOS ? "localhost" : "10.0.2.2"}:9999";
 final CollectorURLs = {
@@ -30,11 +29,12 @@ class Settings extends StatefulWidget {
 }
 
 class _SettingsState extends State<Settings> {
+  static final _appKey = "SM-ADY-BDT";
   static final _defaultCollectorTextFieldText =
       "${CollectorURLs.keys.elementAt(0)} '${CollectorURLs.values.elementAt(0)}'";
   var _collectorURLFieldController =
       TextEditingController(text: _defaultCollectorTextFieldText);
-  final _appKeyFieldController = TextEditingController(text: "SM-ADY-BDT");
+  final _appKeyFieldController = TextEditingController(text: _appKey);
 
   @override
   void dispose() {
@@ -76,7 +76,10 @@ class _SettingsState extends State<Settings> {
           collectorURL: collectorURL);
       await Instrumentation.start(config);
 
-      pushWithContext(context, FeatureList());
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => FeatureList()),
+      );
     } catch (error) {
       print(error);
     }

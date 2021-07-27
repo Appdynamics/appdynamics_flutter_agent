@@ -5,7 +5,7 @@
  */
 
 import 'package:appdynamics_mobilesdk/appdynamics_mobilesdk.dart';
-import 'package:appdynamics_mobilesdk/src/agent-configuration.dart';
+import 'package:appdynamics_mobilesdk/src/agent_configuration.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -37,17 +37,23 @@ void main() {
     AgentConfiguration config = AgentConfiguration(appKey: appKey);
     await Instrumentation.start(config);
 
-    Instrumentation.leaveBreadcrumb(
-        "My breadcrumb", BreadcrumbVisibility.CRASHES_ONLY);
-    Instrumentation.leaveBreadcrumb(
-        "My breadcrumb", BreadcrumbVisibility.CRASHES_AND_SESSIONS);
+    final breadcrumb = "My breadcrumb";
+    final crashSeverityLevel = BreadcrumbVisibility.CRASHES_ONLY;
+    final crashSessionSeverityLevel = BreadcrumbVisibility.CRASHES_AND_SESSIONS;
+
+    Instrumentation.leaveBreadcrumb(breadcrumb, crashSeverityLevel);
+    Instrumentation.leaveBreadcrumb(breadcrumb, crashSessionSeverityLevel);
 
     expect(log, hasLength(2));
     expect(log, <Matcher>[
-      isMethodCall('leaveBreadcrumb',
-          arguments: {"breadcrumb": "My breadcrumb", "mode": 0}),
-      isMethodCall('leaveBreadcrumb',
-          arguments: {"breadcrumb": "My breadcrumb", "mode": 1}),
+      isMethodCall('leaveBreadcrumb', arguments: {
+        "breadcrumb": breadcrumb,
+        "mode": crashSeverityLevel.index
+      }),
+      isMethodCall('leaveBreadcrumb', arguments: {
+        "breadcrumb": breadcrumb,
+        "mode": crashSessionSeverityLevel.index
+      })
     ]);
   });
 }

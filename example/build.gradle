@@ -30,7 +30,7 @@ task runIntegrationTestsiOS {
     dependsOn runRequestTrackerIntegrationTestiOS
     dependsOn runCustomTimersIntegrationTestiOS
     dependsOn runBreadcrumbsIntegrationTestiOS
-
+    dependsOn runErrorReportingIntegrationTestiOS
 }
 
 task runIntegrationTestsAndroid {
@@ -38,9 +38,10 @@ task runIntegrationTestsAndroid {
     dependsOn runRequestTrackerIntegrationTestAndroid
     dependsOn runCustomTimersIntegrationTestAndroid
     dependsOn runBreadcrumbsIntegrationTestAndroid
+    dependsOn runErrorReportingIntegrationTestAndroid
 
 }
 
-task generateMocks(type: Exec) {
-    commandLine "flutter", "pub", "run", "build_runner", "build"
+task installPods(type: Exec) {
+     commandLine "../scripts/flutter-install-pods.sh"
 }

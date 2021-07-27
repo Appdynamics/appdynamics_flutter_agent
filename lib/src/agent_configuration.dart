@@ -9,12 +9,9 @@ enum LoggingLevel { none, info, verbose }
 /// Configuration object for the AppDynamics SDK.
 ///
 /// ```dart
-/// AgentConfiguration config = AgentConfiguration(appKey: "ABC-DEF-GHI");
-///
-/// if (shouldEnableLogging) {
-///    config = config.copyWith(loggingLevel: LoggingLevel.verbose);
-/// }
-///
+/// AgentConfiguration config = AgentConfiguration(
+///     appKey: "ABC-DEF-GHI",
+///     loggingLevel: LoggingLevel.verbose);
 /// Instrumentation.start(config);
 /// ```
 /// **NOTE:** Replace "ABC-DEF-GHI" with your actual application key.
@@ -25,13 +22,14 @@ class AgentConfiguration {
   /// Sets the application key used by the SDK. (required)
   final String appKey;
 
-  /// The URL of the collector. It should be compliant with "1.4. Hierarchical URI and
-  /// Relative Forms" of [RFC2396](https://www.ietf.org/rfc/rfc2396.txt).
+  /// The URL of the collector. It should be compliant with "1.4. Hierarchical
+  /// URI and Relative Forms" of
+  /// [RFC2396](https://www.ietf.org/rfc/rfc2396.txt).
   ///
-  /// The SDK will send beacons to this collector.
+  /// The agent will send beacons to this collector.
   final String collectorURL;
 
-  /// Sets the logging level of the agent. Default is {@link LoggingLevel.none}.
+  /// Sets the logging level of the agent. Default is [LoggingLevel.none].
   ///
   /// **WARNING:** Not recommended for production use.
   final LoggingLevel loggingLevel;
@@ -42,6 +40,21 @@ class AgentConfiguration {
     this.loggingLevel = LoggingLevel.none,
   });
 
+  /// Creates a new [AgentConfiguration] with possibility to overwrite
+  /// new properties.
+  ///
+  /// Useful when needing to conditionally add properties, as with a boolean
+  /// flag variable.
+  ///
+  /// ```dart
+  /// AgentConfiguration config = AgentConfiguration(appKey: "ABC-DEF-GHI");
+  ///
+  /// if (shouldEnableLogging) {
+  ///    config = config.copyWith(loggingLevel: LoggingLevel.verbose);
+  /// }
+  ///
+  /// Instrumentation.start(config);
+  /// ```
   AgentConfiguration copyWith({
     String? appKey,
     String? collectorURL,

@@ -47,7 +47,10 @@ open class AppDynamicsMobileSdkPlugin : FlutterPlugin, MethodCallHandler {
             "stopTimer" to ::stopTimer,
 
             // Breadcrumbs
-            "leaveBreadcrumb" to ::leaveBreadcrumb
+            "leaveBreadcrumb" to ::leaveBreadcrumb,
+
+            // Report error
+            "reportError" to ::reportError
         )
 
         methods[call.method]?.let { method ->

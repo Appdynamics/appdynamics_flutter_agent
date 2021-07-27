@@ -14,6 +14,10 @@ final serverUrl = "http://${Platform.isIOS ? "localhost" : "10.0.2.2"}:9999";
 final serverRequestsUrl = "$serverUrl/__admin/requests";
 final serverMappingsUrl = "$serverUrl/__admin/mappings";
 
+/// Checks request's bodies for specific parameters and values.
+///
+/// Can be used to also check if key exists in body by specifying "<any>"
+/// as parameter the value.
 Future<List<Map<String, dynamic>>> findRequestsBy({
   String? url,
   String? type,
@@ -21,6 +25,10 @@ Future<List<Map<String, dynamic>>> findRequestsBy({
   String? event,
   String? timerName,
   String? text,
+  String? sev,
+  String? javaThrowable,
+  String? nsError,
+  String? userInfo,
   String? $is, // "$" -> reserved keyword workaround
 }) async {
   final response = await http.get(Uri.parse(serverRequestsUrl));
@@ -36,7 +44,11 @@ Future<List<Map<String, dynamic>>> findRequestsBy({
     hrc: "hrc",
     $is: "is",
     text: "text",
-    timerName: "timerName"
+    timerName: "timerName",
+    sev: "sev",
+    javaThrowable: "javaThrowable",
+    nsError: "nsError",
+    userInfo: "userInfo"
   };
 
   final requests = jsonRequests.where((request) {
@@ -45,10 +57,14 @@ Future<List<Map<String, dynamic>>> findRequestsBy({
     // checks if non-null parameters match the ones from the request.
     final bool results = requestParameterMapping.entries
         .where((e) => e.key != null)
-        .fold(true, (value, e) {
+        .fold(true, (previous, e) {
       final bodyUrl = body[e.value].toString().toLowerCase();
       final lower = e.key.toString().toLowerCase();
-      return value && bodyUrl.contains(lower);
+
+      if (e.key == "<any>") {
+        return previous && body.containsKey(e.value);
+      }
+      return previous && bodyUrl.contains(lower);
     });
 
     return results;

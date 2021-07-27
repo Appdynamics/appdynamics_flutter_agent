@@ -30,7 +30,10 @@ public class SwiftAppDynamicsMobileSdkPlugin: NSObject, FlutterPlugin {
             "stopTimer": stopTimer,
             
             // Breadcrumbs
-            "leaveBreadcrumb": leaveBreadcrumb
+            "leaveBreadcrumb": leaveBreadcrumb,
+            
+            // Report error
+            "reportError": reportError
         ]
         
         if let method = methods[call.method] {

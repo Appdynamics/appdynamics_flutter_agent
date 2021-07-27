@@ -5,7 +5,7 @@
  */
 
 import 'package:appdynamics_mobilesdk/appdynamics_mobilesdk.dart';
-import 'package:appdynamics_mobilesdk_example/utils/flush-beacons-app-bar.dart';
+import 'package:appdynamics_mobilesdk_example/utils/flush_beacons_app_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -64,9 +64,9 @@ class _ManualNetworkRequestsState extends State<ManualNetworkRequests> {
     final tracker = await RequestTracker.create(urlString);
     try {
       final response = await request;
-      tracker.setResponseStatusCode(response.statusCode);
-      tracker.setRequestHeaders(response.request!.headers);
-      tracker.setResponseHeaders(response.headers);
+      await tracker.setResponseStatusCode(response.statusCode)
+        ..setRequestHeaders(response.request!.headers)
+        ..setResponseHeaders(response.headers);
       setState(() {
         responseText = "Success with ${response.statusCode}.";
       });

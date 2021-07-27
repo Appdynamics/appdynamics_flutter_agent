@@ -55,6 +55,12 @@ task runBreadcrumbsIntegrationTestiOS(type: Exec) {
             integration_tests_path + "breadcrumbs_test.dart", "-d", iOS_device
 }
 
+task runErrorReportingIntegrationTestiOS(type: Exec) {
+    dependsOn startIntegrationTestServer
+    commandLine "flutter", "drive", "--driver", test_driver_path, "--target",
+            integration_tests_path + "error_reporting_test.dart", "-d", iOS_device
+}
+
 // Android tests
 
 task runStartIntegrationTestAndroid(type: Exec) {
@@ -79,4 +85,10 @@ task runBreadcrumbsIntegrationTestAndroid(type: Exec) {
     dependsOn startIntegrationTestServer
     commandLine "flutter", "drive", "--driver", test_driver_path, "--target",
             integration_tests_path + "breadcrumbs_test.dart", "-d", android_device
+}
+
+task runErrorReportingIntegrationTestAndroid(type: Exec) {
+    dependsOn startIntegrationTestServer
+    commandLine "flutter", "drive", "--driver", test_driver_path, "--target",
+            integration_tests_path + "error_reporting_test.dart", "-d", android_device
 }

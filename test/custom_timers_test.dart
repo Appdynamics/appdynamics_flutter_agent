@@ -5,7 +5,7 @@
  */
 
 import 'package:appdynamics_mobilesdk/appdynamics_mobilesdk.dart';
-import 'package:appdynamics_mobilesdk/src/agent-configuration.dart';
+import 'package:appdynamics_mobilesdk/src/agent_configuration.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -38,13 +38,14 @@ void main() {
     AgentConfiguration config = AgentConfiguration(appKey: appKey);
     await Instrumentation.start(config);
 
-    Instrumentation.startTimer("My timer");
-    Instrumentation.stopTimer("My timer");
+    final timerName = "My timer";
+    Instrumentation.startTimer(timerName);
+    Instrumentation.stopTimer(timerName);
 
     expect(log, hasLength(2));
     expect(log, <Matcher>[
-      isMethodCall('startTimer', arguments: "My timer"),
-      isMethodCall('stopTimer', arguments: "My timer"),
+      isMethodCall('startTimer', arguments: timerName),
+      isMethodCall('stopTimer', arguments: timerName),
     ]);
   });
 }

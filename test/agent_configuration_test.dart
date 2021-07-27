@@ -5,7 +5,7 @@
  */
 
 import 'package:appdynamics_mobilesdk/appdynamics_mobilesdk.dart';
-import 'package:appdynamics_mobilesdk/src/agent-configuration.dart';
+import 'package:appdynamics_mobilesdk/src/agent_configuration.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
