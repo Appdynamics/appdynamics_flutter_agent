@@ -29,6 +29,8 @@ enum ErrorSeverityLevel {
   CRITICAL,
 }
 
+const maxUserDataStringLength = 2048;
+
 /// Interact with the AppDynamics agent running in your application.
 ///
 /// This class provides a number of methods to interact with the AppDynamics
@@ -43,8 +45,8 @@ class Instrumentation {
   /// This has to be done near your application's entry point before any other
   /// initialization routines in your application.
   ///
-  /// Once initialized, further calls to {@link start} have no effect on the
-  /// agent.
+  /// Once initialized, further calls to [Instrumentation.start] have no effect
+  /// on the agent.
   ///
   /// ```dart
   /// try {
@@ -206,5 +208,181 @@ class Instrumentation {
       {ErrorSeverityLevel severityLevel = ErrorSeverityLevel.WARNING}) async {
     final arguments = {"message": message, "severity": severityLevel.index};
     await channel.invokeMethod<void>('reportError', arguments);
+  }
+
+  /// Sets a key-value pair identifier that will be included in all snapshots.
+  /// This identifier can be used to add the [string] types.
+  ///
+  /// The [key] must be unique across your application.
+  /// The [key] namespace is distinct for each user data type.
+  /// Re-using the same [key] overwrites the previous [value].
+  /// The [key] is limited to [maxUserDataStringLength] characters.
+  ///
+  /// A [value] of [null] will clear the data.
+  /// The [value] is also limited to [maxUserDataStringLength] characters.
+  ///
+  /// This information is not persisted across application runs.
+  /// Once the application is destroyed, user data is cleared.
+  ///
+  /// Data can be removed via [removeUserData].
+  static Future<void> setUserData(
+    String key,
+    String? value,
+  ) async {
+    if (value == null) {
+      removeUserData(key);
+      return;
+    }
+
+    final arguments = {"key": key, "value": value};
+    await channel.invokeMethod<void>('setUserData', arguments);
+  }
+
+  /// Removes the [string] corresponding to a [key] set with [setUserData].
+  static Future<void> removeUserData(
+    String key,
+  ) async {
+    await channel.invokeMethod<void>('removeUserData', key);
+  }
+
+  /// Sets a key-value pair identifier that will be included in all snapshots.
+  /// This identifier can be used to add the [double] types.
+  ///
+  /// The [key] must be unique across your application.
+  /// The [key] namespace is distinct for each user data type.
+  /// Re-using the same [key] overwrites the previous [value].
+  /// The [key] is limited to [maxUserDataStringLength] characters.
+  ///
+  /// A [value] of [null] will clear the data.
+  /// The [value] is also limited to [maxUserDataStringLength] characters.
+  ///
+  /// This information is not persisted across application runs.
+  /// Once the application is destroyed, user data is cleared.
+  ///
+  /// Data can be removed via [removeUserDataDouble].
+  static Future<void> setUserDataDouble(
+    String key,
+    double? value,
+  ) async {
+    if (value == null) {
+      removeUserDataDouble(key);
+      return;
+    }
+
+    final arguments = {"key": key, "value": value};
+    await channel.invokeMethod<void>('setUserDataDouble', arguments);
+  }
+
+  /// Removes the [double] corresponding to a [key] set with [setUserDataDouble].
+  static Future<void> removeUserDataDouble(
+    String key,
+  ) async {
+    await channel.invokeMethod<void>('removeUserDataDouble', key);
+  }
+
+  /// Sets a key-value pair identifier that will be included in all snapshots.
+  /// This identifier can be used to add the [int] types.
+  ///
+  /// The [key] must be unique across your application.
+  /// The [key] namespace is distinct for each user data type.
+  /// Re-using the same [key] overwrites the previous [value].
+  /// The [key] is limited to [maxUserDataStringLength] characters.
+  ///
+  /// A [value] of [null] will clear the data.
+  /// The [value] is also limited to [maxUserDataStringLength] characters.
+  ///
+  /// This information is not persisted across application runs.
+  /// Once the application is destroyed, user data is cleared.
+  ///
+  /// Data can be removed via [removeUserDataInt].
+  static Future<void> setUserDataInt(
+    String key,
+    int? value,
+  ) async {
+    if (value == null) {
+      removeUserDataInt(key);
+      return;
+    }
+
+    final arguments = {"key": key, "value": value};
+    await channel.invokeMethod<void>('setUserDataLong', arguments);
+  }
+
+  /// Removes the [int] corresponding to a [key] set with [setUserDataInt].
+  static Future<void> removeUserDataInt(
+    String key,
+  ) async {
+    await channel.invokeMethod<void>('removeUserDataLong', key);
+  }
+
+  /// Sets a key-value pair identifier that will be included in all snapshots.
+  /// This identifier can be used to add the [bool] types.
+  ///
+  /// The [key] must be unique across your application.
+  /// The [key] namespace is distinct for each user data type.
+  /// Re-using the same [key] overwrites the previous [value].
+  /// The [key] is limited to [maxUserDataStringLength] characters.
+  ///
+  /// A [value] of [null] will clear the data.
+  /// The [value] is also limited to [maxUserDataStringLength] characters.
+  ///
+  /// This information is not persisted across application run.
+  /// Once the application is destroyed, user data is cleared.
+  ///
+  /// Data can be removed via [removeUserDataBool].
+  static Future<void> setUserDataBool(
+    String key,
+    bool? value,
+  ) async {
+    if (value == null) {
+      removeUserDataBool(key);
+      return;
+    }
+
+    final arguments = {"key": key, "value": value};
+    await channel.invokeMethod<void>('setUserDataBoolean', arguments);
+  }
+
+  /// Removes the [bool] corresponding to a [key] set with [setUserDataBool].
+  static Future<void> removeUserDataBool(
+    String key,
+  ) async {
+    await channel.invokeMethod<void>('removeUserDataBoolean', key);
+  }
+
+  /// Sets a key-value pair identifier that will be included in all snapshots.
+  /// This identifier can be used to add the [DateTime] types.
+  ///
+  /// The [key] must be unique across your application.
+  /// The [key] namespace is distinct for each user data type.
+  /// Re-using the same [key] overwrites the previous [value].
+  /// The [key] is limited to [maxUserDataStringLength] characters.
+  ///
+  /// A [value] of [null] will clear the data.
+  /// The [value] is also limited to [maxUserDataStringLength] characters.
+  ///
+  /// This information is not persisted across application runs.
+  /// Once the application is destroyed, user data is cleared.
+  ///
+  /// Data can be removed via [removeUserDataDateTime].
+  static Future<void> setUserDataDateTime(
+    String key,
+    DateTime? value,
+  ) async {
+    if (value == null) {
+      removeUserDataDateTime(key);
+      return;
+    }
+
+    final arguments = {"key": key, "value": value.toIso8601String()};
+    await channel.invokeMethod<void>('setUserDataDate', arguments);
+  }
+
+  /// Removes the [DateTime] corresponding to a [key] set with
+  /// [setUserDataDateTime].
+  static Future<void> removeUserDataDateTime(
+    String key,
+  ) async {
+    await channel.invokeMethod<void>('removeUserDataDate', key);
   }
 }

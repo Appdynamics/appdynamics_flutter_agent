@@ -9,7 +9,6 @@ public class SwiftAppDynamicsMobileSdkPlugin: NSObject, FlutterPlugin {
         let instance = SwiftAppDynamicsMobileSdkPlugin()
         registrar.addMethodCallDelegate(instance, channel: channel)
     }
-    
 
     public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
         typealias AdeumMethod = (@escaping FlutterResult, Any?) -> ()
@@ -33,7 +32,19 @@ public class SwiftAppDynamicsMobileSdkPlugin: NSObject, FlutterPlugin {
             "leaveBreadcrumb": leaveBreadcrumb,
             
             // Report error
-            "reportError": reportError
+            "reportError": reportError,
+            
+            // User data
+            "setUserData": setUserData,
+            "setUserDataDouble": setUserDataDouble,
+            "setUserDataLong": setUserDataLong,
+            "setUserDataBoolean": setUserDataBoolean,
+            "setUserDataDate": setUserDataDate,
+            "removeUserData": removeUserData,
+            "removeUserDataDouble": removeUserDataDouble,
+            "removeUserDataLong": removeUserDataLong,
+            "removeUserDataBoolean": removeUserDataBoolean,
+            "removeUserDataDate": removeUserDataDate
         ]
         
         if let method = methods[call.method] {

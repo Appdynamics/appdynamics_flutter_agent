@@ -18,6 +18,8 @@ import Flutter
             switch call.method {
             case "sleep":
                 sleep(result: result, arguments: call.arguments)
+            case "crash":
+                crash(result: result, arguments: call.arguments)
             default:
                 result(FlutterMethodNotImplemented)
             }
@@ -33,6 +35,9 @@ public func sleep(result: @escaping FlutterResult, arguments: Any?) {
     let seconds = arguments as? Double
     let interval = TimeInterval(seconds ?? 1)
     Thread.sleep(forTimeInterval: interval)
-    
     result(nil)
+}
+
+public func crash(result: @escaping FlutterResult, arguments: Any?) {
+   fatalError()
 }

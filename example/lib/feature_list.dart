@@ -7,6 +7,7 @@
 import 'package:appdynamics_mobilesdk_example/features/breadcrumbs.dart';
 import 'package:appdynamics_mobilesdk_example/features/custom_timers.dart';
 import 'package:appdynamics_mobilesdk_example/features/manual_network_requests.dart';
+import 'package:appdynamics_mobilesdk_example/features/user_data.dart';
 import 'package:appdynamics_mobilesdk_example/utils/flush_beacons_app_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -60,6 +61,7 @@ class FeatureList extends StatelessWidget {
               _createSizedButton(context, "Custom timers", CustomTimers()),
               _createSizedButton(context, "Breadcrumbs", Breadcrumbs()),
               _createSizedButton(context, "Error reporting", ErrorReporting()),
+              _createSizedButton(context, "User data", UserData()),
             ],
           ),
         ),

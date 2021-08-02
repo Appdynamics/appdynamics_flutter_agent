@@ -2,6 +2,8 @@ package com.appdynamics.appdynamics_mobilesdk
 
 import androidx.annotation.NonNull
 import com.appdynamics.appdynamics_mobilesdk.features.*
+import com.appdynamics.appdynamics_mobilesdk.features.user_data.removeUserDataDate
+import com.appdynamics.appdynamics_mobilesdk.features.user_data.setUserDataDate
 import com.appdynamics.eumagent.runtime.HttpRequestTracker
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.plugin.common.MethodCall
@@ -50,7 +52,19 @@ open class AppDynamicsMobileSdkPlugin : FlutterPlugin, MethodCallHandler {
             "leaveBreadcrumb" to ::leaveBreadcrumb,
 
             // Report error
-            "reportError" to ::reportError
+            "reportError" to ::reportError,
+
+            // User data
+            "setUserData" to ::setUserData,
+            "setUserDataBoolean" to ::setUserDataBoolean,
+            "setUserDataLong" to ::setUserDataLong,
+            "setUserDataDouble" to ::setUserDataDouble,
+            "setUserDataDate" to ::setUserDataDate,
+            "removeUserData" to ::removeUserData,
+            "removeUserDataBoolean" to ::removeUserDataBoolean,
+            "removeUserDataLong" to ::removeUserDataLong,
+            "removeUserDataDouble" to ::removeUserDataDouble,
+            "removeUserDataDate" to ::removeUserDataDate
         )
 
         methods[call.method]?.let { method ->

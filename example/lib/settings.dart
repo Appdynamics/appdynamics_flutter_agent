@@ -29,7 +29,7 @@ class Settings extends StatefulWidget {
 }
 
 class _SettingsState extends State<Settings> {
-  static final _appKey = "SM-ADY-BDT";
+  static final _appKey = "SH-AAB-AAE-ESS";
   static final _defaultCollectorTextFieldText =
       "${CollectorURLs.keys.elementAt(0)} '${CollectorURLs.values.elementAt(0)}'";
   var _collectorURLFieldController =
