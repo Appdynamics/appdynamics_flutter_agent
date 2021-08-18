@@ -14,6 +14,7 @@ import 'package:flutter/material.dart';
 
 import 'features/ANR.dart';
 import 'features/error_reporting.dart';
+import 'features/session_frames.dart';
 
 class FeatureList extends StatelessWidget {
   String _convertSentenceToCamelCase(String text) {
@@ -62,6 +63,7 @@ class FeatureList extends StatelessWidget {
               _createSizedButton(context, "Breadcrumbs", Breadcrumbs()),
               _createSizedButton(context, "Error reporting", ErrorReporting()),
               _createSizedButton(context, "User data", UserData()),
+              _createSizedButton(context, "Session frames", SessionFrames()),
             ],
           ),
         ),

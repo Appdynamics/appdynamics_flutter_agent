@@ -7,3 +7,4 @@
 export 'src/agent_configuration.dart';
 export 'src/instrumentation.dart';
 export 'src/request_tracker.dart';
+export 'src/session_frame.dart' hide createSessionFrame;

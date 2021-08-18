@@ -5,6 +5,7 @@ import com.appdynamics.appdynamics_mobilesdk.features.*
 import com.appdynamics.appdynamics_mobilesdk.features.user_data.removeUserDataDate
 import com.appdynamics.appdynamics_mobilesdk.features.user_data.setUserDataDate
 import com.appdynamics.eumagent.runtime.HttpRequestTracker
+import com.appdynamics.eumagent.runtime.SessionFrame
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
@@ -20,6 +21,7 @@ open class AppDynamicsMobileSdkPlugin : FlutterPlugin, MethodCallHandler {
     private lateinit var channel: MethodChannel
     internal lateinit var context: android.content.Context
     internal var customRequestTracker: HttpRequestTracker? = null
+    internal var sessionFrames: MutableMap<String, SessionFrame> = mutableMapOf();
 
     override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
         context = flutterPluginBinding.applicationContext
@@ -64,7 +66,12 @@ open class AppDynamicsMobileSdkPlugin : FlutterPlugin, MethodCallHandler {
             "removeUserDataBoolean" to ::removeUserDataBoolean,
             "removeUserDataLong" to ::removeUserDataLong,
             "removeUserDataDouble" to ::removeUserDataDouble,
-            "removeUserDataDate" to ::removeUserDataDate
+            "removeUserDataDate" to ::removeUserDataDate,
+
+            // Session frames
+            "startSessionFrame" to ::startSessionFrame,
+            "updateSessionFrameName" to ::updateSessionFrameName,
+            "endSessionFrame" to ::endSessionFrame
         )
 
         methods[call.method]?.let { method ->

@@ -31,6 +31,7 @@ task runIntegrationTestsiOS {
     dependsOn runCustomTimersIntegrationTestiOS
     dependsOn runBreadcrumbsIntegrationTestiOS
     dependsOn runErrorReportingIntegrationTestiOS
+    dependsOn runSessionFramesIntegrationTestiOS
 }
 
 task runIntegrationTestsAndroid {
@@ -39,7 +40,7 @@ task runIntegrationTestsAndroid {
     dependsOn runCustomTimersIntegrationTestAndroid
     dependsOn runBreadcrumbsIntegrationTestAndroid
     dependsOn runErrorReportingIntegrationTestAndroid
-
+    dependsOn runSessionFramesIntegrationTestAndroid
 }
 
 task installPods(type: Exec) {

@@ -8,6 +8,7 @@
 // https://github.com/dart-lang/language/issues/723
 
 import 'package:appdynamics_mobilesdk/src/agent_configuration.dart';
+import 'package:appdynamics_mobilesdk/src/session_frame.dart';
 import 'package:flutter/services.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
@@ -384,5 +385,68 @@ class Instrumentation {
     String key,
   ) async {
     await channel.invokeMethod<void>('removeUserDataDate', key);
+  }
+
+  /// Starts and returns a [SessionFrame] object.
+  ///
+  /// You can use the Session Frame API to create session frames that will
+  /// appear in the session activity. Session frames provide context for what
+  /// the user is doing during a session. With this API, you can improve the
+  /// names of user screens and chronicle user flows within a business context.
+  ///
+  /// The following are common use cases for the SessionFrame API:
+  ///
+  /// * One screen performs multiple functions and you want more granular
+  ///  tracking of the individual functions.
+  /// * A user flow spans multiple screens or user interactions.
+  ///  For example, you could use the API to create the session frames
+  ///  "Login", "Product Selection", and "Purchase" to follow the user's flow
+  ///  for purchases.
+  /// * You want to capture dynamic information based on user interactions to
+  /// name session frames, such as an order ID.
+  ///
+  /// Example:
+  ///
+  /// ```dart
+  /// import '../appdynamics_mobilesdk.dart';
+  ///
+  /// class ShoppingCart {
+  ///   late SessionFrame _sessionFrame;
+  ///   late String _orderId;
+  ///
+  /// void onCheckoutCartButtonClick() async {
+  ///   // The checkout starts when the user clicks the checkout button.
+  ///   // This may be after they have updated quantities of items in their
+  ///   // cart, etc.
+  ///   _sessionFrame = await Instrumentation.startSessionFrame("Checkout");
+  /// }
+  ///
+  /// void onConfirmOrderButtonClick() {
+  ///   // Once they have confirmed payment info and shipping information,
+  ///   // and they are clicking the "Confirm" button to start the backend
+  ///   // process of checking out, we may know more information about the
+  ///   // order itself, such as an order ID.
+  ///   _sessionFrame.updateName("Checkout: Order ID {this.orderId}");
+  /// }
+  ///
+  /// void onProcessOrderComplete() {
+  ///   // Once the order is processed, the user is done "checking out" so we end
+  ///   // the session frame.
+  ///   _sessionFrame.end();
+  /// }
+  ///
+  /// void onCheckoutCancel() {
+  ///   // If they cancel or go back, you'll want to end the session frame also, or
+  ///   // else it will be left open and appear to have never ended.
+  ///   _sessionFrame.end();
+  /// }
+  /// ```
+  static Future<SessionFrame> startSessionFrame(
+    String sessionFrameName,
+  ) async {
+    final sessionFrame = createSessionFrame();
+    final arguments = {"name": sessionFrameName, "id": sessionFrame.id};
+    await channel.invokeMethod<void>('startSessionFrame', arguments);
+    return sessionFrame;
   }
 }

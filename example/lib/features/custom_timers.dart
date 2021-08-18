@@ -9,12 +9,7 @@ import 'package:appdynamics_mobilesdk_example/utils/flush_beacons_app_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class CustomTimers extends StatefulWidget {
-  @override
-  _CustomTimersState createState() => _CustomTimersState();
-}
-
-class _CustomTimersState extends State<CustomTimers> {
+class CustomTimers extends StatelessWidget {
   Future<void> _startTimerPressed() async {
     await Instrumentation.startTimer("My timer");
   }

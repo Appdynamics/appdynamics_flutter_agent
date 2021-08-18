@@ -29,6 +29,8 @@ Future<List<Map<String, dynamic>>> findRequestsBy({
   String? javaThrowable,
   String? nsError,
   String? userInfo,
+  String? sessionFrameName,
+  String? sessionFrameUuid,
   String? $is, // "$" -> reserved keyword workaround
 }) async {
   final response = await http.get(Uri.parse(serverRequestsUrl));
@@ -48,7 +50,9 @@ Future<List<Map<String, dynamic>>> findRequestsBy({
     sev: "sev",
     javaThrowable: "javaThrowable",
     nsError: "nsError",
-    userInfo: "userInfo"
+    userInfo: "userInfo",
+    sessionFrameName: "sessionFrameName",
+    sessionFrameUuid: "sessionFrameUuid"
   };
 
   final requests = jsonRequests.where((request) {

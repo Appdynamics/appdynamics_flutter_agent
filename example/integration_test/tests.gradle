@@ -8,7 +8,7 @@
 // WARNING: Possible gradle duplicate task error if creating shared gradle file.
 
 // Configure these based on your system's emulator/simulator names.
-def android_device = "sdk gphone x86 arm"
+def android_device = "Android SDK built for x86 64"
 def iOS_device = "iPhone 12"
 
 def test_driver_path = "test_driver/integration_test.dart"
@@ -61,6 +61,12 @@ task runErrorReportingIntegrationTestiOS(type: Exec) {
             integration_tests_path + "error_reporting_test.dart", "-d", iOS_device
 }
 
+task runSessionFramesIntegrationTestiOS(type: Exec) {
+    dependsOn startIntegrationTestServer
+    commandLine "flutter", "drive", "--driver", test_driver_path, "--target",
+            integration_tests_path + "session_frames_test.dart", "-d", iOS_device
+}
+
 // Android tests
 
 task runStartIntegrationTestAndroid(type: Exec) {
@@ -91,4 +97,10 @@ task runErrorReportingIntegrationTestAndroid(type: Exec) {
     dependsOn startIntegrationTestServer
     commandLine "flutter", "drive", "--driver", test_driver_path, "--target",
             integration_tests_path + "error_reporting_test.dart", "-d", android_device
+}
+
+task runSessionFramesIntegrationTestAndroid(type: Exec) {
+    dependsOn startIntegrationTestServer
+    commandLine "flutter", "drive", "--driver", test_driver_path, "--target",
+            integration_tests_path + "session_frames_test.dart", "-d", android_device
 }

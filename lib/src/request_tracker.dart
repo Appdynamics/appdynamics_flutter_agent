@@ -30,7 +30,7 @@ import 'package:appdynamics_mobilesdk/src/globals.dart';
 /// ```
 ///
 class RequestTracker {
-  RequestTracker._() {}
+  RequestTracker._();
 
   /// Create a [RequestTracker] to be configured for manually tracking an HTTP
   /// request to track it manually, with a non-null [url] and after having

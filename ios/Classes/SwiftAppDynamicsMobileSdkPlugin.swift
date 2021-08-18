@@ -3,7 +3,8 @@ import Flutter
 
 public class SwiftAppDynamicsMobileSdkPlugin: NSObject, FlutterPlugin {
     var customRequestTracker: ADEumHTTPRequestTracker?
-    
+    var sessionFrames: [String: ADEumSessionFrame] = [:]
+
     public static func register(with registrar: FlutterPluginRegistrar) {
         let channel = FlutterMethodChannel(name: "appdynamics_mobilesdk", binaryMessenger: registrar.messenger())
         let instance = SwiftAppDynamicsMobileSdkPlugin()
@@ -44,7 +45,12 @@ public class SwiftAppDynamicsMobileSdkPlugin: NSObject, FlutterPlugin {
             "removeUserDataDouble": removeUserDataDouble,
             "removeUserDataLong": removeUserDataLong,
             "removeUserDataBoolean": removeUserDataBoolean,
-            "removeUserDataDate": removeUserDataDate
+            "removeUserDataDate": removeUserDataDate,
+            
+            // Session frames
+            "startSessionFrame": startSessionFrame,
+            "updateSessionFrameName": updateSessionFrameName,
+            "endSessionFrame": endSessionFrame
         ]
         
         if let method = methods[call.method] {
