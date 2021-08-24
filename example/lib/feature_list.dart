@@ -13,6 +13,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'features/ANR.dart';
+import 'features/custom_metrics.dart';
 import 'features/error_reporting.dart';
 import 'features/session_frames.dart';
 
@@ -54,17 +55,21 @@ class FeatureList extends StatelessWidget {
       body: Center(
         child: Padding(
           padding: EdgeInsets.fromLTRB(50, 10, 50, 10),
-          child: Column(
-            children: [
-              _createSizedButton(context, "ANR", ANR()),
-              _createSizedButton(
-                  context, "Manual network requests", ManualNetworkRequests()),
-              _createSizedButton(context, "Custom timers", CustomTimers()),
-              _createSizedButton(context, "Breadcrumbs", Breadcrumbs()),
-              _createSizedButton(context, "Error reporting", ErrorReporting()),
-              _createSizedButton(context, "User data", UserData()),
-              _createSizedButton(context, "Session frames", SessionFrames()),
-            ],
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                _createSizedButton(context, "ANR", ANR()),
+                _createSizedButton(context, "Manual network requests",
+                    ManualNetworkRequests()),
+                _createSizedButton(context, "Custom timers", CustomTimers()),
+                _createSizedButton(context, "Breadcrumbs", Breadcrumbs()),
+                _createSizedButton(
+                    context, "Error reporting", ErrorReporting()),
+                _createSizedButton(context, "User data", UserData()),
+                _createSizedButton(context, "Session frames", SessionFrames()),
+                _createSizedButton(context, "Custom metrics", CustomMetrics()),
+              ],
+            ),
           ),
         ),
       ),

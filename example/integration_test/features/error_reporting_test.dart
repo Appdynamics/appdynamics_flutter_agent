@@ -25,6 +25,7 @@ void main() {
     await jumpStartInstrumentation(tester);
 
     final errorReportingButton = find.byKey(Key("errorReportingButton"));
+    await tester.scrollUntilVisible(errorReportingButton, 10);
     expect(errorReportingButton, findsOneWidget);
 
     await tester.tap(errorReportingButton);

@@ -27,6 +27,7 @@ void main() {
     await jumpStartInstrumentation(tester);
 
     final sessionFramesButton = find.byKey(Key("sessionFramesButton"));
+    await tester.scrollUntilVisible(sessionFramesButton, 10);
     expect(sessionFramesButton, findsOneWidget);
 
     await tester.tap(sessionFramesButton);

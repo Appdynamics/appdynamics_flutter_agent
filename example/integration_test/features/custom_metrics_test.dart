@@ -19,33 +19,33 @@ void main() {
 
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  testWidgets("Check crash and session breadcrumbs are properly reported",
+  testWidgets("Check custom metrics are properly reported",
       (WidgetTester tester) async {
+    final customMetricName = "myCustomMetric";
+    final customMetricValue = "123";
+
     await jumpStartInstrumentation(tester);
 
-    final breadcrumbsButton = find.byKey(Key("breadcrumbsButton"));
-    await tester.scrollUntilVisible(breadcrumbsButton, 10);
-    expect(breadcrumbsButton, findsOneWidget);
+    final customMetricsButton = find.byKey(Key("customMetricsButton"));
+    await tester.scrollUntilVisible(customMetricsButton, 10);
+    expect(customMetricsButton, findsOneWidget);
 
-    await tester.tap(breadcrumbsButton);
+    await tester.tap(customMetricsButton);
     await tester.pumpAndSettle();
 
-    final leaveBreadcrumbCrashAndSessionButton =
-        find.byKey(Key("leaveBreadcrumbCrashAndSessionButton"));
-    expect(leaveBreadcrumbCrashAndSessionButton, findsOneWidget);
+    final reportMetricButton = find.byKey(Key("reportMetricButton"));
+    expect(reportMetricButton, findsOneWidget);
 
-    await tester.tap(leaveBreadcrumbCrashAndSessionButton);
-    await tester.pumpAndSettle();
-
+    await tester.tap(reportMetricButton);
     await flushBeacons();
     await tester.pumpAndSettle(Duration(seconds: 2));
 
     final requests = await findRequestsBy(
-        text: "A crash and session breadcrumb.", type: "breadcrumb");
+        type: "custom-metric-event",
+        metricName: customMetricName,
+        metricValue: customMetricValue);
     expect(requests.length, 1);
   });
-
-  // TODO: Add Check Crash Only breadcrumbs when crash reporting is implemented
 
   tearDown(() async {
     await clearServer();

@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		61B4CD964CB704C0BC1422F8 /* libPods-appdynamics_mobilesdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BE156DF76BB66707D01AF24F /* libPods-appdynamics_mobilesdk.a */; };
 		961A30F226CA5450001241E5 /* SessionFrames.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961A30F126CA5450001241E5 /* SessionFrames.swift */; };
+		961A30F426CB9E90001241E5 /* CustomMetrics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961A30F326CB9E90001241E5 /* CustomMetrics.swift */; };
 		9635068226A5E144003713FD /* ManualRequestTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9635067F26A5E144003713FD /* ManualRequestTracker.swift */; };
 		9635068326A5E144003713FD /* CustomTimers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9635068026A5E144003713FD /* CustomTimers.swift */; };
 		9635068426A5E144003713FD /* AgentStart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9635068126A5E144003713FD /* AgentStart.swift */; };
@@ -26,6 +27,7 @@
 
 /* Begin PBXFileReference section */
 		961A30F126CA5450001241E5 /* SessionFrames.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionFrames.swift; sourceTree = "<group>"; };
+		961A30F326CB9E90001241E5 /* CustomMetrics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomMetrics.swift; sourceTree = "<group>"; };
 		9635067F26A5E144003713FD /* ManualRequestTracker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManualRequestTracker.swift; sourceTree = "<group>"; };
 		9635068026A5E144003713FD /* CustomTimers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTimers.swift; sourceTree = "<group>"; };
 		9635068126A5E144003713FD /* AgentStart.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AgentStart.swift; sourceTree = "<group>"; };
@@ -76,6 +78,7 @@
 				9635068526A5E153003713FD /* Breadcrumbs.swift */,
 				9635068E26A7FF41003713FD /* ErrorReporting.swift */,
 				961A30F126CA5450001241E5 /* SessionFrames.swift */,
+				961A30F326CB9E90001241E5 /* CustomMetrics.swift */,
 			);
 			name = Features;
 			path = Classes/Features;
@@ -237,6 +240,7 @@
 			files = (
 				961A30F226CA5450001241E5 /* SessionFrames.swift in Sources */,
 				9635068326A5E144003713FD /* CustomTimers.swift in Sources */,
+				961A30F426CB9E90001241E5 /* CustomMetrics.swift in Sources */,
 				9635068226A5E144003713FD /* ManualRequestTracker.swift in Sources */,
 				96B99D2926AF061100014CA0 /* UserData.swift in Sources */,
 				96B99D3226AF112200014CA0 /* UserDataBoolean.swift in Sources */,

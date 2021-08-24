@@ -67,6 +67,12 @@ task runSessionFramesIntegrationTestiOS(type: Exec) {
             integration_tests_path + "session_frames_test.dart", "-d", iOS_device
 }
 
+task runCustomMetricsIntegrationTestiOS(type: Exec) {
+    dependsOn startIntegrationTestServer
+    commandLine "flutter", "drive", "--driver", test_driver_path, "--target",
+            integration_tests_path + "custom_metrics_test.dart", "-d", iOS_device
+}
+
 // Android tests
 
 task runStartIntegrationTestAndroid(type: Exec) {
@@ -103,4 +109,10 @@ task runSessionFramesIntegrationTestAndroid(type: Exec) {
     dependsOn startIntegrationTestServer
     commandLine "flutter", "drive", "--driver", test_driver_path, "--target",
             integration_tests_path + "session_frames_test.dart", "-d", android_device
+}
+
+task runCustomMetricsIntegrationTestAndroid(type: Exec) {
+    dependsOn startIntegrationTestServer
+    commandLine "flutter", "drive", "--driver", test_driver_path, "--target",
+            integration_tests_path + "custom_metrics_test.dart", "-d", android_device
 }

@@ -25,6 +25,7 @@ void main() {
 
     final manualNetworkRequestsButton =
         find.byKey(Key("manualNetworkRequestsButton"));
+    await tester.scrollUntilVisible(manualNetworkRequestsButton, 10);
     expect(manualNetworkRequestsButton, findsOneWidget);
 
     await tester.tap(manualNetworkRequestsButton);

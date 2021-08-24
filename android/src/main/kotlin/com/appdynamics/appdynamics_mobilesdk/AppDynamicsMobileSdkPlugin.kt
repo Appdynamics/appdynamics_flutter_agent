@@ -2,8 +2,7 @@ package com.appdynamics.appdynamics_mobilesdk
 
 import androidx.annotation.NonNull
 import com.appdynamics.appdynamics_mobilesdk.features.*
-import com.appdynamics.appdynamics_mobilesdk.features.user_data.removeUserDataDate
-import com.appdynamics.appdynamics_mobilesdk.features.user_data.setUserDataDate
+import com.appdynamics.appdynamics_mobilesdk.features.user_data.*
 import com.appdynamics.eumagent.runtime.HttpRequestTracker
 import com.appdynamics.eumagent.runtime.SessionFrame
 import io.flutter.embedding.engine.plugins.FlutterPlugin
@@ -21,7 +20,7 @@ open class AppDynamicsMobileSdkPlugin : FlutterPlugin, MethodCallHandler {
     private lateinit var channel: MethodChannel
     internal lateinit var context: android.content.Context
     internal var customRequestTracker: HttpRequestTracker? = null
-    internal var sessionFrames: MutableMap<String, SessionFrame> = mutableMapOf();
+    internal var sessionFrames: MutableMap<String, SessionFrame> = mutableMapOf()
 
     override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
         context = flutterPluginBinding.applicationContext
@@ -55,6 +54,9 @@ open class AppDynamicsMobileSdkPlugin : FlutterPlugin, MethodCallHandler {
 
             // Report error
             "reportError" to ::reportError,
+
+            // Report metric
+            "reportMetric" to ::reportMetric,
 
             // User data
             "setUserData" to ::setUserData,

@@ -4,13 +4,12 @@
  *
  */
 
-package com.appdynamics.appdynamics_mobilesdk.features
+package com.appdynamics.appdynamics_mobilesdk.features.user_data
 
 import androidx.annotation.NonNull
 import com.appdynamics.appdynamics_mobilesdk.AppDynamicsMobileSdkPlugin
 import com.appdynamics.eumagent.runtime.Instrumentation
 import io.flutter.plugin.common.MethodChannel
-import java.text.SimpleDateFormat
 import java.util.*
 
 fun AppDynamicsMobileSdkPlugin.setUserData(
@@ -37,7 +36,7 @@ fun AppDynamicsMobileSdkPlugin.setUserData(
         return
     }
 
-    Instrumentation.setUserData(key, value);
+    Instrumentation.setUserData(key, value)
     result.success(null)
 }
 
@@ -55,6 +54,6 @@ fun AppDynamicsMobileSdkPlugin.removeUserData(
         return
     }
 
-    Instrumentation.setUserData(key, null);
+    Instrumentation.setUserData(key, null)
     result.success(null)
 }

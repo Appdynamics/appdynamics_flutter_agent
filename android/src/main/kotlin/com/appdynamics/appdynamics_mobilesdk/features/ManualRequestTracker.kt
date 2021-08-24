@@ -160,7 +160,6 @@ fun AppDynamicsMobileSdkPlugin.requestTrackerReport(
     result.success(null)
 }
 
-
 fun AppDynamicsMobileSdkPlugin.getServerCorrelationHeaders(
     @NonNull result: MethodChannel.Result,
     arguments: Any?

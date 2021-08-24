@@ -38,7 +38,7 @@ const maxUserDataStringLength = 2048;
 /// agent including:
 ///
 /// - Initializing the agent with the right application key.
-/// - Reporting timers, errors.
+/// - Reporting timers, errors, session frames, custom metrics.
 class Instrumentation {
   /// Initializing the agent
   /// The agent does not automatically start with your application. Using the
@@ -448,5 +448,46 @@ class Instrumentation {
     final arguments = {"name": sessionFrameName, "id": sessionFrame.id};
     await channel.invokeMethod<void>('startSessionFrame', arguments);
     return sessionFrame;
+  }
+
+  /// Custom metrics allows you to report numeric values associated with a
+  /// metric [name]. For example, to track the number of times your users
+  /// clicked the *checkout* button.
+  ///
+  /// [name] should contain only alphanumeric characters and spaces.
+  /// Illegal characters shall be replaced by their ASCII hex value.
+  ///
+  /// Example:
+  ///
+  /// ```dart
+  /// import 'package:appdynamics_mobilesdk/appdynamics_mobilesdk.dart';
+  /// import 'package:flutter/cupertino.dart';
+  /// import 'package:flutter/material.dart';
+  ///
+  /// class App extends StatelessWidget {
+  ///   _finishCheckout() {
+  ///     Instrumentation.reportMetric(name: "Checkout Count", value: 1);
+  ///     // ...rest of the checkout logic
+  ///   }
+  ///
+  ///   @override
+  ///   Widget build(BuildContext context) {
+  ///     return Scaffold(
+  ///       appBar: AppBar(title: Text("Checkout screen")),
+  ///       body: Center(
+  ///         child:
+  ///             ElevatedButton(
+  ///               child: Text('Checkout'),
+  ///               onPressed: _finishCheckout,
+  ///             )
+  ///     ));
+  /// }
+  /// ```
+  static Future<void> reportMetric({
+    required String name,
+    required int value,
+  }) async {
+    final arguments = {"name": name, "value": value};
+    await channel.invokeMethod<void>('reportMetric', arguments);
   }
 }

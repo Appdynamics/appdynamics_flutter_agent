@@ -24,6 +24,7 @@ void main() {
     await jumpStartInstrumentation(tester);
 
     final customTimersButton = find.byKey(Key("customTimersButton"));
+    await tester.scrollUntilVisible(customTimersButton, 10);
     expect(customTimersButton, findsOneWidget);
 
     await tester.tap(customTimersButton);

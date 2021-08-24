@@ -4,12 +4,13 @@
  *
  */
 
-package com.appdynamics.appdynamics_mobilesdk.features
+package com.appdynamics.appdynamics_mobilesdk.features.user_data
 
 import androidx.annotation.NonNull
 import com.appdynamics.appdynamics_mobilesdk.AppDynamicsMobileSdkPlugin
 import com.appdynamics.eumagent.runtime.Instrumentation
 import io.flutter.plugin.common.MethodChannel
+import java.lang.Exception
 import java.util.*
 
 fun AppDynamicsMobileSdkPlugin.setUserDataLong(
@@ -27,17 +28,17 @@ fun AppDynamicsMobileSdkPlugin.setUserDataLong(
         return
     }
 
-    val value = properties["value"].toString().toLong() ?: run {
+    try {
+        val value = properties["value"].toString().toLong()
+        Instrumentation.setUserDataLong(key, value)
+        result.success(null)
+    } catch (e: Exception) {
         result.error(
             "500",
             "Agent setUserDataLong() failed.",
-            "Please provide a valid long for `value`."
+            e.message
         )
-        return
     }
-
-    Instrumentation.setUserDataLong(key, value);
-    result.success(null)
 }
 
 
@@ -54,6 +55,6 @@ fun AppDynamicsMobileSdkPlugin.removeUserDataLong(
         return
     }
 
-    Instrumentation.setUserDataLong(key, null);
+    Instrumentation.setUserDataLong(key, null)
     result.success(null)
 }

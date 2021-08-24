@@ -4,7 +4,7 @@
  *
  */
 
-package com.appdynamics.appdynamics_mobilesdk.features
+package com.appdynamics.appdynamics_mobilesdk.features.user_data
 
 import androidx.annotation.NonNull
 import com.appdynamics.appdynamics_mobilesdk.AppDynamicsMobileSdkPlugin
@@ -36,7 +36,7 @@ fun AppDynamicsMobileSdkPlugin.setUserDataBoolean(
         return
     }
 
-    Instrumentation.setUserDataBoolean(key, value);
+    Instrumentation.setUserDataBoolean(key, value)
     result.success(null)
 }
 
@@ -54,6 +54,6 @@ fun AppDynamicsMobileSdkPlugin.removeUserDataBoolean(
         return
     }
 
-    Instrumentation.setUserDataBoolean(key, null);
+    Instrumentation.setUserDataBoolean(key, null)
     result.success(null)
 }

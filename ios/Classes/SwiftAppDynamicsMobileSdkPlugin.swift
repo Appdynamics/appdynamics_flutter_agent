@@ -35,6 +35,9 @@ public class SwiftAppDynamicsMobileSdkPlugin: NSObject, FlutterPlugin {
             // Report error
             "reportError": reportError,
             
+            // Report metric
+            "reportMetric": reportMetric,
+            
             // User data
             "setUserData": setUserData,
             "setUserDataDouble": setUserDataDouble,

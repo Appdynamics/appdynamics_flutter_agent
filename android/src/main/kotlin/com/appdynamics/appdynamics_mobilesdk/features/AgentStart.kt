@@ -39,7 +39,7 @@ fun AppDynamicsMobileSdkPlugin.start(@NonNull result: MethodChannel.Result, argu
         }
 
         builder.withApplicationName("com.appdynamics.FlutterEveryfeatureAndroid")
-            .withContext(context);
+            .withContext(context)
         Instrumentation.startFromHybrid(builder.build(), agentName, agentVersion)
 
         result.success(null)
