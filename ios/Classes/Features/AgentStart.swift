@@ -32,11 +32,18 @@ extension SwiftAppDynamicsMobileSdkPlugin {
             configuration.collectorURL = collectorURL
         }
         
-        configuration.screenshotsEnabled = false
+        if let screenshotURL = properties["screenshotURL"] as? String {
+            configuration.screenshotURL = screenshotURL
+        }
+        
+        if let screenshotsEnabled = properties["screenshotsEnabled"] as? Bool {
+            configuration.screenshotsEnabled = screenshotsEnabled
+        }
+        
+        configuration.enableAutoInstrument = false
         configuration.applicationName = "com.appdynamics.FlutterEveryfeatureiOS"
         ADEumInstrumentation.initWith(configuration)
         
         result(nil)
     }
-    
 }

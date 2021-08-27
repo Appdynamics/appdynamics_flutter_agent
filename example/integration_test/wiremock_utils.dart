@@ -31,6 +31,7 @@ Future<List<Map<String, dynamic>>> findRequestsBy({
   String? userInfo,
   String? sessionFrameName,
   String? sessionFrameUuid,
+  String? tiles,
   String? metricName,
   String? metricValue,
   String? $is, // "$" -> reserved keyword workaround
@@ -55,12 +56,17 @@ Future<List<Map<String, dynamic>>> findRequestsBy({
     userInfo: "userInfo",
     sessionFrameName: "sessionFrameName",
     sessionFrameUuid: "sessionFrameUuid",
+    tiles: "tiles",
     metricName: "metricName",
     metricValue: "val",
   };
 
   final requests = jsonRequests.where((request) {
     final body = getBeaconRequestBody(request);
+
+    if (body == null) {
+      return false;
+    }
 
     // checks if non-null parameters match the ones from the request.
     final bool results = requestParameterMapping.entries

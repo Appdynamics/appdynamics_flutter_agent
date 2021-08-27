@@ -4,4 +4,4 @@
 # All rights reserved.
 #
 #
-cd ios; pod install;
+cd ios; pod install --repo-update;

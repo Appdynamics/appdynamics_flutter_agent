@@ -70,6 +70,8 @@ class Instrumentation {
         "appKey": config.appKey,
         "loggingLevel": config.loggingLevel.index,
         "collectorURL": config.collectorURL,
+        "screenshotURL": config.screenshotURL,
+        "screenshotsEnabled": config.screenshotsEnabled,
         "anrDetectionEnabled":
             true, // hardcoded until it's implemented on Android agent too
         "anrStackTraceEnabled":
@@ -448,6 +450,69 @@ class Instrumentation {
     final arguments = {"name": sessionFrameName, "id": sessionFrame.id};
     await channel.invokeMethod<void>('startSessionFrame', arguments);
     return sessionFrame;
+  }
+
+  /// Unblocks screenshot capture if it is currently blocked, otherwise this has
+  /// no effect. Returns a [Future] which resolves when screenshots are
+  /// effectively unblocked.
+  ///
+  /// If screenshots are disabled through
+  /// [AgentConfiguration.screenshotsEnabled] or through the controller UI, this
+  /// method has no effect.
+  ///
+  /// If screenshots are set to manual mode in the controller UI, this method
+  /// unblocks for manual mode only.
+  ///
+  /// **WARNING:** This will unblock capture for the entire app.
+  ///
+  /// The user is expected to manage any possible nesting issues that may occur
+  /// if blocking and unblocking occur in different code paths.
+  ///
+  /// See [Instrumentation.blockScreenshots()]
+  static Future<void> unblockScreenshots() async {
+    await channel.invokeMethod<void>('unblockScreenshots');
+  }
+
+  /// Blocks screenshot capture if it is currently unblocked, otherwise this
+  /// has no effect. Returns a [Future] which resolves when screenshots are
+  /// effectively blocked.
+  ///
+  /// If screenshots are disabled through
+  /// [AgentConfiguration.screenshotsEnabled] or through the controller UI, this
+  /// method has no effect.
+  ///
+  /// **WARNING:**  This will block capture for the entire app.
+  ///
+  /// The user is expected to manage any possible nesting issues that may
+  /// occur if blocking and unblocking occur in different code paths.
+  ///
+  /// See [Instrumentation.unblockScreenshots]
+  static Future<void> blockScreenshots() async {
+    await channel.invokeMethod<void>('blockScreenshots');
+  }
+
+  /// A [bool] that specifies whether screenshot capturing is blocked.
+  static Future<bool> screenshotsBlocked() async {
+    final result = await channel.invokeMethod<bool>('screenshotsBlocked');
+    return result!;
+  }
+
+  /// Asynchronously takes a screenshot of the current screen.
+  ///
+  /// If screenshots are disabled through
+  /// [AgentConfiguration.screenshotsEnabled] or through the controller UI, this
+  /// method does nothing.
+  ///
+  /// This will capture everything, including personal information, so you must
+  /// be cautious of when to take the screenshot.
+  ///
+  /// These screenshots will show up in the Sessions screen for this user.
+  ///
+  /// The screenshots are taken on a background thread, compressed, and only
+  /// non-redundant parts are uploaded, so it is safe to take many of these
+  /// without impacting performance of your application.
+  static Future<void> takeScreenshot() async {
+    await channel.invokeMethod<bool>('takeScreenshot');
   }
 
   /// Custom metrics allows you to report numeric values associated with a

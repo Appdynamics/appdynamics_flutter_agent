@@ -362,6 +362,26 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-l\"z\"",
+					"-framework",
+					"\"ADEUMInstrumentation\"",
+					"-framework",
+					"\"CoreTelephony\"",
+					"-framework",
+					"\"SystemConfiguration\"",
+					"-framework",
+					"\"appdynamics_mobilesdk\"",
+					"-framework",
+					"\"integration_test\"",
+					"-framework",
+					"\"package_info_plus\"",
+					"-ftest-coverage",
+					"-fprofile-arcs",
+					"-Wall",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.appdynamics.appdynamicsMobilesdkExample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
@@ -491,6 +511,26 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-l\"z\"",
+					"-framework",
+					"\"ADEUMInstrumentation\"",
+					"-framework",
+					"\"CoreTelephony\"",
+					"-framework",
+					"\"SystemConfiguration\"",
+					"-framework",
+					"\"appdynamics_mobilesdk\"",
+					"-framework",
+					"\"integration_test\"",
+					"-framework",
+					"\"package_info_plus\"",
+					"-ftest-coverage",
+					"-fprofile-arcs",
+					"-Wall",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.appdynamics.appdynamicsMobilesdkExample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
@@ -513,6 +553,26 @@
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
+				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-l\"z\"",
+					"-framework",
+					"\"ADEUMInstrumentation\"",
+					"-framework",
+					"\"CoreTelephony\"",
+					"-framework",
+					"\"SystemConfiguration\"",
+					"-framework",
+					"\"appdynamics_mobilesdk\"",
+					"-framework",
+					"\"integration_test\"",
+					"-framework",
+					"\"package_info_plus\"",
+					"-ftest-coverage",
+					"-fprofile-arcs",
+					"-Wall",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.appdynamics.appdynamicsMobilesdkExample;
 				PRODUCT_NAME = "$(TARGET_NAME)";

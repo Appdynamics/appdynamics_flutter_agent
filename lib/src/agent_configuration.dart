@@ -29,19 +29,48 @@ class AgentConfiguration {
   /// The agent will send beacons to this collector.
   final String collectorURL;
 
+  /// Sets the URL of the screenshot service to which the agent will upload
+  /// screenshots.
+  ///
+  /// This is NOT your controller URL. You likely do not need to call this
+  /// method unless you have an AppDynamics managed private cloud (very rare).
+  ///
+  /// **NOTE:** If you have an on-premise EUM Processor and set the collector
+  /// URL in [collectorURL], then you do not need to call this method because
+  /// the two URLs are the same, and the agent assumes that is the case.
+  final String screenshotURL;
+
+  /// Enables or disables screenshots (default = enabled).
+  ///
+  /// If enabled, the [Instrumentation.takeScreenshot] method will capture
+  /// screenshots, and depending on the configuration in the controller,
+  /// automatic screenshots can be taken. You can always disable screenshots
+  /// entirely from your controller.
+  ///
+  /// If disabled, the [Instrumentation.takeScreenshot] method will NOT capture
+  /// screenshots, and no automatic screenshots will be captured. You will NOT
+  /// be able to enable screenshots from your controller.
+  ///
+  /// Most applications should leave this option enabled, and control the
+  /// screenshots from the controller configuration page.
+  ///
+  final bool screenshotsEnabled;
+
   /// Sets the logging level of the agent. Default is [LoggingLevel.none].
   ///
-  /// **WARNING:** Not recommended for production use.
+  /// **WARNING:** Altering this value is not recommended for production use.
   final LoggingLevel loggingLevel;
 
   AgentConfiguration({
     required this.appKey,
     this.collectorURL = "https://mobile.eum-appdynamics.com",
+    this.screenshotURL = "https://mobile.eum-appdynamics.com",
     this.loggingLevel = LoggingLevel.none,
+    this.screenshotsEnabled = true,
   });
 
   /// Creates a new [AgentConfiguration] with possibility to overwrite
-  /// new properties.
+  /// existing properties.
   ///
   /// Useful when needing to conditionally add properties, as with a boolean
   /// flag variable.
@@ -58,11 +87,15 @@ class AgentConfiguration {
   AgentConfiguration copyWith({
     String? appKey,
     String? collectorURL,
+    String? screenshotURL,
+    bool? screenshotsEnabled,
     LoggingLevel? loggingLevel,
   }) {
     return AgentConfiguration(
       appKey: appKey ?? this.appKey,
       collectorURL: collectorURL ?? this.collectorURL,
+      screenshotURL: screenshotURL ?? this.screenshotURL,
+      screenshotsEnabled: screenshotsEnabled ?? this.screenshotsEnabled,
       loggingLevel: loggingLevel ?? this.loggingLevel,
     );
   }

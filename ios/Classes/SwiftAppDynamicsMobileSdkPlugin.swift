@@ -53,7 +53,13 @@ public class SwiftAppDynamicsMobileSdkPlugin: NSObject, FlutterPlugin {
             // Session frames
             "startSessionFrame": startSessionFrame,
             "updateSessionFrameName": updateSessionFrameName,
-            "endSessionFrame": endSessionFrame
+            "endSessionFrame": endSessionFrame,
+            
+            // Screenshots
+            "takeScreenshot": takeScreenshot,
+            "blockScreenshots": blockScreenshots,
+            "unblockScreenshots": unblockScreenshots,
+            "screenshotsBlocked": screenshotsBlocked
         ]
         
         if let method = methods[call.method] {

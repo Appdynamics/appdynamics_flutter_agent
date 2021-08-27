@@ -20,6 +20,8 @@ fun AppDynamicsMobileSdkPlugin.start(@NonNull result: MethodChannel.Result, argu
         val appKey = properties["appKey"] as? String
         val loggingLevel = properties["loggingLevel"] as? Int
         val collectorURL = properties["collectorURL"] as? String
+        val screenshotURL = properties["screenshotURL"] as? String
+        val screenshotsEnabled = properties["screenshotsEnabled"] as? Boolean
 
         if (appKey == null) {
             result.error("500", "Please provide an appKey.", "Agent start() failed.")
@@ -38,6 +40,15 @@ fun AppDynamicsMobileSdkPlugin.start(@NonNull result: MethodChannel.Result, argu
             builder.withCollectorURL(collectorURL)
         }
 
+        if (screenshotURL != null) {
+            builder.withScreenshotURL(screenshotURL)
+        }
+
+        if (screenshotsEnabled != null) {
+            builder.withScreenshotsEnabled(screenshotsEnabled)
+        }
+
+        builder.withAutoInstrument(false);
         builder.withApplicationName("com.appdynamics.FlutterEveryfeatureAndroid")
             .withContext(context)
         Instrumentation.startFromHybrid(builder.build(), agentName, agentVersion)

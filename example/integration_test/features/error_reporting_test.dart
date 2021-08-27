@@ -48,7 +48,7 @@ void main() {
           type: "error", sev: "critical", javaThrowable: "<any>");
       expect(requests.length, 1);
 
-      final exceptionName = getBeaconRequestBody(requests[0])["javaThrowable"]
+      final exceptionName = getBeaconRequestBody(requests[0])!["javaThrowable"]
           ["exceptionClassName"];
       expect(exceptionName, "java.lang.Throwable");
     } else if (Platform.isIOS) {
@@ -56,7 +56,7 @@ void main() {
           type: "error", sev: "critical", nsError: "<any>");
       expect(requests.length, 1);
 
-      final domain = getBeaconRequestBody(requests[0])["nsError"]["domain"];
+      final domain = getBeaconRequestBody(requests[0])!["nsError"]["domain"];
       expect(domain, "Manual error report");
     }
   });
@@ -77,7 +77,7 @@ void main() {
           type: "error", sev: "warning", javaThrowable: "<any>");
       expect(requests.length, 1);
 
-      final exceptionName = getBeaconRequestBody(requests[0])["javaThrowable"]
+      final exceptionName = getBeaconRequestBody(requests[0])!["javaThrowable"]
           ["exceptionClassName"];
       expect(exceptionName, "java.lang.Throwable");
     } else if (Platform.isIOS) {
@@ -85,7 +85,7 @@ void main() {
           await findRequestsBy(type: "error", sev: "warning", nsError: "<any>");
       expect(requests.length, 1);
 
-      final domain = getBeaconRequestBody(requests[0])["nsError"]["domain"];
+      final domain = getBeaconRequestBody(requests[0])!["nsError"]["domain"];
       expect(domain, "Manual error report");
     }
   });
@@ -106,7 +106,7 @@ void main() {
           type: "error", sev: "info", javaThrowable: "<any>");
       expect(requests.length, 1);
 
-      final exceptionName = getBeaconRequestBody(requests[0])["javaThrowable"]
+      final exceptionName = getBeaconRequestBody(requests[0])!["javaThrowable"]
           ["exceptionClassName"];
       expect(exceptionName, "java.lang.Throwable");
     } else if (Platform.isIOS) {
@@ -114,7 +114,7 @@ void main() {
           await findRequestsBy(type: "error", sev: "info", nsError: "<any>");
       expect(requests.length, 1);
 
-      final domain = getBeaconRequestBody(requests[0])["nsError"]["domain"];
+      final domain = getBeaconRequestBody(requests[0])!["nsError"]["domain"];
       expect(domain, "Manual error report");
     }
   });

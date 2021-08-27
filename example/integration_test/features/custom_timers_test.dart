@@ -47,7 +47,7 @@ void main() {
         await findRequestsBy(timerName: "My timer", type: "timer-event");
     expect(requests.length, 1);
 
-    final body = getBeaconRequestBody(requests[0]);
+    final body = getBeaconRequestBody(requests[0])!;
     final int timerStart = body["sut"];
     final int timerEnd = body["eut"];
     expect(timerEnd > timerStart, true);

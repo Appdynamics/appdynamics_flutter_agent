@@ -73,8 +73,14 @@ open class AppDynamicsMobileSdkPlugin : FlutterPlugin, MethodCallHandler {
             // Session frames
             "startSessionFrame" to ::startSessionFrame,
             "updateSessionFrameName" to ::updateSessionFrameName,
-            "endSessionFrame" to ::endSessionFrame
-        )
+            "endSessionFrame" to ::endSessionFrame,
+
+            // Screenshots
+            "takeScreenshot" to ::takeScreenshot,
+            "blockScreenshots" to ::blockScreenshots,
+            "unblockScreenshots" to ::unblockScreenshots,
+            "screenshotsBlocked" to ::screenshotsBlocked
+            )
 
         methods[call.method]?.let { method ->
             method(result, call.arguments)

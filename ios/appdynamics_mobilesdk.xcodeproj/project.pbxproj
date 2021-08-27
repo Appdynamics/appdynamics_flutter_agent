@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		61B4CD964CB704C0BC1422F8 /* libPods-appdynamics_mobilesdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BE156DF76BB66707D01AF24F /* libPods-appdynamics_mobilesdk.a */; };
 		961A30F226CA5450001241E5 /* SessionFrames.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961A30F126CA5450001241E5 /* SessionFrames.swift */; };
+		961A30F626CE7FFE001241E5 /* Screenshots.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961A30F526CE7FFE001241E5 /* Screenshots.swift */; };
 		961A30F426CB9E90001241E5 /* CustomMetrics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961A30F326CB9E90001241E5 /* CustomMetrics.swift */; };
 		9635068226A5E144003713FD /* ManualRequestTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9635067F26A5E144003713FD /* ManualRequestTracker.swift */; };
 		9635068326A5E144003713FD /* CustomTimers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9635068026A5E144003713FD /* CustomTimers.swift */; };
@@ -27,6 +28,7 @@
 
 /* Begin PBXFileReference section */
 		961A30F126CA5450001241E5 /* SessionFrames.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionFrames.swift; sourceTree = "<group>"; };
+		961A30F526CE7FFE001241E5 /* Screenshots.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Screenshots.swift; sourceTree = "<group>"; };
 		961A30F326CB9E90001241E5 /* CustomMetrics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomMetrics.swift; sourceTree = "<group>"; };
 		9635067F26A5E144003713FD /* ManualRequestTracker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManualRequestTracker.swift; sourceTree = "<group>"; };
 		9635068026A5E144003713FD /* CustomTimers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTimers.swift; sourceTree = "<group>"; };
@@ -78,6 +80,7 @@
 				9635068526A5E153003713FD /* Breadcrumbs.swift */,
 				9635068E26A7FF41003713FD /* ErrorReporting.swift */,
 				961A30F126CA5450001241E5 /* SessionFrames.swift */,
+				961A30F526CE7FFE001241E5 /* Screenshots.swift */,
 				961A30F326CB9E90001241E5 /* CustomMetrics.swift */,
 			);
 			name = Features;
@@ -250,6 +253,7 @@
 				96B99D3426AF115A00014CA0 /* UserDataDate.swift in Sources */,
 				9635068F26A7FF41003713FD /* ErrorReporting.swift in Sources */,
 				9635068626A5E153003713FD /* Breadcrumbs.swift in Sources */,
+				961A30F626CE7FFE001241E5 /* Screenshots.swift in Sources */,
 				96B99D2C26AF0FBE00014CA0 /* UserDataDouble.swift in Sources */,
 				9635068426A5E144003713FD /* AgentStart.swift in Sources */,
 			);
@@ -396,6 +400,22 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-l\"z\"",
+					"-framework",
+					"\"ADEUMInstrumentation\"",
+					"-framework",
+					"\"CoreTelephony\"",
+					"-framework",
+					"\"Flutter\"",
+					"-framework",
+					"\"SystemConfiguration\"",
+					"-Wall",
+					"-ftest-coverage",
+					"-fprofile-arcs",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.appdynamics.eum.appdynamics-mobilesdk";
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
@@ -420,6 +440,22 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
+				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-l\"z\"",
+					"-framework",
+					"\"ADEUMInstrumentation\"",
+					"-framework",
+					"\"CoreTelephony\"",
+					"-framework",
+					"\"Flutter\"",
+					"-framework",
+					"\"SystemConfiguration\"",
+					"-Wall",
+					"-ftest-coverage",
+					"-fprofile-arcs",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.appdynamics.eum.appdynamics-mobilesdk";
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";

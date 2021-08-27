@@ -13,6 +13,25 @@ import 'package:flutter_test/flutter_test.dart';
 
 import 'wiremock_utils.dart';
 
+var serverAgentConfigStub = {
+  "agentConfig": {
+    "enableScreenshot": true,
+    "screenshotUseCellular": true,
+    "autoScreenshot": false,
+    "timestamp": 1,
+    "anrThreshold": 3000,
+    "deviceMetricsConfigurations": {
+      "enableMemory": false,
+      "enableStorage": false,
+      "enableBattery": false,
+      "criticalMemoryThresholdPercentage": 90,
+      "criticalBatteryThresholdPercentage": 90,
+      "criticalStorageThresholdPercentage": 90,
+      "collectionFrequencyMins": 2
+    }
+  }
+};
+
 // Jumps over the main screen, starting instrumentation with default configs.
 Future<void> jumpStartInstrumentation(WidgetTester tester) async {
   await tester.pumpWidget(MyApp());
@@ -34,7 +53,7 @@ Future<void> mapAgentInitToReturnSuccess() async {
       "method": "POST",
       "url": "/eumcollector/mobileMetrics?version=2"
     },
-    "response": {"status": 200, "body": "{}"}
+    "response": {"status": 200, "body": jsonEncode(serverAgentConfigStub)}
   });
 }
 
@@ -46,7 +65,12 @@ Future<void> flushBeacons() async {
 }
 
 // Shortcut to get body of beacon requests.
-Map<String, dynamic> getBeaconRequestBody(Map<String, dynamic> request) {
-  final List<dynamic> bodyList = jsonDecode(request["request"]["body"]);
-  return Map<String, dynamic>.from(bodyList[0]);
+Map<String, dynamic>? getBeaconRequestBody(Map<String, dynamic> request) {
+  try {
+    final List<dynamic> bodyList = jsonDecode(request["request"]["body"]);
+    return Map<String, dynamic>.from(bodyList[0]);
+  } catch (e) {
+    print("Request failed to be parsed: ${request["request"]["url"]}");
+    return null;
+  }
 }

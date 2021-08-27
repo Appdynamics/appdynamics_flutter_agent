@@ -36,7 +36,7 @@ void main() {
     final startSessionFrameButton = find.byKey(Key("startSessionFrameButton"));
     expect(startSessionFrameButton, findsOneWidget);
     await tester.tap(startSessionFrameButton);
-    flushBeacons();
+    await flushBeacons();
     await tester.pump(Duration(seconds: 2));
 
     final startRequests = await findRequestsBy(

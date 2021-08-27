@@ -16,6 +16,8 @@ void main() {
     expect(config.appKey, isNot(config2.appKey));
     expect(config.loggingLevel, config2.loggingLevel);
     expect(config.collectorURL, config2.collectorURL);
+    expect(config.screenshotURL, config2.screenshotURL);
+    expect(config.screenshotsEnabled, config2.screenshotsEnabled);
 
     AgentConfiguration config3 =
         config.copyWith(loggingLevel: LoggingLevel.info);

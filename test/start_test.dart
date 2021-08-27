@@ -48,6 +48,8 @@ void main() {
           "version": packageInfo.version,
           "loggingLevel": 0,
           "collectorURL": "https://mobile.eum-appdynamics.com",
+          "screenshotURL": "https://mobile.eum-appdynamics.com",
+          "screenshotsEnabled": true,
           "anrDetectionEnabled": true,
           "anrStackTraceEnabled": true,
           "type": "Flutter",
