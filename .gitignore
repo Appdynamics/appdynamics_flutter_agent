@@ -15,7 +15,9 @@ local.properties
 *.iml
 *.ipr
 *.iws
-.idea/
+android/.idea/
+.idea/*
+!.idea/runConfigurations/
 
 # Visual Studio Code related
 .classpath
