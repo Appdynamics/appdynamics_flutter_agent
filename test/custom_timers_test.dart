@@ -20,12 +20,9 @@ void main() {
     mockPackageInfo();
   });
 
-  tearDown(() {
-    channel.setMockMethodCallHandler(null);
-  });
-
-  test('custom timers are called natively', () async {
-    channel.setMockMethodCallHandler((MethodCall methodCall) async {
+  testWidgets('custom timers are called natively', (WidgetTester tester) async {
+    tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(channel,
+        (MethodCall methodCall) async {
       switch (methodCall.method) {
         case 'startTimer':
         case 'stopTimer':

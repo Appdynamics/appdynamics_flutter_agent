@@ -19,12 +19,10 @@ void main() {
     mockPackageInfo();
   });
 
-  tearDown(() {
-    channel.setMockMethodCallHandler(null);
-  });
-
-  test('Session frames methods are called natively', () async {
-    channel.setMockMethodCallHandler((MethodCall methodCall) async {
+  testWidgets('Session frames methods are called natively',
+      (WidgetTester tester) async {
+    tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(channel,
+        (MethodCall methodCall) async {
       switch (methodCall.method) {
         case 'startSessionFrame':
         case "updateSessionFrameName":

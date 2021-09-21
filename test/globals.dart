@@ -5,12 +5,14 @@
  */
 
 import 'package:flutter/services.dart';
+import 'package:flutter_test/flutter_test.dart';
 
 const MethodChannel channel = const MethodChannel('appdynamics_mobilesdk');
 
 void mockPackageInfo() {
-  const MethodChannel('dev.fluttercommunity.plus/package_info')
-      .setMockMethodCallHandler((MethodCall methodCall) async {
+  const channel = MethodChannel('dev.fluttercommunity.plus/package_info');
+  TestDefaultBinaryMessengerBinding.instance!.defaultBinaryMessenger
+      .setMockMethodCallHandler(channel, (MethodCall methodCall) async {
     if (methodCall.method == 'getAll') {
       return <String, dynamic>{
         'appName': 'appdynamics_mobilesdk',

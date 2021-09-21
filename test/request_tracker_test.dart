@@ -19,12 +19,10 @@ void main() {
     mockPackageInfo();
   });
 
-  tearDown(() {
-    channel.setMockMethodCallHandler(null);
-  });
-
-  test('Manual HTTP tracker success methods are called natively', () async {
-    channel.setMockMethodCallHandler((MethodCall methodCall) async {
+  testWidgets('Manual HTTP tracker success methods are called natively',
+      (WidgetTester tester) async {
+    tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(channel,
+        (MethodCall methodCall) async {
       switch (methodCall.method) {
         case 'getRequestTrackerWithUrl':
         case "setRequestTrackerErrorInfo":

@@ -17,9 +17,10 @@ open class AppDynamicsMobileSdkPlugin : FlutterPlugin, MethodCallHandler {
     ///
     /// This local reference serves to register the plugin with the Flutter Engine and unregister it
     /// when the Flutter Engine is detached from the Activity
-    private lateinit var channel: MethodChannel
+    internal lateinit var channel: MethodChannel
     internal lateinit var context: android.content.Context
     internal var customRequestTracker: HttpRequestTracker? = null
+    internal var crashReportCallback: CrashCallbackObject? = null
     internal var sessionFrames: MutableMap<String, SessionFrame> = mutableMapOf()
 
     override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {

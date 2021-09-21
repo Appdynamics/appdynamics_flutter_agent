@@ -13,3 +13,4 @@
   [SwiftAppDynamicsMobileSdkPlugin registerWithRegistrar:registrar];
 }
 @end
+

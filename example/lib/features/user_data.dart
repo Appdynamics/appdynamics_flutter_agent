@@ -8,7 +8,6 @@ import 'package:appdynamics_mobilesdk/appdynamics_mobilesdk.dart';
 import 'package:appdynamics_mobilesdk_example/utils/flush_beacons_app_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 class UserData extends StatefulWidget {
   @override
@@ -16,9 +15,6 @@ class UserData extends StatefulWidget {
 }
 
 class _UserDataState extends State<UserData> {
-  static const platform =
-      const MethodChannel('com.appdynamics.flutter.example');
-
   final intValue = 1234;
   final doubleValue = 123.456;
   final boolValue = true;
@@ -139,17 +135,6 @@ class _UserDataState extends State<UserData> {
               key: Key("removeDateTimeButton"),
               child: Text('Remove DateTime'),
               onPressed: _removeDateTime,
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            ElevatedButton(
-              key: Key("crashAppButton"),
-              child: Text('Crash app (release-mode only)'),
-              style: ElevatedButton.styleFrom(primary: Colors.red),
-              onPressed: () {
-                platform.invokeMethod("crash");
-              },
             ),
           ]),
         ),

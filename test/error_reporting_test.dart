@@ -20,12 +20,10 @@ void main() {
     mockPackageInfo();
   });
 
-  tearDown(() {
-    channel.setMockMethodCallHandler(null);
-  });
-
-  test('report error is correctly called natively', () async {
-    channel.setMockMethodCallHandler((MethodCall methodCall) async {
+  testWidgets('report error is correctly called natively',
+      (WidgetTester tester) async {
+    tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(channel,
+        (MethodCall methodCall) async {
       switch (methodCall.method) {
         case 'reportError':
           log.add(methodCall);

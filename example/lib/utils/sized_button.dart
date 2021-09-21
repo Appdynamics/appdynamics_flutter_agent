@@ -29,9 +29,9 @@ class SizedButton extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        SizedBox(height: 10),
         ElevatedButton(
-            key: Key(keyString), child: Text(title), onPressed: onPressed)
+            key: Key(keyString), child: Text(title), onPressed: onPressed),
+        SizedBox(height: 10),
       ],
     );
   }

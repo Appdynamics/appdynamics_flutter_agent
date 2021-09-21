@@ -6,7 +6,7 @@ extension SwiftAppDynamicsMobileSdkPlugin {
         guard let properties = arguments as? Dictionary<String, Any> else {
             return
         }
-        
+
         guard let appKey = properties["appKey"] as? String else {
             let error = FlutterError(code: "500", message: "Agent start() failed.", details: "Please provide an appKey.")
             result(error)
@@ -38,6 +38,11 @@ extension SwiftAppDynamicsMobileSdkPlugin {
         
         if let screenshotsEnabled = properties["screenshotsEnabled"] as? Bool {
             configuration.screenshotsEnabled = screenshotsEnabled
+        }
+        
+        if (crashReportCallback == nil) {
+            crashReportCallback = CrashCallbackObject()
+            configuration.crashReportCallback = crashReportCallback
         }
         
         configuration.enableAutoInstrument = false

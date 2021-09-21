@@ -19,12 +19,10 @@ void main() {
     mockPackageInfo();
   });
 
-  tearDown(() {
-    channel.setMockMethodCallHandler(null);
-  });
-
-  test('Custom metrics method is called natively', () async {
-    channel.setMockMethodCallHandler((MethodCall methodCall) async {
+  testWidgets('Custom metrics method is called natively',
+      (WidgetTester tester) async {
+    tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(channel,
+        (MethodCall methodCall) async {
       switch (methodCall.method) {
         case 'reportMetric':
           log.add(methodCall);

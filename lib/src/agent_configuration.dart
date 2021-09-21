@@ -4,6 +4,8 @@
  *
  */
 
+import 'crash_report_summary.dart';
+
 enum LoggingLevel { none, info, verbose }
 
 /// Configuration object for the AppDynamics SDK.
@@ -53,7 +55,6 @@ class AgentConfiguration {
   ///
   /// Most applications should leave this option enabled, and control the
   /// screenshots from the controller configuration page.
-  ///
   final bool screenshotsEnabled;
 
   /// Sets the logging level of the agent. Default is [LoggingLevel.none].
@@ -61,12 +62,22 @@ class AgentConfiguration {
   /// **WARNING:** Altering this value is not recommended for production use.
   final LoggingLevel loggingLevel;
 
+  /// The agent supports usage of a callback function that receives an array of
+  /// the native crashes that have been reported. You can use this callback to
+  /// have access to crash reports.
+  final CrashReportCallback? crashReportCallback;
+
+  // TODO: Implement crash reporting
+  final bool crashReportingEnabled;
+
   AgentConfiguration({
     required this.appKey,
     this.collectorURL = "https://mobile.eum-appdynamics.com",
     this.screenshotURL = "https://mobile.eum-appdynamics.com",
     this.loggingLevel = LoggingLevel.none,
     this.screenshotsEnabled = true,
+    this.crashReportCallback = null,
+    this.crashReportingEnabled = true,
   });
 
   /// Creates a new [AgentConfiguration] with possibility to overwrite
@@ -84,19 +95,22 @@ class AgentConfiguration {
   ///
   /// Instrumentation.start(config);
   /// ```
-  AgentConfiguration copyWith({
-    String? appKey,
-    String? collectorURL,
-    String? screenshotURL,
-    bool? screenshotsEnabled,
-    LoggingLevel? loggingLevel,
-  }) {
+  AgentConfiguration copyWith(
+      {String? appKey,
+      String? collectorURL,
+      String? screenshotURL,
+      bool? screenshotsEnabled,
+      LoggingLevel? loggingLevel,
+      CrashReportCallback? crashReportCallback,
+      bool? crashReportingEnabled}) {
     return AgentConfiguration(
-      appKey: appKey ?? this.appKey,
-      collectorURL: collectorURL ?? this.collectorURL,
-      screenshotURL: screenshotURL ?? this.screenshotURL,
-      screenshotsEnabled: screenshotsEnabled ?? this.screenshotsEnabled,
-      loggingLevel: loggingLevel ?? this.loggingLevel,
-    );
+        appKey: appKey ?? this.appKey,
+        collectorURL: collectorURL ?? this.collectorURL,
+        screenshotURL: screenshotURL ?? this.screenshotURL,
+        screenshotsEnabled: screenshotsEnabled ?? this.screenshotsEnabled,
+        loggingLevel: loggingLevel ?? this.loggingLevel,
+        crashReportCallback: crashReportCallback ?? this.crashReportCallback,
+        crashReportingEnabled:
+            crashReportingEnabled ?? this.crashReportingEnabled);
   }
 }

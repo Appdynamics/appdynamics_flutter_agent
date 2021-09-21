@@ -7,6 +7,7 @@
 // TODO: Extract methods into files when static extensions are supported.
 // https://github.com/dart-lang/language/issues/723
 
+import 'package:appdynamics_mobilesdk/appdynamics_mobilesdk.dart';
 import 'package:appdynamics_mobilesdk/src/agent_configuration.dart';
 import 'package:appdynamics_mobilesdk/src/session_frame.dart';
 import 'package:flutter/services.dart';
@@ -40,6 +41,22 @@ const maxUserDataStringLength = 2048;
 /// - Initializing the agent with the right application key.
 /// - Reporting timers, errors, session frames, custom metrics.
 class Instrumentation {
+  static _initializeCrashCallback(CrashReportCallback callback) {
+    Future<dynamic> crashReportingHandler(MethodCall methodCall) async {
+      switch (methodCall.method) {
+        case 'onCrashReported':
+          final rawMaps = methodCall.arguments as List<dynamic>;
+          final summaries = rawMaps
+              .map((map) =>
+                  CrashReportSummary.fromJson(Map<String, dynamic>.from(map)))
+              .toList();
+          callback(summaries);
+      }
+    }
+
+    channel.setMethodCallHandler(crashReportingHandler);
+  }
+
   /// Initializing the agent
   /// The agent does not automatically start with your application. Using the
   /// app key shown in your controller UI, you can initialize the agent.
@@ -65,6 +82,11 @@ class Instrumentation {
       PackageInfo packageInfo = await PackageInfo.fromPlatform();
       String version = packageInfo.version;
       String type = "Flutter";
+
+      final crashCallback = config.crashReportCallback;
+      if (crashCallback != null) {
+        _initializeCrashCallback(crashCallback);
+      }
 
       Map<String, dynamic> arguments = {
         "appKey": config.appKey,

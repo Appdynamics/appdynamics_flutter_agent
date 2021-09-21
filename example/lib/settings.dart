@@ -4,6 +4,7 @@
  *
  */
 
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:appdynamics_mobilesdk/appdynamics_mobilesdk.dart';
@@ -89,6 +90,27 @@ class _SettingsState extends State<Settings> {
     _collectorFieldController.text = "Custom";
   }
 
+  Future<void> _showCrashReportAlert(String crashReports) async {
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Crash reports detected'),
+          content: SingleChildScrollView(
+              child: ListBody(children: <Widget>[Text(crashReports)])),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Back'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   Future<void> _onStartPress(context) async {
     try {
       var appKey = _appKeyFieldController.text;
@@ -99,11 +121,16 @@ class _SettingsState extends State<Settings> {
         return;
       }
 
+      final crashReportCallback = (List<CrashReportSummary> summaries) async {
+        await _showCrashReportAlert(jsonEncode(summaries));
+      };
+
       AgentConfiguration config = AgentConfiguration(
           appKey: appKey,
           loggingLevel: LoggingLevel.verbose,
           collectorURL: collectorURL,
-          screenshotURL: screenshotURL);
+          screenshotURL: screenshotURL,
+          crashReportCallback: crashReportCallback);
       await Instrumentation.start(config);
 
       await Navigator.push(

@@ -11,19 +11,19 @@ import Flutter
     
     let controller : FlutterViewController = window?.rootViewController as! FlutterViewController
     let channel = FlutterMethodChannel(name: "com.appdynamics.flutter.example",
-                                                  binaryMessenger: controller.binaryMessenger)
-        channel.setMethodCallHandler({
-          (call: FlutterMethodCall, result: @escaping FlutterResult) -> Void in
-            
-            switch call.method {
-            case "sleep":
-                sleep(result: result, arguments: call.arguments)
-            case "crash":
-                crash(result: result, arguments: call.arguments)
-            default:
-                result(FlutterMethodNotImplemented)
-            }
-        })
+                                       binaryMessenger: controller.binaryMessenger)
+    channel.setMethodCallHandler({
+      (call: FlutterMethodCall, result: @escaping FlutterResult) -> Void in
+      
+      switch call.method {
+      case "sleep":
+        sleep(result: result, arguments: call.arguments)
+      case "crash":
+        crash(result: result, arguments: call.arguments)
+      default:
+        result(FlutterMethodNotImplemented)
+      }
+    })
     
     return super.application(application, didFinishLaunchingWithOptions: launchOptions)
   }
@@ -32,12 +32,12 @@ import Flutter
 // MARK: Custom methods
 
 public func sleep(result: @escaping FlutterResult, arguments: Any?) {
-    let seconds = arguments as? Double
-    let interval = TimeInterval(seconds ?? 1)
-    Thread.sleep(forTimeInterval: interval)
-    result(nil)
+  let seconds = arguments as? Double
+  let interval = TimeInterval(seconds ?? 1)
+  Thread.sleep(forTimeInterval: interval)
+  result(nil)
 }
 
 public func crash(result: @escaping FlutterResult, arguments: Any?) {
-   fatalError()
+  NSException.raise(NSExceptionName(rawValue: "Native exception"), format: "This was triggered natively.", arguments: getVaList([]))
 }

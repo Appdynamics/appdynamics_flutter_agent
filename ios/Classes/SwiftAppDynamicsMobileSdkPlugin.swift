@@ -2,13 +2,16 @@ import ADEUMInstrumentation
 import Flutter
 
 public class SwiftAppDynamicsMobileSdkPlugin: NSObject, FlutterPlugin {
+    static var channel: FlutterMethodChannel?
+    
     var customRequestTracker: ADEumHTTPRequestTracker?
+    var crashReportCallback: CrashCallbackObject?
     var sessionFrames: [String: ADEumSessionFrame] = [:]
-
+    
     public static func register(with registrar: FlutterPluginRegistrar) {
-        let channel = FlutterMethodChannel(name: "appdynamics_mobilesdk", binaryMessenger: registrar.messenger())
+        channel = FlutterMethodChannel(name: "appdynamics_mobilesdk", binaryMessenger: registrar.messenger())
         let instance = SwiftAppDynamicsMobileSdkPlugin()
-        registrar.addMethodCallDelegate(instance, channel: channel)
+        registrar.addMethodCallDelegate(instance, channel: channel!)
     }
 
     public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {

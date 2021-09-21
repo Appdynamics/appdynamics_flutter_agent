@@ -48,7 +48,12 @@ fun AppDynamicsMobileSdkPlugin.start(@NonNull result: MethodChannel.Result, argu
             builder.withScreenshotsEnabled(screenshotsEnabled)
         }
 
-        builder.withAutoInstrument(false);
+        if (crashReportCallback == null) {
+            crashReportCallback = CrashCallbackObject(channel)
+            builder.withCrashCallback(crashReportCallback)
+        }
+
+        builder.withAutoInstrument(false)
         builder.withApplicationName("com.appdynamics.FlutterEveryfeatureAndroid")
             .withContext(context)
         Instrumentation.startFromHybrid(builder.build(), agentName, agentVersion)
