@@ -24,29 +24,30 @@ void main() {
     await jumpStartInstrumentation(tester);
 
     final manualNetworkRequestsButton =
-        find.byKey(Key("manualNetworkRequestsButton"));
+        find.byKey(const Key("manualNetworkRequestsButton"));
     await tester.scrollUntilVisible(manualNetworkRequestsButton, 10);
     expect(manualNetworkRequestsButton, findsOneWidget);
 
     await tester.tap(manualNetworkRequestsButton);
     await tester.pumpAndSettle();
 
-    final manualPOSTRequestButton = find.byKey(Key("manualPOSTRequestButton"));
+    final manualPOSTRequestButton =
+        find.byKey(const Key("manualPOSTRequestButton"));
     expect(manualPOSTRequestButton, findsOneWidget);
 
-    final requestTextField = find.byKey(Key("requestTextField"));
+    final requestTextField = find.byKey(const Key("requestTextField"));
     expect(requestTextField, findsOneWidget);
 
     final randomSuccessURL = serverRequestsUrl;
     await tester.enterText(requestTextField, randomSuccessURL);
     await tester.tap(manualPOSTRequestButton);
-    await tester.pump(Duration(seconds: 2));
+    await tester.pump(const Duration(seconds: 2));
 
     final requestSentLabel = find.text("Success with 200.");
     expect(requestSentLabel, findsOneWidget);
 
     await flushBeacons();
-    await tester.pump(Duration(seconds: 2));
+    await tester.pump(const Duration(seconds: 2));
 
     final requests = await findRequestsBy(
         url: serverRequestsUrl,

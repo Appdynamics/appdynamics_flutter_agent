@@ -35,7 +35,7 @@ void main() {
     AgentConfiguration config = AgentConfiguration(appKey: appKey);
     await Instrumentation.start(config);
 
-    final timerName = "My timer";
+    const timerName = "My timer";
     Instrumentation.startTimer(timerName);
     Instrumentation.stopTimer(timerName);
 

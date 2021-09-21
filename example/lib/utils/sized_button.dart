@@ -18,11 +18,13 @@ class SizedButton extends StatelessWidget {
         MaterialPageRoute(builder: (context) => screen),
       );
 
-  SizedButton(
-      {required this.context,
+  const SizedButton(
+      {Key? key,
+      required this.context,
       required this.title,
       required this.keyString,
-      required this.screen});
+      required this.screen})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +33,7 @@ class SizedButton extends StatelessWidget {
       children: [
         ElevatedButton(
             key: Key(keyString), child: Text(title), onPressed: onPressed),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
       ],
     );
   }

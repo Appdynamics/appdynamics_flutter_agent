@@ -9,14 +9,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class ANR extends StatefulWidget {
+class Anr extends StatefulWidget {
+  const Anr({Key? key}) : super(key: key);
+
   @override
-  _ANRState createState() => _ANRState();
+  _AnrState createState() => _AnrState();
 }
 
-class _ANRState extends State<ANR> {
-  static const platform =
-      const MethodChannel('com.appdynamics.flutter.example');
+class _AnrState extends State<Anr> {
+  static const platform = MethodChannel('com.appdynamics.flutter.example');
 
   var showSleepText = false;
 
@@ -25,13 +26,9 @@ class _ANRState extends State<ANR> {
       showSleepText = true;
     });
 
-    new Future.delayed(const Duration(milliseconds: 50), () async {
-      try {
-        const anrThreshold = 5;
-        await platform.invokeMethod('sleep', anrThreshold + 1);
-      } on PlatformException catch (e) {
-        print("Failed to get native sleep: '${e.message}'.");
-      }
+    Future.delayed(const Duration(milliseconds: 50), () async {
+      const anrThreshold = 5;
+      await platform.invokeMethod('sleep', anrThreshold + 1);
 
       setState(() {
         showSleepText = false;
@@ -42,21 +39,21 @@ class _ANRState extends State<ANR> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: FlushBeaconsAppBar(
+      appBar: const FlushBeaconsAppBar(
         title: 'ANR',
       ),
       body: Center(
         child: Column(
           children: [
-            SizedBox(height: 30),
+            const SizedBox(height: 30),
             ElevatedButton(
-              child: Text('Trigger sleep'),
+              child: const Text('Trigger sleep'),
               onPressed: () {
                 triggerSleep();
               },
             ),
             Visibility(
-              child: Text("Zzz Zzz."),
+              child: const Text("Zzz Zzz."),
               visible: showSleepText,
             ),
           ],

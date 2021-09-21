@@ -21,24 +21,24 @@ void main() {
 
   testWidgets("Check custom metrics are properly reported",
       (WidgetTester tester) async {
-    final customMetricName = "myCustomMetric";
-    final customMetricValue = "123";
+    const customMetricName = "myCustomMetric";
+    const customMetricValue = "123";
 
     await jumpStartInstrumentation(tester);
 
-    final customMetricsButton = find.byKey(Key("customMetricsButton"));
+    final customMetricsButton = find.byKey(const Key("customMetricsButton"));
     await tester.scrollUntilVisible(customMetricsButton, 10);
     expect(customMetricsButton, findsOneWidget);
 
     await tester.tap(customMetricsButton);
     await tester.pumpAndSettle();
 
-    final reportMetricButton = find.byKey(Key("reportMetricButton"));
+    final reportMetricButton = find.byKey(const Key("reportMetricButton"));
     expect(reportMetricButton, findsOneWidget);
 
     await tester.tap(reportMetricButton);
     await flushBeacons();
-    await tester.pumpAndSettle(Duration(seconds: 2));
+    await tester.pumpAndSettle(const Duration(seconds: 2));
 
     final requests = await findRequestsBy(
         type: "custom-metric-event",

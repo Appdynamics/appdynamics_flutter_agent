@@ -10,6 +10,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class CustomTimers extends StatelessWidget {
+  const CustomTimers({Key? key}) : super(key: key);
+
   Future<void> _startTimerPressed() async {
     await Instrumentation.startTimer("My timer");
   }
@@ -21,23 +23,23 @@ class CustomTimers extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: FlushBeaconsAppBar(title: "Custom timers"),
+      appBar: const FlushBeaconsAppBar(title: "Custom timers"),
       body: Center(
         child: Padding(
           padding: const EdgeInsets.only(right: 50, left: 50),
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             ElevatedButton(
-              key: Key("startTimerButton"),
-              child: Text('Start timer'),
+              key: const Key("startTimerButton"),
+              child: const Text('Start timer'),
               onPressed: _startTimerPressed,
             ),
             ElevatedButton(
-              key: Key("stopTimerButton"),
-              child: Text('Stop timer'),
+              key: const Key("stopTimerButton"),
+              child: const Text('Stop timer'),
               onPressed: _stopTimerPressed,
             ),
           ]),

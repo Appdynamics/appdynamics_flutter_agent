@@ -12,6 +12,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class ErrorReporting extends StatefulWidget {
+  const ErrorReporting({Key? key}) : super(key: key);
+
   @override
   _ErrorReportingState createState() => _ErrorReportingState();
 }
@@ -19,11 +21,11 @@ class ErrorReporting extends StatefulWidget {
 class _ErrorReportingState extends State<ErrorReporting> {
   Future<void> _sendError() async {
     try {
-      final myMethod = null;
+      const myMethod = null;
       myMethod();
     } on NoSuchMethodError catch (e) {
       await Instrumentation.reportError(e,
-          severityLevel: ErrorSeverityLevel.CRITICAL);
+          severityLevel: ErrorSeverityLevel.critical);
     }
   }
 
@@ -32,7 +34,7 @@ class _ErrorReportingState extends State<ErrorReporting> {
       jsonDecode("invalid/exception/json");
     } on FormatException catch (e) {
       await Instrumentation.reportException(e,
-          severityLevel: ErrorSeverityLevel.WARNING);
+          severityLevel: ErrorSeverityLevel.warning);
     }
   }
 
@@ -41,36 +43,36 @@ class _ErrorReportingState extends State<ErrorReporting> {
       jsonDecode("invalid/message/json");
     } on FormatException catch (e) {
       await Instrumentation.reportMessage(e.toString(),
-          severityLevel: ErrorSeverityLevel.INFO);
+          severityLevel: ErrorSeverityLevel.info);
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: FlushBeaconsAppBar(
+      appBar: const FlushBeaconsAppBar(
         title: 'Report error',
       ),
       body: Center(
         child: Padding(
-          padding: EdgeInsets.fromLTRB(50, 10, 50, 10),
+          padding: const EdgeInsets.fromLTRB(50, 10, 50, 10),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               ElevatedButton(
-                  key: Key("reportErrorButton"),
-                  child: Text('Report error (critical)'),
+                  key: const Key("reportErrorButton"),
+                  child: const Text('Report error (critical)'),
                   onPressed: _sendError),
               ElevatedButton(
-                  key: Key("reportExceptionButton"),
-                  child: Text('Report exception (warning)'),
+                  key: const Key("reportExceptionButton"),
+                  child: const Text('Report exception (warning)'),
                   onPressed: _sendException),
               ElevatedButton(
-                  key: Key("reportMessageButton"),
-                  child: Text('Report message (info)'),
+                  key: const Key("reportMessageButton"),
+                  child: const Text('Report message (info)'),
                   onPressed: _sendMessage),
             ],
           ),

@@ -13,6 +13,8 @@ class CustomMetrics extends StatelessWidget {
   final customMetricName = "myCustomMetric";
   final customMetricValue = 123;
 
+  const CustomMetrics({Key? key}) : super(key: key);
+
   Future<void> _reportMetric() async {
     await Instrumentation.reportMetric(
         name: customMetricName, value: customMetricValue);
@@ -21,17 +23,17 @@ class CustomMetrics extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: FlushBeaconsAppBar(title: "Custom metrics"),
+      appBar: const FlushBeaconsAppBar(title: "Custom metrics"),
       body: Center(
         child: Padding(
           padding: const EdgeInsets.only(right: 50, left: 50),
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             ElevatedButton(
-              key: Key("reportMetricButton"),
+              key: const Key("reportMetricButton"),
               child: Text(
                   'Report metric \n(name: $customMetricName, value: $customMetricValue)',
                   textAlign: TextAlign.center),

@@ -11,6 +11,8 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class ManualNetworkRequests extends StatefulWidget {
+  const ManualNetworkRequests({Key? key}) : super(key: key);
+
   @override
   _ManualNetworkRequestsState createState() => _ManualNetworkRequestsState();
 }
@@ -32,7 +34,7 @@ class _ManualNetworkRequestsState extends State<ManualNetworkRequests> {
     if (urlString.trim().isNotEmpty) {
       final url = Uri.parse(urlString);
 
-      var headers = null;
+      Map<String, String> headers = <String, String>{};
       if (addServerCorrelation) {
         headers = await RequestTracker.getServerCorrelationHeaders();
       }
@@ -46,7 +48,7 @@ class _ManualNetworkRequestsState extends State<ManualNetworkRequests> {
     if (urlString.trim().isNotEmpty) {
       final url = Uri.parse(urlString);
 
-      var headers = null;
+      Map<String, String> headers = <String, String>{};
       if (addServerCorrelation) {
         headers = await RequestTracker.getServerCorrelationHeaders();
       }
@@ -83,7 +85,7 @@ class _ManualNetworkRequestsState extends State<ManualNetworkRequests> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: FlushBeaconsAppBar(
+      appBar: const FlushBeaconsAppBar(
         title: 'Manual network requests',
       ),
       body: Center(
@@ -91,15 +93,15 @@ class _ManualNetworkRequestsState extends State<ManualNetworkRequests> {
           children: [
             Row(
               children: [
-                SizedBox(
+                const SizedBox(
                   width: 10,
                 ),
-                Text('Add server correlation headers: '),
+                const Text('Add server correlation headers: '),
                 Checkbox(
-                  value: this.addServerCorrelation,
+                  value: addServerCorrelation,
                   onChanged: (bool? value) {
                     setState(() {
-                      this.addServerCorrelation = value!;
+                      addServerCorrelation = value!;
                     });
                   },
                 ),
@@ -108,9 +110,9 @@ class _ManualNetworkRequestsState extends State<ManualNetworkRequests> {
             Padding(
               padding: const EdgeInsets.fromLTRB(50, 80, 50, 10),
               child: TextFormField(
-                key: Key("requestTextField"),
+                key: const Key("requestTextField"),
                 controller: urlFieldController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'Enter URL to report',
                     hintText: 'https://www.appdynamics.com'),
@@ -121,20 +123,20 @@ class _ManualNetworkRequestsState extends State<ManualNetworkRequests> {
                 responseText,
                 textAlign: TextAlign.center,
               ),
-              visible: !responseText.isEmpty,
+              visible: responseText.isNotEmpty,
             ),
-            SizedBox(
+            const SizedBox(
               height: 30,
             ),
             ElevatedButton(
-                key: Key("manualGETRequestButton"),
-                child: Text('Manual track GET request'),
+                key: const Key("manualGETRequestButton"),
+                child: const Text('Manual track GET request'),
                 onPressed: _sendGetRequestButtonPressed),
             ElevatedButton(
-                key: Key("manualPOSTRequestButton"),
-                child: Text('Manual track POST request'),
+                key: const Key("manualPOSTRequestButton"),
+                child: const Text('Manual track POST request'),
                 onPressed: _sendPostRequestButtonPressed),
-            SizedBox(
+            const SizedBox(
               height: 30,
             ),
           ],

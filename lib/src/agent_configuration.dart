@@ -76,8 +76,8 @@ class AgentConfiguration {
     this.screenshotURL = "https://mobile.eum-appdynamics.com",
     this.loggingLevel = LoggingLevel.none,
     this.screenshotsEnabled = true,
-    this.crashReportCallback = null,
     this.crashReportingEnabled = true,
+    this.crashReportCallback,
   });
 
   /// Creates a new [AgentConfiguration] with possibility to overwrite

@@ -21,23 +21,24 @@ void main() {
 
   testWidgets("Check session frames are properly reported",
       (WidgetTester tester) async {
-    final newSessionFrameName = "newSessionFrame";
-    final updatedSessionFrameName = "updatedSessionFrame";
+    const newSessionFrameName = "newSessionFrame";
+    const updatedSessionFrameName = "updatedSessionFrame";
 
     await jumpStartInstrumentation(tester);
 
-    final sessionFramesButton = find.byKey(Key("sessionFramesButton"));
+    final sessionFramesButton = find.byKey(const Key("sessionFramesButton"));
     await tester.scrollUntilVisible(sessionFramesButton, 10);
     expect(sessionFramesButton, findsOneWidget);
 
     await tester.tap(sessionFramesButton);
     await tester.pumpAndSettle();
 
-    final startSessionFrameButton = find.byKey(Key("startSessionFrameButton"));
+    final startSessionFrameButton =
+        find.byKey(const Key("startSessionFrameButton"));
     expect(startSessionFrameButton, findsOneWidget);
     await tester.tap(startSessionFrameButton);
     await flushBeacons();
-    await tester.pump(Duration(seconds: 2));
+    await tester.pump(const Duration(seconds: 2));
 
     final startRequests = await findRequestsBy(
       type: "ui",
@@ -48,11 +49,11 @@ void main() {
     expect(startRequests.length, 1);
 
     final updateSessionFrameButton =
-        find.byKey(Key("updateSessionFrameButton"));
+        find.byKey(const Key("updateSessionFrameButton"));
     expect(updateSessionFrameButton, findsOneWidget);
     await tester.tap(updateSessionFrameButton);
     await flushBeacons();
-    await tester.pump(Duration(seconds: 2));
+    await tester.pump(const Duration(seconds: 2));
 
     final updateRequests = await findRequestsBy(
       type: "ui",
@@ -62,11 +63,12 @@ void main() {
     );
     expect(updateRequests.length, 1);
 
-    final endSessionFrameButton = find.byKey(Key("endSessionFrameButton"));
+    final endSessionFrameButton =
+        find.byKey(const Key("endSessionFrameButton"));
     expect(endSessionFrameButton, findsOneWidget);
     await tester.tap(endSessionFrameButton);
     await flushBeacons();
-    await tester.pump(Duration(seconds: 2));
+    await tester.pump(const Duration(seconds: 2));
 
     final endRequests = await findRequestsBy(
       type: "ui",

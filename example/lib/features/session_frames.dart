@@ -19,11 +19,10 @@ class SessionFrames extends StatefulWidget {
 class _SessionFramesState extends State<SessionFrames> {
   final newSessionFrameName = "newSessionFrame";
   final updatedSessionFrameName = "updatedSessionFrame";
-  SessionFrame? sessionFrame = null;
+  SessionFrame? sessionFrame;
 
   Future<void> _startSessionFrame() async {
     if (sessionFrame != null) {
-      print("Session frame already initialized.");
       return;
     }
 
@@ -41,32 +40,33 @@ class _SessionFramesState extends State<SessionFrames> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: FlushBeaconsAppBar(title: "Session frames"),
+      appBar: const FlushBeaconsAppBar(title: "Session frames"),
       body: Center(
         child: Padding(
           padding: const EdgeInsets.only(right: 50, left: 50),
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             ElevatedButton(
-              key: Key("startSessionFrameButton"),
+              key: const Key("startSessionFrameButton"),
               child: Text(
                   'Start session frame \n(named: "$newSessionFrameName")',
                   textAlign: TextAlign.center),
               onPressed: _startSessionFrame,
             ),
             ElevatedButton(
-              key: Key("updateSessionFrameButton"),
+              key: const Key("updateSessionFrameButton"),
               child: Text(
                   'Update session frame \n(named: "$updatedSessionFrameName")',
                   textAlign: TextAlign.center),
               onPressed: _updateSessionFrame,
             ),
             ElevatedButton(
-              key: Key("endSessionFrameButton"),
-              child: Text('End session frame', textAlign: TextAlign.center),
+              key: const Key("endSessionFrameButton"),
+              child:
+                  const Text('End session frame', textAlign: TextAlign.center),
               onPressed: _endSessionFrame,
             ),
           ]),

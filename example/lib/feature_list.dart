@@ -15,25 +15,26 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'features/ANR.dart';
+import 'features/anr.dart';
 import 'features/custom_metrics.dart';
 import 'features/screenshots.dart';
 import 'features/session_frames.dart';
 
 class FeatureList extends StatelessWidget {
-  static const platform =
-      const MethodChannel('com.appdynamics.flutter.example');
+  static const platform = MethodChannel('com.appdynamics.flutter.example');
+
+  const FeatureList({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: FlushBeaconsAppBar(
+      appBar: const FlushBeaconsAppBar(
         key: Key("featureListAppBar"),
         title: 'Feature list',
       ),
       body: Center(
           child: Padding(
-        padding: EdgeInsets.fromLTRB(50, 10, 50, 10),
+        padding: const EdgeInsets.fromLTRB(50, 10, 50, 10),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -42,50 +43,50 @@ class FeatureList extends StatelessWidget {
                   context: context,
                   title: "ANR",
                   keyString: "anrButton",
-                  screen: ANR()),
+                  screen: const Anr()),
               SizedButton(
                   context: context,
                   title: "Manual network requests",
                   keyString: "manualNetworkRequestsButton",
-                  screen: ManualNetworkRequests()),
+                  screen: const ManualNetworkRequests()),
               SizedButton(
                   context: context,
                   title: "Custom timers",
                   keyString: "customTimersButton",
-                  screen: CustomTimers()),
+                  screen: const CustomTimers()),
               SizedButton(
                   context: context,
                   title: "Breadcrumbs",
                   keyString: "breadcrumbsButton",
-                  screen: Breadcrumbs()),
+                  screen: const Breadcrumbs()),
               SizedButton(
                   context: context,
                   title: "Error reporting",
                   keyString: "errorReportingButton",
-                  screen: ErrorReporting()),
+                  screen: const ErrorReporting()),
               SizedButton(
                   context: context,
                   title: "User data",
                   keyString: "userDataButton",
-                  screen: UserData()),
+                  screen: const UserData()),
               SizedButton(
                   context: context,
                   title: "Session frames",
                   keyString: "sessionFramesButton",
-                  screen: SessionFrames()),
+                  screen: const SessionFrames()),
               SizedButton(
                   context: context,
                   title: "Custom metrics",
                   keyString: "customMetricsButton",
-                  screen: CustomMetrics()),
+                  screen: const CustomMetrics()),
               SizedButton(
                   context: context,
                   title: "Screenshots",
                   keyString: "screenshotsButton",
-                  screen: Screenshots()),
+                  screen: const Screenshots()),
               ElevatedButton(
-                key: Key("crashAppButton"),
-                child: Text('Crash app'),
+                key: const Key("crashAppButton"),
+                child: const Text('Crash app'),
                 style: ElevatedButton.styleFrom(primary: Colors.red),
                 onPressed: () {
                   platform.invokeMethod("crash");

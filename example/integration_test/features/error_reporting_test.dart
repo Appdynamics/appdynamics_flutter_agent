@@ -24,7 +24,7 @@ void main() {
   Future<void> runCommonConfiguration(WidgetTester tester) async {
     await jumpStartInstrumentation(tester);
 
-    final errorReportingButton = find.byKey(Key("errorReportingButton"));
+    final errorReportingButton = find.byKey(const Key("errorReportingButton"));
     await tester.scrollUntilVisible(errorReportingButton, 10);
     expect(errorReportingButton, findsOneWidget);
 
@@ -36,12 +36,12 @@ void main() {
       (WidgetTester tester) async {
     await runCommonConfiguration(tester);
 
-    final reportErrorButton = find.byKey(Key("reportErrorButton"));
+    final reportErrorButton = find.byKey(const Key("reportErrorButton"));
     expect(reportErrorButton, findsOneWidget);
     await tester.tap(reportErrorButton);
 
     await flushBeacons();
-    await tester.pumpAndSettle(Duration(seconds: 2));
+    await tester.pumpAndSettle(const Duration(seconds: 2));
 
     if (Platform.isAndroid) {
       final requests = await findRequestsBy(
@@ -65,12 +65,13 @@ void main() {
       (WidgetTester tester) async {
     await runCommonConfiguration(tester);
 
-    final reportExceptionButton = find.byKey(Key("reportExceptionButton"));
+    final reportExceptionButton =
+        find.byKey(const Key("reportExceptionButton"));
     expect(reportExceptionButton, findsOneWidget);
     await tester.tap(reportExceptionButton);
 
     await flushBeacons();
-    await tester.pumpAndSettle(Duration(seconds: 2));
+    await tester.pumpAndSettle(const Duration(seconds: 2));
 
     if (Platform.isAndroid) {
       final requests = await findRequestsBy(
@@ -94,12 +95,12 @@ void main() {
       (WidgetTester tester) async {
     await runCommonConfiguration(tester);
 
-    final reportMessageButton = find.byKey(Key("reportMessageButton"));
+    final reportMessageButton = find.byKey(const Key("reportMessageButton"));
     expect(reportMessageButton, findsOneWidget);
     await tester.tap(reportMessageButton);
 
     await flushBeacons();
-    await tester.pumpAndSettle(Duration(seconds: 2));
+    await tester.pumpAndSettle(const Duration(seconds: 2));
 
     if (Platform.isAndroid) {
       final requests = await findRequestsBy(

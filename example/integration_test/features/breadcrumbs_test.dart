@@ -23,7 +23,7 @@ void main() {
       (WidgetTester tester) async {
     await jumpStartInstrumentation(tester);
 
-    final breadcrumbsButton = find.byKey(Key("breadcrumbsButton"));
+    final breadcrumbsButton = find.byKey(const Key("breadcrumbsButton"));
     await tester.scrollUntilVisible(breadcrumbsButton, 10);
     expect(breadcrumbsButton, findsOneWidget);
 
@@ -31,14 +31,14 @@ void main() {
     await tester.pumpAndSettle();
 
     final leaveBreadcrumbCrashAndSessionButton =
-        find.byKey(Key("leaveBreadcrumbCrashAndSessionButton"));
+        find.byKey(const Key("leaveBreadcrumbCrashAndSessionButton"));
     expect(leaveBreadcrumbCrashAndSessionButton, findsOneWidget);
 
     await tester.tap(leaveBreadcrumbCrashAndSessionButton);
     await tester.pumpAndSettle();
 
     await flushBeacons();
-    await tester.pumpAndSettle(Duration(seconds: 2));
+    await tester.pumpAndSettle(const Duration(seconds: 2));
 
     final requests = await findRequestsBy(
         text: "A crash and session breadcrumb.", type: "breadcrumb");

@@ -16,19 +16,19 @@ import 'package:package_info_plus/package_info_plus.dart';
 import 'globals.dart';
 
 enum BreadcrumbVisibility {
-  CRASHES_ONLY,
-  CRASHES_AND_SESSIONS,
+  crashesOnly,
+  crashesAndSessions,
 }
 
 enum ErrorSeverityLevel {
   /// An error happened, but it did not cause a problem.
-  INFO,
+  info,
 
   /// An error happened but the app recovered gracefully.
-  WARNING,
+  warning,
 
   /// An error happened and caused problems to the app.
-  CRITICAL,
+  critical,
 }
 
 const maxUserDataStringLength = 2048;
@@ -78,35 +78,30 @@ class Instrumentation {
   /// }
   /// ```
   static Future<void> start(AgentConfiguration config) async {
-    try {
-      PackageInfo packageInfo = await PackageInfo.fromPlatform();
-      String version = packageInfo.version;
-      String type = "Flutter";
+    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+    String version = packageInfo.version;
+    String type = "Flutter";
 
-      final crashCallback = config.crashReportCallback;
-      if (crashCallback != null) {
-        _initializeCrashCallback(crashCallback);
-      }
-
-      Map<String, dynamic> arguments = {
-        "appKey": config.appKey,
-        "loggingLevel": config.loggingLevel.index,
-        "collectorURL": config.collectorURL,
-        "screenshotURL": config.screenshotURL,
-        "screenshotsEnabled": config.screenshotsEnabled,
-        "anrDetectionEnabled":
-            true, // hardcoded until it's implemented on Android agent too
-        "anrStackTraceEnabled":
-            true, // hardcoded until it's implemented on Android agent too
-        "version": version,
-        "type": type,
-      }..removeWhere((key, value) => value == null);
-
-      await channel.invokeMethod<void>('start', arguments);
-    } on PlatformException catch (e) {
-      print("Failed to run agent start(): '${e.message}'");
-      throw (e);
+    final crashCallback = config.crashReportCallback;
+    if (crashCallback != null) {
+      _initializeCrashCallback(crashCallback);
     }
+
+    Map<String, dynamic> arguments = {
+      "appKey": config.appKey,
+      "loggingLevel": config.loggingLevel.index,
+      "collectorURL": config.collectorURL,
+      "screenshotURL": config.screenshotURL,
+      "screenshotsEnabled": config.screenshotsEnabled,
+      "anrDetectionEnabled":
+          true, // hardcoded until it's implemented on Android agent too
+      "anrStackTraceEnabled":
+          true, // hardcoded until it's implemented on Android agent too
+      "version": version,
+      "type": type,
+    }..removeWhere((key, value) => value == null);
+
+    await channel.invokeMethod<void>('start', arguments);
   }
 
   /// We can time events by using customer timers that span across
@@ -184,7 +179,7 @@ class Instrumentation {
   /// }
   /// ```
   static Future<void> reportException(Exception exception,
-      {ErrorSeverityLevel severityLevel = ErrorSeverityLevel.WARNING}) async {
+      {ErrorSeverityLevel severityLevel = ErrorSeverityLevel.warning}) async {
     final arguments = {
       "message": exception.toString(),
       "severity": severityLevel.index
@@ -207,7 +202,7 @@ class Instrumentation {
   ///  }
   /// ```
   static Future<void> reportError(Error error,
-      {ErrorSeverityLevel severityLevel = ErrorSeverityLevel.WARNING}) async {
+      {ErrorSeverityLevel severityLevel = ErrorSeverityLevel.warning}) async {
     final arguments = {
       "message": error.toString(),
       "stackTrace": error.stackTrace.toString(),
@@ -226,11 +221,11 @@ class Instrumentation {
   ///   await customAPI();
   /// } on CustomError catch (e) {
   ///   await Instrumentation.reportMessage(e.toString(),
-  ///       severityLevel: ErrorSeverityLevel.INFO);
+  ///       severityLevel: ErrorSeverityLevel.info);
   /// }
   /// ```
   static Future<void> reportMessage(String message,
-      {ErrorSeverityLevel severityLevel = ErrorSeverityLevel.WARNING}) async {
+      {ErrorSeverityLevel severityLevel = ErrorSeverityLevel.warning}) async {
     final arguments = {"message": message, "severity": severityLevel.index};
     await channel.invokeMethod<void>('reportError', arguments);
   }

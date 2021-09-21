@@ -23,25 +23,25 @@ void main() {
       (WidgetTester tester) async {
     await jumpStartInstrumentation(tester);
 
-    final customTimersButton = find.byKey(Key("customTimersButton"));
+    final customTimersButton = find.byKey(const Key("customTimersButton"));
     await tester.scrollUntilVisible(customTimersButton, 10);
     expect(customTimersButton, findsOneWidget);
 
     await tester.tap(customTimersButton);
     await tester.pumpAndSettle();
 
-    final startTimerButton = find.byKey(Key("startTimerButton"));
+    final startTimerButton = find.byKey(const Key("startTimerButton"));
     expect(startTimerButton, findsOneWidget);
 
-    final stopTimerButton = find.byKey(Key("stopTimerButton"));
+    final stopTimerButton = find.byKey(const Key("stopTimerButton"));
     expect(stopTimerButton, findsOneWidget);
 
     await tester.tap(startTimerButton);
-    await tester.pumpAndSettle(Duration(seconds: 1));
+    await tester.pumpAndSettle(const Duration(seconds: 1));
     await tester.tap(stopTimerButton);
 
     await flushBeacons();
-    await tester.pumpAndSettle(Duration(seconds: 2));
+    await tester.pumpAndSettle(const Duration(seconds: 2));
 
     final requests =
         await findRequestsBy(timerName: "My timer", type: "timer-event");

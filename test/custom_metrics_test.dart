@@ -34,8 +34,8 @@ void main() {
     AgentConfiguration config = AgentConfiguration(appKey: appKey);
     await Instrumentation.start(config);
 
-    final customMetricName = "myCustomMetric";
-    final customMetricValue = 123;
+    const customMetricName = "myCustomMetric";
+    const customMetricValue = 123;
 
     await Instrumentation.reportMetric(
         name: customMetricName, value: customMetricValue);

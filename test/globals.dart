@@ -7,7 +7,7 @@
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-const MethodChannel channel = const MethodChannel('appdynamics_mobilesdk');
+const MethodChannel channel = MethodChannel('appdynamics_mobilesdk');
 
 void mockPackageInfo() {
   const channel = MethodChannel('dev.fluttercommunity.plus/package_info');

@@ -49,45 +49,45 @@ class _ScreenshotsState extends State<Screenshots> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: FlushBeaconsAppBar(title: "Screenshots"),
+      appBar: const FlushBeaconsAppBar(title: "Screenshots"),
       body: Center(
         child: Padding(
           padding: const EdgeInsets.only(right: 50, left: 50),
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             ElevatedButton(
-              key: Key("takeScreenshotButton"),
-              child: Text('Take screenshot'),
+              key: const Key("takeScreenshotButton"),
+              child: const Text('Take screenshot'),
               onPressed: _takeScreenshot,
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             ElevatedButton(
-              key: Key("blockScreenshotsButton"),
-              child: Text('Block screenshots'),
+              key: const Key("blockScreenshotsButton"),
+              child: const Text('Block screenshots'),
               onPressed: _blockScreenshots,
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             ElevatedButton(
-              key: Key("unblockScreenshotsButton"),
-              child: Text('Unblock screenshots'),
+              key: const Key("unblockScreenshotsButton"),
+              child: const Text('Unblock screenshots'),
               onPressed: _unblockScreenshots,
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             ElevatedButton(
-              key: Key("checkScreenshotsStatusButton"),
-              child: Text('Check screenshots status'),
+              key: const Key("checkScreenshotsStatusButton"),
+              child: const Text('Check screenshots status'),
               onPressed: _checkScreenshotsStatus,
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             Text(

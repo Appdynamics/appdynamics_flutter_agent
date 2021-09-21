@@ -38,11 +38,11 @@ void main() {
       }
     });
 
-    final url = "http://www.appdynamics.com";
-    final headers = {'foo': 'bar'};
-    final responseCode = 123;
-    final errorMessage = "foo";
-    final stackTrace = "bar";
+    const url = "http://www.appdynamics.com";
+    const headers = {'foo': 'bar'};
+    const responseCode = 123;
+    const errorMessage = "foo";
+    const stackTrace = "bar";
 
     await RequestTracker.create("http://www.appdynamics.com")
       ..setRequestHeaders(headers)

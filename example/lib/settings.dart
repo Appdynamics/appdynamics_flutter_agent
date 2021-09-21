@@ -15,7 +15,7 @@ import 'package:flutter_picker/flutter_picker.dart';
 import 'feature_list.dart';
 
 var localServerURL = "http://${Platform.isIOS ? "localhost" : "10.0.2.2"}:9999";
-final Collectors = {
+final collectors = {
   "Local": {"url": localServerURL, "screenshotURL": localServerURL},
   "Shadow Master": {
     "url": "https://eum-shadow-master-col.saas.appd-test.com",
@@ -40,19 +40,21 @@ final Collectors = {
 };
 
 class Settings extends StatefulWidget {
+  const Settings({Key? key}) : super(key: key);
+
   @override
   _SettingsState createState() => _SettingsState();
 }
 
 class _SettingsState extends State<Settings> {
-  static final _appKey = "SM-AEG-MXS";
+  static const _appKey = "SM-AEG-MXS";
 
   final _appKeyFieldController = TextEditingController(text: _appKey);
   final _collectorFieldController = TextEditingController();
   final _collectorURLFieldController = TextEditingController();
   final _screenshotURLFieldController = TextEditingController();
 
-  void set _currentSelectedCollector(MapEntry collector) {
+  set _currentSelectedCollector(MapEntry collector) {
     final collectorName = collector.key;
     final collectorURL = collector.value["url"];
     final screenshotURL = collector.value["screenshotURL"];
@@ -62,7 +64,7 @@ class _SettingsState extends State<Settings> {
   }
 
   _SettingsState() {
-    _currentSelectedCollector = Collectors.entries.elementAt(0);
+    _currentSelectedCollector = collectors.entries.elementAt(0);
   }
 
   @override
@@ -72,18 +74,18 @@ class _SettingsState extends State<Settings> {
   }
 
   void _onCollectorTextFieldPress() {
-    new Picker(
+    Picker(
         adapter: PickerDataAdapter<String>(pickerdata: [
-          Collectors.keys.toList(),
+          collectors.keys.toList(),
         ], isArray: true),
         changeToFirst: true,
         hideHeader: false,
         onConfirm: (Picker picker, List value) {
-          final collector = Collectors.entries.elementAt(value[0]);
+          final collector = collectors.entries.elementAt(value[0]);
           _currentSelectedCollector = collector;
           _collectorFieldController.selection =
-              TextSelection.fromPosition(TextPosition(offset: 0));
-        }).showModal(this.context);
+              TextSelection.fromPosition(const TextPosition(offset: 0));
+        }).showModal(context);
   }
 
   void _setCustomCollector(String _) {
@@ -112,34 +114,30 @@ class _SettingsState extends State<Settings> {
   }
 
   Future<void> _onStartPress(context) async {
-    try {
-      var appKey = _appKeyFieldController.text;
-      var collectorURL = _collectorURLFieldController.text;
-      var screenshotURL = _screenshotURLFieldController.text;
+    var appKey = _appKeyFieldController.text;
+    var collectorURL = _collectorURLFieldController.text;
+    var screenshotURL = _screenshotURLFieldController.text;
 
-      if (appKey.trim().isEmpty) {
-        return;
-      }
-
-      final crashReportCallback = (List<CrashReportSummary> summaries) async {
-        await _showCrashReportAlert(jsonEncode(summaries));
-      };
-
-      AgentConfiguration config = AgentConfiguration(
-          appKey: appKey,
-          loggingLevel: LoggingLevel.verbose,
-          collectorURL: collectorURL,
-          screenshotURL: screenshotURL,
-          crashReportCallback: crashReportCallback);
-      await Instrumentation.start(config);
-
-      await Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => FeatureList()),
-      );
-    } catch (error) {
-      print(error);
+    if (appKey.trim().isEmpty) {
+      return;
     }
+
+    crashReportCallback(List<CrashReportSummary> summaries) async {
+      await _showCrashReportAlert(jsonEncode(summaries));
+    }
+
+    AgentConfiguration config = AgentConfiguration(
+        appKey: appKey,
+        loggingLevel: LoggingLevel.verbose,
+        collectorURL: collectorURL,
+        screenshotURL: screenshotURL,
+        crashReportCallback: crashReportCallback);
+    await Instrumentation.start(config);
+
+    await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const FeatureList()),
+    );
   }
 
   @override
@@ -154,7 +152,7 @@ class _SettingsState extends State<Settings> {
             padding: const EdgeInsets.fromLTRB(50, 8, 50, 20),
             child: TextFormField(
               controller: _appKeyFieldController,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: 'Enter app key',
                   hintText: 'AA-BBB-CCC'),
@@ -166,7 +164,7 @@ class _SettingsState extends State<Settings> {
               controller: _collectorFieldController,
               onTap: _onCollectorTextFieldPress,
               readOnly: true,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: 'Select collector',
                   hintText: 'https://my-custom-collector.com'),
@@ -177,7 +175,7 @@ class _SettingsState extends State<Settings> {
             child: TextFormField(
               controller: _collectorURLFieldController,
               onFieldSubmitted: _setCustomCollector,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                   border: UnderlineInputBorder(),
                   labelText: 'Collector URL',
                   hintText: 'https://my-custom-collector-url.com'),
@@ -188,14 +186,14 @@ class _SettingsState extends State<Settings> {
             child: TextFormField(
               controller: _screenshotURLFieldController,
               onFieldSubmitted: _setCustomCollector,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                   border: UnderlineInputBorder(),
                   labelText: 'Screenshot URL',
                   hintText: 'https://my-custom-screenshot-url.com'),
             ),
           ),
           ElevatedButton(
-              key: Key("startInstrumentationButton"),
+              key: const Key("startInstrumentationButton"),
               onPressed: () => _onStartPress(context),
               child: const Text('Start instrumentation')),
         ], mainAxisAlignment: MainAxisAlignment.center),

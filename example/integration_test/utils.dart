@@ -34,11 +34,11 @@ var serverAgentConfigStub = {
 
 // Jumps over the main screen, starting instrumentation with default configs.
 Future<void> jumpStartInstrumentation(WidgetTester tester) async {
-  await tester.pumpWidget(MyApp());
-  final startButtonFinder = find.byKey(Key("startInstrumentationButton"));
+  await tester.pumpWidget(const MyApp());
+  final startButtonFinder = find.byKey(const Key("startInstrumentationButton"));
   expect(startButtonFinder, findsOneWidget);
 
-  final featureListBarFinder = find.byKey(Key("featureListAppBar"));
+  final featureListBarFinder = find.byKey(const Key("featureListAppBar"));
   expect(featureListBarFinder, findsNothing);
 
   await tester.tap(startButtonFinder);
@@ -70,7 +70,6 @@ Map<String, dynamic>? getBeaconRequestBody(Map<String, dynamic> request) {
     final List<dynamic> bodyList = jsonDecode(request["request"]["body"]);
     return Map<String, dynamic>.from(bodyList[0]);
   } catch (e) {
-    print("Request failed to be parsed: ${request["request"]["url"]}");
     return null;
   }
 }

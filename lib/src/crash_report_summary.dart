@@ -13,7 +13,7 @@
 /// operations should be performed asynchronously.
 ///
 /// [AgentConfiguration.crashReportingEnabled] must be `true` (default).
-typedef void CrashReportCallback(List<CrashReportSummary> summaries);
+typedef CrashReportCallback = void Function(List<CrashReportSummary> summaries);
 
 class CrashReportSummary {
   /// Uniquely defines the crash, can be used as key to find full crash report.
@@ -27,8 +27,8 @@ class CrashReportSummary {
 
   CrashReportSummary({
     required this.crashId,
-    this.exceptionName = null,
-    this.exceptionReason = null,
+    this.exceptionName,
+    this.exceptionReason,
   });
 
   CrashReportSummary.fromJson(Map<String, dynamic> json) {

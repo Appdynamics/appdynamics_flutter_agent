@@ -36,8 +36,8 @@ void main() {
     AgentConfiguration config = AgentConfiguration(appKey: appKey);
     await Instrumentation.start(config);
 
-    final newSessionFrameName = "newSessionFrame";
-    final updatedSessionFrameName = "updatedSessionFrame";
+    const newSessionFrameName = "newSessionFrame";
+    const updatedSessionFrameName = "updatedSessionFrame";
 
     final sessionFrame =
         await Instrumentation.startSessionFrame(newSessionFrameName);

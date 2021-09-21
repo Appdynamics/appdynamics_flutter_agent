@@ -34,9 +34,9 @@ void main() {
     AgentConfiguration config = AgentConfiguration(appKey: appKey);
     await Instrumentation.start(config);
 
-    final breadcrumb = "My breadcrumb";
-    final crashSeverityLevel = BreadcrumbVisibility.CRASHES_ONLY;
-    final crashSessionSeverityLevel = BreadcrumbVisibility.CRASHES_AND_SESSIONS;
+    const breadcrumb = "My breadcrumb";
+    const crashSeverityLevel = BreadcrumbVisibility.crashesOnly;
+    const crashSessionSeverityLevel = BreadcrumbVisibility.crashesAndSessions;
 
     Instrumentation.leaveBreadcrumb(breadcrumb, crashSeverityLevel);
     Instrumentation.leaveBreadcrumb(breadcrumb, crashSessionSeverityLevel);

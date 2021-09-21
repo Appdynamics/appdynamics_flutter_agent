@@ -9,7 +9,8 @@ import 'package:appdynamics_mobilesdk/src/agent_configuration.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  testWidgets('did update property both in class and copyWith()', (WidgetTester tester) async {
+  testWidgets('did update property both in class and copyWith()',
+      (WidgetTester tester) async {
     AgentConfiguration config =
         AgentConfiguration(appKey: "foo", loggingLevel: LoggingLevel.none);
     AgentConfiguration config2 = config.copyWith(appKey: 'newAppKey');

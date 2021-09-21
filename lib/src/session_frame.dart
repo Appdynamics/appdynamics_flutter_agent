@@ -23,13 +23,13 @@ class SessionFrame {
   /// is not known at the time of its creation.
   ///
   updateName(String newName) async {
-    final arguments = {"newName": newName, "id": this.id};
+    final arguments = {"newName": newName, "id": id};
     await channel.invokeMethod<void>('updateSessionFrameName', arguments);
   }
 
   /// Reports the end of the session frame.
   /// The [SessionFrame] object will no longer be usable after this call.
   end() async {
-    await channel.invokeMethod<void>('endSessionFrame', this.id);
+    await channel.invokeMethod<void>('endSessionFrame', id);
   }
 }

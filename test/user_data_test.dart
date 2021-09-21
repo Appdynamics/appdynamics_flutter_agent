@@ -44,19 +44,19 @@ void main() {
     AgentConfiguration config = AgentConfiguration(appKey: appKey);
     await Instrumentation.start(config);
 
-    final intKey = "intKey";
-    final intValue = 1234;
+    const intKey = "intKey";
+    const intValue = 1234;
 
-    final stringKey = "stringKey";
-    final stringValue = "1234";
+    const stringKey = "stringKey";
+    const stringValue = "1234";
 
-    final doubleKey = "doubleKey";
-    final doubleValue = 1234.5678;
+    const doubleKey = "doubleKey";
+    const doubleValue = 1234.5678;
 
-    final boolKey = "boolKey";
-    final boolValue = true;
+    const boolKey = "boolKey";
+    const boolValue = true;
 
-    final dateTimeKey = "DateTimeKey";
+    const dateTimeKey = "DateTimeKey";
     final dateTimeValue = DateTime.utc(2021);
 
     await Instrumentation.setUserDataInt(intKey, intValue);

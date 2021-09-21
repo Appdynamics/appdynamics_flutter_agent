@@ -21,7 +21,7 @@ class FlushBeaconsAppBar extends StatefulWidget with PreferredSizeWidget {
   _FlushBeaconsAppBarState createState() => _FlushBeaconsAppBarState();
 
   @override
-  Size get preferredSize => Size.fromHeight(kToolbarHeight);
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }
 
 class _FlushBeaconsAppBarState extends State<FlushBeaconsAppBar> {
@@ -32,7 +32,7 @@ class _FlushBeaconsAppBarState extends State<FlushBeaconsAppBar> {
     tracker.setResponseStatusCode(200);
     tracker.reportDone();
 
-    Future.delayed(Duration(milliseconds: 200), () {
+    Future.delayed(const Duration(milliseconds: 200), () {
       hideLoadingIndicator(context);
     });
   }
@@ -43,11 +43,11 @@ class _FlushBeaconsAppBarState extends State<FlushBeaconsAppBar> {
       title: Text(widget.title),
       actions: <Widget>[
         Padding(
-            padding: EdgeInsets.only(right: 20.0),
+            padding: const EdgeInsets.only(right: 20.0),
             child: GestureDetector(
-              key: Key("flushBeaconButton"),
+              key: const Key("flushBeaconButton"),
               onTap: () => _flushBeaconsPressed(context),
-              child: Icon(Icons.refresh),
+              child: const Icon(Icons.refresh),
             )),
       ],
     );

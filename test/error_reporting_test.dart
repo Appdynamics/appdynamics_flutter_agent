@@ -35,13 +35,13 @@ void main() {
     AgentConfiguration config = AgentConfiguration(appKey: appKey);
     await Instrumentation.start(config);
 
-    final message = "test";
-    final exception = Exception(message);
-    final error = Error();
+    const message = "test";
+    var exception = Exception(message);
+    var error = Error();
 
-    final infoLevel = ErrorSeverityLevel.INFO;
-    final warningLevel = ErrorSeverityLevel.WARNING;
-    final criticalLevel = ErrorSeverityLevel.CRITICAL;
+    const infoLevel = ErrorSeverityLevel.info;
+    const warningLevel = ErrorSeverityLevel.warning;
+    const criticalLevel = ErrorSeverityLevel.critical;
 
     Instrumentation.reportException(exception, severityLevel: infoLevel);
     Instrumentation.reportError(error, severityLevel: warningLevel);

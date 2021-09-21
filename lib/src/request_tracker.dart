@@ -107,6 +107,6 @@ class RequestTracker {
   static Future<Map<String, String>> getServerCorrelationHeaders() async {
     var response = await channel
         .invokeMethod<Map<dynamic, dynamic>>('getServerCorrelationHeaders');
-    return new Map<String, String>.from(response!);
+    return Map<String, String>.from(response!);
   }
 }
