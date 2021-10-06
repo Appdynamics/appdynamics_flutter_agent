@@ -67,7 +67,13 @@ class AgentConfiguration {
   /// have access to crash reports.
   final CrashReportCallback? crashReportCallback;
 
-  // TODO: Implement crash reporting
+  /// Enables or disables the Crash Reporter feature.
+  ///
+  /// Default is enabled.
+  ///
+  /// Most applications should leave this feature enabled.
+  /// Disable if you are using a different crash reporting tool and conflicts
+  /// are occurring.
   final bool crashReportingEnabled;
 
   AgentConfiguration({

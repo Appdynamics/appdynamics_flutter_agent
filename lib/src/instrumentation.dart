@@ -93,6 +93,7 @@ class Instrumentation {
       "collectorURL": config.collectorURL,
       "screenshotURL": config.screenshotURL,
       "screenshotsEnabled": config.screenshotsEnabled,
+      "crashReportingEnabled": config.crashReportingEnabled,
       "anrDetectionEnabled":
           true, // hardcoded until it's implemented on Android agent too
       "anrStackTraceEnabled":

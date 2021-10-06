@@ -19,6 +19,8 @@ void main() {
     expect(config.collectorURL, config2.collectorURL);
     expect(config.screenshotURL, config2.screenshotURL);
     expect(config.screenshotsEnabled, config2.screenshotsEnabled);
+    expect(config.crashReportCallback, config2.crashReportCallback);
+    expect(config.crashReportingEnabled, config2.crashReportingEnabled);
 
     AgentConfiguration config3 =
         config.copyWith(loggingLevel: LoggingLevel.info);

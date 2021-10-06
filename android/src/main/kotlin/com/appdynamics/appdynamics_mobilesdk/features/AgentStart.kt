@@ -22,6 +22,7 @@ fun AppDynamicsMobileSdkPlugin.start(@NonNull result: MethodChannel.Result, argu
         val collectorURL = properties["collectorURL"] as? String
         val screenshotURL = properties["screenshotURL"] as? String
         val screenshotsEnabled = properties["screenshotsEnabled"] as? Boolean
+        val crashReportingEnabled = properties["crashReportingEnabled"] as? Boolean
 
         if (appKey == null) {
             result.error("500", "Please provide an appKey.", "Agent start() failed.")
@@ -46,6 +47,10 @@ fun AppDynamicsMobileSdkPlugin.start(@NonNull result: MethodChannel.Result, argu
 
         if (screenshotsEnabled != null) {
             builder.withScreenshotsEnabled(screenshotsEnabled)
+        }
+
+        if (crashReportingEnabled != null) {
+            builder.withCrashReportingEnabled(crashReportingEnabled)
         }
 
         if (crashReportCallback == null) {

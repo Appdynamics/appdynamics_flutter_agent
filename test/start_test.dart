@@ -49,6 +49,7 @@ void main() {
           "screenshotsEnabled": true,
           "anrDetectionEnabled": true,
           "anrStackTraceEnabled": true,
+          "crashReportingEnabled": true,
           "type": "Flutter",
         },
       ),

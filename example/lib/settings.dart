@@ -53,6 +53,8 @@ class _SettingsState extends State<Settings> {
   final _collectorFieldController = TextEditingController();
   final _collectorURLFieldController = TextEditingController();
   final _screenshotURLFieldController = TextEditingController();
+  var _crashReportingEnabled = true;
+  var _screenshotsEnabled = true;
 
   set _currentSelectedCollector(MapEntry collector) {
     final collectorName = collector.key;
@@ -70,6 +72,9 @@ class _SettingsState extends State<Settings> {
   @override
   void dispose() {
     _appKeyFieldController.dispose();
+    _collectorFieldController.dispose();
+    _collectorURLFieldController.dispose();
+    _screenshotURLFieldController.dispose();
     super.dispose();
   }
 
@@ -131,7 +136,9 @@ class _SettingsState extends State<Settings> {
         loggingLevel: LoggingLevel.verbose,
         collectorURL: collectorURL,
         screenshotURL: screenshotURL,
-        crashReportCallback: crashReportCallback);
+        crashReportCallback: crashReportCallback,
+        screenshotsEnabled: _screenshotsEnabled,
+        crashReportingEnabled: _crashReportingEnabled);
     await Instrumentation.start(config);
 
     await Navigator.push(
@@ -140,11 +147,61 @@ class _SettingsState extends State<Settings> {
     );
   }
 
+  Future<void> _showExtraConfigurationsDialog(context) async {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return StatefulBuilder(builder: (context, setState) {
+            return Dialog(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20.0)),
+                child: Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(children: [
+                          const Text("Crash reporting enabled:"),
+                          Checkbox(
+                            value: _crashReportingEnabled,
+                            onChanged: (bool? newValue) {
+                              setState(() {
+                                _crashReportingEnabled = newValue!;
+                              });
+                            },
+                          )
+                        ]),
+                        Row(children: [
+                          const Text("Screenshots enabled:"),
+                          Checkbox(
+                            value: _screenshotsEnabled,
+                            onChanged: (bool? newValue) {
+                              setState(() {
+                                _screenshotsEnabled = newValue!;
+                              });
+                            },
+                          ),
+                        ])
+                      ]),
+                ));
+          });
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('EveryFeature'),
+        actions: <Widget>[
+          Padding(
+              padding: const EdgeInsets.only(right: 20.0),
+              child: GestureDetector(
+                onTap: () => {_showExtraConfigurationsDialog(context)},
+                child: const Icon(Icons.menu),
+              )),
+        ],
       ),
       body: Center(
         child: Column(children: [
