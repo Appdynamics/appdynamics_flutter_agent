@@ -13,6 +13,25 @@ import 'package:flutter_test/flutter_test.dart';
 
 import 'wiremock_utils.dart';
 
+extension TestHelpers on WidgetTester {
+  // TODO: Migrate all tests to integrate this WidgetTester extension.
+  // Jumps over the main screen, starting instrumentation with default configs.
+  Future<void> jumpStartInstrumentation() async {
+    await pumpWidget(const MyApp());
+    final startButtonFinder =
+        find.byKey(const Key("startInstrumentationButton"));
+    expect(startButtonFinder, findsOneWidget);
+
+    final featureListBarFinder = find.byKey(const Key("featureListAppBar"));
+    expect(featureListBarFinder, findsNothing);
+
+    await tap(startButtonFinder);
+    await pumpAndSettle();
+
+    expect(featureListBarFinder, findsOneWidget);
+  }
+}
+
 var serverAgentConfigStub = {
   "agentConfig": {
     "enableScreenshot": true,
@@ -32,7 +51,7 @@ var serverAgentConfigStub = {
   }
 };
 
-// Jumps over the main screen, starting instrumentation with default configs.
+// TODO: Delete after migrating all tests to WidgetTester extension.
 Future<void> jumpStartInstrumentation(WidgetTester tester) async {
   await tester.pumpWidget(const MyApp());
   final startButtonFinder = find.byKey(const Key("startInstrumentationButton"));

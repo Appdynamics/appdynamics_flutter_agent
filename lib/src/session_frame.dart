@@ -9,7 +9,7 @@ import 'package:flutter/cupertino.dart';
 
 /// Call the private constructor for [SessionFrame].
 ///
-/// We want users to call session frames aPI by _createSessionFrame, not
+/// We want users to call session frames API by _createSessionFrame, not
 /// constructors.
 SessionFrame createSessionFrame() => SessionFrame._();
 

@@ -530,7 +530,7 @@ class Instrumentation {
   /// non-redundant parts are uploaded, so it is safe to take many of these
   /// without impacting performance of your application.
   static Future<void> takeScreenshot() async {
-    await channel.invokeMethod<bool>('takeScreenshot');
+    await channel.invokeMethod<void>('takeScreenshot');
   }
 
   /// Custom metrics allows you to report numeric values associated with a
@@ -572,5 +572,25 @@ class Instrumentation {
   }) async {
     final arguments = {"name": name, "value": value};
     await channel.invokeMethod<void>('reportMetric', arguments);
+  }
+
+  /// Stop sending beacons to the collector.
+  ///
+  /// No data will come from the agent while shut down. All other activities of
+  /// the agent will continue, except for event sending.
+  ///
+  /// See also [restartAgent].
+  static Future<void> shutdownAgent() async {
+    await channel.invokeMethod<void>('shutdownAgent');
+  }
+
+  /// Restart sending beacons to the collector.
+  ///
+  /// Data will start flowing from the agent immediately. No change will
+  /// occur if the shutdownAgent call has not been made.
+  ///
+  /// See also [shutdownAgent].
+  static Future<void> restartAgent() async {
+    await channel.invokeMethod<void>('restartAgent');
   }
 }

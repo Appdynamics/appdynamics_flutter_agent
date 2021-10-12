@@ -80,7 +80,11 @@ open class AppDynamicsMobileSdkPlugin : FlutterPlugin, MethodCallHandler {
             "takeScreenshot" to ::takeScreenshot,
             "blockScreenshots" to ::blockScreenshots,
             "unblockScreenshots" to ::unblockScreenshots,
-            "screenshotsBlocked" to ::screenshotsBlocked
+            "screenshotsBlocked" to ::screenshotsBlocked,
+
+            // Shutdown & restart
+            "shutdownAgent" to ::shutdownAgent,
+            "restartAgent" to::restartAgent
             )
 
         methods[call.method]?.let { method ->

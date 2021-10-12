@@ -109,36 +109,44 @@ class _ManualNetworkRequestsState extends State<ManualNetworkRequests> {
             ),
             Padding(
               padding: const EdgeInsets.fromLTRB(50, 80, 50, 10),
-              child: TextFormField(
-                key: const Key("requestTextField"),
-                controller: urlFieldController,
-                decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'Enter URL to report',
-                    hintText: 'https://www.appdynamics.com'),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  TextFormField(
+                    key: const Key("requestTextField"),
+                    controller: urlFieldController,
+                    decoration: const InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: 'Enter URL to report',
+                        hintText: 'https://www.appdynamics.com'),
+                  ),
+                  const SizedBox(
+                    height: 8,
+                  ),
+                  Visibility(
+                    child: Text(
+                      responseText,
+                      textAlign: TextAlign.center,
+                    ),
+                    visible: responseText.isNotEmpty,
+                  ),
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  ElevatedButton(
+                      key: const Key("manualGETRequestButton"),
+                      child: const Text('Manual track GET request'),
+                      onPressed: _sendGetRequestButtonPressed),
+                  ElevatedButton(
+                      key: const Key("manualPOSTRequestButton"),
+                      child: const Text('Manual track POST request'),
+                      onPressed: _sendPostRequestButtonPressed),
+                  const SizedBox(
+                    height: 30,
+                  ),
+                ],
               ),
-            ),
-            Visibility(
-              child: Text(
-                responseText,
-                textAlign: TextAlign.center,
-              ),
-              visible: responseText.isNotEmpty,
-            ),
-            const SizedBox(
-              height: 30,
-            ),
-            ElevatedButton(
-                key: const Key("manualGETRequestButton"),
-                child: const Text('Manual track GET request'),
-                onPressed: _sendGetRequestButtonPressed),
-            ElevatedButton(
-                key: const Key("manualPOSTRequestButton"),
-                child: const Text('Manual track POST request'),
-                onPressed: _sendPostRequestButtonPressed),
-            const SizedBox(
-              height: 30,
-            ),
+            )
           ],
         ),
       ),

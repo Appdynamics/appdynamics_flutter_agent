@@ -4,6 +4,7 @@
  *
  */
 
+import 'package:appdynamics_mobilesdk_example/features/agent_shutdown.dart';
 import 'package:appdynamics_mobilesdk_example/features/breadcrumbs.dart';
 import 'package:appdynamics_mobilesdk_example/features/custom_timers.dart';
 import 'package:appdynamics_mobilesdk_example/features/error_reporting.dart';
@@ -84,6 +85,11 @@ class FeatureList extends StatelessWidget {
                   title: "Screenshots",
                   keyString: "screenshotsButton",
                   screen: const Screenshots()),
+              SizedButton(
+                  context: context,
+                  title: "Agent shutdown",
+                  keyString: "agentShutdownButton",
+                  screen: const AgentShutdown()),
               ElevatedButton(
                 key: const Key("crashAppButton"),
                 child: const Text('Crash app'),
