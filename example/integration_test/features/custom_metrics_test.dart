@@ -4,12 +4,21 @@
  *
  */
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
-import '../utils.dart';
+import '../tester_utils.dart';
 import '../wiremock_utils.dart';
+
+extension on WidgetTester {
+  assertBeaconSent() async {
+    final requests = await findRequestsBy(
+        type: "custom-metric-event",
+        metricName: "myCustomMetric",
+        metricValue: "123");
+    expect(requests.length, 1);
+  }
+}
 
 void main() {
   setUp(() async {
@@ -21,30 +30,11 @@ void main() {
 
   testWidgets("Check custom metrics are properly reported",
       (WidgetTester tester) async {
-    const customMetricName = "myCustomMetric";
-    const customMetricValue = "123";
-
-    await jumpStartInstrumentation(tester);
-
-    final customMetricsButton = find.byKey(const Key("customMetricsButton"));
-    await tester.scrollUntilVisible(customMetricsButton, 10);
-    expect(customMetricsButton, findsOneWidget);
-
-    await tester.tap(customMetricsButton);
-    await tester.pumpAndSettle();
-
-    final reportMetricButton = find.byKey(const Key("reportMetricButton"));
-    expect(reportMetricButton, findsOneWidget);
-
-    await tester.tap(reportMetricButton);
-    await flushBeacons();
-    await tester.pumpAndSettle(const Duration(seconds: 2));
-
-    final requests = await findRequestsBy(
-        type: "custom-metric-event",
-        metricName: customMetricName,
-        metricValue: customMetricValue);
-    expect(requests.length, 1);
+    await tester.jumpstartInstrumentation();
+    await tester.tapAndSettle("customMetricsButton");
+    await tester.tapAndSettle("reportMetricButton");
+    await tester.flushBeacons();
+    await tester.assertBeaconSent();
   });
 
   tearDown(() async {

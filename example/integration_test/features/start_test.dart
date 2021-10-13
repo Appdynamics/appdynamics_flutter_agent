@@ -7,8 +7,16 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
-import '../utils.dart';
+import '../tester_utils.dart';
 import '../wiremock_utils.dart';
+
+extension on WidgetTester {
+  assertBeaconSent() async {
+    final requests =
+        await findRequestsBy(type: "system-event", event: "Agent init");
+    expect(requests.length, 1);
+  }
+}
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -20,11 +28,8 @@ void main() {
 
   testWidgets("Instrumentation.start() changes screen",
       (WidgetTester tester) async {
-    await jumpStartInstrumentation(tester);
-
-    final requests =
-        await findRequestsBy(type: "system-event", event: "Agent init");
-    expect(requests.length, 1);
+    await tester.jumpstartInstrumentation();
+    await tester.assertBeaconSent();
   });
 
   tearDown(() async {

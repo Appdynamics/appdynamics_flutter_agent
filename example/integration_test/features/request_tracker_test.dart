@@ -8,8 +8,48 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
-import '../utils.dart';
+import '../tester_utils.dart';
 import '../wiremock_utils.dart';
+
+extension NetworkRequests on WidgetTester {
+  sendNetworkRequest() async {
+    final manualPOSTRequestButton =
+        find.byKey(const Key("manualPOSTRequestButton"));
+    expect(manualPOSTRequestButton, findsOneWidget);
+
+    final requestTextField = find.byKey(const Key("requestTextField"));
+    expect(requestTextField, findsOneWidget);
+
+    final randomSuccessURL = serverRequestsUrl;
+    await enterText(requestTextField, randomSuccessURL);
+    await tap(manualPOSTRequestButton);
+    await pump(const Duration(seconds: 2));
+  }
+
+  assertBeaconSent() async {
+    final requestSentLabel = find.text("Success with 200.");
+    expect(requestSentLabel, findsOneWidget);
+
+    final requests = await findRequestsBy(
+        url: serverRequestsUrl,
+        type: "network-request",
+        hrc: "200",
+        $is: "Manual HttpTracker");
+    expect(requests.length, 1);
+  }
+
+  assertBeaconNotSent() async {
+    final requestSentLabel = find.text("Success with 200.");
+    expect(requestSentLabel, findsOneWidget);
+
+    final requests = await findRequestsBy(
+        url: serverRequestsUrl,
+        type: "network-request",
+        hrc: "200",
+        $is: "Manual HttpTracker");
+    expect(requests.length, 0);
+  }
+}
 
 void main() {
   setUp(() async {
@@ -21,40 +61,10 @@ void main() {
 
   testWidgets("Manual request tracking sends beacons",
       (WidgetTester tester) async {
-    await jumpStartInstrumentation(tester);
-
-    final manualNetworkRequestsButton =
-        find.byKey(const Key("manualNetworkRequestsButton"));
-    await tester.scrollUntilVisible(manualNetworkRequestsButton, 10);
-    expect(manualNetworkRequestsButton, findsOneWidget);
-
-    await tester.tap(manualNetworkRequestsButton);
-    await tester.pumpAndSettle();
-
-    final manualPOSTRequestButton =
-        find.byKey(const Key("manualPOSTRequestButton"));
-    expect(manualPOSTRequestButton, findsOneWidget);
-
-    final requestTextField = find.byKey(const Key("requestTextField"));
-    expect(requestTextField, findsOneWidget);
-
-    final randomSuccessURL = serverRequestsUrl;
-    await tester.enterText(requestTextField, randomSuccessURL);
-    await tester.tap(manualPOSTRequestButton);
-    await tester.pump(const Duration(seconds: 2));
-
-    final requestSentLabel = find.text("Success with 200.");
-    expect(requestSentLabel, findsOneWidget);
-
-    await flushBeacons();
-    await tester.pump(const Duration(seconds: 2));
-
-    final requests = await findRequestsBy(
-        url: serverRequestsUrl,
-        type: "network-request",
-        hrc: "200",
-        $is: "Manual HttpTracker");
-    expect(requests.length, 1);
+    await tester.jumpstartInstrumentation();
+    await tester.tapAndSettle("manualNetworkRequestsButton");
+    await tester.sendNetworkRequest();
+    await tester.assertBeaconSent();
   });
 
   tearDown(() async {

@@ -4,12 +4,19 @@
  *
  */
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
-import '../utils.dart';
+import '../tester_utils.dart';
 import '../wiremock_utils.dart';
+
+extension on WidgetTester {
+  assertCrashAndSessionBeaconSent() async {
+    final requests = await findRequestsBy(
+        text: "A crash and session breadcrumb.", type: "breadcrumb");
+    expect(requests.length, 1);
+  }
+}
 
 void main() {
   setUp(() async {
@@ -21,28 +28,11 @@ void main() {
 
   testWidgets("Check crash and session breadcrumbs are properly reported",
       (WidgetTester tester) async {
-    await jumpStartInstrumentation(tester);
-
-    final breadcrumbsButton = find.byKey(const Key("breadcrumbsButton"));
-    await tester.scrollUntilVisible(breadcrumbsButton, 10);
-    expect(breadcrumbsButton, findsOneWidget);
-
-    await tester.tap(breadcrumbsButton);
-    await tester.pumpAndSettle();
-
-    final leaveBreadcrumbCrashAndSessionButton =
-        find.byKey(const Key("leaveBreadcrumbCrashAndSessionButton"));
-    expect(leaveBreadcrumbCrashAndSessionButton, findsOneWidget);
-
-    await tester.tap(leaveBreadcrumbCrashAndSessionButton);
-    await tester.pumpAndSettle();
-
-    await flushBeacons();
-    await tester.pumpAndSettle(const Duration(seconds: 2));
-
-    final requests = await findRequestsBy(
-        text: "A crash and session breadcrumb.", type: "breadcrumb");
-    expect(requests.length, 1);
+    await tester.jumpstartInstrumentation();
+    await tester.tapAndSettle("breadcrumbsButton");
+    await tester.tapAndSettle("leaveBreadcrumbCrashAndSessionButton");
+    await tester.flushBeacons();
+    await tester.assertCrashAndSessionBeaconSent();
   });
 
   // TODO: Add Check Crash Only breadcrumbs when crash reporting is implemented

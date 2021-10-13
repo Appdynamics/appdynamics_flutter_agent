@@ -5,14 +5,51 @@
  */
 import 'dart:convert';
 import 'dart:io';
-
 import 'package:http/http.dart' as http;
-
-import 'utils.dart';
+import 'package:flutter_test/flutter_test.dart';
 
 final serverUrl = "http://${Platform.isIOS ? "localhost" : "10.0.2.2"}:9999";
 final serverRequestsUrl = "$serverUrl/__admin/requests";
 final serverMappingsUrl = "$serverUrl/__admin/mappings";
+
+var serverAgentConfigStub = {
+  "agentConfig": {
+    "enableScreenshot": true,
+    "screenshotUseCellular": true,
+    "autoScreenshot": false,
+    "timestamp": 1,
+    "anrThreshold": 3000,
+    "deviceMetricsConfigurations": {
+      "enableMemory": false,
+      "enableStorage": false,
+      "enableBattery": false,
+      "criticalMemoryThresholdPercentage": 90,
+      "criticalBatteryThresholdPercentage": 90,
+      "criticalStorageThresholdPercentage": 90,
+      "collectionFrequencyMins": 2
+    }
+  }
+};
+
+Future<void> mapAgentInitToReturnSuccess() async {
+  await setServerMapping({
+    "request": {
+      "method": "POST",
+      "url": "/eumcollector/mobileMetrics?version=2"
+    },
+    "response": {"status": 200, "body": jsonEncode(serverAgentConfigStub)}
+  });
+}
+
+// Shortcut to get body of beacon requests.
+Map<String, dynamic>? getBeaconRequestBody(Map<String, dynamic> request) {
+  try {
+    final List<dynamic> bodyList = jsonDecode(request["request"]["body"]);
+    return Map<String, dynamic>.from(bodyList[0]);
+  } catch (e) {
+    return null;
+  }
+}
 
 /// Checks request's bodies for specific parameters and values.
 ///

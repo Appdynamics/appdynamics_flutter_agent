@@ -4,12 +4,44 @@
  *
  */
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
-import '../utils.dart';
+import '../tester_utils.dart';
 import '../wiremock_utils.dart';
+
+extension on WidgetTester {
+  static const updatedSessionFrameName = "updatedSessionFrame";
+
+  assertSessionStartBeaconSent() async {
+    final startRequests = await findRequestsBy(
+        type: "ui",
+        event: "Session Frame Start",
+        sessionFrameUuid: "<any>",
+        sessionFrameName: "newSessionFrame");
+    expect(startRequests.length, 1);
+  }
+
+  assertSessionUpdateBeaconSent() async {
+    final updateRequests = await findRequestsBy(
+      type: "ui",
+      event: "Session Frame Update",
+      sessionFrameUuid: "<any>",
+      sessionFrameName: updatedSessionFrameName,
+    );
+    expect(updateRequests.length, 1);
+  }
+
+  assertSessionEndBeaconSent() async {
+    final endRequests = await findRequestsBy(
+      type: "ui",
+      event: "Session Frame End",
+      sessionFrameUuid: "<any>",
+      sessionFrameName: updatedSessionFrameName,
+    );
+    expect(endRequests.length, 1);
+  }
+}
 
 void main() {
   setUp(() async {
@@ -21,62 +53,17 @@ void main() {
 
   testWidgets("Check session frames are properly reported",
       (WidgetTester tester) async {
-    const newSessionFrameName = "newSessionFrame";
-    const updatedSessionFrameName = "updatedSessionFrame";
-
-    await jumpStartInstrumentation(tester);
-
-    final sessionFramesButton = find.byKey(const Key("sessionFramesButton"));
-    await tester.scrollUntilVisible(sessionFramesButton, 10);
-    expect(sessionFramesButton, findsOneWidget);
-
-    await tester.tap(sessionFramesButton);
-    await tester.pumpAndSettle();
-
-    final startSessionFrameButton =
-        find.byKey(const Key("startSessionFrameButton"));
-    expect(startSessionFrameButton, findsOneWidget);
-    await tester.tap(startSessionFrameButton);
-    await flushBeacons();
-    await tester.pump(const Duration(seconds: 2));
-
-    final startRequests = await findRequestsBy(
-      type: "ui",
-      event: "Session Frame Start",
-      sessionFrameUuid: "<any>",
-      sessionFrameName: newSessionFrameName,
-    );
-    expect(startRequests.length, 1);
-
-    final updateSessionFrameButton =
-        find.byKey(const Key("updateSessionFrameButton"));
-    expect(updateSessionFrameButton, findsOneWidget);
-    await tester.tap(updateSessionFrameButton);
-    await flushBeacons();
-    await tester.pump(const Duration(seconds: 2));
-
-    final updateRequests = await findRequestsBy(
-      type: "ui",
-      event: "Session Frame Update",
-      sessionFrameUuid: "<any>",
-      sessionFrameName: updatedSessionFrameName,
-    );
-    expect(updateRequests.length, 1);
-
-    final endSessionFrameButton =
-        find.byKey(const Key("endSessionFrameButton"));
-    expect(endSessionFrameButton, findsOneWidget);
-    await tester.tap(endSessionFrameButton);
-    await flushBeacons();
-    await tester.pump(const Duration(seconds: 2));
-
-    final endRequests = await findRequestsBy(
-      type: "ui",
-      event: "Session Frame End",
-      sessionFrameUuid: "<any>",
-      sessionFrameName: updatedSessionFrameName,
-    );
-    expect(endRequests.length, 1);
+    await tester.jumpstartInstrumentation();
+    await tester.tapAndSettle("sessionFramesButton");
+    await tester.tapAndSettle("startSessionFrameButton");
+    await tester.flushBeacons();
+    await tester.assertSessionStartBeaconSent();
+    await tester.tapAndSettle("updateSessionFrameButton");
+    await tester.flushBeacons();
+    await tester.assertSessionUpdateBeaconSent();
+    await tester.tapAndSettle("endSessionFrameButton");
+    await tester.flushBeacons();
+    await tester.assertSessionEndBeaconSent();
   });
 
   tearDown(() async {

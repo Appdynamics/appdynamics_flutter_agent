@@ -10,7 +10,7 @@
       </option>
       <option name="taskNames">
         <list>
-          <option value="runReportErrorsIntegrationTestAndroid" />
+          <option value="runErrorReportingIntegrationTestAndroid" />
         </list>
       </option>
       <option name="vmOptions" value="" />

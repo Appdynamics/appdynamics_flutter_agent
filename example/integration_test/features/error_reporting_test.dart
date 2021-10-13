@@ -6,12 +6,32 @@
 
 import 'dart:io' show Platform;
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
-import '../utils.dart';
+import '../tester_utils.dart';
 import '../wiremock_utils.dart';
+
+extension on WidgetTester {
+  assertBeaconSent(String severity) async {
+    if (Platform.isAndroid) {
+      final requests = await findRequestsBy(
+          type: "error", sev: severity, javaThrowable: "<any>");
+      expect(requests.length, 1);
+
+      final exceptionName = getBeaconRequestBody(requests[0])!["javaThrowable"]
+          ["exceptionClassName"];
+      expect(exceptionName, "java.lang.Throwable");
+    } else if (Platform.isIOS) {
+      final requests =
+          await findRequestsBy(type: "error", sev: severity, nsError: "<any>");
+      expect(requests.length, 1);
+
+      final domain = getBeaconRequestBody(requests[0])!["nsError"]["domain"];
+      expect(domain, "Manual error report");
+    }
+  }
+}
 
 void main() {
   setUp(() async {
@@ -21,103 +41,31 @@ void main() {
 
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  Future<void> runCommonConfiguration(WidgetTester tester) async {
-    await jumpStartInstrumentation(tester);
-
-    final errorReportingButton = find.byKey(const Key("errorReportingButton"));
-    await tester.scrollUntilVisible(errorReportingButton, 10);
-    expect(errorReportingButton, findsOneWidget);
-
-    await tester.tap(errorReportingButton);
-    await tester.pumpAndSettle();
-  }
-
   testWidgets("Check errors are properly reported",
       (WidgetTester tester) async {
-    await runCommonConfiguration(tester);
-
-    final reportErrorButton = find.byKey(const Key("reportErrorButton"));
-    expect(reportErrorButton, findsOneWidget);
-    await tester.tap(reportErrorButton);
-
-    await flushBeacons();
-    await tester.pumpAndSettle(const Duration(seconds: 2));
-
-    if (Platform.isAndroid) {
-      final requests = await findRequestsBy(
-          type: "error", sev: "critical", javaThrowable: "<any>");
-      expect(requests.length, 1);
-
-      final exceptionName = getBeaconRequestBody(requests[0])!["javaThrowable"]
-          ["exceptionClassName"];
-      expect(exceptionName, "java.lang.Throwable");
-    } else if (Platform.isIOS) {
-      final requests = await findRequestsBy(
-          type: "error", sev: "critical", nsError: "<any>");
-      expect(requests.length, 1);
-
-      final domain = getBeaconRequestBody(requests[0])!["nsError"]["domain"];
-      expect(domain, "Manual error report");
-    }
+    await tester.jumpstartInstrumentation();
+    await tester.tapAndSettle("errorReportingButton");
+    await tester.tapAndSettle("reportErrorButton");
+    await tester.flushBeacons();
+    await tester.assertBeaconSent("critical");
   });
 
   testWidgets("Check exceptions are properly reported",
       (WidgetTester tester) async {
-    await runCommonConfiguration(tester);
-
-    final reportExceptionButton =
-        find.byKey(const Key("reportExceptionButton"));
-    expect(reportExceptionButton, findsOneWidget);
-    await tester.tap(reportExceptionButton);
-
-    await flushBeacons();
-    await tester.pumpAndSettle(const Duration(seconds: 2));
-
-    if (Platform.isAndroid) {
-      final requests = await findRequestsBy(
-          type: "error", sev: "warning", javaThrowable: "<any>");
-      expect(requests.length, 1);
-
-      final exceptionName = getBeaconRequestBody(requests[0])!["javaThrowable"]
-          ["exceptionClassName"];
-      expect(exceptionName, "java.lang.Throwable");
-    } else if (Platform.isIOS) {
-      final requests =
-          await findRequestsBy(type: "error", sev: "warning", nsError: "<any>");
-      expect(requests.length, 1);
-
-      final domain = getBeaconRequestBody(requests[0])!["nsError"]["domain"];
-      expect(domain, "Manual error report");
-    }
+    await tester.jumpstartInstrumentation();
+    await tester.tapAndSettle("errorReportingButton");
+    await tester.tapAndSettle("reportExceptionButton");
+    await tester.flushBeacons();
+    await tester.assertBeaconSent("warning");
   });
 
   testWidgets("Check messages are properly reported",
       (WidgetTester tester) async {
-    await runCommonConfiguration(tester);
-
-    final reportMessageButton = find.byKey(const Key("reportMessageButton"));
-    expect(reportMessageButton, findsOneWidget);
-    await tester.tap(reportMessageButton);
-
-    await flushBeacons();
-    await tester.pumpAndSettle(const Duration(seconds: 2));
-
-    if (Platform.isAndroid) {
-      final requests = await findRequestsBy(
-          type: "error", sev: "info", javaThrowable: "<any>");
-      expect(requests.length, 1);
-
-      final exceptionName = getBeaconRequestBody(requests[0])!["javaThrowable"]
-          ["exceptionClassName"];
-      expect(exceptionName, "java.lang.Throwable");
-    } else if (Platform.isIOS) {
-      final requests =
-          await findRequestsBy(type: "error", sev: "info", nsError: "<any>");
-      expect(requests.length, 1);
-
-      final domain = getBeaconRequestBody(requests[0])!["nsError"]["domain"];
-      expect(domain, "Manual error report");
-    }
+    await tester.jumpstartInstrumentation();
+    await tester.tapAndSettle("errorReportingButton");
+    await tester.tapAndSettle("reportMessageButton");
+    await tester.flushBeacons();
+    await tester.assertBeaconSent("info");
   });
 
   tearDown(() async {
