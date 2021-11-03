@@ -598,6 +598,26 @@ class Instrumentation {
     await channel.invokeMethod<void>('restartAgent');
   }
 
+  /// Starts next session and ends the current session.
+  ///
+  /// The session started using this API may be ended by inactivity timeout set
+  /// in the Application Configuration, before the next call to this API.
+  ///
+  /// ```dart
+  /// Future<void> checkout(dynamic data) async {
+  ///   try {
+  ///     final response = http.post("https://server.com/checkout", data);
+  ///     Instrumentation.startNextSession();
+  ///   } catch (e) {
+  ///     logError(e);
+  ///   }
+  /// }
+  /// ```
+
+  static Future<void> startNextSession() async {
+    await channel.invokeMethod<void>('startNextSession');
+  }
+
   /// Reports that an info point has started.
   ///
   /// The [InfoPoint] decorator provides an easier way to add info points to

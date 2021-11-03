@@ -91,6 +91,12 @@ task runInfoPointsIntegrationTestiOS(type: Exec) {
             integration_tests_path + "info_points_test.dart", "-d", iOS_device
 }
 
+task runSessionControlIntegrationTestiOS(type: Exec) {
+    dependsOn startIntegrationTestServer
+    commandLine "flutter", "drive", "--driver", test_driver_path, "--target",
+            integration_tests_path + "session_control_test.dart", "-d", iOS_device
+}
+
 // Android tests
 
 task runStartIntegrationTestAndroid(type: Exec) {
@@ -145,6 +151,12 @@ task runAgentShutdownIntegrationTestAndroid(type: Exec) {
     dependsOn startIntegrationTestServer
     commandLine "flutter", "drive", "--driver", test_driver_path, "--target",
             integration_tests_path + "agent_shutdown_test.dart", "-d", android_device
+}
+
+task runSessionControlIntegrationTestAndroid(type: Exec) {
+    dependsOn startIntegrationTestServer
+    commandLine "flutter", "drive", "--driver", test_driver_path, "--target",
+            integration_tests_path + "session_control_test.dart", "-d", android_device
 }
 
 task runInfoPointsIntegrationTestAndroid(type: Exec) {

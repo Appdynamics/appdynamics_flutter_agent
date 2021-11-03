@@ -35,6 +35,7 @@ task runIntegrationTestsiOS {
     dependsOn runScreenshotsIntegrationTestiOS
     dependsOn runCustomMetricsIntegrationTestiOS
     dependsOn runAgentShutdownIntegrationTestiOS
+    dependsOn runSessionControlIntegrationTestiOS
     dependsOn runInfoPointsIntegrationTestiOS
 }
 
@@ -48,6 +49,7 @@ task runIntegrationTestsAndroid {
     dependsOn runScreenshotsIntegrationTestAndroid
     dependsOn runCustomMetricsIntegrationTestAndroid
     dependsOn runAgentShutdownIntegrationTestAndroid
+    dependsOn runSessionControlIntegrationTestAndroid
     dependsOn runInfoPointsIntegrationTestAndroid
 }
 

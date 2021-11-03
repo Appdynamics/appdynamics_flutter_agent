@@ -72,6 +72,9 @@ public class SwiftAppDynamicsMobileSdkPlugin: NSObject, FlutterPlugin {
       "shutdownAgent": shutdownAgent,
       "restartAgent": restartAgent,
       
+      // Programmatic session control
+      "startNextSession": startNextSession,
+
       // Info points
       "beginCall": beginCall,
       "endCallWithSuccess": endCallWithSuccess,

@@ -88,6 +88,9 @@ open class AppDynamicsMobileSdkPlugin : FlutterPlugin, MethodCallHandler {
             "shutdownAgent" to ::shutdownAgent,
             "restartAgent" to ::restartAgent,
 
+            // Programmatic session control
+            "startNextSession" to ::startNextSession,
+
             // Info points
             "beginCall" to ::beginCall,
             "endCallWithSuccess" to ::endCallWithSuccess,

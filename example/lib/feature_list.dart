@@ -20,6 +20,7 @@ import 'features/anr.dart';
 import 'features/custom_metrics.dart';
 import 'features/info_points.dart';
 import 'features/screenshots.dart';
+import 'features/session_control.dart';
 import 'features/session_frames.dart';
 
 class FeatureList extends StatelessWidget {
@@ -91,6 +92,11 @@ class FeatureList extends StatelessWidget {
                   title: "Agent shutdown",
                   keyString: "agentShutdownButton",
                   screen: const AgentShutdown()),
+              SizedButton(
+                  context: context,
+                  title: "Session control",
+                  keyString: "sessionControlButton",
+                  screen: const SessionControl()),
               SizedButton(
                   context: context,
                   title: "Info points",
