@@ -1,13 +1,17 @@
 import ADEUMInstrumentation
 import Flutter
 
+// ADEumMethodCall is not yet exposed from native.
+typealias ADEumMethodCall = Any
+
 public class SwiftAppDynamicsMobileSdkPlugin: NSObject, FlutterPlugin {
   static var channel: FlutterMethodChannel?
   
   var customRequestTracker: ADEumHTTPRequestTracker?
   var crashReportCallback: CrashCallbackObject?
   var sessionFrames: [String: ADEumSessionFrame] = [:]
-  
+  var callTrackers: [String: ADEumMethodCall] = [:]
+
   public static func register(with registrar: FlutterPluginRegistrar) {
     channel = FlutterMethodChannel(name: "appdynamics_mobilesdk", binaryMessenger: registrar.messenger())
     let instance = SwiftAppDynamicsMobileSdkPlugin()
@@ -66,7 +70,12 @@ public class SwiftAppDynamicsMobileSdkPlugin: NSObject, FlutterPlugin {
       
       // Shutdown & Restart
       "shutdownAgent": shutdownAgent,
-      "restartAgent": restartAgent
+      "restartAgent": restartAgent,
+      
+      // Info points
+      "beginCall": beginCall,
+      "endCallWithSuccess": endCallWithSuccess,
+      "endCallWithError": endCallWithError
     ]
     
     if let method = methods[call.method] {

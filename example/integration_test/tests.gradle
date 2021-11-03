@@ -9,7 +9,7 @@
 
 // Configure these based on your system's emulator/simulator names.
 def android_device = "Android SDK built for x86 64"
-def iOS_device = "iPhone 12"
+def iOS_device = "iPhone 13"
 
 def test_driver_path = "test_driver/integration_test.dart"
 def integration_tests_path = "integration_test/features/"
@@ -82,7 +82,13 @@ task runCustomMetricsIntegrationTestiOS(type: Exec) {
 task runAgentShutdownIntegrationTestiOS(type: Exec) {
     dependsOn startIntegrationTestServer
     commandLine "flutter", "drive", "--driver", test_driver_path, "--target",
-            integration_tests_path + "agent_shutdown.dart", "-d", iOS_device
+            integration_tests_path + "agent_shutdown_test.dart", "-d", iOS_device
+}
+
+task runInfoPointsIntegrationTestiOS(type: Exec) {
+    dependsOn startIntegrationTestServer
+    commandLine "flutter", "drive", "--driver", test_driver_path, "--target",
+            integration_tests_path + "info_points_test.dart", "-d", iOS_device
 }
 
 // Android tests
@@ -138,5 +144,11 @@ task runCustomMetricsIntegrationTestAndroid(type: Exec) {
 task runAgentShutdownIntegrationTestAndroid(type: Exec) {
     dependsOn startIntegrationTestServer
     commandLine "flutter", "drive", "--driver", test_driver_path, "--target",
-            integration_tests_path + "agent_shutdown.dart", "-d", android_device
+            integration_tests_path + "agent_shutdown_test.dart", "-d", android_device
+}
+
+task runInfoPointsIntegrationTestAndroid(type: Exec) {
+    dependsOn startIntegrationTestServer
+    commandLine "flutter", "drive", "--driver", test_driver_path, "--target",
+            integration_tests_path + "info_points_test.dart", "-d", android_device
 }

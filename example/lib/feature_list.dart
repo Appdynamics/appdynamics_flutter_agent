@@ -18,6 +18,7 @@ import 'package:flutter/services.dart';
 
 import 'features/anr.dart';
 import 'features/custom_metrics.dart';
+import 'features/info_points.dart';
 import 'features/screenshots.dart';
 import 'features/session_frames.dart';
 
@@ -90,6 +91,11 @@ class FeatureList extends StatelessWidget {
                   title: "Agent shutdown",
                   keyString: "agentShutdownButton",
                   screen: const AgentShutdown()),
+              SizedButton(
+                  context: context,
+                  title: "Info points",
+                  keyString: "infoPointsButton",
+                  screen: const InfoPoints()),
               ElevatedButton(
                 key: const Key("crashAppButton"),
                 child: const Text('Crash app'),

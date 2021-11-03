@@ -7,9 +7,12 @@
 // TODO: Extract methods into files when static extensions are supported.
 // https://github.com/dart-lang/language/issues/723
 
+import 'dart:async';
+
 import 'package:appdynamics_mobilesdk/appdynamics_mobilesdk.dart';
 import 'package:appdynamics_mobilesdk/src/agent_configuration.dart';
 import 'package:appdynamics_mobilesdk/src/session_frame.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
@@ -592,5 +595,78 @@ class Instrumentation {
   /// See also [shutdownAgent].
   static Future<void> restartAgent() async {
     await channel.invokeMethod<void>('restartAgent');
+  }
+
+  /// Reports that an info point has started.
+  ///
+  /// The [InfoPoint] decorator provides an easier way to add info points to
+  /// your app. Consider using that as a first resort.
+  ///
+  /// Only [StandardMessageCodec] types are accepted as [methodArgs]:
+  /// null, bools, nums, Strings, Uint8Lists, Int32Lists, Int64Lists,
+  /// Float64Lists, Lists of supported values, Maps from supported values to
+  /// supported values.
+  ///
+  /// ```dart
+  /// void main() async {
+  ///   final myURL = "http://www.mysite.com/news";
+  ///   final news = await Instrumentation.trackCall(
+  ///     className: "MainScreen",
+  ///     methodName: "getNews",
+  ///     methodArgs: [myURL],
+  ///     methodBody: () async {
+  ///       final result = await get(myURL);
+  ///       return result;
+  ///   });
+  /// }
+  /// ```
+  static Future<T?> trackCall<T>({
+    required String className,
+    required String methodName,
+    required FutureOr<T> Function() methodBody,
+    dynamic methodArgs,
+    String? uniqueCallId,
+  }) async {
+    final callId = uniqueCallId ?? UniqueKey().toString();
+    final args = {
+      "callId": callId,
+      "className": className,
+      "methodName": methodName,
+      "methodArgs": methodArgs
+    };
+
+    await channel.invokeMethod<void>('beginCall', args);
+
+    FutureOr<T> onSuccess(dynamic result) async {
+      final args = {"callId": callId, "result": result};
+      await channel.invokeMethod<void>('endCallWithSuccess', args);
+      return result;
+    }
+
+    Future<T?> onError(dynamic e) async {
+      var error = <String, String>{};
+
+      if (e is Error) {
+        error["stackTrace"] = e.stackTrace.toString();
+        error["message"] = "Error";
+      } else {
+        error["message"] = e.toString();
+      }
+
+      final args = {"callId": callId, "error": error};
+      await channel.invokeMethod<void>('endCallWithError', args);
+    }
+
+    try {
+      final callback = methodBody();
+      if (callback is Future<T>) {
+        final res = await callback;
+        return onSuccess(res);
+      } else if (callback is T) {
+        return onSuccess(callback);
+      }
+    } catch (e) {
+      return onError(e);
+    }
   }
 }

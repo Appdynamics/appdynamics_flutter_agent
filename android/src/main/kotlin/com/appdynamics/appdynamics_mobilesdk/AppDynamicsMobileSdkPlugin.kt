@@ -3,6 +3,7 @@ package com.appdynamics.appdynamics_mobilesdk
 import androidx.annotation.NonNull
 import com.appdynamics.appdynamics_mobilesdk.features.*
 import com.appdynamics.appdynamics_mobilesdk.features.user_data.*
+import com.appdynamics.eumagent.runtime.CallTracker
 import com.appdynamics.eumagent.runtime.HttpRequestTracker
 import com.appdynamics.eumagent.runtime.SessionFrame
 import io.flutter.embedding.engine.plugins.FlutterPlugin
@@ -22,6 +23,7 @@ open class AppDynamicsMobileSdkPlugin : FlutterPlugin, MethodCallHandler {
     internal var customRequestTracker: HttpRequestTracker? = null
     internal var crashReportCallback: CrashCallbackObject? = null
     internal var sessionFrames: MutableMap<String, SessionFrame> = mutableMapOf()
+    internal var callTrackers: MutableMap<String, CallTracker> = mutableMapOf()
 
     override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
         context = flutterPluginBinding.applicationContext
@@ -84,7 +86,12 @@ open class AppDynamicsMobileSdkPlugin : FlutterPlugin, MethodCallHandler {
 
             // Shutdown & restart
             "shutdownAgent" to ::shutdownAgent,
-            "restartAgent" to::restartAgent
+            "restartAgent" to ::restartAgent,
+
+            // Info points
+            "beginCall" to ::beginCall,
+            "endCallWithSuccess" to ::endCallWithSuccess,
+            "endCallWithError" to ::endCallWithError
             )
 
         methods[call.method]?.let { method ->

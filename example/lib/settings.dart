@@ -199,7 +199,7 @@ class _SettingsState extends State<Settings> {
               padding: const EdgeInsets.only(right: 20.0),
               child: GestureDetector(
                 onTap: () => {_showExtraConfigurationsDialog(context)},
-                child: const Icon(Icons.menu),
+                child: const Icon(Icons.settings),
               )),
         ],
       ),

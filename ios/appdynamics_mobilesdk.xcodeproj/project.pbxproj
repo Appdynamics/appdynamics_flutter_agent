@@ -23,6 +23,7 @@
 		96B99D3026AF104300014CA0 /* UserDataLong.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96B99D2F26AF104300014CA0 /* UserDataLong.swift */; };
 		96B99D3226AF112200014CA0 /* UserDataBoolean.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96B99D3126AF112200014CA0 /* UserDataBoolean.swift */; };
 		96B99D3426AF115A00014CA0 /* UserDataDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96B99D3326AF115A00014CA0 /* UserDataDate.swift */; };
+		96CC7F9627175840008AF26A /* TrackCall.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96CC7F9527175840008AF26A /* TrackCall.swift */; };
 		96EAFA3E266521AB00A3CFC5 /* AppdynamicsMobilesdkPlugin.h in Headers */ = {isa = PBXBuildFile; fileRef = 96EAFA3B266521AB00A3CFC5 /* AppdynamicsMobilesdkPlugin.h */; };
 		96EAFA3F266521AB00A3CFC5 /* AppdynamicsMobilesdkPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 96EAFA3C266521AB00A3CFC5 /* AppdynamicsMobilesdkPlugin.m */; };
 		96EAFA40266521AB00A3CFC5 /* SwiftAppdynamicsMobilesdkPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96EAFA3D266521AB00A3CFC5 /* SwiftAppdynamicsMobilesdkPlugin.swift */; };
@@ -44,6 +45,7 @@
 		96B99D2F26AF104300014CA0 /* UserDataLong.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDataLong.swift; sourceTree = "<group>"; };
 		96B99D3126AF112200014CA0 /* UserDataBoolean.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDataBoolean.swift; sourceTree = "<group>"; };
 		96B99D3326AF115A00014CA0 /* UserDataDate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDataDate.swift; sourceTree = "<group>"; };
+		96CC7F9527175840008AF26A /* TrackCall.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackCall.swift; sourceTree = "<group>"; };
 		96EAFA302665218500A3CFC5 /* appdynamics_mobilesdk.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = appdynamics_mobilesdk.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		96EAFA3B266521AB00A3CFC5 /* AppdynamicsMobilesdkPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppdynamicsMobilesdkPlugin.h; sourceTree = "<group>"; };
 		96EAFA3C266521AB00A3CFC5 /* AppdynamicsMobilesdkPlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppdynamicsMobilesdkPlugin.m; sourceTree = "<group>"; };
@@ -87,6 +89,7 @@
 				961A30F126CA5450001241E5 /* SessionFrames.swift */,
 				961A30F526CE7FFE001241E5 /* Screenshots.swift */,
 				961A30F326CB9E90001241E5 /* CustomMetrics.swift */,
+				96CC7F9527175840008AF26A /* TrackCall.swift */,
 				967CB7A526EFAB7A000987B5 /* CrashReportCallback.swift */,
 			);
 			name = Features;
@@ -251,6 +254,7 @@
 				9635068326A5E144003713FD /* CustomTimers.swift in Sources */,
 				961A30F426CB9E90001241E5 /* CustomMetrics.swift in Sources */,
 				966D065C270B5519009BC639 /* AgentShutdown.swift in Sources */,
+				96CC7F9627175840008AF26A /* TrackCall.swift in Sources */,
 				9635068226A5E144003713FD /* ManualRequestTracker.swift in Sources */,
 				96B99D2926AF061100014CA0 /* UserData.swift in Sources */,
 				96B99D3226AF112200014CA0 /* UserDataBoolean.swift in Sources */,

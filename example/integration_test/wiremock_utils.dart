@@ -41,11 +41,23 @@ Future<void> mapAgentInitToReturnSuccess() async {
   });
 }
 
-// Shortcut to get body of beacon requests.
+/// [jsonDecode]'s beacon's body and nested JSON values recursively.
 Map<String, dynamic>? getBeaconRequestBody(Map<String, dynamic> request) {
   try {
     final List<dynamic> bodyList = jsonDecode(request["request"]["body"]);
-    return Map<String, dynamic>.from(bodyList[0]);
+    final body = Map<String, dynamic>.from(bodyList[0]);
+
+    // Deserialize nested JSON's that bypassed `jsonDecode` above.
+    MapEntry<String, dynamic> decode(MapEntry<String, dynamic> entry) {
+      try {
+        return decode(MapEntry(entry.key, jsonDecode(entry.value)));
+      } catch (e) {
+        return entry;
+      }
+    }
+
+    final recursivelyDecoded = body.entries.map(decode);
+    return Map<String, dynamic>.fromEntries(recursivelyDecoded);
   } catch (e) {
     return null;
   }
@@ -56,22 +68,25 @@ Map<String, dynamic>? getBeaconRequestBody(Map<String, dynamic> request) {
 /// Can be used to also check if key exists in body by specifying "<any>"
 /// as parameter the value.
 Future<List<Map<String, dynamic>>> findRequestsBy({
-  String? url,
-  String? type,
-  String? hrc,
-  String? event,
-  String? timerName,
-  String? text,
-  String? sev,
-  String? javaThrowable,
-  String? nsError,
-  String? userInfo,
-  String? sessionFrameName,
-  String? sessionFrameUuid,
-  String? tiles,
-  String? metricName,
-  String? metricValue,
-  String? $is, // "$" -> reserved keyword workaround
+  dynamic url,
+  dynamic type,
+  dynamic hrc,
+  dynamic event,
+  dynamic timerName,
+  dynamic text,
+  dynamic sev,
+  dynamic javaThrowable,
+  dynamic nsError,
+  dynamic userInfo,
+  dynamic sessionFrameName,
+  dynamic sessionFrameUuid,
+  dynamic tiles,
+  dynamic metricName,
+  dynamic metricValue,
+  dynamic methodArgs,
+  dynamic methodInfo,
+  dynamic returnValue,
+  dynamic $is, // "$" -> reserved keyword workaround
 }) async {
   final response = await http.get(Uri.parse(serverRequestsUrl));
   final Map<String, dynamic> json = jsonDecode(response.body);
@@ -94,6 +109,9 @@ Future<List<Map<String, dynamic>>> findRequestsBy({
     sessionFrameName: "sessionFrameName",
     sessionFrameUuid: "sessionFrameUuid",
     tiles: "tiles",
+    methodArgs: "args",
+    methodInfo: "mid",
+    returnValue: "ret",
     metricName: "metricName",
     metricValue: "val",
   };
@@ -115,7 +133,23 @@ Future<List<Map<String, dynamic>>> findRequestsBy({
       if (e.key == "<any>") {
         return previous && body.containsKey(e.value);
       }
-      return previous && bodyUrl.contains(lower);
+
+      // Compare maps based on having the same letters.
+      // Different ordered keys in maps are still a valid comparison.
+      if (e.key is Map) {
+        final sortedValue = bodyUrl.split("")..sort();
+        final sortedMatch = lower.split("")..sort();
+        final value = sortedValue.join().toString().trim();
+        final match = sortedMatch.join().toString().trim();
+
+        return previous && value.contains(match);
+      }
+
+      if (e.key is String) {
+        return previous && bodyUrl.contains(lower);
+      }
+
+      return false;
     });
 
     return results;
