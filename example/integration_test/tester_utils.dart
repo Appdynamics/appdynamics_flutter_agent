@@ -13,15 +13,11 @@ extension TestHelpers on WidgetTester {
   // Jumps over the main screen, starting instrumentation with default configs.
   Future<void> jumpstartInstrumentation() async {
     await pumpWidget(const MyApp());
-    final startButtonFinder =
-        find.byKey(const Key("startInstrumentationButton"));
-    expect(startButtonFinder, findsOneWidget);
 
     final featureListBarFinder = find.byKey(const Key("featureListAppBar"));
     expect(featureListBarFinder, findsNothing);
 
-    await tap(startButtonFinder);
-    await pumpAndSettle();
+    await tapAndSettle("startInstrumentationButton");
 
     expect(featureListBarFinder, findsOneWidget);
   }

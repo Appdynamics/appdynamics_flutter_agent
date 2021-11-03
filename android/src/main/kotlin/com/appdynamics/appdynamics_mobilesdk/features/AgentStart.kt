@@ -23,6 +23,7 @@ fun AppDynamicsMobileSdkPlugin.start(@NonNull result: MethodChannel.Result, argu
         val screenshotURL = properties["screenshotURL"] as? String
         val screenshotsEnabled = properties["screenshotsEnabled"] as? Boolean
         val crashReportingEnabled = properties["crashReportingEnabled"] as? Boolean
+        val autoInstrumentEnabled = properties["autoInstrumentEnabled"] as? Boolean
 
         if (appKey == null) {
             result.error("500", "Please provide an appKey.", "Agent start() failed.")
@@ -53,12 +54,15 @@ fun AppDynamicsMobileSdkPlugin.start(@NonNull result: MethodChannel.Result, argu
             builder.withCrashReportingEnabled(crashReportingEnabled)
         }
 
+        if (autoInstrumentEnabled != null) {
+            builder.withAutoInstrument(autoInstrumentEnabled)
+        }
+
         if (crashReportCallback == null) {
             crashReportCallback = CrashCallbackObject(channel)
             builder.withCrashCallback(crashReportCallback)
         }
 
-        builder.withAutoInstrument(false)
         builder.withApplicationName("com.appdynamics.FlutterEveryfeatureAndroid")
             .withContext(context)
         Instrumentation.startFromHybrid(builder.build(), agentName, agentVersion)

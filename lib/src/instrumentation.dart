@@ -95,6 +95,7 @@ class Instrumentation {
       "loggingLevel": config.loggingLevel.index,
       "collectorURL": config.collectorURL,
       "screenshotURL": config.screenshotURL,
+      "autoInstrumentEnabled": config.autoInstrument,
       "screenshotsEnabled": config.screenshotsEnabled,
       "crashReportingEnabled": config.crashReportingEnabled,
       "anrDetectionEnabled":

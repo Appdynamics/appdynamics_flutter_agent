@@ -76,11 +76,22 @@ class AgentConfiguration {
   /// are occurring.
   final bool crashReportingEnabled;
 
+  // TODO: Add rest of the features in doc when implemented.
+  /// Boolean value that indicates if automatic instrumentation is enabled.
+  ///
+  /// Setting this to `false` will disable all automatic instrumentation
+  /// regardless of any code injection.
+  ///
+  /// The following features will also be effected:
+  /// 1. Automatic touch points capturing.
+  final bool autoInstrument;
+
   AgentConfiguration({
     required this.appKey,
     this.collectorURL = "https://mobile.eum-appdynamics.com",
     this.screenshotURL = "https://mobile.eum-appdynamics.com",
     this.loggingLevel = LoggingLevel.none,
+    this.autoInstrument = true,
     this.screenshotsEnabled = true,
     this.crashReportingEnabled = true,
     this.crashReportCallback,
@@ -106,11 +117,13 @@ class AgentConfiguration {
       String? collectorURL,
       String? screenshotURL,
       bool? screenshotsEnabled,
+      bool? autoInstrument,
       LoggingLevel? loggingLevel,
       CrashReportCallback? crashReportCallback,
       bool? crashReportingEnabled}) {
     return AgentConfiguration(
         appKey: appKey ?? this.appKey,
+        autoInstrument: autoInstrument ?? this.autoInstrument,
         collectorURL: collectorURL ?? this.collectorURL,
         screenshotURL: screenshotURL ?? this.screenshotURL,
         screenshotsEnabled: screenshotsEnabled ?? this.screenshotsEnabled,

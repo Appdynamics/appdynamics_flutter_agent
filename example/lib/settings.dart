@@ -47,7 +47,7 @@ class Settings extends StatefulWidget {
 }
 
 class _SettingsState extends State<Settings> {
-  static const _appKey = "SM-AEG-MXS";
+  static const _appKey = "SM-AER-HCE";
 
   final _appKeyFieldController = TextEditingController(text: _appKey);
   final _collectorFieldController = TextEditingController();
@@ -55,6 +55,7 @@ class _SettingsState extends State<Settings> {
   final _screenshotURLFieldController = TextEditingController();
   var _crashReportingEnabled = true;
   var _screenshotsEnabled = true;
+  var _autoInstrumentEnabled = true;
 
   set _currentSelectedCollector(MapEntry collector) {
     final collectorName = collector.key;
@@ -137,6 +138,7 @@ class _SettingsState extends State<Settings> {
         collectorURL: collectorURL,
         screenshotURL: screenshotURL,
         crashReportCallback: crashReportCallback,
+        autoInstrument: _autoInstrumentEnabled,
         screenshotsEnabled: _screenshotsEnabled,
         crashReportingEnabled: _crashReportingEnabled);
     await Instrumentation.start(config);
@@ -156,35 +158,62 @@ class _SettingsState extends State<Settings> {
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20.0)),
                 child: Padding(
-                  padding: const EdgeInsets.all(12.0),
-                  child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(children: [
-                          const Text("Crash reporting enabled:"),
-                          Checkbox(
-                            value: _crashReportingEnabled,
-                            onChanged: (bool? newValue) {
-                              setState(() {
-                                _crashReportingEnabled = newValue!;
-                              });
-                            },
-                          )
-                        ]),
-                        Row(children: [
-                          const Text("Screenshots enabled:"),
-                          Checkbox(
-                            value: _screenshotsEnabled,
-                            onChanged: (bool? newValue) {
-                              setState(() {
-                                _screenshotsEnabled = newValue!;
-                              });
-                            },
-                          ),
-                        ])
-                      ]),
-                ));
+                    padding: const EdgeInsets.all(12.0),
+                    child: Column(mainAxisSize: MainAxisSize.min, children: [
+                      Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Text("Crash reporting enabled:"),
+                            Checkbox(
+                              value: _crashReportingEnabled,
+                              key: const Key("toggleCrashReportingBox"),
+                              onChanged: (bool? newValue) {
+                                setState(() {
+                                  _crashReportingEnabled = newValue!;
+                                });
+                              },
+                            )
+                          ]),
+                      Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Text("Screenshots enabled:"),
+                            Checkbox(
+                              value: _screenshotsEnabled,
+                              key: const Key("toggleScreenshotsBox"),
+                              onChanged: (bool? newValue) {
+                                setState(() {
+                                  _screenshotsEnabled = newValue!;
+                                });
+                              },
+                            ),
+                          ]),
+                      Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Text("Auto instrument enabled:"),
+                            Checkbox(
+                              value: _autoInstrumentEnabled,
+                              key: const Key("toggleAutoInstrumentBox"),
+                              onChanged: (bool? newValue) {
+                                setState(() {
+                                  _autoInstrumentEnabled = newValue!;
+                                });
+                              },
+                            ),
+                          ]),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 12),
+                        child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              ElevatedButton(
+                                  key: const Key("dismissDialogButton"),
+                                  onPressed: () => Navigator.pop(context),
+                                  child: const Text('Close')),
+                            ]),
+                      )
+                    ])));
           });
         });
   }
@@ -198,6 +227,7 @@ class _SettingsState extends State<Settings> {
           Padding(
               padding: const EdgeInsets.only(right: 20.0),
               child: GestureDetector(
+                key: const Key("extraConfigurationDialogButton"),
                 onTap: () => {_showExtraConfigurationsDialog(context)},
                 child: const Icon(Icons.settings),
               )),
