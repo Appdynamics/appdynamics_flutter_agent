@@ -4,11 +4,15 @@
  *
  */
 
-import 'package:appdynamics_mobilesdk_example/settings.dart';
+import 'package:appdynamics_mobilesdk_example/settings/settings.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import 'app_state/app_state.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(ChangeNotifierProvider(
+      create: (context) => AppState(), child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {

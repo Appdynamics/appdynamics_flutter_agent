@@ -13,17 +13,12 @@ import '../wiremock_utils.dart';
 
 extension NetworkRequests on WidgetTester {
   sendNetworkRequest() async {
-    final manualPOSTRequestButton =
-        find.byKey(const Key("manualPOSTRequestButton"));
-    expect(manualPOSTRequestButton, findsOneWidget);
-
     final requestTextField = find.byKey(const Key("requestTextField"));
     expect(requestTextField, findsOneWidget);
 
     final randomSuccessURL = serverRequestsUrl;
     await enterText(requestTextField, randomSuccessURL);
-    await tap(manualPOSTRequestButton);
-    await pump(const Duration(seconds: 2));
+    await tapAndSettle("manualPOSTRequestButton");
   }
 
   assertBeaconSent() async {
@@ -64,6 +59,7 @@ void main() {
     await tester.jumpstartInstrumentation();
     await tester.tapAndSettle("manualNetworkRequestsButton");
     await tester.sendNetworkRequest();
+    await tester.flushBeacons();
     await tester.assertBeaconSent();
   });
 

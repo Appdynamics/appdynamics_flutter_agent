@@ -23,7 +23,7 @@ public class SwiftAppDynamicsMobileSdkPlugin: NSObject, FlutterPlugin {
     let methods: [String: AdeumMethod] = [
       "start": start,
       
-      // Manual request tracking
+      /// Manual request tracking
       "getRequestTrackerWithUrl": getRequestTrackerWithUrl,
       "setRequestTrackerErrorInfo": setRequestTrackerErrorInfo,
       "setRequestTrackerStatusCode": setRequestTrackerStatusCode,
@@ -32,20 +32,20 @@ public class SwiftAppDynamicsMobileSdkPlugin: NSObject, FlutterPlugin {
       "getServerCorrelationHeaders": getServerCorrelationHeaders,
       "requestTrackerReport": requestTrackerReport,
       
-      // Custom timers
+      /// Custom timers
       "startTimer": startTimer,
       "stopTimer": stopTimer,
       
-      // Breadcrumbs
+      /// Breadcrumbs
       "leaveBreadcrumb": leaveBreadcrumb,
       
-      // Report error
+      /// Report error
       "reportError": reportError,
       
-      // Report metric
+      /// Report metric
       "reportMetric": reportMetric,
       
-      // User data
+      /// User data
       "setUserData": setUserData,
       "setUserDataDouble": setUserDataDouble,
       "setUserDataLong": setUserDataLong,
@@ -57,28 +57,31 @@ public class SwiftAppDynamicsMobileSdkPlugin: NSObject, FlutterPlugin {
       "removeUserDataBoolean": removeUserDataBoolean,
       "removeUserDataDate": removeUserDataDate,
       
-      // Session frames
+      /// Session frames
       "startSessionFrame": startSessionFrame,
       "updateSessionFrameName": updateSessionFrameName,
       "endSessionFrame": endSessionFrame,
       
-      // Screenshots
+      /// Screenshots
       "takeScreenshot": takeScreenshot,
       "blockScreenshots": blockScreenshots,
       "unblockScreenshots": unblockScreenshots,
       "screenshotsBlocked": screenshotsBlocked,
       
-      // Shutdown & Restart
+      /// Shutdown & Restart
       "shutdownAgent": shutdownAgent,
       "restartAgent": restartAgent,
       
-      // Programmatic session control
+      /// Programmatic session control
       "startNextSession": startNextSession,
 
-      // Info points
+      /// Info points
       "beginCall": beginCall,
       "endCallWithSuccess": endCallWithSuccess,
-      "endCallWithError": endCallWithError
+      "endCallWithError": endCallWithError,
+      
+      /// Change app key after initialization
+      "changeAppKey": changeAppKey
     ]
     
     if let method = methods[call.method] {

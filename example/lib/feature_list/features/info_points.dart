@@ -5,7 +5,7 @@
  */
 
 import 'package:appdynamics_mobilesdk/appdynamics_mobilesdk.dart';
-import 'package:appdynamics_mobilesdk_example/utils/flush_beacons_app_bar.dart';
+import 'package:appdynamics_mobilesdk_example/feature_list/utils/flush_beacons_app_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -66,12 +66,9 @@ class InfoPoints extends StatelessWidget {
       appBar: const FlushBeaconsAppBar(title: "Info points"),
       body: Center(
         child: Padding(
-          padding: const EdgeInsets.only(right: 50, left: 50),
+          padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 50),
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-            const SizedBox(
-              height: 20,
-            ),
             ElevatedButton(
               key: const Key("manualSyncCallButton"),
               child: const Text('Track manual sync call'),

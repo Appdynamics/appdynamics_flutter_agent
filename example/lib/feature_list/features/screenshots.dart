@@ -5,7 +5,7 @@
  */
 
 import 'package:appdynamics_mobilesdk/appdynamics_mobilesdk.dart';
-import 'package:appdynamics_mobilesdk_example/utils/flush_beacons_app_bar.dart';
+import 'package:appdynamics_mobilesdk_example/feature_list/utils/flush_beacons_app_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -52,12 +52,9 @@ class _ScreenshotsState extends State<Screenshots> {
       appBar: const FlushBeaconsAppBar(title: "Screenshots"),
       body: Center(
         child: Padding(
-          padding: const EdgeInsets.only(right: 50, left: 50),
+          padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 50),
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-            const SizedBox(
-              height: 20,
-            ),
             ElevatedButton(
               key: const Key("takeScreenshotButton"),
               child: const Text('Take screenshot'),
@@ -86,9 +83,6 @@ class _ScreenshotsState extends State<Screenshots> {
               key: const Key("checkScreenshotsStatusButton"),
               child: const Text('Check screenshots status'),
               onPressed: _checkScreenshotsStatus,
-            ),
-            const SizedBox(
-              height: 20,
             ),
             Text(
               () {

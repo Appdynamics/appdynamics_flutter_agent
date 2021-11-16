@@ -5,7 +5,7 @@
  */
 
 import 'package:appdynamics_mobilesdk/appdynamics_mobilesdk.dart';
-import 'package:appdynamics_mobilesdk_example/utils/flush_beacons_app_bar.dart';
+import 'package:appdynamics_mobilesdk_example/feature_list/utils/flush_beacons_app_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -26,12 +26,9 @@ class CustomTimers extends StatelessWidget {
       appBar: const FlushBeaconsAppBar(title: "Custom timers"),
       body: Center(
         child: Padding(
-          padding: const EdgeInsets.only(right: 50, left: 50),
+          padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 50),
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-            const SizedBox(
-              height: 20,
-            ),
             ElevatedButton(
               key: const Key("startTimerButton"),
               child: const Text('Start timer'),

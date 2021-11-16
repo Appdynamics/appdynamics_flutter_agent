@@ -4,7 +4,7 @@
  *
  */
 
-// TODO: split iOS and Android tests to separate files
+// TODO: split iOS and Android tests to separate files.
 // WARNING: Possible gradle duplicate task error if creating shared gradle file.
 
 // Configure these based on your system's emulator/simulator names.
@@ -97,6 +97,12 @@ task runSessionControlIntegrationTestiOS(type: Exec) {
             integration_tests_path + "session_control_test.dart", "-d", iOS_device
 }
 
+task runChangeAppKeyIntegrationTestiOS(type: Exec) {
+    dependsOn startIntegrationTestServer
+    commandLine "flutter", "drive", "--driver", test_driver_path, "--target",
+            integration_tests_path + "change_app_key_test.dart", "-d", iOS_device
+}
+
 // Android tests
 
 task runStartIntegrationTestAndroid(type: Exec) {
@@ -163,4 +169,10 @@ task runInfoPointsIntegrationTestAndroid(type: Exec) {
     dependsOn startIntegrationTestServer
     commandLine "flutter", "drive", "--driver", test_driver_path, "--target",
             integration_tests_path + "info_points_test.dart", "-d", android_device
+}
+
+task runChangeAppKeyIntegrationTestAndroid(type: Exec) {
+    dependsOn startIntegrationTestServer
+    commandLine "flutter", "drive", "--driver", test_driver_path, "--target",
+            integration_tests_path + "change_app_key_test.dart", "-d", android_device
 }

@@ -16,6 +16,12 @@
 		9635068426A5E144003713FD /* AgentStart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9635068126A5E144003713FD /* AgentStart.swift */; };
 		9635068626A5E153003713FD /* Breadcrumbs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9635068526A5E153003713FD /* Breadcrumbs.swift */; };
 		9635068F26A7FF41003713FD /* ErrorReporting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9635068E26A7FF41003713FD /* ErrorReporting.swift */; };
+		96449529273939F50077FC22 /* ChangeAppKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96449528273939F50077FC22 /* ChangeAppKey.swift */; };
+		96449535273AE2F60077FC22 /* SessionControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96449534273AE2F60077FC22 /* SessionControl.swift */; };
+		96449537273AE3040077FC22 /* InfoPoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96449536273AE3040077FC22 /* InfoPoints.swift */; };
+		9644953A273AE4EF0077FC22 /* Bridging-Header.h in Headers */ = {isa = PBXBuildFile; fileRef = 96449539273AE4EF0077FC22 /* Bridging-Header.h */; };
+		9644953D273AE5BA0077FC22 /* ObjcExceptionCatch.h in Headers */ = {isa = PBXBuildFile; fileRef = 9644953B273AE5BA0077FC22 /* ObjcExceptionCatch.h */; };
+		9644953E273AE5BA0077FC22 /* ObjcExceptionCatch.m in Sources */ = {isa = PBXBuildFile; fileRef = 9644953C273AE5BA0077FC22 /* ObjcExceptionCatch.m */; };
 		966D065C270B5519009BC639 /* AgentShutdown.swift in Sources */ = {isa = PBXBuildFile; fileRef = 966D065B270B5518009BC639 /* AgentShutdown.swift */; };
 		967CB7A626EFAB7A000987B5 /* CrashReportCallback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 967CB7A526EFAB7A000987B5 /* CrashReportCallback.swift */; };
 		96B99D2926AF061100014CA0 /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96B99D2826AF061100014CA0 /* UserData.swift */; };
@@ -23,7 +29,6 @@
 		96B99D3026AF104300014CA0 /* UserDataLong.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96B99D2F26AF104300014CA0 /* UserDataLong.swift */; };
 		96B99D3226AF112200014CA0 /* UserDataBoolean.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96B99D3126AF112200014CA0 /* UserDataBoolean.swift */; };
 		96B99D3426AF115A00014CA0 /* UserDataDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96B99D3326AF115A00014CA0 /* UserDataDate.swift */; };
-		96CC7F9627175840008AF26A /* TrackCall.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96CC7F9527175840008AF26A /* TrackCall.swift */; };
 		96EAFA3E266521AB00A3CFC5 /* AppdynamicsMobilesdkPlugin.h in Headers */ = {isa = PBXBuildFile; fileRef = 96EAFA3B266521AB00A3CFC5 /* AppdynamicsMobilesdkPlugin.h */; };
 		96EAFA3F266521AB00A3CFC5 /* AppdynamicsMobilesdkPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 96EAFA3C266521AB00A3CFC5 /* AppdynamicsMobilesdkPlugin.m */; };
 		96EAFA40266521AB00A3CFC5 /* SwiftAppdynamicsMobilesdkPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96EAFA3D266521AB00A3CFC5 /* SwiftAppdynamicsMobilesdkPlugin.swift */; };
@@ -38,6 +43,12 @@
 		9635068126A5E144003713FD /* AgentStart.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AgentStart.swift; sourceTree = "<group>"; };
 		9635068526A5E153003713FD /* Breadcrumbs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Breadcrumbs.swift; sourceTree = "<group>"; };
 		9635068E26A7FF41003713FD /* ErrorReporting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorReporting.swift; sourceTree = "<group>"; };
+		96449528273939F50077FC22 /* ChangeAppKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeAppKey.swift; sourceTree = "<group>"; };
+		96449534273AE2F60077FC22 /* SessionControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionControl.swift; sourceTree = "<group>"; };
+		96449536273AE3040077FC22 /* InfoPoints.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoPoints.swift; sourceTree = "<group>"; };
+		96449539273AE4EF0077FC22 /* Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Bridging-Header.h"; path = "Classes/Bridging-Header.h"; sourceTree = SOURCE_ROOT; };
+		9644953B273AE5BA0077FC22 /* ObjcExceptionCatch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ObjcExceptionCatch.h; path = Classes/ObjcExceptionCatch.h; sourceTree = SOURCE_ROOT; };
+		9644953C273AE5BA0077FC22 /* ObjcExceptionCatch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ObjcExceptionCatch.m; path = Classes/ObjcExceptionCatch.m; sourceTree = SOURCE_ROOT; };
 		966D065B270B5518009BC639 /* AgentShutdown.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgentShutdown.swift; sourceTree = "<group>"; };
 		967CB7A526EFAB7A000987B5 /* CrashReportCallback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrashReportCallback.swift; sourceTree = "<group>"; };
 		96B99D2826AF061100014CA0 /* UserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
@@ -45,7 +56,6 @@
 		96B99D2F26AF104300014CA0 /* UserDataLong.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDataLong.swift; sourceTree = "<group>"; };
 		96B99D3126AF112200014CA0 /* UserDataBoolean.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDataBoolean.swift; sourceTree = "<group>"; };
 		96B99D3326AF115A00014CA0 /* UserDataDate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDataDate.swift; sourceTree = "<group>"; };
-		96CC7F9527175840008AF26A /* TrackCall.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackCall.swift; sourceTree = "<group>"; };
 		96EAFA302665218500A3CFC5 /* appdynamics_mobilesdk.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = appdynamics_mobilesdk.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		96EAFA3B266521AB00A3CFC5 /* AppdynamicsMobilesdkPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppdynamicsMobilesdkPlugin.h; sourceTree = "<group>"; };
 		96EAFA3C266521AB00A3CFC5 /* AppdynamicsMobilesdkPlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppdynamicsMobilesdkPlugin.m; sourceTree = "<group>"; };
@@ -87,9 +97,11 @@
 				9635068526A5E153003713FD /* Breadcrumbs.swift */,
 				9635068E26A7FF41003713FD /* ErrorReporting.swift */,
 				961A30F126CA5450001241E5 /* SessionFrames.swift */,
+				96449534273AE2F60077FC22 /* SessionControl.swift */,
 				961A30F526CE7FFE001241E5 /* Screenshots.swift */,
+				96449536273AE3040077FC22 /* InfoPoints.swift */,
 				961A30F326CB9E90001241E5 /* CustomMetrics.swift */,
-				96CC7F9527175840008AF26A /* TrackCall.swift */,
+				96449528273939F50077FC22 /* ChangeAppKey.swift */,
 				967CB7A526EFAB7A000987B5 /* CrashReportCallback.swift */,
 			);
 			name = Features;
@@ -99,8 +111,11 @@
 		96AC791E268217E20035C226 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				96449539273AE4EF0077FC22 /* Bridging-Header.h */,
 				96EAFA3B266521AB00A3CFC5 /* AppdynamicsMobilesdkPlugin.h */,
 				96EAFA3C266521AB00A3CFC5 /* AppdynamicsMobilesdkPlugin.m */,
+				9644953B273AE5BA0077FC22 /* ObjcExceptionCatch.h */,
+				9644953C273AE5BA0077FC22 /* ObjcExceptionCatch.m */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -153,6 +168,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				96EAFA3E266521AB00A3CFC5 /* AppdynamicsMobilesdkPlugin.h in Headers */,
+				9644953D273AE5BA0077FC22 /* ObjcExceptionCatch.h in Headers */,
+				9644953A273AE4EF0077FC22 /* Bridging-Header.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -254,19 +271,22 @@
 				9635068326A5E144003713FD /* CustomTimers.swift in Sources */,
 				961A30F426CB9E90001241E5 /* CustomMetrics.swift in Sources */,
 				966D065C270B5519009BC639 /* AgentShutdown.swift in Sources */,
-				96CC7F9627175840008AF26A /* TrackCall.swift in Sources */,
 				9635068226A5E144003713FD /* ManualRequestTracker.swift in Sources */,
+				96449529273939F50077FC22 /* ChangeAppKey.swift in Sources */,
 				96B99D2926AF061100014CA0 /* UserData.swift in Sources */,
 				96B99D3226AF112200014CA0 /* UserDataBoolean.swift in Sources */,
 				96B99D3026AF104300014CA0 /* UserDataLong.swift in Sources */,
 				96EAFA3F266521AB00A3CFC5 /* AppdynamicsMobilesdkPlugin.m in Sources */,
 				96EAFA40266521AB00A3CFC5 /* SwiftAppdynamicsMobilesdkPlugin.swift in Sources */,
+				9644953E273AE5BA0077FC22 /* ObjcExceptionCatch.m in Sources */,
+				96449535273AE2F60077FC22 /* SessionControl.swift in Sources */,
 				96B99D3426AF115A00014CA0 /* UserDataDate.swift in Sources */,
 				9635068F26A7FF41003713FD /* ErrorReporting.swift in Sources */,
 				9635068626A5E153003713FD /* Breadcrumbs.swift in Sources */,
 				961A30F626CE7FFE001241E5 /* Screenshots.swift in Sources */,
 				96B99D2C26AF0FBE00014CA0 /* UserDataDouble.swift in Sources */,
 				967CB7A626EFAB7A000987B5 /* CrashReportCallback.swift in Sources */,
+				96449537273AE3040077FC22 /* InfoPoints.swift in Sources */,
 				9635068426A5E144003713FD /* AgentStart.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -431,6 +451,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.appdynamics.eum.appdynamics-mobilesdk";
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "Classes/Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -472,6 +493,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.appdynamics.eum.appdynamics-mobilesdk";
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "Classes/Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

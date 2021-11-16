@@ -5,39 +5,18 @@
  */
 
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:appdynamics_mobilesdk/appdynamics_mobilesdk.dart';
+import 'package:appdynamics_mobilesdk_example/app_state/app_state.dart';
+import 'package:appdynamics_mobilesdk_example/settings/utils/constants.dart';
+import 'package:appdynamics_mobilesdk_example/settings/utils/crash_report_dialog.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_picker/flutter_picker.dart';
+import 'package:provider/provider.dart';
 
-import 'feature_list.dart';
-
-var localServerURL = "http://${Platform.isIOS ? "localhost" : "10.0.2.2"}:9999";
-final collectors = {
-  "Local": {"url": localServerURL, "screenshotURL": localServerURL},
-  "Shadow Master": {
-    "url": "https://eum-shadow-master-col.saas.appd-test.com",
-    "screenshotURL": "https://eum-shadow-master-image.saas.appd-test.com"
-  },
-  "Shadow": {
-    "url": "https://shadow-eum-col.appdynamics.com",
-    "screenshotURL": "https://shadow-eum-image.appdynamics.com"
-  },
-  "North America": {
-    "url": "https://mobile.eum-appdynamics.com",
-    "screenshotURL": "https://mobile.eum-appdynamics.com"
-  },
-  "Europe": {
-    "url": "https://fra-col.eum-appdynamics.com",
-    "screenshotURL": "https://fra-col.eum-appdynamics.com"
-  },
-  "APAC": {
-    "url": "https://syd-col.eum-appdynamics.com",
-    "screenshotURL": "https://syd-col.eum-appdynamics.com"
-  },
-};
+import 'utils/extra_configuration_dialog.dart';
+import '../feature_list/feature_list.dart';
 
 class Settings extends StatefulWidget {
   const Settings({Key? key}) : super(key: key);
@@ -47,15 +26,10 @@ class Settings extends StatefulWidget {
 }
 
 class _SettingsState extends State<Settings> {
-  static const _appKey = "SM-AER-HCE";
-
-  final _appKeyFieldController = TextEditingController(text: _appKey);
+  final _appKeyFieldController = TextEditingController();
   final _collectorFieldController = TextEditingController();
   final _collectorURLFieldController = TextEditingController();
   final _screenshotURLFieldController = TextEditingController();
-  var _crashReportingEnabled = true;
-  var _screenshotsEnabled = true;
-  var _autoInstrumentEnabled = true;
 
   set _currentSelectedCollector(MapEntry collector) {
     final collectorName = collector.key;
@@ -66,8 +40,14 @@ class _SettingsState extends State<Settings> {
     _screenshotURLFieldController.text = screenshotURL!;
   }
 
-  _SettingsState() {
+  @override
+  void initState() {
+    super.initState();
+
     _currentSelectedCollector = collectors.entries.elementAt(0);
+
+    final appState = Provider.of<AppState>(context, listen: false);
+    _appKeyFieldController.text = appState.appKey;
   }
 
   @override
@@ -100,23 +80,10 @@ class _SettingsState extends State<Settings> {
 
   Future<void> _showCrashReportAlert(String crashReports) async {
     return showDialog<void>(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Crash reports detected'),
-          content: SingleChildScrollView(
-              child: ListBody(children: <Widget>[Text(crashReports)])),
-          actions: <Widget>[
-            TextButton(
-              child: const Text('Back'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
+        context: context,
+        builder: (BuildContext context) {
+          return CrashReportDialog(crashReports: crashReports);
+        });
   }
 
   Future<void> _onStartPress(context) async {
@@ -132,15 +99,16 @@ class _SettingsState extends State<Settings> {
       await _showCrashReportAlert(jsonEncode(summaries));
     }
 
+    final appState = Provider.of<AppState>(context, listen: false);
     AgentConfiguration config = AgentConfiguration(
         appKey: appKey,
         loggingLevel: LoggingLevel.verbose,
         collectorURL: collectorURL,
         screenshotURL: screenshotURL,
         crashReportCallback: crashReportCallback,
-        autoInstrument: _autoInstrumentEnabled,
-        screenshotsEnabled: _screenshotsEnabled,
-        crashReportingEnabled: _crashReportingEnabled);
+        autoInstrument: appState.autoInstrumentEnabled,
+        screenshotsEnabled: appState.screenshotsEnabled,
+        crashReportingEnabled: appState.crashReportingEnabled);
     await Instrumentation.start(config);
 
     await Navigator.push(
@@ -153,68 +121,7 @@ class _SettingsState extends State<Settings> {
     showDialog(
         context: context,
         builder: (BuildContext context) {
-          return StatefulBuilder(builder: (context, setState) {
-            return Dialog(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20.0)),
-                child: Padding(
-                    padding: const EdgeInsets.all(12.0),
-                    child: Column(mainAxisSize: MainAxisSize.min, children: [
-                      Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Text("Crash reporting enabled:"),
-                            Checkbox(
-                              value: _crashReportingEnabled,
-                              key: const Key("toggleCrashReportingBox"),
-                              onChanged: (bool? newValue) {
-                                setState(() {
-                                  _crashReportingEnabled = newValue!;
-                                });
-                              },
-                            )
-                          ]),
-                      Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Text("Screenshots enabled:"),
-                            Checkbox(
-                              value: _screenshotsEnabled,
-                              key: const Key("toggleScreenshotsBox"),
-                              onChanged: (bool? newValue) {
-                                setState(() {
-                                  _screenshotsEnabled = newValue!;
-                                });
-                              },
-                            ),
-                          ]),
-                      Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Text("Auto instrument enabled:"),
-                            Checkbox(
-                              value: _autoInstrumentEnabled,
-                              key: const Key("toggleAutoInstrumentBox"),
-                              onChanged: (bool? newValue) {
-                                setState(() {
-                                  _autoInstrumentEnabled = newValue!;
-                                });
-                              },
-                            ),
-                          ]),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 12),
-                        child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              ElevatedButton(
-                                  key: const Key("dismissDialogButton"),
-                                  onPressed: () => Navigator.pop(context),
-                                  child: const Text('Close')),
-                            ]),
-                      )
-                    ])));
-          });
+          return const ExtraConfigurationsDialog();
         });
   }
 

@@ -44,8 +44,8 @@ Future<void> mapAgentInitToReturnSuccess() async {
 /// [jsonDecode]'s beacon's body and nested JSON values recursively.
 Map<String, dynamic>? getBeaconRequestBody(Map<String, dynamic> request) {
   try {
-    final List<dynamic> bodyList = jsonDecode(request["request"]["body"]);
-    final body = Map<String, dynamic>.from(bodyList[0]);
+    final List<dynamic> list = jsonDecode(request["request"]["body"]);
+    final object = Map<String, dynamic>.from(list[0]);
 
     // Deserialize nested JSON's that bypassed `jsonDecode` above.
     MapEntry<String, dynamic> decode(MapEntry<String, dynamic> entry) {
@@ -56,11 +56,15 @@ Map<String, dynamic>? getBeaconRequestBody(Map<String, dynamic> request) {
       }
     }
 
-    final recursivelyDecoded = body.entries.map(decode);
+    final recursivelyDecoded = object.entries.map(decode);
     return Map<String, dynamic>.fromEntries(recursivelyDecoded);
   } catch (e) {
     return null;
   }
+}
+
+Map<String, dynamic> getBeaconRequestHeaders(Map<String, dynamic> request) {
+  return Map<String, dynamic>.from(request["request"]["headers"]);
 }
 
 /// Checks request's bodies for specific parameters and values.

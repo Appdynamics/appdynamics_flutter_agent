@@ -5,14 +5,17 @@
  */
 
 import 'package:appdynamics_mobilesdk/appdynamics_mobilesdk.dart';
+import 'package:appdynamics_mobilesdk_example/app_state/app_state.dart';
 import 'package:appdynamics_mobilesdk_example/main.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:provider/provider.dart';
 
 extension TestHelpers on WidgetTester {
   // Jumps over the main screen, starting instrumentation with default configs.
   Future<void> jumpstartInstrumentation() async {
-    await pumpWidget(const MyApp());
+    await pumpWidget(ChangeNotifierProvider(
+        create: (context) => AppState(), child: const MyApp()));
 
     final featureListBarFinder = find.byKey(const Key("featureListAppBar"));
     expect(featureListBarFinder, findsNothing);
@@ -31,8 +34,13 @@ extension TestHelpers on WidgetTester {
     await pumpAndSettle(const Duration(seconds: 2));
   }
 
-  Future<void> tapAndSettle(String key) async {
+  Future<void> tapAndSettle(String key, {bool shouldScroll = false}) async {
     final widget = find.byKey(Key(key));
+
+    if (shouldScroll) {
+      await scrollUntilVisible(widget, 5);
+    }
+
     expect(widget, findsOneWidget);
 
     await tap(widget);

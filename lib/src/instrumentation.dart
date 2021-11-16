@@ -4,6 +4,7 @@
  *
  */
 
+// TODO: Wrap all methods with try/catch
 // TODO: Extract methods into files when static extensions are supported.
 // https://github.com/dart-lang/language/issues/723
 
@@ -688,6 +689,34 @@ class Instrumentation {
       }
     } catch (e) {
       return onError(e);
+    }
+  }
+
+  /// Change the app key after initialization.
+  ///
+  /// Older beacons/reports will be discarded when [newKey]
+  /// will be applied.
+  ///
+  /// Invoking this method has no effect unless the agent was already
+  /// initialized by calling one of the start methods.
+  ///
+  /// Method throws if provided an invalid [newKey].
+  ///
+  /// ```dart
+  /// try {
+  ///   await Instrumentation.changeAppKey("AA-BBB-CCC");
+  /// } catch (e) {
+  ///   log(e);
+  /// }
+  /// ```
+  static Future<void> changeAppKey(String newKey) async {
+    try {
+      final args = {
+        "newKey": newKey,
+      };
+      await channel.invokeMethod<String?>('changeAppKey', args);
+    } on PlatformException catch (e) {
+      throw Exception(e.details);
     }
   }
 }

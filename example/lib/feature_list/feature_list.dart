@@ -4,24 +4,25 @@
  *
  */
 
-import 'package:appdynamics_mobilesdk_example/features/agent_shutdown.dart';
-import 'package:appdynamics_mobilesdk_example/features/breadcrumbs.dart';
-import 'package:appdynamics_mobilesdk_example/features/custom_timers.dart';
-import 'package:appdynamics_mobilesdk_example/features/error_reporting.dart';
-import 'package:appdynamics_mobilesdk_example/features/manual_network_requests.dart';
-import 'package:appdynamics_mobilesdk_example/features/user_data.dart';
-import 'package:appdynamics_mobilesdk_example/utils/flush_beacons_app_bar.dart';
-import 'package:appdynamics_mobilesdk_example/utils/sized_button.dart';
+import 'package:appdynamics_mobilesdk_example/feature_list/features/change_app_key.dart';
+import 'package:appdynamics_mobilesdk_example/feature_list/utils/flush_beacons_app_bar.dart';
+import 'package:appdynamics_mobilesdk_example/feature_list/utils/sized_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import 'features/agent_shutdown.dart';
 import 'features/anr.dart';
+import 'features/breadcrumbs.dart';
 import 'features/custom_metrics.dart';
+import 'features/custom_timers.dart';
+import 'features/error_reporting.dart';
 import 'features/info_points.dart';
+import 'features/manual_network_requests.dart';
 import 'features/screenshots.dart';
 import 'features/session_control.dart';
 import 'features/session_frames.dart';
+import 'features/user_data.dart';
 
 class FeatureList extends StatelessWidget {
   static const platform = MethodChannel('com.appdynamics.flutter.example');
@@ -102,6 +103,11 @@ class FeatureList extends StatelessWidget {
                   title: "Info points",
                   keyString: "infoPointsButton",
                   screen: const InfoPoints()),
+              SizedButton(
+                  context: context,
+                  title: "Change app key",
+                  keyString: "changeAppKeyButton",
+                  screen: const ChangeAppKey()),
               ElevatedButton(
                 key: const Key("crashAppButton"),
                 child: const Text('Crash app'),

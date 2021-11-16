@@ -94,8 +94,11 @@ open class AppDynamicsMobileSdkPlugin : FlutterPlugin, MethodCallHandler {
             // Info points
             "beginCall" to ::beginCall,
             "endCallWithSuccess" to ::endCallWithSuccess,
-            "endCallWithError" to ::endCallWithError
-            )
+            "endCallWithError" to ::endCallWithError,
+
+            // Change app key after initialization
+            "changeAppKey" to ::changeAppKey
+        )
 
         methods[call.method]?.let { method ->
             method(result, call.arguments)
