@@ -38,6 +38,7 @@ task runIntegrationTestsiOS {
     dependsOn runSessionControlIntegrationTestiOS
     dependsOn runInfoPointsIntegrationTestiOS
     dependsOn runChangeAppKeyIntegrationTestiOS
+    dependsOn runActivityTrackingIntegrationTestiOS
 }
 
 task runIntegrationTestsAndroid {
@@ -53,6 +54,7 @@ task runIntegrationTestsAndroid {
     dependsOn runSessionControlIntegrationTestAndroid
     dependsOn runInfoPointsIntegrationTestAndroid
     dependsOn runChangeAppKeyIntegrationTestAndroid
+    dependsOn runActivityTrackingIntegrationTestAndroid
 }
 
 task installPods(type: Exec) {

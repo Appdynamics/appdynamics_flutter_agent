@@ -13,6 +13,7 @@ dependencies:
   flutter_picker: ^2.0.2
   http: ^0.13.3
   package_info_plus: ^1.0.3
+  uuid: ^3.0.5
 
 dev_dependencies:
   flutter_lints: ^1.0.4

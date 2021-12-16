@@ -4,25 +4,12 @@
  *
  */
 
-import 'package:appdynamics_mobilesdk_example/feature_list/features/change_app_key.dart';
 import 'package:appdynamics_mobilesdk_example/feature_list/utils/flush_beacons_app_bar.dart';
 import 'package:appdynamics_mobilesdk_example/feature_list/utils/sized_button.dart';
+import 'package:appdynamics_mobilesdk_example/routing/route_paths.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
-import 'features/agent_shutdown.dart';
-import 'features/anr.dart';
-import 'features/breadcrumbs.dart';
-import 'features/custom_metrics.dart';
-import 'features/custom_timers.dart';
-import 'features/error_reporting.dart';
-import 'features/info_points.dart';
-import 'features/manual_network_requests.dart';
-import 'features/screenshots.dart';
-import 'features/session_control.dart';
-import 'features/session_frames.dart';
-import 'features/user_data.dart';
 
 class FeatureList extends StatelessWidget {
   static const platform = MethodChannel('com.appdynamics.flutter.example');
@@ -47,67 +34,72 @@ class FeatureList extends StatelessWidget {
                   context: context,
                   title: "ANR",
                   keyString: "anrButton",
-                  screen: const Anr()),
+                  screenRoute: RoutePaths.anr),
               SizedButton(
                   context: context,
                   title: "Manual network requests",
                   keyString: "manualNetworkRequestsButton",
-                  screen: const ManualNetworkRequests()),
+                  screenRoute: RoutePaths.manualNetworkRequests),
               SizedButton(
                   context: context,
                   title: "Custom timers",
                   keyString: "customTimersButton",
-                  screen: const CustomTimers()),
+                  screenRoute: RoutePaths.customTimers),
               SizedButton(
                   context: context,
                   title: "Breadcrumbs",
                   keyString: "breadcrumbsButton",
-                  screen: const Breadcrumbs()),
+                  screenRoute: RoutePaths.breadcrumbs),
               SizedButton(
                   context: context,
                   title: "Error reporting",
                   keyString: "errorReportingButton",
-                  screen: const ErrorReporting()),
+                  screenRoute: RoutePaths.errorReporting),
               SizedButton(
                   context: context,
                   title: "User data",
                   keyString: "userDataButton",
-                  screen: const UserData()),
+                  screenRoute: RoutePaths.userData),
               SizedButton(
                   context: context,
                   title: "Session frames",
                   keyString: "sessionFramesButton",
-                  screen: const SessionFrames()),
+                  screenRoute: RoutePaths.sessionFrames),
               SizedButton(
                   context: context,
                   title: "Custom metrics",
                   keyString: "customMetricsButton",
-                  screen: const CustomMetrics()),
+                  screenRoute: RoutePaths.customMetrics),
               SizedButton(
                   context: context,
                   title: "Screenshots",
                   keyString: "screenshotsButton",
-                  screen: const Screenshots()),
+                  screenRoute: RoutePaths.screenshots),
               SizedButton(
                   context: context,
                   title: "Agent shutdown",
                   keyString: "agentShutdownButton",
-                  screen: const AgentShutdown()),
+                  screenRoute: RoutePaths.agentShutdown),
               SizedButton(
                   context: context,
                   title: "Session control",
                   keyString: "sessionControlButton",
-                  screen: const SessionControl()),
+                  screenRoute: RoutePaths.sessionControl),
               SizedButton(
                   context: context,
                   title: "Info points",
                   keyString: "infoPointsButton",
-                  screen: const InfoPoints()),
+                  screenRoute: RoutePaths.infoPoints),
               SizedButton(
                   context: context,
                   title: "Change app key",
                   keyString: "changeAppKeyButton",
-                  screen: const ChangeAppKey()),
+                  screenRoute: RoutePaths.changeAppKey),
+              SizedButton(
+                  context: context,
+                  title: "Activity tracking",
+                  keyString: "activityTrackingButton",
+                  screenRoute: RoutePaths.activityTracking),
               ElevatedButton(
                 key: const Key("crashAppButton"),
                 child: const Text('Crash app'),

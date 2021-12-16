@@ -18,6 +18,8 @@ open class AppDynamicsMobileSdkPlugin : FlutterPlugin, MethodCallHandler {
     ///
     /// This local reference serves to register the plugin with the Flutter Engine and unregister it
     /// when the Flutter Engine is detached from the Activity
+
+    internal var dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS"
     internal lateinit var channel: MethodChannel
     internal lateinit var context: android.content.Context
     internal var customRequestTracker: HttpRequestTracker? = null
@@ -97,7 +99,12 @@ open class AppDynamicsMobileSdkPlugin : FlutterPlugin, MethodCallHandler {
             "endCallWithError" to ::endCallWithError,
 
             // Change app key after initialization
-            "changeAppKey" to ::changeAppKey
+            "changeAppKey" to ::changeAppKey,
+
+            // Activity tracking
+            "trackPageStart" to ::trackPageStart,
+            "trackPageEnd" to ::trackPageEnd
+
         )
 
         methods[call.method]?.let { method ->

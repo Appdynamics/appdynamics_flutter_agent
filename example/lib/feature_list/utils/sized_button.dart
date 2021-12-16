@@ -11,11 +11,11 @@ class SizedButton extends StatelessWidget {
   final BuildContext context;
   final String title;
   final String keyString;
-  final Widget screen;
+  final String screenRoute;
 
-  void onPressed() => Navigator.push(
+  void onPressed() => Navigator.pushNamed(
         context,
-        MaterialPageRoute(builder: (context) => screen),
+        screenRoute,
       );
 
   const SizedButton(
@@ -23,7 +23,7 @@ class SizedButton extends StatelessWidget {
       required this.context,
       required this.title,
       required this.keyString,
-      required this.screen})
+      required this.screenRoute})
       : super(key: key);
 
   @override

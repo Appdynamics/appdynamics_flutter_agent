@@ -39,7 +39,7 @@ fun AppDynamicsMobileSdkPlugin.setUserDataDate(
     }
 
     val date = SimpleDateFormat(
-        "yyyy-MM-dd'T'HH:mm:ss.mmm'Z'",
+        dateFormat,
         Locale.US
     ).parse(value) ?: run {
         result.error(

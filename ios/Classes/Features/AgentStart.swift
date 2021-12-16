@@ -14,6 +14,8 @@ extension SwiftAppDynamicsMobileSdkPlugin {
     }
     
     let configuration = ADEumAgentConfiguration(appKey: appKey)
+    let type = properties["type"] as! String
+    let version = properties["version"] as! String
     
     if let loggingLevel = properties["loggingLevel"] as? Int {
       let levels = [ADEumLoggingLevel.off,  ADEumLoggingLevel.info, ADEumLoggingLevel.all]
@@ -47,14 +49,14 @@ extension SwiftAppDynamicsMobileSdkPlugin {
     if let autoInstrumentEnabled = properties["autoInstrumentEnabled"] as? Bool {
       configuration.enableAutoInstrument = autoInstrumentEnabled
     }
-    
+
     if crashReportCallback == nil {
       crashReportCallback = CrashCallbackObject()
       configuration.crashReportCallback = crashReportCallback
     }
     
     configuration.applicationName = "com.appdynamics.FlutterEveryfeatureiOS"
-    ADEumInstrumentation.initWith(configuration)
+    ADEumInstrumentation.initWith(configuration, a: type, b: version);
     
     result(nil)
   }

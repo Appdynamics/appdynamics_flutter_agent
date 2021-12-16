@@ -90,6 +90,8 @@ Future<List<Map<String, dynamic>>> findRequestsBy({
   dynamic methodArgs,
   dynamic methodInfo,
   dynamic returnValue,
+  dynamic viewControllerName,
+  dynamic fragmentName,
   dynamic $is, // "$" -> reserved keyword workaround
 }) async {
   final response = await http.get(Uri.parse(serverRequestsUrl));
@@ -118,6 +120,8 @@ Future<List<Map<String, dynamic>>> findRequestsBy({
     returnValue: "ret",
     metricName: "metricName",
     metricValue: "val",
+    viewControllerName: "viewControllerName",
+    fragmentName: "fragmentName",
   };
 
   final requests = jsonRequests.where((request) {

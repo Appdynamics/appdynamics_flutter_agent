@@ -8,6 +8,7 @@ import 'dart:convert';
 
 import 'package:appdynamics_mobilesdk/appdynamics_mobilesdk.dart';
 import 'package:appdynamics_mobilesdk_example/app_state/app_state.dart';
+import 'package:appdynamics_mobilesdk_example/routing/route_paths.dart';
 import 'package:appdynamics_mobilesdk_example/settings/utils/constants.dart';
 import 'package:appdynamics_mobilesdk_example/settings/utils/crash_report_dialog.dart';
 import 'package:flutter/cupertino.dart';
@@ -16,7 +17,6 @@ import 'package:flutter_picker/flutter_picker.dart';
 import 'package:provider/provider.dart';
 
 import 'utils/extra_configuration_dialog.dart';
-import '../feature_list/feature_list.dart';
 
 class Settings extends StatefulWidget {
   const Settings({Key? key}) : super(key: key);
@@ -79,7 +79,7 @@ class _SettingsState extends State<Settings> {
   }
 
   Future<void> _showCrashReportAlert(String crashReports) async {
-    return showDialog<void>(
+    await showDialog<void>(
         context: context,
         builder: (BuildContext context) {
           return CrashReportDialog(crashReports: crashReports);
@@ -111,14 +111,11 @@ class _SettingsState extends State<Settings> {
         crashReportingEnabled: appState.crashReportingEnabled);
     await Instrumentation.start(config);
 
-    await Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => const FeatureList()),
-    );
+    await Navigator.pushNamed(context, RoutePaths.featureList);
   }
 
   Future<void> _showExtraConfigurationsDialog(context) async {
-    showDialog(
+    await showDialog(
         context: context,
         builder: (BuildContext context) {
           return const ExtraConfigurationsDialog();

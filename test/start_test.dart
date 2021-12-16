@@ -41,8 +41,9 @@ void main() {
       isMethodCall(
         'start',
         arguments: <String, dynamic>{
-          "appKey": appKey,
+          "type": "Flutter",
           "version": packageInfo.version,
+          "appKey": appKey,
           "loggingLevel": 0,
           "collectorURL": "https://mobile.eum-appdynamics.com",
           "screenshotURL": "https://mobile.eum-appdynamics.com",
@@ -51,7 +52,6 @@ void main() {
           "anrStackTraceEnabled": true,
           "crashReportingEnabled": true,
           "autoInstrumentEnabled": true,
-          "type": "Flutter",
         },
       ),
     ]);

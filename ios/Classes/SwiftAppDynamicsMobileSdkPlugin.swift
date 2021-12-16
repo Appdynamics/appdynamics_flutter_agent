@@ -6,6 +6,7 @@ typealias ADEumMethodCall = Any
 
 public class SwiftAppDynamicsMobileSdkPlugin: NSObject, FlutterPlugin {
   static var channel: FlutterMethodChannel?
+  static var dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS"
   
   var customRequestTracker: ADEumHTTPRequestTracker?
   var crashReportCallback: CrashCallbackObject?
@@ -81,7 +82,11 @@ public class SwiftAppDynamicsMobileSdkPlugin: NSObject, FlutterPlugin {
       "endCallWithError": endCallWithError,
       
       /// Change app key after initialization
-      "changeAppKey": changeAppKey
+      "changeAppKey": changeAppKey,
+      
+      /// Activity tracking
+      "trackPageStart": trackPageStart,
+      "trackPageEnd": trackPageEnd
     ]
     
     if let method = methods[call.method] {

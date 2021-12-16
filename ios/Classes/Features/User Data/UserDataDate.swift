@@ -20,7 +20,7 @@ extension SwiftAppDynamicsMobileSdkPlugin {
         }
         
         let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.mmm'Z'"
+        formatter.dateFormat = SwiftAppDynamicsMobileSdkPlugin.dateFormat
         guard let date = formatter.date(from: value) else {
             let error = FlutterError(code: "500", message: "Agent setUserDataDateTime() failed.", details: "Please provide a valid DateTime for `value`.")
             result(error)

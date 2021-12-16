@@ -455,14 +455,14 @@ class Instrumentation {
   /// }
   ///
   /// void onProcessOrderComplete() {
-  ///   // Once the order is processed, the user is done "checking out" so we end
-  ///   // the session frame.
+  ///   // Once the order is processed, the user is done "checking out" so we
+  ///   // end the session frame.
   ///   _sessionFrame.end();
   /// }
   ///
   /// void onCheckoutCancel() {
-  ///   // If they cancel or go back, you'll want to end the session frame also, or
-  ///   // else it will be left open and appear to have never ended.
+  ///   // If they cancel or go back, you'll want to end the session frame also,
+  ///   // or else it will be left open and appear to have never ended.
   ///   _sessionFrame.end();
   /// }
   /// ```
