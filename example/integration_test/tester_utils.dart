@@ -8,7 +8,6 @@ import 'package:appdynamics_mobilesdk/appdynamics_mobilesdk.dart';
 import 'package:appdynamics_mobilesdk_example/app_state/app_state.dart';
 import 'package:appdynamics_mobilesdk_example/routing/on_generate_route.dart';
 import 'package:appdynamics_mobilesdk_example/routing/route_paths.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
@@ -48,15 +47,9 @@ extension TestHelpers on WidgetTester {
     await pumpAndSettle(const Duration(seconds: 2));
   }
 
-  Future<void> tapAndSettle(String key, {bool shouldScroll = false}) async {
+  Future<void> tapAndSettle(String key) async {
     final widget = find.byKey(Key(key));
-
-    if (shouldScroll) {
-      await scrollUntilVisible(widget, 5);
-    }
-
-    expect(widget, findsOneWidget);
-
+    await ensureVisible(widget);
     await tap(widget);
     await pumpAndSettle();
   }

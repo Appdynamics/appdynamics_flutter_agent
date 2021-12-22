@@ -66,7 +66,7 @@ void main() {
   testWidgets("Activity tracking beacons are sent",
       (WidgetTester tester) async {
     await tester.startInstrumentationWithObserver();
-    await tester.tapAndSettle("activityTrackingButton", shouldScroll: true);
+    await tester.tapAndSettle("activityTrackingButton");
     await tester.flushBeacons();
     await tester.tapAndSettle("pushScreenButton");
     await tester.flushBeacons();

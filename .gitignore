@@ -124,3 +124,7 @@ app.*.symbols
 
 # Ignore Gradle build output directory
 build
+
+# SonarQube
+.sonar/
+.scannerwork/

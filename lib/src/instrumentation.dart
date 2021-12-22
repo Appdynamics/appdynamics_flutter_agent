@@ -11,9 +11,9 @@
 import 'dart:async';
 
 import 'package:appdynamics_mobilesdk/appdynamics_mobilesdk.dart';
-import 'package:appdynamics_mobilesdk/src/agent_configuration.dart';
 import 'package:appdynamics_mobilesdk/src/session_frame.dart';
 import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/services.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
@@ -549,7 +549,7 @@ class Instrumentation {
   ///
   /// ```dart
   /// import 'package:appdynamics_mobilesdk/appdynamics_mobilesdk.dart';
-  /// import 'package:flutter/cupertino.dart';
+  ///
   /// import 'package:flutter/material.dart';
   ///
   /// class App extends StatelessWidget {
@@ -684,7 +684,7 @@ class Instrumentation {
       if (callback is Future<T>) {
         final res = await callback;
         return onSuccess(res);
-      } else if (callback is T) {
+      } else {
         return onSuccess(callback);
       }
     } catch (e) {

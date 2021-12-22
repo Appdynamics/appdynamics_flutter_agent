@@ -38,4 +38,19 @@ void main() {
       isMethodCall('changeAppKey', arguments: {"newKey": newKey}),
     ]);
   });
+
+  testWidgets('Change app key catches native exception',
+      (WidgetTester tester) async {
+    tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(channel,
+        (MethodCall methodCall) async {
+      switch (methodCall.method) {
+        case 'changeAppKey':
+          throw Exception("Invalid key");
+      }
+    });
+
+    const newKey = "123456";
+    expect(() async => await Instrumentation.changeAppKey(newKey),
+        throwsA(isA<Exception>()));
+  });
 }

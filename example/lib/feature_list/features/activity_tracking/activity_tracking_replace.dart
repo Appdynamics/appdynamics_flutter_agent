@@ -5,7 +5,6 @@
  */
 
 import 'package:appdynamics_mobilesdk_example/feature_list/utils/flush_beacons_app_bar.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class ActivityTrackingReplace extends StatefulWidget {

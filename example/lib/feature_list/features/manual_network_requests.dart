@@ -6,7 +6,7 @@
 
 import 'package:appdynamics_mobilesdk/appdynamics_mobilesdk.dart';
 import 'package:appdynamics_mobilesdk_example/feature_list/utils/flush_beacons_app_bar.dart';
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -108,7 +108,7 @@ class _ManualNetworkRequestsState extends State<ManualNetworkRequests> {
               ],
             ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(50, 80, 50, 10),
+              padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 50),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [

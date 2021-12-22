@@ -4,10 +4,8 @@
  *
  */
 
-import 'package:appdynamics_mobilesdk/appdynamics_mobilesdk.dart';
 import 'package:appdynamics_mobilesdk_example/feature_list/utils/flush_beacons_app_bar.dart';
 import 'package:appdynamics_mobilesdk_example/routing/route_paths.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class ActivityTracking extends StatefulWidget {
@@ -23,7 +21,6 @@ class _ActivityTrackingState extends State<ActivityTracking> {
   }
 
   _replaceScreen() async {
-    WidgetTracker.instance.trackWidgetStart("MyScreen");
     await Navigator.pushReplacementNamed(
         context, RoutePaths.activityTrackingReplace);
   }

@@ -11,7 +11,7 @@ import 'package:appdynamics_mobilesdk_example/app_state/app_state.dart';
 import 'package:appdynamics_mobilesdk_example/routing/route_paths.dart';
 import 'package:appdynamics_mobilesdk_example/settings/utils/constants.dart';
 import 'package:appdynamics_mobilesdk_example/settings/utils/crash_report_dialog.dart';
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_picker/flutter_picker.dart';
 import 'package:provider/provider.dart';

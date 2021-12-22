@@ -9,7 +9,7 @@
 
 // Configure these based on your system's emulator/simulator names.
 def android_device = "Android SDK built for x86 64"
-def iOS_device = "iPhone 13"
+def iOS_device = "iPhone 12"
 
 def test_driver_path = "test_driver/integration_test.dart"
 def integration_tests_path = "integration_test/features/"
@@ -103,6 +103,12 @@ task runChangeAppKeyIntegrationTestiOS(type: Exec) {
             integration_tests_path + "change_app_key_test.dart", "-d", iOS_device
 }
 
+task runANRIntegrationTestiOS(type: Exec) {
+    dependsOn startIntegrationTestServer
+    commandLine "flutter", "drive", "--driver", test_driver_path, "--target",
+            integration_tests_path + "anr_test.dart", "-d", iOS_device
+}
+
 task runActivityTrackingIntegrationTestiOS(type: Exec) {
     dependsOn startIntegrationTestServer
     commandLine "flutter", "drive", "--driver", test_driver_path, "--target",
@@ -181,6 +187,12 @@ task runChangeAppKeyIntegrationTestAndroid(type: Exec) {
     dependsOn startIntegrationTestServer
     commandLine "flutter", "drive", "--driver", test_driver_path, "--target",
             integration_tests_path + "change_app_key_test.dart", "-d", android_device
+}
+
+task runANRIntegrationTestAndroid(type: Exec) {
+    dependsOn startIntegrationTestServer
+    commandLine "flutter", "drive", "--driver", test_driver_path, "--target",
+            integration_tests_path + "anr_test.dart", "-d", android_device
 }
 
 task runActivityTrackingIntegrationTestAndroid(type: Exec) {

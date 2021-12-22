@@ -7,6 +7,7 @@
 import 'package:appdynamics_mobilesdk/src/globals.dart';
 import 'package:flutter/cupertino.dart';
 
+
 /// Call the private constructor for [SessionFrame].
 ///
 /// We want users to call session frames API by _createSessionFrame, not

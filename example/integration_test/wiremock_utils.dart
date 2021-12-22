@@ -16,8 +16,10 @@ var serverAgentConfigStub = {
   "agentConfig": {
     "enableScreenshot": true,
     "screenshotUseCellular": true,
+    "enableAnrDetection": true,
+    "enableAnrStackTrace": true,
     "autoScreenshot": false,
-    "timestamp": 1,
+    "timestamp": 9999999999,
     "anrThreshold": 3000,
     "deviceMetricsConfigurations": {
       "enableMemory": false,

@@ -38,6 +38,7 @@ task runIntegrationTestsiOS {
     dependsOn runSessionControlIntegrationTestiOS
     dependsOn runInfoPointsIntegrationTestiOS
     dependsOn runChangeAppKeyIntegrationTestiOS
+    dependsOn runANRIntegrationTestiOS
     dependsOn runActivityTrackingIntegrationTestiOS
 }
 
@@ -54,6 +55,7 @@ task runIntegrationTestsAndroid {
     dependsOn runSessionControlIntegrationTestAndroid
     dependsOn runInfoPointsIntegrationTestAndroid
     dependsOn runChangeAppKeyIntegrationTestAndroid
+    dependsOn runANRIntegrationTestAndroid
     dependsOn runActivityTrackingIntegrationTestAndroid
 }
 

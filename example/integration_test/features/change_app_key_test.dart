@@ -4,6 +4,7 @@
  *
  */
 
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
@@ -55,7 +56,7 @@ void main() {
   testWidgets("Check app key change is properly reported",
       (WidgetTester tester) async {
     await tester.jumpstartInstrumentation();
-    await tester.tapAndSettle("changeAppKeyButton", shouldScroll: true);
+    await tester.tapAndSettle("changeAppKeyButton");
     await tester.enterInvalidKey();
     await tester.tapAndSettle("setKeyButton");
     await tester.assertExceptionCaught();

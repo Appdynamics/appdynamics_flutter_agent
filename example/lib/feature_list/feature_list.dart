@@ -7,7 +7,6 @@
 import 'package:appdynamics_mobilesdk_example/feature_list/utils/flush_beacons_app_bar.dart';
 import 'package:appdynamics_mobilesdk_example/feature_list/utils/sized_button.dart';
 import 'package:appdynamics_mobilesdk_example/routing/route_paths.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -25,7 +24,7 @@ class FeatureList extends StatelessWidget {
       ),
       body: Center(
           child: Padding(
-        padding: const EdgeInsets.fromLTRB(50, 10, 50, 10),
+        padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 50),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,

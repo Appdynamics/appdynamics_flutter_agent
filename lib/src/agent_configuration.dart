@@ -50,7 +50,7 @@ class AgentConfiguration {
   /// entirely from your controller.
   ///
   /// If disabled, the [Instrumentation.takeScreenshot] method will NOT capture
-  /// screenshots, and no automatic screenshots will be captured. You will NOT
+  /// screenshots and no automatic screenshots will be captured. You will NOT
   /// be able to enable screenshots from your controller.
   ///
   /// Most applications should leave this option enabled, and control the
@@ -62,7 +62,7 @@ class AgentConfiguration {
   /// **WARNING:** Altering this value is not recommended for production use.
   final LoggingLevel loggingLevel;
 
-  /// The agent supports usage of a callback function that receives an array of
+  /// The agent supports the usage of a callback function that receives an array of
   /// the native crashes that have been reported. You can use this callback to
   /// have access to crash reports.
   final CrashReportCallback? crashReportCallback;
@@ -76,7 +76,7 @@ class AgentConfiguration {
   /// are occurring.
   final bool crashReportingEnabled;
 
-  // TODO: Add rest of the features in doc when implemented.
+  // TODO: Add the rest of the features in doc when implemented.
   /// Boolean value that indicates if automatic instrumentation is enabled.
   ///
   /// Setting this to `false` will disable all automatic instrumentation

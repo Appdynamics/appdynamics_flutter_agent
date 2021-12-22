@@ -5,8 +5,8 @@
  */
 
 /**
- *  This file gets included from the top-level build file of the android application and injects the appdynamics
- *  android gradle plugin into the build of that application.
+ *  This file gets included from the top-level build file of the android application and injects the
+ *  appdynamics android Gradle plugin into the build of that application.
  */
 allprojects {
     ext.appd_plugin_version = '21.11.1'

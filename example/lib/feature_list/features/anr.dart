@@ -5,7 +5,7 @@
  */
 
 import 'package:appdynamics_mobilesdk_example/feature_list/utils/flush_beacons_app_bar.dart';
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -21,18 +21,16 @@ class _AnrState extends State<Anr> {
 
   var showSleepText = false;
 
-  void triggerSleep() {
+  void triggerSleep() async {
     setState(() {
       showSleepText = true;
     });
 
-    Future.delayed(const Duration(milliseconds: 50), () async {
-      const anrThreshold = 5;
-      await platform.invokeMethod('sleep', anrThreshold + 1);
+    const anrThreshold = 5;
+    await platform.invokeMethod('sleep', anrThreshold + 1);
 
-      setState(() {
-        showSleepText = false;
-      });
+    setState(() {
+      showSleepText = false;
     });
   }
 
@@ -43,20 +41,27 @@ class _AnrState extends State<Anr> {
         title: 'ANR',
       ),
       body: Center(
-        child: Column(
-          children: [
-            const SizedBox(height: 30),
-            ElevatedButton(
-              child: const Text('Trigger sleep'),
-              onPressed: () {
-                triggerSleep();
-              },
-            ),
-            Visibility(
-              child: const Text("Zzz Zzz."),
-              visible: showSleepText,
-            ),
-          ],
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(50, 20, 50, 10),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              ElevatedButton(
+                key: const Key("triggerSleepButton"),
+                child: const Text('Trigger sleep'),
+                onPressed: () {
+                  triggerSleep();
+                },
+              ),
+              Visibility(
+                child: const Text(
+                  "Zzz Zzz.",
+                  textAlign: TextAlign.center,
+                ),
+                visible: showSleepText,
+              ),
+            ],
+          ),
         ),
       ),
     );

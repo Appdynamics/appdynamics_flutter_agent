@@ -1,7 +1,9 @@
-import 'package:flutter/cupertino.dart';
+
 
 // Shared state between entire widgets in the app.
 // Default values for settings are also set here.
+import 'package:flutter/cupertino.dart';
+
 class AppState extends ChangeNotifier {
   String _appKey = "SM-AER-HCE";
   bool _crashReportingEnabled = true;

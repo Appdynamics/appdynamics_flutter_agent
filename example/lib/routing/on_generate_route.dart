@@ -17,7 +17,6 @@ import 'package:appdynamics_mobilesdk_example/feature_list/features/session_fram
 import 'package:appdynamics_mobilesdk_example/feature_list/features/user_data.dart';
 import 'package:appdynamics_mobilesdk_example/routing/route_paths.dart';
 import 'package:appdynamics_mobilesdk_example/settings/settings.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 Route<dynamic> onGenerateRoute(RouteSettings settings) {

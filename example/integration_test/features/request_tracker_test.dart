@@ -4,6 +4,7 @@
  *
  */
 
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
@@ -41,7 +42,8 @@ extension NetworkRequests on WidgetTester {
         url: serverRequestsUrl,
         type: "network-request",
         hrc: "200",
-        $is: "Manual HttpTracker");
+        $is: "Manual HttpTracker"
+    );
     expect(requests.length, 0);
   }
 }
