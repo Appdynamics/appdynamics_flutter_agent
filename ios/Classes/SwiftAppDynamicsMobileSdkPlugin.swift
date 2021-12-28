@@ -8,11 +8,11 @@ public class SwiftAppDynamicsMobileSdkPlugin: NSObject, FlutterPlugin {
   static var channel: FlutterMethodChannel?
   static var dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS"
   
-  var customRequestTracker: ADEumHTTPRequestTracker?
   var crashReportCallback: CrashCallbackObject?
+  var requestTrackers: [String: ADEumHTTPRequestTracker] = [:]
   var sessionFrames: [String: ADEumSessionFrame] = [:]
   var callTrackers: [String: ADEumMethodCall] = [:]
-
+  
   public static func register(with registrar: FlutterPluginRegistrar) {
     channel = FlutterMethodChannel(name: "appdynamics_mobilesdk", binaryMessenger: registrar.messenger())
     let instance = SwiftAppDynamicsMobileSdkPlugin()
@@ -32,6 +32,12 @@ public class SwiftAppDynamicsMobileSdkPlugin: NSObject, FlutterPlugin {
       "setRequestTrackerRequestHeaders": setRequestTrackerRequestHeaders,
       "getServerCorrelationHeaders": getServerCorrelationHeaders,
       "requestTrackerReport": requestTrackerReport,
+      
+      "setRequestTrackerUserData": setRequestTrackerUserData,
+      "setRequestTrackerUserDataDouble": setRequestTrackerUserDataDouble,
+      "setRequestTrackerUserDataLong": setRequestTrackerUserDataLong,
+      "setRequestTrackerUserDataBoolean": setRequestTrackerUserDataBoolean,
+      "setRequestTrackerUserDataDate": setRequestTrackerUserDataDate,
       
       /// Custom timers
       "startTimer": startTimer,
@@ -69,13 +75,13 @@ public class SwiftAppDynamicsMobileSdkPlugin: NSObject, FlutterPlugin {
       "unblockScreenshots": unblockScreenshots,
       "screenshotsBlocked": screenshotsBlocked,
       
-      /// Shutdown & Restart
+      /// Shutdown & restart
       "shutdownAgent": shutdownAgent,
       "restartAgent": restartAgent,
       
       /// Programmatic session control
       "startNextSession": startNextSession,
-
+      
       /// Info points
       "beginCall": beginCall,
       "endCallWithSuccess": endCallWithSuccess,

@@ -6,7 +6,6 @@
 
 import 'package:appdynamics_mobilesdk/appdynamics_mobilesdk.dart';
 import 'package:appdynamics_mobilesdk_example/feature_list/utils/flush_beacons_app_bar.dart';
-
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -64,11 +63,21 @@ class _ManualNetworkRequestsState extends State<ManualNetworkRequests> {
     });
 
     final tracker = await RequestTracker.create(urlString);
+    const intValue = 1234;
+    const doubleValue = 123.456;
+    const boolValue = true;
+    const stringValue = "test string";
+    final dateTimeValue = DateTime.utc(2021).toLocal();
     try {
       final response = await request;
       await tracker.setResponseStatusCode(response.statusCode)
         ..setRequestHeaders(response.request!.headers)
-        ..setResponseHeaders(response.headers);
+        ..setResponseHeaders(response.headers)
+        ..setUserData("stringKey", stringValue)
+        ..setUserDataBool("boolKey", boolValue)
+        ..setUserDataDateTime("dateTimeValue", dateTimeValue)
+        ..setUserDataDouble("doubleValue", doubleValue)
+        ..setUserDataInt("intValue", intValue);
       setState(() {
         responseText = "Success with ${response.statusCode}.";
       });

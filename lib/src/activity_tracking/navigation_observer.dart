@@ -34,17 +34,19 @@ import '../../appdynamics_mobilesdk.dart';
 /// ```
 class NavigationObserver extends RouteObserver<PageRoute<dynamic>> {
   @override
-  void didPush(Route<dynamic> route, Route<dynamic>? previousRoute) {
+  Future<void> didPush(
+      Route<dynamic> route, Route<dynamic>? previousRoute) async {
     super.didPush(route, previousRoute);
 
     final name = route.settings.name;
     if (name != null) {
-      WidgetTracker.instance.trackWidgetStart(name);
+      await WidgetTracker.instance.trackWidgetStart(name);
     }
   }
 
   @override
-  void didReplace({Route<dynamic>? newRoute, Route<dynamic>? oldRoute}) {
+  Future<void> didReplace(
+      {Route<dynamic>? newRoute, Route<dynamic>? oldRoute}) async {
     super.didReplace(newRoute: newRoute, oldRoute: oldRoute);
 
     final newRouteName = newRoute?.settings.name;
@@ -59,12 +61,13 @@ class NavigationObserver extends RouteObserver<PageRoute<dynamic>> {
   }
 
   @override
-  void didPop(Route<dynamic> route, Route<dynamic>? previousRoute) {
+  Future<void> didPop(
+      Route<dynamic> route, Route<dynamic>? previousRoute) async {
     super.didPop(route, previousRoute);
 
     final name = route.settings.name;
     if (name != null) {
-      WidgetTracker.instance.trackWidgetEnd(name);
+      await WidgetTracker.instance.trackWidgetEnd(name);
     }
   }
 }

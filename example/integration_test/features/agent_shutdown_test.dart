@@ -4,12 +4,45 @@
  *
  */
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
 import '../tester_utils.dart';
 import '../wiremock_utils.dart';
-import 'request_tracker_test.dart';
+
+extension on WidgetTester {
+  sendNetworkRequest() async {
+    final requestTextField = find.byKey(const Key("requestTextField"));
+    expect(requestTextField, findsOneWidget);
+
+    final randomSuccessURL = serverRequestsUrl;
+    await enterText(requestTextField, randomSuccessURL);
+    await tapAndSettle("manualPOSTRequestButton");
+  }
+
+  assertBeaconSent() async {
+    final requestSentLabel = find.text("Success with 200.");
+    expect(requestSentLabel, findsOneWidget);
+
+    final requests = await findRequestsBy(
+        url: serverRequestsUrl,
+        type: "network-request",
+        hrc: "200");
+    expect(requests.length, 1);
+  }
+
+  assertBeaconNotSent() async {
+    final requestSentLabel = find.text("Success with 200.");
+    expect(requestSentLabel, findsOneWidget);
+
+    final requests = await findRequestsBy(
+        url: serverRequestsUrl,
+        type: "network-request",
+        hrc: "200");
+    expect(requests.length, 0);
+  }
+}
 
 void main() {
   setUp(() async {

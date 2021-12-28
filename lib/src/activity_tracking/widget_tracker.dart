@@ -47,7 +47,8 @@ class TrackedWidget {
 /// The available methods permit specifying the start and end of a Flutter
 /// widget that can be reflected as an app page in the controller.
 ///
-/// Warning: Be sure to be using unique screen identifiers.
+/// Warning: Be sure to be using unique widget names. Duplicate name might
+/// resolve in unexpected behavior.
 ///
 /// For apps using named routes, see [NavigationObserver].
 ///
@@ -99,7 +100,10 @@ class WidgetTracker {
 
   static WidgetTracker get instance => _instance;
 
-  trackWidgetStart(String widgetName) async {
+  /// Tracks when a widget has started.
+  ///
+  /// May throw [Exception] on native platform error.
+  Future<void> trackWidgetStart(String widgetName) async {
     try {
       final uuidString = const Uuid().v1();
       final startDate = DateTime.now().toIso8601String();
@@ -115,12 +119,18 @@ class WidgetTracker {
     }
   }
 
-  trackWidgetEnd(String widgetName) async {
+  /// Tracks when a widget has ended.
+  ///
+  /// If widget doesn't exist, it doesn't do
+  /// anything.
+  ///
+  /// May throw [Exception] on native platform error.
+  Future<void> trackWidgetEnd(String widgetName) async {
     try {
       final trackedWidget = trackedWidgets[widgetName];
 
       if (trackedWidget == null) {
-        return null;
+        return;
       }
 
       final endDate = DateTime.now().toIso8601String();

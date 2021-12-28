@@ -3,9 +3,8 @@ import Flutter
 
 extension SwiftAppDynamicsMobileSdkPlugin {
   public func start(result: @escaping FlutterResult, arguments: Any?) {
-    guard let properties = arguments as? Dictionary<String, Any> else {
-      return
-    }
+    let properties = arguments as! Dictionary<String, Any>
+
     
     guard let appKey = properties["appKey"] as? String else {
       let error = FlutterError(code: "500", message: "Agent start() failed.", details: "Please provide an appKey.")

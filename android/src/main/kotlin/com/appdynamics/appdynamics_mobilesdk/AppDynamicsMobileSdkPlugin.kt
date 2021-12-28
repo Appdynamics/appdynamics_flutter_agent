@@ -2,6 +2,8 @@ package com.appdynamics.appdynamics_mobilesdk
 
 import androidx.annotation.NonNull
 import com.appdynamics.appdynamics_mobilesdk.features.*
+import com.appdynamics.appdynamics_mobilesdk.features.request_tracking.*
+import com.appdynamics.appdynamics_mobilesdk.features.request_tracking.tracker_user_data.*
 import com.appdynamics.appdynamics_mobilesdk.features.user_data.*
 import com.appdynamics.eumagent.runtime.CallTracker
 import com.appdynamics.eumagent.runtime.HttpRequestTracker
@@ -22,8 +24,8 @@ open class AppDynamicsMobileSdkPlugin : FlutterPlugin, MethodCallHandler {
     internal var dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS"
     internal lateinit var channel: MethodChannel
     internal lateinit var context: android.content.Context
-    internal var customRequestTracker: HttpRequestTracker? = null
     internal var crashReportCallback: CrashCallbackObject? = null
+    internal var requestTrackers: MutableMap<String, HttpRequestTracker> = mutableMapOf()
     internal var sessionFrames: MutableMap<String, SessionFrame> = mutableMapOf()
     internal var callTrackers: MutableMap<String, CallTracker> = mutableMapOf()
 
@@ -49,6 +51,12 @@ open class AppDynamicsMobileSdkPlugin : FlutterPlugin, MethodCallHandler {
             "setRequestTrackerRequestHeaders" to ::setRequestTrackerRequestHeaders,
             "getServerCorrelationHeaders" to ::getServerCorrelationHeaders,
             "requestTrackerReport" to ::requestTrackerReport,
+
+            "setRequestTrackerUserData" to ::setRequestTrackerUserData,
+            "setRequestTrackerUserDataBoolean" to ::setRequestTrackerUserDataBoolean,
+            "setRequestTrackerUserDataLong" to ::setRequestTrackerUserDataLong,
+            "setRequestTrackerUserDataDouble" to ::setRequestTrackerUserDataDouble,
+            "setRequestTrackerUserDataDate" to ::setRequestTrackerUserDataDate,
 
             // Custom timers
             "startTimer" to ::startTimer,

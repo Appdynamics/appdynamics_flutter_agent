@@ -5,7 +5,6 @@
  */
 
 import 'package:appdynamics_mobilesdk_example/feature_list/utils/flush_beacons_app_bar.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 

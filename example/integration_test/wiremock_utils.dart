@@ -69,14 +69,21 @@ Map<String, dynamic> getBeaconRequestHeaders(Map<String, dynamic> request) {
   return Map<String, dynamic>.from(request["request"]["headers"]);
 }
 
+class AnyRequestValue {}
+
 /// Checks request's bodies for specific parameters and values.
 ///
-/// Can be used to also check if key exists in body by specifying "<any>"
+/// Can be used also to check the i.f key exists in body by specifying "<any>"
 /// as parameter the value.
 Future<List<Map<String, dynamic>>> findRequestsBy({
   dynamic url,
   dynamic type,
   dynamic hrc,
+  dynamic userData,
+  dynamic userDataDateTime,
+  dynamic userDataBool,
+  dynamic userDataDouble,
+  dynamic userDataInt,
   dynamic event,
   dynamic timerName,
   dynamic text,
@@ -124,6 +131,11 @@ Future<List<Map<String, dynamic>>> findRequestsBy({
     metricValue: "val",
     viewControllerName: "viewControllerName",
     fragmentName: "fragmentName",
+    userData: "userdata",
+    userDataDateTime: "userdataDateTimestampMs",
+    userDataBool: "userdataBoolean",
+    userDataDouble: "userdataDouble",
+    userDataInt: "userdataLong",
   };
 
   final requests = jsonRequests.where((request) {

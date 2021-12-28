@@ -4,61 +4,71 @@
  *
  */
 
-package com.appdynamics.appdynamics_mobilesdk.features
+package com.appdynamics.appdynamics_mobilesdk.features.request_tracking
 
 import androidx.annotation.NonNull
 import com.appdynamics.appdynamics_mobilesdk.AppDynamicsMobileSdkPlugin
 import com.appdynamics.eumagent.runtime.Instrumentation
 import com.appdynamics.eumagent.runtime.ServerCorrelationHeaders
 import io.flutter.plugin.common.MethodChannel
+import java.net.MalformedURLException
 import java.net.URL
 
 fun AppDynamicsMobileSdkPlugin.getRequestTrackerWithUrl(
     @NonNull result: MethodChannel.Result,
     arguments: Any?
 ) {
-    val urlString = arguments as? String
+    val properties = arguments as HashMap<*, *>
+    val id = properties["id"] as String
 
-    if (urlString == null) {
+    val urlString = properties["url"] as? String ?: run {
         result.error(
             "500",
             "Agent getRequestTrackerWithUrl() failed.",
-            "Please provide a valid URL."
+            "Please insert valid URL string."
         )
         return
     }
 
-    val url = URL(urlString)
-    customRequestTracker = Instrumentation.beginHttpRequest(url)
-    result.success(null)
+    try {
+        val url = URL(urlString)
+        requestTrackers[id] = Instrumentation.beginHttpRequest(url)
+        result.success(null)
+    } catch (e: MalformedURLException) {
+        result.error(
+            "500",
+            "Agent setRequestTrackerStatusCode() failed.",
+            e.message
+        )
+    }
 }
 
 fun AppDynamicsMobileSdkPlugin.setRequestTrackerErrorInfo(
     @NonNull result: MethodChannel.Result,
     arguments: Any?
 ) {
-    val tracker = customRequestTracker ?: run {
+    val properties = arguments as HashMap<*, *>
+    val id = properties["id"] as String
+
+    val error = properties["errorDict"] as? HashMap<String, String> ?: run {
         result.error(
             "500",
             "Agent setRequestTrackerErrorInfo() failed.",
-            "Request tracker was not initialized."
+            "Please insert a valid error message."
         )
         return
     }
 
-    val error = arguments as? HashMap<String, String>
-    val message = error?.get("message")
-
-    if (message == null) {
+    val tracker = requestTrackers[id] ?: run {
         result.error(
             "500",
             "Agent setRequestTrackerErrorInfo() failed.",
-            "Error 'message' is not a valid String."
+            "Request tracker was not initialized or already reported."
         )
         return
     }
 
-    tracker.withError(message)
+    tracker.withError(error["message"])
     result.success(null)
 }
 
@@ -66,17 +76,19 @@ fun AppDynamicsMobileSdkPlugin.setRequestTrackerStatusCode(
     @NonNull result: MethodChannel.Result,
     arguments: Any?
 ) {
-    val tracker = customRequestTracker ?: run {
+    val properties = arguments as HashMap<*, *>
+    val id = properties["id"] as String
+
+    val tracker = requestTrackers[id] ?: run {
         result.error(
             "500",
             "Agent setRequestTrackerStatusCode() failed.",
-            "Request tracker was not initialized."
+            "Request tracker was not initialized or already reported."
         )
         return
     }
 
-    val statusCode = arguments as? Int
-    if (statusCode == null) {
+    val statusCode = properties["statusCode"] as? Int ?: run {
         result.error(
             "500",
             "Agent setRequestTrackerStatusCode() failed.",
@@ -93,16 +105,19 @@ fun AppDynamicsMobileSdkPlugin.setRequestTrackerResponseHeaders(
     @NonNull result: MethodChannel.Result,
     arguments: Any?
 ) {
-    val tracker = customRequestTracker ?: run {
+    val properties = arguments as HashMap<*, *>
+    val id = properties["id"] as String
+
+    val tracker = requestTrackers[id] ?: run {
         result.error(
             "500",
             "Agent setRequestTrackerResponseHeaders() failed.",
-            "Request tracker was not initialized."
+            "Request tracker was not initialized or already reported."
         )
         return
     }
 
-    val headers = arguments as? Map<String, String> ?: run {
+    val headers = properties["headers"] as? Map<String, String> ?: run {
         result.error(
             "500",
             "Agent setRequestTrackerResponseHeaders() failed.",
@@ -110,7 +125,9 @@ fun AppDynamicsMobileSdkPlugin.setRequestTrackerResponseHeaders(
         )
         return
     }
-    val listHeaders: Map<String, List<String>> = headers.entries.associate { it.key to listOf(it.value) }
+
+    val listHeaders: Map<String, List<String>> =
+        headers.entries.associate { it.key to listOf(it.value) }
 
     tracker.withResponseHeaderFields(listHeaders)
     result.success(null)
@@ -120,16 +137,19 @@ fun AppDynamicsMobileSdkPlugin.setRequestTrackerRequestHeaders(
     @NonNull result: MethodChannel.Result,
     arguments: Any?
 ) {
-    val tracker = customRequestTracker ?: run {
+    val properties = arguments as HashMap<*, *>
+    val id = properties["id"] as String
+
+    val tracker = requestTrackers[id] ?: run {
         result.error(
             "500",
             "Agent setRequestTrackerRequestHeaders() failed.",
-            "Request tracker was not initialized."
+            "Request tracker was not initialized or already reported."
         )
         return
     }
 
-    val headers = arguments as? Map<String, String> ?: run {
+    val headers = properties["headers"] as? Map<String, String> ?: run {
         result.error(
             "500",
             "Agent setRequestTrackerRequestHeaders() failed.",
@@ -137,7 +157,9 @@ fun AppDynamicsMobileSdkPlugin.setRequestTrackerRequestHeaders(
         )
         return
     }
-    val listHeaders: Map<String, List<String>> = headers.entries.associate { it.key to listOf(it.value) }
+
+    val listHeaders: Map<String, List<String>> =
+        headers.entries.associate { it.key to listOf(it.value) }
 
     tracker.withRequestHeaderFields(listHeaders)
     result.success(null)
@@ -147,11 +169,14 @@ fun AppDynamicsMobileSdkPlugin.requestTrackerReport(
     @NonNull result: MethodChannel.Result,
     arguments: Any?
 ) {
-    val tracker = customRequestTracker ?: run {
+    val properties = arguments as HashMap<*, *>
+    val id = properties["id"] as String
+
+    val tracker = requestTrackers[id] ?: run {
         result.error(
             "500",
             "Agent requestTrackerReport() failed.",
-            "Request tracker was not initialized."
+            "Request tracker was not initialized or already reported."
         )
         return
     }

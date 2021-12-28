@@ -41,8 +41,8 @@ extension TestHelpers on WidgetTester {
   // Force beacons to be sent.
   Future<void> flushBeacons() async {
     final tracker = await RequestTracker.create("http://flush-beacons.com");
-    tracker.setResponseStatusCode(200);
-    tracker.reportDone();
+    await tracker.setResponseStatusCode(200);
+    await tracker.reportDone();
 
     await pumpAndSettle(const Duration(seconds: 2));
   }

@@ -32,6 +32,12 @@
 		96EAFA3E266521AB00A3CFC5 /* AppdynamicsMobilesdkPlugin.h in Headers */ = {isa = PBXBuildFile; fileRef = 96EAFA3B266521AB00A3CFC5 /* AppdynamicsMobilesdkPlugin.h */; };
 		96EAFA3F266521AB00A3CFC5 /* AppdynamicsMobilesdkPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 96EAFA3C266521AB00A3CFC5 /* AppdynamicsMobilesdkPlugin.m */; };
 		96EAFA40266521AB00A3CFC5 /* SwiftAppdynamicsMobilesdkPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96EAFA3D266521AB00A3CFC5 /* SwiftAppdynamicsMobilesdkPlugin.swift */; };
+		96F276F42770E97800468270 /* TrackerUserDataDouble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96F276F12770E81C00468270 /* TrackerUserDataDouble.swift */; };
+		96F276F52770E97800468270 /* TrackerUserDataBoolean.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96F276F02770E81C00468270 /* TrackerUserDataBoolean.swift */; };
+		96F276F62770E97800468270 /* TrackerUserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96F276EF2770E81C00468270 /* TrackerUserData.swift */; };
+		96F276F72770E97800468270 /* TrackerUserDataDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96F276F22770E81C00468270 /* TrackerUserDataDate.swift */; };
+		96F276F82770E97800468270 /* TrackerUserDataLong.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96F276F32770E81D00468270 /* TrackerUserDataLong.swift */; };
+		96F276FA2770EA8100468270 /* ActivityTracking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96F276F92770EA8100468270 /* ActivityTracking.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -60,6 +66,12 @@
 		96EAFA3B266521AB00A3CFC5 /* AppdynamicsMobilesdkPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppdynamicsMobilesdkPlugin.h; sourceTree = "<group>"; };
 		96EAFA3C266521AB00A3CFC5 /* AppdynamicsMobilesdkPlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppdynamicsMobilesdkPlugin.m; sourceTree = "<group>"; };
 		96EAFA3D266521AB00A3CFC5 /* SwiftAppdynamicsMobilesdkPlugin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SwiftAppdynamicsMobilesdkPlugin.swift; path = Classes/SwiftAppdynamicsMobilesdkPlugin.swift; sourceTree = "<group>"; };
+		96F276EF2770E81C00468270 /* TrackerUserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackerUserData.swift; sourceTree = "<group>"; };
+		96F276F02770E81C00468270 /* TrackerUserDataBoolean.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackerUserDataBoolean.swift; sourceTree = "<group>"; };
+		96F276F12770E81C00468270 /* TrackerUserDataDouble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackerUserDataDouble.swift; sourceTree = "<group>"; };
+		96F276F22770E81C00468270 /* TrackerUserDataDate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackerUserDataDate.swift; sourceTree = "<group>"; };
+		96F276F32770E81D00468270 /* TrackerUserDataLong.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackerUserDataLong.swift; sourceTree = "<group>"; };
+		96F276F92770EA8100468270 /* ActivityTracking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityTracking.swift; sourceTree = "<group>"; };
 		BE156DF76BB66707D01AF24F /* libPods-appdynamics_mobilesdk.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-appdynamics_mobilesdk.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EFF9E957E56BC13D1F5F110A /* Pods-appdynamics_mobilesdk.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-appdynamics_mobilesdk.debug.xcconfig"; path = "Target Support Files/Pods-appdynamics_mobilesdk/Pods-appdynamics_mobilesdk.debug.xcconfig"; sourceTree = "<group>"; };
 		FA144E64A7DFEF201023D472 /* Pods-appdynamics_mobilesdk.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-appdynamics_mobilesdk.release.xcconfig"; path = "Target Support Files/Pods-appdynamics_mobilesdk/Pods-appdynamics_mobilesdk.release.xcconfig"; sourceTree = "<group>"; };
@@ -89,9 +101,10 @@
 		9635067E26A5E144003713FD /* Features */ = {
 			isa = PBXGroup;
 			children = (
+				96F276EA2770E77800468270 /* Request Tracking */,
 				96B99D2A26AF0FB100014CA0 /* User Data */,
-				9635067F26A5E144003713FD /* ManualRequestTracker.swift */,
 				9635068026A5E144003713FD /* CustomTimers.swift */,
+				96F276F92770EA8100468270 /* ActivityTracking.swift */,
 				9635068126A5E144003713FD /* AgentStart.swift */,
 				966D065B270B5518009BC639 /* AgentShutdown.swift */,
 				9635068526A5E153003713FD /* Breadcrumbs.swift */,
@@ -150,6 +163,27 @@
 				96EAFA302665218500A3CFC5 /* appdynamics_mobilesdk.framework */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		96F276EA2770E77800468270 /* Request Tracking */ = {
+			isa = PBXGroup;
+			children = (
+				96F276ED2770E81400468270 /* Tracker User Data */,
+				9635067F26A5E144003713FD /* ManualRequestTracker.swift */,
+			);
+			path = "Request Tracking";
+			sourceTree = "<group>";
+		};
+		96F276ED2770E81400468270 /* Tracker User Data */ = {
+			isa = PBXGroup;
+			children = (
+				96F276EF2770E81C00468270 /* TrackerUserData.swift */,
+				96F276F32770E81D00468270 /* TrackerUserDataLong.swift */,
+				96F276F02770E81C00468270 /* TrackerUserDataBoolean.swift */,
+				96F276F22770E81C00468270 /* TrackerUserDataDate.swift */,
+				96F276F12770E81C00468270 /* TrackerUserDataDouble.swift */,
+			);
+			path = "Tracker User Data";
 			sourceTree = "<group>";
 		};
 		D60A50EC4F9FD9FAAC1A4ACC /* Frameworks */ = {
@@ -271,21 +305,27 @@
 				9635068326A5E144003713FD /* CustomTimers.swift in Sources */,
 				961A30F426CB9E90001241E5 /* CustomMetrics.swift in Sources */,
 				966D065C270B5519009BC639 /* AgentShutdown.swift in Sources */,
+				96F276F82770E97800468270 /* TrackerUserDataLong.swift in Sources */,
 				9635068226A5E144003713FD /* ManualRequestTracker.swift in Sources */,
+				96F276FA2770EA8100468270 /* ActivityTracking.swift in Sources */,
 				96449529273939F50077FC22 /* ChangeAppKey.swift in Sources */,
 				96B99D2926AF061100014CA0 /* UserData.swift in Sources */,
 				96B99D3226AF112200014CA0 /* UserDataBoolean.swift in Sources */,
 				96B99D3026AF104300014CA0 /* UserDataLong.swift in Sources */,
+				96F276F52770E97800468270 /* TrackerUserDataBoolean.swift in Sources */,
 				96EAFA3F266521AB00A3CFC5 /* AppdynamicsMobilesdkPlugin.m in Sources */,
 				96EAFA40266521AB00A3CFC5 /* SwiftAppdynamicsMobilesdkPlugin.swift in Sources */,
 				9644953E273AE5BA0077FC22 /* ObjcExceptionCatch.m in Sources */,
+				96F276F72770E97800468270 /* TrackerUserDataDate.swift in Sources */,
 				96449535273AE2F60077FC22 /* SessionControl.swift in Sources */,
 				96B99D3426AF115A00014CA0 /* UserDataDate.swift in Sources */,
 				9635068F26A7FF41003713FD /* ErrorReporting.swift in Sources */,
 				9635068626A5E153003713FD /* Breadcrumbs.swift in Sources */,
 				961A30F626CE7FFE001241E5 /* Screenshots.swift in Sources */,
+				96F276F62770E97800468270 /* TrackerUserData.swift in Sources */,
 				96B99D2C26AF0FBE00014CA0 /* UserDataDouble.swift in Sources */,
 				967CB7A626EFAB7A000987B5 /* CrashReportCallback.swift in Sources */,
+				96F276F42770E97800468270 /* TrackerUserDataDouble.swift in Sources */,
 				96449537273AE3040077FC22 /* InfoPoints.swift in Sources */,
 				9635068426A5E144003713FD /* AgentStart.swift in Sources */,
 			);

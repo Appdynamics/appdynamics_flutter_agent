@@ -39,18 +39,23 @@ void main() {
     ]);
   });
 
-  testWidgets('Change app key catches native exception',
+  testWidgets(
+      'Changing app key with error propagates native exception message.',
       (WidgetTester tester) async {
+    const exceptionMessage = "Invalid key";
     tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(channel,
         (MethodCall methodCall) async {
       switch (methodCall.method) {
         case 'changeAppKey':
-          throw Exception("Invalid key");
+          throw PlatformException(
+              code: '500', details: exceptionMessage, message: "Message");
       }
     });
 
     const newKey = "123456";
-    expect(() async => await Instrumentation.changeAppKey(newKey),
-        throwsA(isA<Exception>()));
+    expect(
+        () => Instrumentation.changeAppKey(newKey),
+        throwsA(predicate((e) =>
+            e is Exception && e.toString() == "Exception: $exceptionMessage")));
   });
 }

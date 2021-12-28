@@ -4,7 +4,6 @@
  *
  */
 
-
 import 'package:flutter/material.dart';
 
 class SizedButton extends StatelessWidget {

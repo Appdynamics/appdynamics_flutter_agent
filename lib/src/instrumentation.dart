@@ -25,7 +25,7 @@ enum BreadcrumbVisibility {
 }
 
 enum ErrorSeverityLevel {
-  /// An error happened, but it did not cause a problem.
+  /// An error happened, but it did not ,cause a problem.
   info,
 
   /// An error happened but the app recovered gracefully.
@@ -35,11 +35,9 @@ enum ErrorSeverityLevel {
   critical,
 }
 
-const maxUserDataStringLength = 2048;
-
 /// Interact with the AppDynamics agent running in your application.
 ///
-/// This class provides a number of methods to interact with the AppDynamics
+/// This class provides several methods to interact with the AppDynamics
 /// agent including:
 ///
 /// - Initializing the agent with the right application key.
@@ -62,8 +60,8 @@ class Instrumentation {
   }
 
   /// Initializing the agent
-  /// The agent does not automatically start with your application. Using the
-  /// app key shown in your controller UI, you can initialize the agent.
+  /// The agent does not automatically start with your application. You can
+  /// initialize the agent using the app key shown in your UI controller.
   /// This has to be done near your application's entry point before any other
   /// initialization routines in your application.
   ///
@@ -173,7 +171,7 @@ class Instrumentation {
 
   /// Reports an [exception] that was caught.
   ///
-  /// This can be called in [catch] blocks to report unexpected exception that
+  /// This can be called in [catch] blocks to report unexpected exceptions ,that
   /// you want to track.
   ///
   /// ```dart
@@ -496,7 +494,7 @@ class Instrumentation {
     await channel.invokeMethod<void>('unblockScreenshots');
   }
 
-  /// Blocks screenshot capture if it is currently unblocked, otherwise this
+  /// Blocks screenshot capture if it is currently unblocked; otherwise this
   /// has no effect. Returns a [Future] which resolves when screenshots are
   /// effectively blocked.
   ///
@@ -592,7 +590,7 @@ class Instrumentation {
   /// Restart sending beacons to the collector.
   ///
   /// Data will start flowing from the agent immediately. No change will
-  /// occur if the shutdownAgent call has not been made.
+  /// occur if the [shutdownAgent] call has not been made.
   ///
   /// See also [shutdownAgent].
   static Future<void> restartAgent() async {
@@ -601,8 +599,8 @@ class Instrumentation {
 
   /// Starts next session and ends the current session.
   ///
-  /// The session started using this API may be ended by inactivity timeout set
-  /// in the Application Configuration, before the next call to this API.
+  /// The session started using this API may be ended by an inactivity timeout
+  /// set in the Application Configuration before the next call to this API.
   ///
   /// ```dart
   /// Future<void> checkout(dynamic data) async {
@@ -700,7 +698,7 @@ class Instrumentation {
   /// Invoking this method has no effect unless the agent was already
   /// initialized by calling one of the start methods.
   ///
-  /// Method throws if provided an invalid [newKey].
+  /// Method throws [Exception] if provided an invalid [newKey].
   ///
   /// ```dart
   /// try {

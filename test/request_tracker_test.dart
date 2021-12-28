@@ -29,6 +29,11 @@ void main() {
         case "setRequestTrackerStatusCode":
         case "setRequestTrackerResponseHeaders":
         case "setRequestTrackerRequestHeaders":
+        case "setRequestTrackerUserData":
+        case "setRequestTrackerUserDataDouble":
+        case "setRequestTrackerUserDataLong":
+        case "setRequestTrackerUserDataBoolean":
+        case "setRequestTrackerUserDataDate":
         case "requestTrackerReport":
           log.add(methodCall);
           return null;
@@ -38,43 +43,87 @@ void main() {
       }
     });
 
-    const url = "http://www.appdynamics.com";
+    const url = "https://www.appdynamics.com";
     const headers = {'foo': 'bar'};
-    const responseCode = 123;
+    const statusCode = 123;
     const errorMessage = "foo";
     const stackTrace = "bar";
 
-    await RequestTracker.create("http://www.appdynamics.com")
+    const intValue = 1234;
+    const doubleValue = 123.456;
+    const boolValue = true;
+    const stringValue = "test string";
+    final dateTimeValue = DateTime.utc(2021).toLocal();
+    const stringKey = "stringKey";
+    const boolKey = "boolKey";
+    const dateTimeKey = "dateKey";
+    const doubleKey = "doubleKey";
+    const intKey = "intKey";
+
+    final tracker = await RequestTracker.create(url)
       ..setRequestHeaders(headers)
-      ..setResponseStatusCode(responseCode)
+      ..setResponseStatusCode(statusCode)
       ..setResponseHeaders(headers)
+      ..setUserData(stringKey, stringValue)
+      ..setUserDataBool(boolKey, boolValue)
+      ..setUserDataDateTime(dateTimeKey, dateTimeValue)
+      ..setUserDataDouble(doubleKey, doubleValue)
+      ..setUserDataInt(intKey, intValue)
       ..setError(errorMessage, stackTrace)
       ..reportDone();
 
-    RequestTracker.getServerCorrelationHeaders();
+    await RequestTracker.getServerCorrelationHeaders();
 
-    expect(log, hasLength(7));
+    expect(log, hasLength(12));
     expect(log, <Matcher>[
-      isMethodCall('getRequestTrackerWithUrl', arguments: url),
+      isMethodCall('getRequestTrackerWithUrl',
+          arguments: {"id": tracker.id, "url": url}),
       isMethodCall(
         'setRequestTrackerRequestHeaders',
-        arguments: headers,
+        arguments: {"id": tracker.id, "headers": headers},
       ),
       isMethodCall(
         'setRequestTrackerStatusCode',
-        arguments: responseCode,
+        arguments: {"id": tracker.id, "statusCode": statusCode},
       ),
       isMethodCall(
         'setRequestTrackerResponseHeaders',
-        arguments: headers,
+        arguments: {"id": tracker.id, "headers": headers},
+      ),
+      isMethodCall(
+        'setRequestTrackerUserData',
+        arguments: {"id": tracker.id, "key": stringKey, "value": stringValue},
+      ),
+      isMethodCall(
+        'setRequestTrackerUserDataBoolean',
+        arguments: {"id": tracker.id, "key": boolKey, "value": boolValue},
+      ),
+      isMethodCall(
+        'setRequestTrackerUserDataDate',
+        arguments: {
+          "id": tracker.id,
+          "key": dateTimeKey,
+          "value": dateTimeValue.toIso8601String()
+        },
+      ),
+      isMethodCall(
+        'setRequestTrackerUserDataDouble',
+        arguments: {"id": tracker.id, "key": doubleKey, "value": doubleValue},
+      ),
+      isMethodCall(
+        'setRequestTrackerUserDataLong',
+        arguments: {"id": tracker.id, "key": intKey, "value": intValue},
       ),
       isMethodCall(
         'setRequestTrackerErrorInfo',
-        arguments: {"message": errorMessage, "stack": stackTrace},
+        arguments: {
+          "id": tracker.id,
+          "errorDict": {"message": errorMessage, "stack": stackTrace}
+        },
       ),
       isMethodCall(
         'requestTrackerReport',
-        arguments: null,
+        arguments: {"id": tracker.id},
       ),
       isMethodCall(
         'getServerCorrelationHeaders',

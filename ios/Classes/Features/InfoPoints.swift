@@ -3,9 +3,8 @@ import Flutter
 
 extension SwiftAppDynamicsMobileSdkPlugin {
   func beginCall(result: @escaping FlutterResult, arguments: Any?) {
-    guard let properties = arguments as? Dictionary<String, Any> else {
-      return
-    }
+    let properties = arguments as! Dictionary<String, Any>
+
     
     let callId = properties["callId"] as! String
     
@@ -30,9 +29,8 @@ extension SwiftAppDynamicsMobileSdkPlugin {
   }
   
   func endCallWithSuccess(result: @escaping FlutterResult, arguments: Any?) {
-    guard let properties = arguments as? Dictionary<String, Any> else {
-      return
-    }
+    let properties = arguments as! Dictionary<String, Any>
+
     
     let callId = properties["callId"] as! String
     let value = properties["result"]!
@@ -44,9 +42,8 @@ extension SwiftAppDynamicsMobileSdkPlugin {
   }
   
   func endCallWithError(result: @escaping FlutterResult, arguments: Any?) {
-    guard let properties = arguments as? Dictionary<String, Any> else {
-      return
-    }
+    let properties = arguments as! Dictionary<String, Any>
+
     
     let callId = properties["callId"] as! String
     let error = properties["error"] as! [String: Any]
