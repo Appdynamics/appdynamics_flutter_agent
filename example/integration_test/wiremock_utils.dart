@@ -33,6 +33,11 @@ var serverAgentConfigStub = {
   }
 };
 
+// All `http` responses will be 400 if we don't disable this.
+void disableHTTPClientOverriding() {
+  HttpOverrides.global = null;
+}
+
 Future<void> mapAgentInitToReturnSuccess() async {
   await setServerMapping({
     "request": {

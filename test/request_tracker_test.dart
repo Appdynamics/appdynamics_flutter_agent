@@ -13,14 +13,10 @@ import 'globals.dart';
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
-  final List<MethodCall> log = <MethodCall>[];
-
-  setUp(() {
-    mockPackageInfo();
-  });
-
-  testWidgets('Manual HTTP tracker success methods are called natively',
+  testWidgets('Manual HTTP tracker methods work natively',
       (WidgetTester tester) async {
+    final List<MethodCall> log = <MethodCall>[];
+
     tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(channel,
         (MethodCall methodCall) async {
       switch (methodCall.method) {
@@ -39,12 +35,11 @@ void main() {
           return null;
         case "getServerCorrelationHeaders":
           log.add(methodCall);
-          return {"foo": "bar"};
+          return {'foo': 'bar'};
       }
     });
 
     const url = "https://www.appdynamics.com";
-    const headers = {'foo': 'bar'};
     const statusCode = 123;
     const errorMessage = "foo";
     const stackTrace = "bar";
@@ -60,6 +55,8 @@ void main() {
     const doubleKey = "doubleKey";
     const intKey = "intKey";
 
+    final headers = await RequestTracker.getServerCorrelationHeaders();
+
     final tracker = await RequestTracker.create(url)
       ..setRequestHeaders(headers)
       ..setResponseStatusCode(statusCode)
@@ -72,10 +69,12 @@ void main() {
       ..setError(errorMessage, stackTrace)
       ..reportDone();
 
-    await RequestTracker.getServerCorrelationHeaders();
-
     expect(log, hasLength(12));
     expect(log, <Matcher>[
+      isMethodCall(
+        'getServerCorrelationHeaders',
+        arguments: null,
+      ),
       isMethodCall('getRequestTrackerWithUrl',
           arguments: {"id": tracker.id, "url": url}),
       isMethodCall(
@@ -124,11 +123,7 @@ void main() {
       isMethodCall(
         'requestTrackerReport',
         arguments: {"id": tracker.id},
-      ),
-      isMethodCall(
-        'getServerCorrelationHeaders',
-        arguments: null,
-      ),
+      )
     ]);
   });
 }

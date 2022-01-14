@@ -28,6 +28,7 @@ task buildAndroid(type: Exec) {
 task runIntegrationTestsiOS {
     dependsOn runStartIntegrationTestiOS
     dependsOn runRequestTrackerIntegrationTestiOS
+    dependsOn runTrackedHttpClientIntegrationTestiOS
     dependsOn runCustomTimersIntegrationTestiOS
     dependsOn runBreadcrumbsIntegrationTestiOS
     dependsOn runErrorReportingIntegrationTestiOS
@@ -45,6 +46,7 @@ task runIntegrationTestsiOS {
 task runIntegrationTestsAndroid {
     dependsOn runStartIntegrationTestAndroid
     dependsOn runRequestTrackerIntegrationTestAndroid
+    dependsOn runTrackedHttpClientIntegrationTestAndroid
     dependsOn runCustomTimersIntegrationTestAndroid
     dependsOn runBreadcrumbsIntegrationTestAndroid
     dependsOn runErrorReportingIntegrationTestAndroid

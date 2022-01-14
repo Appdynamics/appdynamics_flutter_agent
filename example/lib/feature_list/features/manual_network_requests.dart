@@ -91,6 +91,31 @@ class _ManualNetworkRequestsState extends State<ManualNetworkRequests> {
     }
   }
 
+  Future<void> _sendClientRequestButtonPressed() async {
+    var urlString = urlFieldController.text;
+    if (urlString.trim().isEmpty) {
+      return;
+    }
+
+    try {
+      setState(() {
+        responseText = "Loading...";
+      });
+
+      final url = Uri.parse(urlString);
+      final client = TrackedHttpClient(http.Client());
+      final response =
+          await client.post(url, body: "[{\"type\": \"trackedhttpclient\"}]");
+      setState(() {
+        responseText = "Success with ${response.statusCode}.";
+      });
+    } catch (e) {
+      setState(() {
+        responseText = "Failed with ${e.toString()}.";
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -144,12 +169,21 @@ class _ManualNetworkRequestsState extends State<ManualNetworkRequests> {
                   ),
                   ElevatedButton(
                       key: const Key("manualGETRequestButton"),
-                      child: const Text('Manual track GET request'),
+                      child: const Text(
+                          'Manual track GET request\n(+ user data)',
+                          textAlign: TextAlign.center),
                       onPressed: _sendGetRequestButtonPressed),
                   ElevatedButton(
                       key: const Key("manualPOSTRequestButton"),
                       child: const Text('Manual track POST request'),
                       onPressed: _sendPostRequestButtonPressed),
+                  ElevatedButton(
+                      key: const Key("manualClientGetRequestButton"),
+                      child: const Text(
+                          'TrackedHttpClient GET request\n'
+                          '(has custom header: "foo")',
+                          textAlign: TextAlign.center),
+                      onPressed: _sendClientRequestButtonPressed),
                   const SizedBox(
                     height: 30,
                   ),

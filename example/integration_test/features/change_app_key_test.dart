@@ -47,6 +47,7 @@ extension on WidgetTester {
 
 void main() {
   setUp(() async {
+    disableHTTPClientOverriding();
     await clearServer();
     await mapAgentInitToReturnSuccess();
   });

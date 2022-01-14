@@ -22,6 +22,7 @@ void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
   setUp(() async {
+    disableHTTPClientOverriding();
     await clearServer();
     await mapAgentInitToReturnSuccess();
   });

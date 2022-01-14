@@ -8,8 +8,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
-import '../tester_utils.dart';
-import '../wiremock_utils.dart';
+import '../../tester_utils.dart';
+import '../../wiremock_utils.dart';
 
 extension on WidgetTester {
   sendNetworkRequest() async {
@@ -57,6 +57,7 @@ extension on WidgetTester {
 
 void main() {
   setUp(() async {
+    disableHTTPClientOverriding();
     await clearServer();
     await mapAgentInitToReturnSuccess();
   });

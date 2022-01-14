@@ -63,7 +63,7 @@ extension SwiftAppDynamicsMobileSdkPlugin {
       return
     }
     
-    guard let headers = properties["headers"] as? [AnyHashable: Any] else {
+    guard let headers = properties["headers"] as? [String: Any] else {
       let error = FlutterError(code: "500", message: "Agent setRequestTrackerResponseHeaders() failed.", details: "Please provide valid response headers.")
       result(error)
       return
@@ -83,7 +83,7 @@ extension SwiftAppDynamicsMobileSdkPlugin {
       return
     }
     
-    guard let headers = properties["headers"] as? [AnyHashable: Any] else {
+    guard let headers = properties["headers"] as? [String: Any] else {
       let error = FlutterError(code: "500", message: "Agent setRequestTrackerRequestHeaders() failed.", details: "Please provide valid response headers.")
       result(error)
       return

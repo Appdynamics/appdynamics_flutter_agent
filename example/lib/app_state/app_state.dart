@@ -5,7 +5,7 @@
 import 'package:flutter/cupertino.dart';
 
 class AppState extends ChangeNotifier {
-  String _appKey = "SM-AER-HCE";
+  String _appKey = "SH-AAB-AAE-HDK";
   bool _crashReportingEnabled = true;
   bool _screenshotsEnabled = true;
   bool _autoInstrumentEnabled = false;

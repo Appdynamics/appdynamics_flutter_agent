@@ -12,7 +12,7 @@ extension SwiftAppDynamicsMobileSdkPlugin {
       return
     }
     
-    let formatter = DateFormatter()
+    let formatter: DateFormatter = DateFormatter()
     formatter.dateFormat = SwiftAppDynamicsMobileSdkPlugin.dateFormat
     guard let value = properties["value"] as? String, let date = formatter.date(from: value) else {
       let error = FlutterError(code: "500", message: "Agent setRequestTrackerUserDataDate() failed.", details: "Please provide a valid DateTime for `value`.")

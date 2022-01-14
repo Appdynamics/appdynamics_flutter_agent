@@ -40,7 +40,13 @@ task runStartIntegrationTestiOS(type: Exec) {
 task runRequestTrackerIntegrationTestiOS(type: Exec) {
     dependsOn startIntegrationTestServer
     commandLine "flutter", "drive", "--driver", test_driver_path, "--target",
-            integration_tests_path + "request_tracker_test.dart", "-d", iOS_device
+            integration_tests_path + "network_requests/request_tracker_test.dart", "-d", iOS_device
+}
+
+task runTrackedHttpClientIntegrationTestiOS(type: Exec) {
+    dependsOn startIntegrationTestServer
+    commandLine "flutter", "drive", "--driver", test_driver_path, "--target",
+            integration_tests_path + "network_requests/tracked_http_client_test.dart", "-d", iOS_device
 }
 
 task runCustomTimersIntegrationTestiOS(type: Exec) {
@@ -112,7 +118,7 @@ task runANRIntegrationTestiOS(type: Exec) {
 task runActivityTrackingIntegrationTestiOS(type: Exec) {
     dependsOn startIntegrationTestServer
     commandLine "flutter", "drive", "--driver", test_driver_path, "--target",
-            integration_tests_path + "activity_tracking/" + "activity_tracking_test.ios.dart", "-d", iOS_device
+            integration_tests_path + "activity_tracking/activity_tracking_test.ios.dart", "-d", iOS_device
 }
 
 // Android tests
@@ -126,7 +132,13 @@ task runStartIntegrationTestAndroid(type: Exec) {
 task runRequestTrackerIntegrationTestAndroid(type: Exec) {
     dependsOn startIntegrationTestServer
     commandLine "flutter", "drive", "--driver", test_driver_path, "--target",
-            integration_tests_path + "request_tracker_test.dart", "-d", android_device
+            integration_tests_path + "network_requests/request_tracker_test.dart", "-d", android_device
+}
+
+task runTrackedHttpClientIntegrationTestAndroid(type: Exec) {
+    dependsOn startIntegrationTestServer
+    commandLine "flutter", "drive", "--driver", test_driver_path, "--target",
+            integration_tests_path + "network_requests/tracked_http_client_test.dart", "-d", android_device
 }
 
 task runCustomTimersIntegrationTestAndroid(type: Exec) {
@@ -198,5 +210,5 @@ task runANRIntegrationTestAndroid(type: Exec) {
 task runActivityTrackingIntegrationTestAndroid(type: Exec) {
     dependsOn startIntegrationTestServer
     commandLine "flutter", "drive", "--driver", test_driver_path, "--target",
-            integration_tests_path + "activity_tracking/" + "activity_tracking_test.android.dart", "-d", android_device
+            integration_tests_path + "activity_tracking/activity_tracking_test.android.dart", "-d", android_device
 }
