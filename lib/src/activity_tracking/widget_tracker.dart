@@ -45,10 +45,10 @@ class TrackedWidget {
 /// Used for manually tracking activities throughout the app.
 ///
 /// The available methods permit specifying the start and end of a Flutter
-/// widget that can be reflected as an app page in the controller.
+/// widget to be reflected as an app screen in the controller.
 ///
-/// Warning: Be sure to be using unique widget names. Duplicate name might
-/// resolve in unexpected behavior.
+/// Warning: Be sure to be using unique widget names. Duplicate names might
+/// result in unexpected behavior.
 ///
 /// For apps using named routes, see [NavigationObserver].
 ///
@@ -89,7 +89,7 @@ class TrackedWidget {
 ///           )
 ///         ]));
 ///   }
-// }
+/// }
 /// ```
 class WidgetTracker {
   final Map<String, TrackedWidget> trackedWidgets = {};
@@ -102,7 +102,7 @@ class WidgetTracker {
 
   /// Tracks when a widget has started.
   ///
-  /// May throw [Exception] on native platform error.
+  /// May throw [Exception] on native platform contingency.
   Future<void> trackWidgetStart(String widgetName) async {
     try {
       final uuidString = const Uuid().v1();
@@ -121,10 +121,9 @@ class WidgetTracker {
 
   /// Tracks when a widget has ended.
   ///
-  /// If widget doesn't exist, it doesn't do
-  /// anything.
+  /// If the widget doesn't exist, it doesn't do anything.
   ///
-  /// May throw [Exception] on native platform error.
+  /// May throw [Exception] on native platform contingency.
   Future<void> trackWidgetEnd(String widgetName) async {
     try {
       final trackedWidget = trackedWidgets[widgetName];

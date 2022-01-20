@@ -1,8 +1,6 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="Debug" type="FlutterRunConfigurationType" factoryName="Flutter">
     <option name="filePath" value="$PROJECT_DIR$/example/lib/main.dart" />
-    <method v="2">
-      <option name="Gradle.BeforeRunTask" enabled="true" tasks="installPods" externalProjectPath="$PROJECT_DIR$/example" vmOptions="" scriptParameters="" />
-    </method>
+    <method v="2" />
   </configuration>
 </component>

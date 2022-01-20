@@ -50,7 +50,6 @@ void main() {
           "anrDetectionEnabled": true,
           "anrStackTraceEnabled": true,
           "crashReportingEnabled": true,
-          "autoInstrumentEnabled": true,
         },
       ),
     ]);

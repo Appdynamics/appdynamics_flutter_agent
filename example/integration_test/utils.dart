@@ -32,7 +32,7 @@ extension TestHelpers on WidgetTester {
   }
 }
 
-Future<void> mapAgentInitToReturnSuccess() async {
+Future<void> stubServerResponses() async {
   await setServerMapping({
     "request": {
       "method": "POST",

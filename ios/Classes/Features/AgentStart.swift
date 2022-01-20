@@ -44,16 +44,13 @@ extension SwiftAppDynamicsMobileSdkPlugin {
     if let crashReportingEnabled = properties["crashReportingEnabled"] as? Bool {
       configuration.crashReportingEnabled = crashReportingEnabled
     }
-    
-    if let autoInstrumentEnabled = properties["autoInstrumentEnabled"] as? Bool {
-      configuration.enableAutoInstrument = autoInstrumentEnabled
-    }
 
     if crashReportCallback == nil {
       crashReportCallback = CrashCallbackObject()
       configuration.crashReportCallback = crashReportCallback
     }
-    
+
+    configuration.enableAutoInstrument = false
     configuration.applicationName = "com.appdynamics.FlutterEveryfeatureiOS"
     ADEumInstrumentation.initWith(configuration, a: type, b: version);
     

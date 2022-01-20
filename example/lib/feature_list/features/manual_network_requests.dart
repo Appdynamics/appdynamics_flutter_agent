@@ -175,7 +175,8 @@ class _ManualNetworkRequestsState extends State<ManualNetworkRequests> {
                       onPressed: _sendGetRequestButtonPressed),
                   ElevatedButton(
                       key: const Key("manualPOSTRequestButton"),
-                      child: const Text('Manual track POST request'),
+                      child: const Text('Manual track POST request',
+                          textAlign: TextAlign.center),
                       onPressed: _sendPostRequestButtonPressed),
                   ElevatedButton(
                       key: const Key("manualClientGetRequestButton"),

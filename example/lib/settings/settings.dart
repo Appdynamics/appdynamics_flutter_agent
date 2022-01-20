@@ -105,12 +105,11 @@ class _SettingsState extends State<Settings> {
         collectorURL: collectorURL,
         screenshotURL: screenshotURL,
         crashReportCallback: crashReportCallback,
-        autoInstrument: appState.autoInstrumentEnabled,
         screenshotsEnabled: appState.screenshotsEnabled,
         crashReportingEnabled: appState.crashReportingEnabled);
     await Instrumentation.start(config);
 
-    await Navigator.pushNamed(context, RoutePaths.featureList);
+    await Navigator.pushReplacementNamed(context, RoutePaths.featureList);
   }
 
   Future<void> _showExtraConfigurationsDialog(context) async {

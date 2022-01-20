@@ -38,13 +38,20 @@ void disableHTTPClientOverriding() {
   HttpOverrides.global = null;
 }
 
-Future<void> mapAgentInitToReturnSuccess() async {
+Future<void> stubServerResponses() async {
   await setServerMapping({
     "request": {
       "method": "POST",
       "url": "/eumcollector/mobileMetrics?version=2"
     },
     "response": {"status": 200, "body": jsonEncode(serverAgentConfigStub)}
+  });
+  await setServerMapping({
+    "request": {
+      "method": "PUT",
+      "urlPattern": "/screenshots/v1/application/.*/tiles"
+    },
+    "response": {"status": 200, "body": "{}"}
   });
 }
 
@@ -73,8 +80,6 @@ Map<String, dynamic>? getBeaconRequestBody(Map<String, dynamic> request) {
 Map<String, dynamic> getBeaconRequestHeaders(Map<String, dynamic> request) {
   return Map<String, dynamic>.from(request["request"]["headers"]);
 }
-
-class AnyRequestValue {}
 
 /// Checks request's bodies for specific parameters and values.
 ///

@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../../appdynamics_mobilesdk.dart';
 
-/// Used to automatically detect screens in apps using named routes,
-/// based on transitions (pushNamed(), pop(), pushReplacementNamed()).
+/// Used to automatically detect screen transitions in apps using named routes.
 ///
 /// Add the [NavigationObserver] instance to the app's entry (usually in
 /// main.dart)

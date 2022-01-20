@@ -21,7 +21,6 @@ void main() {
     expect(config.screenshotsEnabled, config2.screenshotsEnabled);
     expect(config.crashReportCallback, config2.crashReportCallback);
     expect(config.crashReportingEnabled, config2.crashReportingEnabled);
-    expect(config.autoInstrument, config2.autoInstrument);
 
     AgentConfiguration config3 =
         config.copyWith(loggingLevel: LoggingLevel.info);

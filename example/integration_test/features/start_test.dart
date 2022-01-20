@@ -24,7 +24,7 @@ void main() {
   setUp(() async {
     disableHTTPClientOverriding();
     await clearServer();
-    await mapAgentInitToReturnSuccess();
+    await stubServerResponses();
   });
 
   testWidgets("Instrumentation.start() changes screen",

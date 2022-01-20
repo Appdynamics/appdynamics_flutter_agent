@@ -1,22 +1,17 @@
-
-
 // Shared state between entire widgets in the app.
 // Default values for settings are also set here.
 import 'package:flutter/cupertino.dart';
 
 class AppState extends ChangeNotifier {
-  String _appKey = "SH-AAB-AAE-HDK";
+  String _appKey = "SM-AEZ-YRP";
   bool _crashReportingEnabled = true;
   bool _screenshotsEnabled = true;
-  bool _autoInstrumentEnabled = false;
 
   String get appKey => _appKey;
 
   bool get crashReportingEnabled => _crashReportingEnabled;
 
   bool get screenshotsEnabled => _screenshotsEnabled;
-
-  bool get autoInstrumentEnabled => _autoInstrumentEnabled;
 
   set appKey(String value) {
     _appKey = value;
@@ -30,11 +25,6 @@ class AppState extends ChangeNotifier {
 
   set screenshotsEnabled(bool value) {
     _screenshotsEnabled = value;
-    notifyListeners();
-  }
-
-  set autoInstrumentEnabled(bool value) {
-    _autoInstrumentEnabled = value;
     notifyListeners();
   }
 }

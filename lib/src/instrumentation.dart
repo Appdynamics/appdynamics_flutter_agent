@@ -94,7 +94,6 @@ class Instrumentation {
       "loggingLevel": config.loggingLevel.index,
       "collectorURL": config.collectorURL,
       "screenshotURL": config.screenshotURL,
-      "autoInstrumentEnabled": config.autoInstrument,
       "screenshotsEnabled": config.screenshotsEnabled,
       "crashReportingEnabled": config.crashReportingEnabled,
       "anrDetectionEnabled":
@@ -599,14 +598,11 @@ class Instrumentation {
 
   /// Starts next session and ends the current session.
   ///
-  /// The session started using this API may be ended by an inactivity timeout
-  /// set in the Application Configuration before the next call to this API.
-  ///
   /// ```dart
   /// Future<void> checkout(dynamic data) async {
   ///   try {
   ///     final response = http.post("https://server.com/checkout", data);
-  ///     Instrumentation.startNextSession();
+  ///     await Instrumentation.startNextSession();
   ///   } catch (e) {
   ///     logError(e);
   ///   }

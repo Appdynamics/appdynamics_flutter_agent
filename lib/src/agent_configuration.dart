@@ -8,7 +8,7 @@ import 'crash_report_summary.dart';
 
 enum LoggingLevel { none, info, verbose }
 
-/// Configuration object for the AppDynamics SDK.
+/// Configuration object for the AppDynamics agent.
 ///
 /// ```dart
 /// AgentConfiguration config = AgentConfiguration(
@@ -21,7 +21,7 @@ enum LoggingLevel { none, info, verbose }
 /// For more specialized use cases, like using an on-premise collector, use the
 /// other, more advanced options supported by this class.
 class AgentConfiguration {
-  /// Sets the application key used by the SDK. (required)
+  /// Sets the application key used by the agent. (required)
   final String appKey;
 
   /// The URL of the collector. It should be compliant with "1.4. Hierarchical
@@ -53,7 +53,7 @@ class AgentConfiguration {
   /// screenshots and no automatic screenshots will be captured. You will NOT
   /// be able to enable screenshots from your controller.
   ///
-  /// Most applications should leave this option enabled, and control the
+  /// Most applications should leave this option enabled and control the
   /// screenshots from the controller configuration page.
   final bool screenshotsEnabled;
 
@@ -62,9 +62,9 @@ class AgentConfiguration {
   /// **WARNING:** Altering this value is not recommended for production use.
   final LoggingLevel loggingLevel;
 
-  /// The agent supports the usage of a callback function that receives an array of
-  /// the native crashes that have been reported. You can use this callback to
-  /// have access to crash reports.
+  /// The agent supports the usage of a callback function that receives an array
+  /// of the native crashes that have been reported. You can use this callback
+  /// to have access to crash reports.
   final CrashReportCallback? crashReportCallback;
 
   /// Enables or disables the Crash Reporter feature.
@@ -76,29 +76,18 @@ class AgentConfiguration {
   /// are occurring.
   final bool crashReportingEnabled;
 
-  // TODO: Add the rest of the features in doc when implemented.
-  /// Boolean value that indicates if automatic instrumentation is enabled.
-  ///
-  /// Setting this to `false` will disable all automatic instrumentation
-  /// regardless of any code injection.
-  ///
-  /// The following features will also be effected:
-  /// 1. Automatic touch points capturing.
-  final bool autoInstrument;
-
   AgentConfiguration({
     required this.appKey,
     this.collectorURL = "https://mobile.eum-appdynamics.com",
     this.screenshotURL = "https://mobile.eum-appdynamics.com",
     this.loggingLevel = LoggingLevel.none,
-    this.autoInstrument = true,
     this.screenshotsEnabled = true,
     this.crashReportingEnabled = true,
     this.crashReportCallback,
   });
 
-  /// Creates a new [AgentConfiguration] with possibility to overwrite
-  /// existing properties.
+  /// Creates a new [AgentConfiguration] with possibility to overwrite existing
+  /// properties.
   ///
   /// Useful when needing to conditionally add properties, as with a boolean
   /// flag variable.
@@ -110,20 +99,18 @@ class AgentConfiguration {
   ///    config = config.copyWith(loggingLevel: LoggingLevel.verbose);
   /// }
   ///
-  /// Instrumentation.start(config);
+  /// await Instrumentation.start(config);
   /// ```
   AgentConfiguration copyWith(
       {String? appKey,
       String? collectorURL,
       String? screenshotURL,
       bool? screenshotsEnabled,
-      bool? autoInstrument,
       LoggingLevel? loggingLevel,
       CrashReportCallback? crashReportCallback,
       bool? crashReportingEnabled}) {
     return AgentConfiguration(
         appKey: appKey ?? this.appKey,
-        autoInstrument: autoInstrument ?? this.autoInstrument,
         collectorURL: collectorURL ?? this.collectorURL,
         screenshotURL: screenshotURL ?? this.screenshotURL,
         screenshotsEnabled: screenshotsEnabled ?? this.screenshotsEnabled,

@@ -40,18 +40,6 @@ class ExtraConfigurationsDialog extends StatelessWidget {
                                 },
                               ),
                             ]),
-                        Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const Text("Auto instrument enabled:"),
-                              Checkbox(
-                                value: appState.autoInstrumentEnabled,
-                                key: const Key("toggleAutoInstrumentBox"),
-                                onChanged: (bool? newValue) {
-                                  appState.autoInstrumentEnabled = newValue!;
-                                },
-                              ),
-                            ]),
                         Padding(
                           padding: const EdgeInsets.only(top: 12),
                           child: Row(
