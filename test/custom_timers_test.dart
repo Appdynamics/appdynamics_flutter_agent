@@ -13,13 +13,9 @@ import 'globals.dart';
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
-  final List<MethodCall> log = <MethodCall>[];
-
-  setUp(() {
-    mockPackageInfo();
-  });
-
   testWidgets('custom timers are called natively', (WidgetTester tester) async {
+    final List<MethodCall> log = <MethodCall>[];
+
     tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(channel,
         (MethodCall methodCall) async {
       switch (methodCall.method) {
@@ -30,18 +26,34 @@ void main() {
       }
     });
 
-    const appKey = "AA-BBB-CCC";
-    AgentConfiguration config = AgentConfiguration(appKey: appKey);
-    await Instrumentation.start(config);
-
     const timerName = "My timer";
-    Instrumentation.startTimer(timerName);
-    Instrumentation.stopTimer(timerName);
+    await Instrumentation.startTimer(timerName);
+    await Instrumentation.stopTimer(timerName);
 
     expect(log, hasLength(2));
     expect(log, <Matcher>[
       isMethodCall('startTimer', arguments: timerName),
       isMethodCall('stopTimer', arguments: timerName),
     ]);
+  });
+
+  testWidgets('custom timers native error is converted to exception',
+      (WidgetTester tester) async {
+    const exceptionMessage = "Invalid key";
+    tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(channel,
+        (MethodCall methodCall) async {
+      throw PlatformException(
+          code: '500', details: exceptionMessage, message: "Message");
+    });
+
+    expect(
+        () => Instrumentation.startTimer("My timer"),
+        throwsA(predicate((e) =>
+            e is Exception && e.toString() == "Exception: $exceptionMessage")));
+
+    expect(
+        () => Instrumentation.stopTimer("My timer"),
+        throwsA(predicate((e) =>
+            e is Exception && e.toString() == "Exception: $exceptionMessage")));
   });
 }

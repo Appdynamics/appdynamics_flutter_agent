@@ -13,14 +13,10 @@ import 'globals.dart';
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
-  final List<MethodCall> log = <MethodCall>[];
-
-  setUp(() {
-    mockPackageInfo();
-  });
-
   testWidgets('Session frames methods are called natively',
       (WidgetTester tester) async {
+    final List<MethodCall> log = <MethodCall>[];
+
     tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(channel,
         (MethodCall methodCall) async {
       switch (methodCall.method) {
@@ -32,17 +28,13 @@ void main() {
       }
     });
 
-    const appKey = "AA-BBB-CCC";
-    AgentConfiguration config = AgentConfiguration(appKey: appKey);
-    await Instrumentation.start(config);
-
     const newSessionFrameName = "newSessionFrame";
     const updatedSessionFrameName = "updatedSessionFrame";
 
     final sessionFrame =
         await Instrumentation.startSessionFrame(newSessionFrameName);
-    sessionFrame.updateName(updatedSessionFrameName);
-    sessionFrame.end();
+    await sessionFrame.updateName(updatedSessionFrameName);
+    await sessionFrame.end();
 
     expect(log, hasLength(3));
     expect(log, <Matcher>[
@@ -54,5 +46,49 @@ void main() {
       }),
       isMethodCall('endSessionFrame', arguments: sessionFrame.id),
     ]);
+  });
+
+  testWidgets(
+      'session frames startSessionFrame() native error is converted to exception',
+      (WidgetTester tester) async {
+    const exceptionMessage = "Invalid key";
+    tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(channel,
+        (MethodCall methodCall) async {
+      throw PlatformException(
+          code: '500', details: exceptionMessage, message: "Message");
+    });
+
+    expect(
+        () => Instrumentation.startSessionFrame("newSessionFrame"),
+        throwsA(predicate((e) =>
+            e is Exception && e.toString() == "Exception: $exceptionMessage")));
+  });
+
+  testWidgets(
+      'session frames other methods native error is converted to exception',
+      (WidgetTester tester) async {
+    const exceptionMessage = "Invalid key";
+    tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(channel,
+        (MethodCall methodCall) async {
+      switch (methodCall.method) {
+        case "updateSessionFrameName":
+        case "endSessionFrame":
+          throw PlatformException(
+              code: '500', details: exceptionMessage, message: "Message");
+      }
+    });
+
+    final sessionFrame =
+        await Instrumentation.startSessionFrame("sessionFrame");
+
+    expect(
+        () => sessionFrame.updateName("foo"),
+        throwsA(predicate((e) =>
+            e is Exception && e.toString() == "Exception: $exceptionMessage")));
+
+    expect(
+        () => sessionFrame.end(),
+        throwsA(predicate((e) =>
+            e is Exception && e.toString() == "Exception: $exceptionMessage")));
   });
 }

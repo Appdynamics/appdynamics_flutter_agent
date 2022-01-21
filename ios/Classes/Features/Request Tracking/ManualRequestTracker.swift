@@ -28,7 +28,7 @@ extension SwiftAppDynamicsMobileSdkPlugin {
       result(error)
       return
     }
-
+    
     tracker.error = NSError(domain: "Manual request tracker", code: 0, userInfo: errorDict)
     result(nil)
   }
@@ -96,7 +96,7 @@ extension SwiftAppDynamicsMobileSdkPlugin {
   func requestTrackerReport(result: @escaping FlutterResult, arguments: Any?) {
     let properties = arguments as! Dictionary<String, Any>
     let id = properties["id"] as! String
-
+    
     guard let tracker = requestTrackers[id] else {
       let error = FlutterError(code: "500", message: "Agent requestTrackerReport() failed.", details: "Request tracker was not initialized or already reported.")
       result(error)

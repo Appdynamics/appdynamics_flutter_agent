@@ -1,3 +1,6 @@
-## 0.0.1
+## 1.0.0 
 
-* TODO: Describe initial release.
+🎉🎊 Presenting the new AppDynamics SDK for Flutter: 
+* Allows instrumenting Flutter apps and getting valuable insights in the UI controller.
+* Features: request tracking, error/crash reporting, activity tracking, info points and many more.
+* Thoroughly maintained and ready for production.

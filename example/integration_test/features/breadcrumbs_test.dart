@@ -36,7 +36,8 @@ void main() {
     await tester.assertCrashAndSessionBeaconSent();
   });
 
-  // TODO: Add Check Crash Only breadcrumbs when crash reporting is implemented
+  // TODO: Add Check Crash Only breadcrumbs when we will be able to crash
+  // flutter driver and still restart the app
 
   tearDown(() async {
     await clearServer();

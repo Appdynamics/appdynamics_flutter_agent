@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 
 import '../../appdynamics_mobilesdk.dart';
 
-/// Used to automatically detect screen transitions in apps using named routes.
+/// A class used to detect screen transitions in apps using named routes
+/// automatically.
 ///
 /// Add the [NavigationObserver] instance to the app's entry (usually in
 /// main.dart)

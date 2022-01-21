@@ -42,7 +42,7 @@ class TrackedWidget {
   }
 }
 
-/// Used for manually tracking activities throughout the app.
+/// A class used for manually tracking activities throughout the app.
 ///
 /// The available methods permit specifying the start and end of a Flutter
 /// widget to be reflected as an app screen in the controller.

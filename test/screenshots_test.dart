@@ -13,14 +13,10 @@ import 'globals.dart';
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
-  final List<MethodCall> log = <MethodCall>[];
-
-  setUp(() {
-    mockPackageInfo();
-  });
-
   testWidgets('Screenshots methods are called natively',
       (WidgetTester tester) async {
+    final List<MethodCall> log = <MethodCall>[];
+
     tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(channel,
         (MethodCall methodCall) async {
       switch (methodCall.method) {
@@ -35,15 +31,11 @@ void main() {
       }
     });
 
-    const appKey = "AA-BBB-CCC";
-    AgentConfiguration config = AgentConfiguration(appKey: appKey);
-    await Instrumentation.start(config);
-
-    Instrumentation.blockScreenshots();
-    Instrumentation.unblockScreenshots();
+    await Instrumentation.blockScreenshots();
+    await Instrumentation.unblockScreenshots();
     final areScreenshotsBlocked = await Instrumentation.screenshotsBlocked();
     expect(areScreenshotsBlocked, true);
-    Instrumentation.takeScreenshot();
+    await Instrumentation.takeScreenshot();
 
     expect(log, hasLength(4));
     expect(log, <Matcher>[
@@ -52,5 +44,32 @@ void main() {
       isMethodCall('screenshotsBlocked', arguments: null),
       isMethodCall('takeScreenshot', arguments: null),
     ]);
+  });
+
+  testWidgets('screenshots native error is converted to exception',
+      (WidgetTester tester) async {
+    const exceptionMessage = "Invalid key";
+    tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(channel,
+        (MethodCall methodCall) async {
+      throw PlatformException(
+          code: '500', details: exceptionMessage, message: "Message");
+    });
+
+    expect(
+        () => Instrumentation.blockScreenshots(),
+        throwsA(predicate((e) =>
+            e is Exception && e.toString() == "Exception: $exceptionMessage")));
+    expect(
+        () => Instrumentation.unblockScreenshots(),
+        throwsA(predicate((e) =>
+            e is Exception && e.toString() == "Exception: $exceptionMessage")));
+    expect(
+        () => Instrumentation.screenshotsBlocked(),
+        throwsA(predicate((e) =>
+            e is Exception && e.toString() == "Exception: $exceptionMessage")));
+    expect(
+        () => Instrumentation.takeScreenshot(),
+        throwsA(predicate((e) =>
+            e is Exception && e.toString() == "Exception: $exceptionMessage")));
   });
 }

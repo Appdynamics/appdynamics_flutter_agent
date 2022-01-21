@@ -6,31 +6,41 @@
 
 import 'package:appdynamics_mobilesdk/src/globals.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/services.dart';
 
-
-/// Call the private constructor for [SessionFrame].
-///
-/// We want users to call session frames API by [createSessionFrame], not
-/// constructors.
+/// Hiding the private constructor for [SessionFrame]. We want users to call
+/// session frames API by [createSessionFrame], not constructors.
 SessionFrame createSessionFrame() => SessionFrame._();
 
+/// Object used to chronicle user flows during an app session.
 class SessionFrame {
   final String id = UniqueKey().toString();
 
   SessionFrame._();
 
   /// Updates the session frame with a [newName].
-  /// This is generally used when the appropriate name for the Session Frame
-  /// is not known at the time of its creation.
+  /// This is generally used when the appropriate name for the Session Frame is
+  /// not known at the time of its creation.
   ///
-  updateName(String newName) async {
-    final arguments = {"newName": newName, "id": id};
-    await channel.invokeMethod<void>('updateSessionFrameName', arguments);
+  /// Method might throw [Exception].
+  Future<void> updateName(String newName) async {
+    try {
+      final arguments = {"newName": newName, "id": id};
+      await channel.invokeMethod<void>('updateSessionFrameName', arguments);
+    } on PlatformException catch (e) {
+      throw Exception(e.details);
+    }
   }
 
   /// Reports the end of the session frame.
   /// The [SessionFrame] object will no longer be usable after this call.
-  end() async {
-    await channel.invokeMethod<void>('endSessionFrame', id);
+  ///
+  /// Method might throw [Exception].
+  Future<void> end() async {
+    try {
+      await channel.invokeMethod<void>('endSessionFrame', id);
+    } on PlatformException catch (e) {
+      throw Exception(e.details);
+    }
   }
 }

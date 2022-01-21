@@ -1,8 +1,8 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="Run HTTP Client Test (iOS)" type="GradleRunConfiguration" factoryName="Gradle" folderName="iOS Integration Tests">
+  <configuration default="false" name="Generate and View Docs" type="GradleRunConfiguration" factoryName="Gradle" folderName="Docs">
     <ExternalSystemSettings>
       <option name="executionName" />
-      <option name="externalProjectPath" value="$PROJECT_DIR$/example" />
+      <option name="externalProjectPath" value="$PROJECT_DIR$" />
       <option name="externalSystemIdString" value="GRADLE" />
       <option name="scriptParameters" value="" />
       <option name="taskDescriptions">
@@ -10,7 +10,7 @@
       </option>
       <option name="taskNames">
         <list>
-          <option value="runHTTPClientIntegrationTestiOS" />
+          <option value="viewDocs" />
         </list>
       </option>
       <option name="vmOptions" value="" />
@@ -18,6 +18,8 @@
     <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
     <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
     <DebugAllEnabled>false</DebugAllEnabled>
-    <method v="2" />
+    <method v="2">
+      <option name="Gradle.BeforeRunTask" enabled="true" tasks="generateDocs" externalProjectPath="$PROJECT_DIR$" vmOptions="" scriptParameters="" />
+    </method>
   </configuration>
 </component>

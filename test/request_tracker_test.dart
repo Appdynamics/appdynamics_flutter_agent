@@ -13,6 +13,22 @@ import 'globals.dart';
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
+  const url = "https://www.appdynamics.com";
+  const statusCode = 123;
+  const errorMessage = "foo";
+  const stackTrace = "bar";
+
+  const intValue = 1234;
+  const doubleValue = 123.456;
+  const boolValue = true;
+  const stringValue = "test string";
+  final dateTimeValue = DateTime.utc(2021).toLocal();
+  const stringKey = "stringKey";
+  const boolKey = "boolKey";
+  const dateTimeKey = "dateKey";
+  const doubleKey = "doubleKey";
+  const intKey = "intKey";
+
   testWidgets('Manual HTTP tracker methods work natively',
       (WidgetTester tester) async {
     final List<MethodCall> log = <MethodCall>[];
@@ -39,24 +55,7 @@ void main() {
       }
     });
 
-    const url = "https://www.appdynamics.com";
-    const statusCode = 123;
-    const errorMessage = "foo";
-    const stackTrace = "bar";
-
-    const intValue = 1234;
-    const doubleValue = 123.456;
-    const boolValue = true;
-    const stringValue = "test string";
-    final dateTimeValue = DateTime.utc(2021).toLocal();
-    const stringKey = "stringKey";
-    const boolKey = "boolKey";
-    const dateTimeKey = "dateKey";
-    const doubleKey = "doubleKey";
-    const intKey = "intKey";
-
     final headers = await RequestTracker.getServerCorrelationHeaders();
-
     final tracker = await RequestTracker.create(url)
       ..setRequestHeaders(headers)
       ..setResponseStatusCode(statusCode)
@@ -125,5 +124,93 @@ void main() {
         arguments: {"id": tracker.id},
       )
     ]);
+  });
+
+  testWidgets(
+      'request tracker creation methods native error is converted to exception',
+      (WidgetTester tester) async {
+    const exceptionMessage = "Invalid key";
+    tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(channel,
+        (MethodCall methodCall) async {
+      throw PlatformException(
+          code: '500', details: exceptionMessage, message: "Message");
+    });
+
+    expect(
+        () => RequestTracker.getServerCorrelationHeaders(),
+        throwsA(predicate((e) =>
+            e is Exception && e.toString() == "Exception: $exceptionMessage")));
+    expect(
+        () => RequestTracker.create(url),
+        throwsA(predicate((e) =>
+            e is Exception && e.toString() == "Exception: $exceptionMessage")));
+  });
+
+  testWidgets('request tracker methods native error is converted to exception',
+      (WidgetTester tester) async {
+    const exceptionMessage = "Invalid key";
+    tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(channel,
+        (MethodCall methodCall) async {
+      switch (methodCall.method) {
+        case "getServerCorrelationHeaders":
+          return {'foo': 'bar'};
+        case "setRequestTrackerErrorInfo":
+        case "setRequestTrackerStatusCode":
+        case "setRequestTrackerResponseHeaders":
+        case "setRequestTrackerRequestHeaders":
+        case "setRequestTrackerUserData":
+        case "setRequestTrackerUserDataDouble":
+        case "setRequestTrackerUserDataLong":
+        case "setRequestTrackerUserDataBoolean":
+        case "setRequestTrackerUserDataDate":
+        case "requestTrackerReport":
+          throw PlatformException(
+              code: '500', details: exceptionMessage, message: "Message");
+      }
+    });
+
+    final headers = await RequestTracker.getServerCorrelationHeaders();
+    final tracker = await RequestTracker.create(url);
+
+    expect(
+        () => tracker.setRequestHeaders(headers),
+        throwsA(predicate((e) =>
+            e is Exception && e.toString() == "Exception: $exceptionMessage")));
+    expect(
+        () => tracker.setResponseStatusCode(statusCode),
+        throwsA(predicate((e) =>
+            e is Exception && e.toString() == "Exception: $exceptionMessage")));
+    expect(
+        () => tracker.setResponseHeaders(headers),
+        throwsA(predicate((e) =>
+            e is Exception && e.toString() == "Exception: $exceptionMessage")));
+    expect(
+        () => tracker.setUserData(stringKey, stringValue),
+        throwsA(predicate((e) =>
+            e is Exception && e.toString() == "Exception: $exceptionMessage")));
+    expect(
+        () => tracker.setUserDataBool(boolKey, boolValue),
+        throwsA(predicate((e) =>
+            e is Exception && e.toString() == "Exception: $exceptionMessage")));
+    expect(
+        () => tracker.setUserDataDateTime(dateTimeKey, dateTimeValue),
+        throwsA(predicate((e) =>
+            e is Exception && e.toString() == "Exception: $exceptionMessage")));
+    expect(
+        () => tracker.setUserDataDouble(doubleKey, doubleValue),
+        throwsA(predicate((e) =>
+            e is Exception && e.toString() == "Exception: $exceptionMessage")));
+    expect(
+        () => tracker.setUserDataInt(intKey, intValue),
+        throwsA(predicate((e) =>
+            e is Exception && e.toString() == "Exception: $exceptionMessage")));
+    expect(
+        () => tracker.setError(errorMessage, stackTrace),
+        throwsA(predicate((e) =>
+            e is Exception && e.toString() == "Exception: $exceptionMessage")));
+    expect(
+        () => tracker.reportDone(),
+        throwsA(predicate((e) =>
+            e is Exception && e.toString() == "Exception: $exceptionMessage")));
   });
 }

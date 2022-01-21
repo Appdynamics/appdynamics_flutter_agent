@@ -9,7 +9,6 @@ package com.appdynamics.appdynamics_mobilesdk.features.request_tracking.tracker_
 import androidx.annotation.NonNull
 import com.appdynamics.appdynamics_mobilesdk.AppDynamicsMobileSdkPlugin
 import io.flutter.plugin.common.MethodChannel
-import java.lang.Exception
 import java.util.*
 
 fun AppDynamicsMobileSdkPlugin.setRequestTrackerUserDataLong(

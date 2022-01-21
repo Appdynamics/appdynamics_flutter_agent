@@ -13,14 +13,10 @@ import 'globals.dart';
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
-  final List<MethodCall> log = <MethodCall>[];
-
-  setUp(() {
-    mockPackageInfo();
-  });
-
   testWidgets('Custom metrics method is called natively',
       (WidgetTester tester) async {
+    final List<MethodCall> log = <MethodCall>[];
+
     tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(channel,
         (MethodCall methodCall) async {
       switch (methodCall.method) {
@@ -29,10 +25,6 @@ void main() {
           return null;
       }
     });
-
-    const appKey = "AA-BBB-CCC";
-    AgentConfiguration config = AgentConfiguration(appKey: appKey);
-    await Instrumentation.start(config);
 
     const customMetricName = "myCustomMetric";
     const customMetricValue = 123;
@@ -45,5 +37,19 @@ void main() {
       isMethodCall('reportMetric',
           arguments: {"name": customMetricName, "value": customMetricValue}),
     ]);
+  });
+
+  testWidgets('custom metrics native error is converted to exception',
+      (WidgetTester tester) async {
+    const exceptionMessage = "Invalid key";
+    tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(channel,
+        (MethodCall methodCall) async {
+      throw PlatformException(
+          code: '500', details: exceptionMessage, message: "Message");
+    });
+    expect(
+        () => Instrumentation.reportMetric(name: "foo", value: 30),
+        throwsA(predicate((e) =>
+            e is Exception && e.toString() == "Exception: $exceptionMessage")));
   });
 }

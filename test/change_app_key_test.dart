@@ -13,10 +13,6 @@ import 'globals.dart';
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
-  setUp(() {
-    mockPackageInfo();
-  });
-
   testWidgets('Change app key after initialization is called natively',
       (WidgetTester tester) async {
     final List<MethodCall> log = <MethodCall>[];

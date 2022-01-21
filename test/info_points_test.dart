@@ -13,10 +13,6 @@ import 'globals.dart';
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
-  setUp(() {
-    mockPackageInfo();
-  });
-
   testWidgets('Info points success method is called natively',
       (WidgetTester tester) async {
     final List<MethodCall> log = <MethodCall>[];
@@ -196,5 +192,25 @@ void main() {
         methodBody: () {});
 
     expect(log, hasLength(1));
+  });
+
+  testWidgets('info points native error is converted to exception',
+      (WidgetTester tester) async {
+    const exceptionMessage = "Invalid key";
+    tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(channel,
+        (MethodCall methodCall) async {
+      throw PlatformException(
+          code: '500', details: exceptionMessage, message: "Message");
+    });
+
+    expect(
+        () => Instrumentation.trackCall(
+            className: "foo",
+            methodName: "bar",
+            methodArgs: [1, 2],
+            uniqueCallId: null,
+            methodBody: () {}),
+        throwsA(predicate((e) =>
+            e is Exception && e.toString() == "Exception: $exceptionMessage")));
   });
 }

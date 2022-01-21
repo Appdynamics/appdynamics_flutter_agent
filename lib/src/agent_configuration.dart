@@ -14,9 +14,9 @@ enum LoggingLevel { none, info, verbose }
 /// AgentConfiguration config = AgentConfiguration(
 ///     appKey: "ABC-DEF-GHI",
 ///     loggingLevel: LoggingLevel.verbose);
-/// Instrumentation.start(config);
+/// await Instrumentation.start(config);
 /// ```
-/// **NOTE:** Replace "ABC-DEF-GHI" with your actual application key.
+/// **Note:** Replace "ABC-DEF-GHI" with your actual application key.
 ///
 /// For more specialized use cases, like using an on-premise collector, use the
 /// other, more advanced options supported by this class.
@@ -31,18 +31,18 @@ class AgentConfiguration {
   /// The agent will send beacons to this collector.
   final String collectorURL;
 
-  /// Sets the URL of the screenshot service to which the agent will upload
+  /// The URL of the screenshot service to which the agent will upload
   /// screenshots.
   ///
   /// This is NOT your controller URL. You likely do not need to call this
   /// method unless you have an AppDynamics managed private cloud (very rare).
   ///
-  /// **NOTE:** If you have an on-premise EUM Processor and set the collector
+  /// **Note:** If you have an on-premise EUM Processor and set the collector
   /// URL in [collectorURL], then you do not need to call this method because
   /// the two URLs are the same, and the agent assumes that is the case.
   final String screenshotURL;
 
-  /// Enables or disables screenshots (default = enabled).
+  /// Bool indicating if screenshot capture is enabled. (default = enabled).
   ///
   /// If enabled, the [Instrumentation.takeScreenshot] method will capture
   /// screenshots, and depending on the configuration in the controller,
@@ -57,19 +57,17 @@ class AgentConfiguration {
   /// screenshots from the controller configuration page.
   final bool screenshotsEnabled;
 
-  /// Sets the logging level of the agent. Default is [LoggingLevel.none].
+  /// The logging level of the agent. Default is [LoggingLevel.none].
   ///
-  /// **WARNING:** Altering this value is not recommended for production use.
+  /// **Warning:** Altering this value is not recommended for production use.
   final LoggingLevel loggingLevel;
 
-  /// The agent supports the usage of a callback function that receives an array
-  /// of the native crashes that have been reported. You can use this callback
-  /// to have access to crash reports.
+  /// A callback function that will be triggered on a native crash. You can use
+  /// this callback to have access to crash reports.
   final CrashReportCallback? crashReportCallback;
 
-  /// Enables or disables the Crash Reporter feature.
-  ///
-  /// Default is enabled.
+  /// A bool indicating if the crash reporter should be enabled. Default is
+  /// `true`.
   ///
   /// Most applications should leave this feature enabled.
   /// Disable if you are using a different crash reporting tool and conflicts

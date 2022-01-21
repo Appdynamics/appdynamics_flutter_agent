@@ -5,4 +5,6 @@
 #
 #
 flutter build apk
+
+# Current TC artifact path is hardcoded to build/app/reports so we move things there.
 cp build/app/outputs/flutter-apk/app-release.apk build/app/reports

@@ -5,7 +5,7 @@ extension SwiftAppDynamicsMobileSdkPlugin {
   func setRequestTrackerUserDataDate(result: @escaping FlutterResult, arguments: Any?) {
     let properties = arguments as! Dictionary<String, Any>
     let id = properties["id"] as! String
-
+    
     guard let key = properties["key"] as? String else {
       let error = FlutterError(code: "500", message: "Agent setRequestTrackerUserDataDate() failed.", details: "Please provide a valid string for `key`.")
       result(error)

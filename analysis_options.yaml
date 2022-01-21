@@ -9,7 +9,7 @@
 # packages, and plugins designed to encourage good coding practices.
 include: package:flutter_lints/flutter.yaml
 
-# exclude local flutter folder from dart linting
+# (CI/CD) Exclude local flutter folder from dart linting.
 analyzer:
   exclude:
     - flutter

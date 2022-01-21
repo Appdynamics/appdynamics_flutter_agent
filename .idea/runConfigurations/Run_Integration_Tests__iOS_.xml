@@ -18,6 +18,8 @@
     <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
     <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
     <DebugAllEnabled>false</DebugAllEnabled>
-    <method v="2" />
+    <method v="2">
+      <option name="Gradle.BeforeRunTask" enabled="false" tasks="startiOSSimulator" externalProjectPath="$PROJECT_DIR$/example" vmOptions="" scriptParameters="" />
+    </method>
   </configuration>
 </component>

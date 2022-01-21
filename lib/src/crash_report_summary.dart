@@ -4,19 +4,21 @@
  *
  */
 
-/// Called when a crash report is about to be sent.
+/// Captures crash reports on deployment (usually app restart).
 ///
-/// Typically the [summaries] will have a size of 1, but if the app is crashing
-/// very early during start up, [summaries] could be larger.
+/// Typically, the [summaries] will have a size of 1, but if the app is crashing
+/// very early during startup, [summaries] could be more extensive.
 ///
-/// This method will be scheduled on the *main thread*, so any long
+/// This method will be scheduled natively on the main thread, so any long
 /// operations should be performed asynchronously.
 ///
 /// [AgentConfiguration.crashReportingEnabled] must be `true` (default).
 typedef CrashReportCallback = void Function(List<CrashReportSummary> summaries);
 
+/// Object encompassing native crash report info.
 class CrashReportSummary {
-  /// Uniquely defines the crash, can be used as key to find full crash report.
+  /// Uniquely defines the crash and can be used as key to find the full crash
+  /// report.
   late final String crashId;
 
   /// May be `null` if no exception occurred.

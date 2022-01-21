@@ -10,7 +10,6 @@ import androidx.annotation.NonNull
 import com.appdynamics.appdynamics_mobilesdk.AppDynamicsMobileSdkPlugin
 import com.appdynamics.eumagent.runtime.Instrumentation
 import io.flutter.plugin.common.MethodChannel
-import java.lang.Exception
 
 fun AppDynamicsMobileSdkPlugin.reportMetric(
     @NonNull result: MethodChannel.Result,

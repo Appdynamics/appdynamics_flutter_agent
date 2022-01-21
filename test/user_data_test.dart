@@ -13,14 +13,21 @@ import 'globals.dart';
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
-  final List<MethodCall> log = <MethodCall>[];
-
-  setUp(() {
-    mockPackageInfo();
-  });
+  const intKey = "intKey";
+  const intValue = 1234;
+  const stringKey = "stringKey";
+  const stringValue = "1234";
+  const doubleKey = "doubleKey";
+  const doubleValue = 1234.5678;
+  const boolKey = "boolKey";
+  const boolValue = true;
+  const dateTimeKey = "DateTimeKey";
+  final dateTimeValue = DateTime.utc(2021);
 
   testWidgets('user data methods are called natively',
       (WidgetTester tester) async {
+    final List<MethodCall> log = <MethodCall>[];
+
     tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(channel,
         (MethodCall methodCall) async {
       switch (methodCall.method) {
@@ -38,25 +45,6 @@ void main() {
           return null;
       }
     });
-
-    const appKey = "AA-BBB-CCC";
-    AgentConfiguration config = AgentConfiguration(appKey: appKey);
-    await Instrumentation.start(config);
-
-    const intKey = "intKey";
-    const intValue = 1234;
-
-    const stringKey = "stringKey";
-    const stringValue = "1234";
-
-    const doubleKey = "doubleKey";
-    const doubleValue = 1234.5678;
-
-    const boolKey = "boolKey";
-    const boolValue = true;
-
-    const dateTimeKey = "DateTimeKey";
-    final dateTimeValue = DateTime.utc(2021);
 
     await Instrumentation.setUserDataInt(intKey, intValue);
     await Instrumentation.setUserDataDouble(doubleKey, doubleValue);
@@ -101,5 +89,57 @@ void main() {
       isMethodCall('removeUserData', arguments: stringKey),
       isMethodCall('removeUserDataDate', arguments: dateTimeKey),
     ]);
+  });
+
+  testWidgets('user data native error is converted to exception',
+      (WidgetTester tester) async {
+    const exceptionMessage = "Invalid key";
+    tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(channel,
+        (MethodCall methodCall) async {
+      throw PlatformException(
+          code: '500', details: exceptionMessage, message: "Message");
+    });
+
+    expect(
+        () => Instrumentation.setUserDataInt(intKey, intValue),
+        throwsA(predicate((e) =>
+            e is Exception && e.toString() == "Exception: $exceptionMessage")));
+    expect(
+        () => Instrumentation.setUserDataDouble(doubleKey, doubleValue),
+        throwsA(predicate((e) =>
+            e is Exception && e.toString() == "Exception: $exceptionMessage")));
+    expect(
+        () => Instrumentation.setUserDataBool(boolKey, boolValue),
+        throwsA(predicate((e) =>
+            e is Exception && e.toString() == "Exception: $exceptionMessage")));
+    expect(
+        () => Instrumentation.setUserData(stringKey, stringValue),
+        throwsA(predicate((e) =>
+            e is Exception && e.toString() == "Exception: $exceptionMessage")));
+    expect(
+        () => Instrumentation.setUserDataDateTime(dateTimeKey, dateTimeValue),
+        throwsA(predicate((e) =>
+            e is Exception && e.toString() == "Exception: $exceptionMessage")));
+
+    expect(
+        () => Instrumentation.removeUserDataInt(intKey),
+        throwsA(predicate((e) =>
+            e is Exception && e.toString() == "Exception: $exceptionMessage")));
+    expect(
+        () => Instrumentation.removeUserDataDouble(doubleKey),
+        throwsA(predicate((e) =>
+            e is Exception && e.toString() == "Exception: $exceptionMessage")));
+    expect(
+        () => Instrumentation.removeUserDataBool(boolKey),
+        throwsA(predicate((e) =>
+            e is Exception && e.toString() == "Exception: $exceptionMessage")));
+    expect(
+        () => Instrumentation.removeUserData(stringKey),
+        throwsA(predicate((e) =>
+            e is Exception && e.toString() == "Exception: $exceptionMessage")));
+    expect(
+        () => Instrumentation.removeUserDataDateTime(dateTimeKey),
+        throwsA(predicate((e) =>
+            e is Exception && e.toString() == "Exception: $exceptionMessage")));
   });
 }

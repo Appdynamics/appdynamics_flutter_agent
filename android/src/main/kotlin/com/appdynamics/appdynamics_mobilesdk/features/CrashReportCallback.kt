@@ -7,7 +7,7 @@
 package com.appdynamics.appdynamics_mobilesdk.features
 
 import com.appdynamics.eumagent.runtime.CrashReportCallback
-import com.appdynamics.eumagent.runtime.*
+import com.appdynamics.eumagent.runtime.CrashReportSummary
 import io.flutter.plugin.common.MethodChannel
 
 class CrashCallbackObject(private val channel: MethodChannel) : CrashReportCallback {

@@ -12,7 +12,6 @@ import com.appdynamics.eumagent.runtime.Instrumentation
 import io.flutter.plugin.common.MethodChannel
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.HashMap
 
 fun AppDynamicsMobileSdkPlugin.trackPageStart(
     @NonNull result: MethodChannel.Result,
@@ -25,7 +24,8 @@ fun AppDynamicsMobileSdkPlugin.trackPageStart(
     val uuid = UUID.fromString(uuidString)
 
     val startDate = properties["startDate"] as String
-    val start = SimpleDateFormat(dateFormat,
+    val start = SimpleDateFormat(
+        dateFormat,
         Locale.US
     ).parse(startDate)!!.time
 

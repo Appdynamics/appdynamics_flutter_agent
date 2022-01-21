@@ -32,24 +32,27 @@ void main() {
       "exceptionReason": "baz"
     };
 
+    // Test CrashReportSummary methods and callback at the same time.
     crashReportCallback(List<CrashReportSummary> summaries) async {
-      // Ensure coverage for CrashSummary object.
-      final testToJson = summaries.first.toJson();
-      expect(testToJson, crashReport);
+      final report = summaries.first;
+      expect(report.toJson().toString(), crashReport.toString());
 
-      const newCrashId = "new";
-      final testConstructor = CrashReportSummary(crashId: newCrashId);
-      expect(testConstructor.crashId, newCrashId);
+      final newCrashReport = CrashReportSummary(
+          crashId: report.crashId,
+          exceptionName: report.exceptionName,
+          exceptionReason: report.exceptionReason);
+
+      expect(newCrashReport.crashId, report.crashId);
+      expect(newCrashReport.exceptionName, report.exceptionName);
+      expect(newCrashReport.exceptionReason, report.exceptionReason);
     }
 
-    const appKey = "AA-BBB-CCC";
     AgentConfiguration config = AgentConfiguration(
-        appKey: appKey, crashReportCallback: crashReportCallback);
+        appKey: 'AA-BBB-CCC', crashReportCallback: crashReportCallback);
     await Instrumentation.start(config);
 
     // Simulate crash being reported from native
-    const codec = StandardMethodCodec();
-    final data = codec
+    final data = const StandardMethodCodec()
         .encodeMethodCall(const MethodCall("onCrashReported", [crashReport]));
     tester.binding.defaultBinaryMessenger
         .handlePlatformMessage(channel.name, data, null);

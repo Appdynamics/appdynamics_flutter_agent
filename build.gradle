@@ -12,7 +12,7 @@
  */
 
 plugins {
-    id 'java-library'
+    id 'distribution'
     id 'com.appdynamics.gradle.plugins.appd-publish' version '2.2.22'
     id 'com.appdynamics.gradle.plugins.pipeline.pipelinePlugin' version '3.5.179'
     id 'org.sonarqube' version '3.2.0'
@@ -23,9 +23,15 @@ pipeline {
     teamcityParent = "EUM"
     projectName = "Flutter Agent"
 
-    buildTasks = ["build", "downloadFlutter", "installPackages", "analyze", "runTests", ":example:buildAndroid"]
-
-    param("env.ARTIFACT_MAPPING", "example/build/app/outputs/flutter-apk")
+    buildTasks = [
+            "build",
+            "downloadFlutter",
+            "installPackages",
+            "analyze",
+            "runUnitTests",
+            ":example:buildAndroid",
+            "generateDocs",
+    ]
 }
 
 // appd-publish
@@ -57,7 +63,15 @@ task analyze(type: Exec) {
     commandLine "./scripts/flutter-analyze.sh"
 }
 
-task runTests(type: Exec) {
+task runUnitTests(type: Exec) {
     environment "PATH", execPath
     commandLine "./scripts/flutter-test.sh"
+}
+
+task generateDocs(type: Exec) {
+    commandLine "./scripts/generate-docs.sh"
+}
+
+task viewDocs(type: Exec) {
+    commandLine "./scripts/view-docs.sh"
 }
