@@ -19,6 +19,8 @@ plugins {
 }
 
 // pipelinePlugin
+//
+// Specify CI/CD tasks in order and run `./gradlew pipeline` to generate new .teamcity file.
 pipeline {
     teamcityParent = "EUM"
     projectName = "Flutter Agent"
@@ -34,10 +36,43 @@ pipeline {
     ]
 }
 
-// appd-publish
 group = 'com.appdynamics.eum'
 appdVersion {
-    baseVersion = '1.0'
+    baseVersion = '0.1'
+}
+
+// distribution + appd-publish
+//
+// Specify which files to .zip when publishing to Nexus 3.
+distributions {
+    main {
+        distributionBaseName.set("rum-flutter")
+        contents {
+            // .gitignore exception
+            from(".idea/runConfigurations") {
+                into(".idea/runConfigurations")
+            }
+            from(".") {
+                def ignores = []
+                File rootIgnore = file(".gitignore")
+                rootIgnore.eachLine { line ->
+                    if (!line.startsWith('#') && !line.isEmpty()) {
+                        ignores.add(line)
+                    }
+
+                }
+
+                File exampleIgnore = file("example/.gitignore")
+                exampleIgnore.eachLine { line ->
+                    if (!line.startsWith('#') && !line.isEmpty()) {
+                        ignores.add("example/" + line)
+                    }
+                }
+                print(ignores);
+                exclude ignores
+            }
+        }
+    }
 }
 
 sonarqube {

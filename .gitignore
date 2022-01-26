@@ -48,6 +48,7 @@ analysis_benchmark.json
 .packages.generated
 
 # Flutter/Dart/Pub related
+doc
 **/doc/api/
 .dart_tool/
 .flutter-plugins
