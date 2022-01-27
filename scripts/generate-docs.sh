@@ -4,12 +4,19 @@
 # All rights reserved.
 #
 #
-set -e
 
-flutter pub global activate dartdoc
+## Not working on CI/CD, needs newer macOS than Mojave.
+
+set -e
+set -x
+
+export PATH="$PATH":"$HOME/.pub-cache/bin"
+
+# expecting flutter executable to be downloaded via flutter-download.sh script
+flutter/bin/flutter pub global activate dartdoc
 # Running `dartdoc` alone was throwing error and no other solution worked.
 # https://stackoverflow.com/questions/61086384/dartdoc-failed-top-level-package-requires-flutter-but-flutter-root-environment
-flutter pub global run dartdoc:dartdoc
+flutter/bin/flutter pub global run dartdoc:dartdoc
 
 # Current TC artifact path is hardcoded to build/app/reports so we move things there.
 ARTIFACTS_FOLDER=example/build/app/reports

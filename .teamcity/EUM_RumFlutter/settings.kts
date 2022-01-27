@@ -9,13 +9,7 @@ AppdBuildSettings.Builder(AppdBuild.PipeLibType.JAVA_LIB)
     .projectID("EUM_RumFlutter")
     .testTargets()
     .buildTargets(
-        "build",
-        "downloadFlutter",
-        "installPackages",
-        "analyze",
-        "runUnitTests",
-        ":example:buildAndroid",
-        "generateDocs"
+        "build"
     )
     .passwordParams()
     .checkboxParams()

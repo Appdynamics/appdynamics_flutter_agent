@@ -32,21 +32,7 @@ $ flutter pub add appdynamics_mobilesdk
 
 ## Extra configuration for Android apps:
 
-1. Add the following line on top-level of your `android/build.gradle` file:
-
-```groovy
-apply from: '<path_to_agent>/android/adeum.gradle' // this line
-
-buildscript {
-   ext.kotlin_version = 'x.x.xx'
-   repositories {
-      google()
-      mavenCentral()
-   }
-...
-```
-
-2. Add the following permissions to your AndroidManifest.xml (usually in android/src/main/) 
+1. Add the following permissions to your AndroidManifest.xml (usually in android/src/main/) 
    to benefit from connection transition events logging:
    
 ```xml
@@ -56,7 +42,8 @@ package="com.example.myawesomepackage">
    <!-- add these two permissions -->
     <uses-permission android:name="android.permission.INTERNET" /> 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    ...
+    <application>
+       <!-- other settings -->
 ```
 
 ## Start instrumentation
