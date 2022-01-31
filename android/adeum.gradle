@@ -1,0 +1,36 @@
+/*
+ * Copyright (c) 2021. AppDynamics LLC and its affiliates.
+ * All rights reserved.
+ *
+ */
+
+/**
+ *  This file gets included from the top-level build file of the android application and injects the
+ *  appdynamics android Gradle plugin into the build of that application.
+ */
+allprojects {
+    ext.appd_plugin_version = '21.11.1'
+
+    subprojects { project ->
+        project.buildscript {
+            repositories {
+                addAll rootProject.buildscript.repositories
+            }
+            dependencies {
+                classpath "com.appdynamics:appdynamics-gradle-plugin:$appd_plugin_version"
+            }
+        }
+        project.plugins.withId('com.android.application') {
+            // This gets executed when the android application plugin is applied
+            project.plugins.apply("adeum")
+            adeum {
+                // This tells the gradle plugin not to inject the runtime library dependency into the user's application.
+                // The runtime library is already included in the Flutter project, and it is made visible to
+                // the application in case one wants to perform manual Instrumentation calls from the native context.
+                dependencyInjection {
+                    enabled = false
+                }
+            }
+        }
+    }
+}

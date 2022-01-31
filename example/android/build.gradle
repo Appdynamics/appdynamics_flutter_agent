@@ -4,6 +4,8 @@
  *
  */
 
+apply from: '../../android/adeum.gradle'
+
 buildscript {
     ext.kotlin_version = '1.3.50'
     repositories {
