@@ -4,7 +4,11 @@
 # All rights reserved.
 #
 #
+
+# For debugging purposes
+flutter devices
+
 flutter build ios --simulator
 
 # Current TC artifact path is hardcoded to build/app/reports so we move things there.
-cp /build/ios/iphonesimulator build/app/reports
+cp -r build/ios/iphonesimulator/Runner.app build/app/reports

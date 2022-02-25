@@ -13,20 +13,25 @@
 
 apply from: "integration_test/tests.gradle"
 
-def execPath = "$System.env.PATH" + System.getProperty("path.separator") + "$projectDir/../flutter/bin"
-
 task buildiOS(type: Exec) {
-    environment "PATH", execPath
     commandLine "../scripts/flutter-build-ios.sh"
 }
 
 task buildAndroid(type: Exec) {
-    environment "PATH", execPath
     commandLine "../scripts/flutter-build-android.sh"
+}
+
+task startiOSSimulator(type: Exec) {
+    commandLine "../scripts/start-ios-simulator.sh"
+}
+
+task startAndroidEmulator(type: Exec) {
+    commandLine "../scripts/start-android-emulator.sh"
 }
 
 task runIntegrationTestsiOS {
     dependsOn ordered(
+            "startiOSSimulator",
             "runStartIntegrationTestiOS",
             "runRequestTrackerIntegrationTestiOS",
             "runTrackedHttpClientIntegrationTestiOS",
@@ -47,6 +52,7 @@ task runIntegrationTestsiOS {
 
 task runIntegrationTestsAndroid {
     dependsOn ordered(
+            "startAndroidEmulator",
             "runStartIntegrationTestAndroid",
             "runRequestTrackerIntegrationTestAndroid",
             "runTrackedHttpClientIntegrationTestAndroid",
@@ -63,14 +69,6 @@ task runIntegrationTestsAndroid {
             "runANRIntegrationTestAndroid",
             "runActivityTrackingIntegrationTestAndroid"
     )
-}
-
-task startiOSSimulator(type: Exec) {
-    commandLine "../scripts/start-ios-simulator.sh"
-}
-
-task startAndroidEmulator(type: Exec) {
-    commandLine "../scripts/start-android-emulator.sh"
 }
 
 // Imply an order of tasks and still type check

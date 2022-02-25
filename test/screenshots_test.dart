@@ -28,6 +28,8 @@ void main() {
         case "screenshotsBlocked":
           log.add(methodCall);
           return true;
+        default:
+          return null;
       }
     });
 

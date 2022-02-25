@@ -12,9 +12,10 @@
  */
 
 plugins {
-    id 'distribution'
+    id 'java-library'
     id 'com.appdynamics.gradle.plugins.appd-publish' version '2.2.22'
     id 'com.appdynamics.gradle.plugins.pipeline.pipelinePlugin' version '3.5.179'
+    id 'com.appdynamics.gradle.plugins.appd-integration-test' version '0.0.7'
     id 'org.sonarqube' version '3.2.0'
 }
 
@@ -27,52 +28,23 @@ pipeline {
 
     buildTasks = [
             "build",
-            "downloadFlutter",
+            "upgradeFlutter",
             "installPackages",
             "analyze",
             "runUnitTests",
             ":example:buildAndroid",
             "generateDocs",
     ]
+    integrationTestTasks = [
+            "runUnitTests",
+            ":example:runIntegrationTestsiOS",
+            ":example:runIntegrationTestsAndroid"
+    ]
 }
 
 group = 'com.appdynamics.eum'
 appdVersion {
     baseVersion = '0.1'
-}
-
-// distribution + appd-publish
-//
-// Specify which files to .zip when publishing to Nexus 3.
-distributions {
-    main {
-        distributionBaseName.set("rum-flutter")
-        contents {
-            // .gitignore exception
-            from(".idea/runConfigurations") {
-                into(".idea/runConfigurations")
-            }
-            from(".") {
-                def ignores = []
-                File rootIgnore = file(".gitignore")
-                rootIgnore.eachLine { line ->
-                    if (!line.startsWith('#') && !line.isEmpty()) {
-                        ignores.add(line)
-                    }
-
-                }
-
-                File exampleIgnore = file("example/.gitignore")
-                exampleIgnore.eachLine { line ->
-                    if (!line.startsWith('#') && !line.isEmpty()) {
-                        ignores.add("example/" + line)
-                    }
-                }
-                print(ignores);
-                exclude ignores
-            }
-        }
-    }
 }
 
 sonarqube {
@@ -82,24 +54,19 @@ sonarqube {
     }
 }
 
-def execPath = "$System.env.PATH" + System.getProperty("path.separator") + "$projectDir/flutter/bin"
-
-task downloadFlutter(type: Exec) {
-    commandLine "./scripts/flutter-download.sh"
+task upgradeFlutter(type: Exec) {
+    commandLine "./scripts/flutter-upgrade.sh"
 }
 
 task installPackages(type: Exec) {
-    environment "PATH", execPath
     commandLine "./scripts/flutter-get.sh"
 }
 
 task analyze(type: Exec) {
-    environment "PATH", execPath
     commandLine "./scripts/flutter-analyze.sh"
 }
 
 task runUnitTests(type: Exec) {
-    environment "PATH", execPath
     commandLine "./scripts/flutter-test.sh"
 }
 

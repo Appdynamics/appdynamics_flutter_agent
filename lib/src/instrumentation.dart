@@ -835,6 +835,7 @@ class Instrumentation {
 
       final args = {"callId": callId, "error": error};
       await channel.invokeMethod<void>('endCallWithError', args);
+      return null;
     }
 
     try {

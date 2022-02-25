@@ -23,6 +23,8 @@ void main() {
       switch (methodCall.method) {
         case 'start':
           return null;
+        default:
+          return null;
       }
     });
 

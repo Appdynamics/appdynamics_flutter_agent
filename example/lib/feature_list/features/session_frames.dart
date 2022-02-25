@@ -40,34 +40,37 @@ class _SessionFramesState extends State<SessionFrames> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const FlushBeaconsAppBar(title: "Session frames"),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 50),
-          child:
-              Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-            ElevatedButton(
-              key: const Key("startSessionFrameButton"),
-              child: Text(
-                  'Start session frame \n(named: "$newSessionFrameName")',
-                  textAlign: TextAlign.center),
-              onPressed: _startSessionFrame,
-            ),
-            ElevatedButton(
-              key: const Key("updateSessionFrameButton"),
-              child: Text(
-                  'Update session frame \n(named: "$updatedSessionFrameName")',
-                  textAlign: TextAlign.center),
-              onPressed: _updateSessionFrame,
-            ),
-            ElevatedButton(
-              key: const Key("endSessionFrameButton"),
-              child:
-                  const Text('End session frame', textAlign: TextAlign.center),
-              onPressed: _endSessionFrame,
-            ),
-          ]),
+      body: ListView(children: <Widget>[
+        Center(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 50),
+            child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  ElevatedButton(
+                    key: const Key("startSessionFrameButton"),
+                    child: Text(
+                        'Start session frame \n(named: "$newSessionFrameName")',
+                        textAlign: TextAlign.center),
+                    onPressed: _startSessionFrame,
+                  ),
+                  ElevatedButton(
+                    key: const Key("updateSessionFrameButton"),
+                    child: Text(
+                        'Update session frame \n(named: "$updatedSessionFrameName")',
+                        textAlign: TextAlign.center),
+                    onPressed: _updateSessionFrame,
+                  ),
+                  ElevatedButton(
+                    key: const Key("endSessionFrameButton"),
+                    child: const Text('End session frame',
+                        textAlign: TextAlign.center),
+                    onPressed: _endSessionFrame,
+                  ),
+                ]),
+          ),
         ),
-      ),
+      ]),
     );
   }
 }

@@ -49,53 +49,56 @@ class _ScreenshotsState extends State<Screenshots> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const FlushBeaconsAppBar(title: "Screenshots"),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 50),
-          child:
-              Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-            ElevatedButton(
-              key: const Key("takeScreenshotButton"),
-              child: const Text('Take screenshot'),
-              onPressed: _takeScreenshot,
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            ElevatedButton(
-              key: const Key("blockScreenshotsButton"),
-              child: const Text('Block screenshots'),
-              onPressed: _blockScreenshots,
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            ElevatedButton(
-              key: const Key("unblockScreenshotsButton"),
-              child: const Text('Unblock screenshots'),
-              onPressed: _unblockScreenshots,
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            ElevatedButton(
-              key: const Key("checkScreenshotsStatusButton"),
-              child: const Text('Check screenshots status'),
-              onPressed: _checkScreenshotsStatus,
-            ),
-            Text(
-              () {
-                final status = screenshotsStatus;
-                if (status == null) {
-                  return "Screenshot status: unknown";
-                }
-                return "Screenshot status: ${status ? "blocked" : "unblocked"}";
-              }(),
-              textAlign: TextAlign.center,
-            )
-          ]),
+      body: ListView(children: <Widget>[
+        Center(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 50),
+            child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  ElevatedButton(
+                    key: const Key("takeScreenshotButton"),
+                    child: const Text('Take screenshot'),
+                    onPressed: _takeScreenshot,
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  ElevatedButton(
+                    key: const Key("blockScreenshotsButton"),
+                    child: const Text('Block screenshots'),
+                    onPressed: _blockScreenshots,
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  ElevatedButton(
+                    key: const Key("unblockScreenshotsButton"),
+                    child: const Text('Unblock screenshots'),
+                    onPressed: _unblockScreenshots,
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  ElevatedButton(
+                    key: const Key("checkScreenshotsStatusButton"),
+                    child: const Text('Check screenshots status'),
+                    onPressed: _checkScreenshotsStatus,
+                  ),
+                  Text(
+                    () {
+                      final status = screenshotsStatus;
+                      if (status == null) {
+                        return "Screenshot status: unknown";
+                      }
+                      return "Screenshot status: ${status ? "blocked" : "unblocked"}";
+                    }(),
+                    textAlign: TextAlign.center,
+                  )
+                ]),
+          ),
         ),
-      ),
+      ]),
     );
   }
 }

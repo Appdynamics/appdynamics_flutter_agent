@@ -23,21 +23,24 @@ class CustomMetrics extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const FlushBeaconsAppBar(title: "Custom metrics"),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 50),
-          child:
-              Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-            ElevatedButton(
-              key: const Key("reportMetricButton"),
-              child: Text(
-                  'Report metric \n(name: $customMetricName, value: $customMetricValue)',
-                  textAlign: TextAlign.center),
-              onPressed: _reportMetric,
-            ),
-          ]),
+      body: ListView(children: <Widget>[
+        Center(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 50),
+            child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  ElevatedButton(
+                    key: const Key("reportMetricButton"),
+                    child: Text(
+                        'Report metric \n(name: $customMetricName, value: $customMetricValue)',
+                        textAlign: TextAlign.center),
+                    onPressed: _reportMetric,
+                  ),
+                ]),
+          ),
         ),
-      ),
+      ]),
     );
   }
 }

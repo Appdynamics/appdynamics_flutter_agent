@@ -136,56 +136,53 @@ class _SettingsState extends State<Settings> {
         ],
       ),
       body: Center(
-        child: Column(children: [
-          Padding(
-            padding: const EdgeInsets.fromLTRB(50, 8, 50, 20),
-            child: TextFormField(
-              controller: _appKeyFieldController,
-              decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Enter app key',
-                  hintText: 'AA-BBB-CCC'),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(50, 8, 50, 0),
-            child: TextFormField(
-              controller: _collectorFieldController,
-              onTap: _onCollectorTextFieldPress,
-              readOnly: true,
-              decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Select collector',
-                  hintText: 'https://my-custom-collector.com'),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(50, 8, 50, 0),
-            child: TextFormField(
-              controller: _collectorURLFieldController,
-              onFieldSubmitted: _setCustomCollector,
-              decoration: const InputDecoration(
-                  border: UnderlineInputBorder(),
-                  labelText: 'Collector URL',
-                  hintText: 'https://my-custom-collector-url.com'),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(50, 8, 50, 20),
-            child: TextFormField(
-              controller: _screenshotURLFieldController,
-              onFieldSubmitted: _setCustomCollector,
-              decoration: const InputDecoration(
-                  border: UnderlineInputBorder(),
-                  labelText: 'Screenshot URL',
-                  hintText: 'https://my-custom-screenshot-url.com'),
-            ),
-          ),
-          ElevatedButton(
-              key: const Key("startInstrumentationButton"),
-              onPressed: () => _onStartPress(context),
-              child: const Text('Start instrumentation')),
-        ], mainAxisAlignment: MainAxisAlignment.center),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 50),
+          child: ListView(shrinkWrap: true, children: <Widget>[
+            Column(children: [
+              TextFormField(
+                controller: _appKeyFieldController,
+                decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Enter app key',
+                    hintText: 'AA-BBB-CCC'),
+              ),
+              const SizedBox(height: 20),
+              TextFormField(
+                controller: _collectorFieldController,
+                onTap: _onCollectorTextFieldPress,
+                readOnly: true,
+                decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Select collector',
+                    hintText: 'https://my-custom-collector.com'),
+              ),
+              const SizedBox(height: 10),
+              TextFormField(
+                controller: _collectorURLFieldController,
+                onFieldSubmitted: _setCustomCollector,
+                decoration: const InputDecoration(
+                    border: UnderlineInputBorder(),
+                    labelText: 'Collector URL',
+                    hintText: 'https://my-custom-collector-url.com'),
+              ),
+              const SizedBox(height: 8),
+              TextFormField(
+                controller: _screenshotURLFieldController,
+                onFieldSubmitted: _setCustomCollector,
+                decoration: const InputDecoration(
+                    border: UnderlineInputBorder(),
+                    labelText: 'Screenshot URL',
+                    hintText: 'https://my-custom-screenshot-url.com'),
+              ),
+              const SizedBox(height: 20),
+              ElevatedButton(
+                  key: const Key("startInstrumentationButton"),
+                  onPressed: () => _onStartPress(context),
+                  child: const Text('Start instrumentation')),
+            ], mainAxisAlignment: MainAxisAlignment.center),
+          ]),
+        ),
       ),
     );
   }

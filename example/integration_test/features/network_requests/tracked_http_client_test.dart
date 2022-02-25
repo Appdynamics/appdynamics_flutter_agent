@@ -20,6 +20,7 @@ extension on WidgetTester {
 
   redirectToLocalhost() async {
     final requestTextField = find.byKey(const Key("requestTextField"));
+    await ensureVisible(requestTextField);
     expect(requestTextField, findsOneWidget);
 
     await enterText(requestTextField, successURL);
@@ -27,6 +28,7 @@ extension on WidgetTester {
 
   assertBeaconSent() async {
     final requestSentLabel = find.text("Success with 200.");
+    await ensureVisible(requestSentLabel);
     expect(requestSentLabel, findsOneWidget);
 
     final trackerRequests = await findRequestsBy(
@@ -56,10 +58,17 @@ void main() {
     await stubServerResponses();
   });
 
-  IntegrationTestWidgetsFlutterBinding.ensureInitialized();
+  final binding = IntegrationTestWidgetsFlutterBinding.ensureInitialized()
+      as IntegrationTestWidgetsFlutterBinding;
 
   testWidgets("TrackedHttpClient beacon same as RequestTracker beacon",
       (WidgetTester tester) async {
+    // Force using test keyboard and don't simulate typing.
+    // Needed because `WidgetTester.enterText()` was lagging  and failing test
+    // on smaller emulator screens.
+    // https://github.com/flutter/flutter/issues/87990
+    binding.testTextInput.register();
+
     await tester.jumpstartInstrumentation();
     await tester.tapAndSettle("manualNetworkRequestsButton");
     await tester.redirectToLocalhost();

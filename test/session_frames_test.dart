@@ -25,6 +25,8 @@ void main() {
         case "endSessionFrame":
           log.add(methodCall);
           return null;
+        default:
+          return null;
       }
     });
 
@@ -75,6 +77,8 @@ void main() {
         case "endSessionFrame":
           throw PlatformException(
               code: '500', details: exceptionMessage, message: "Message");
+        default:
+          return null;
       }
     });
 

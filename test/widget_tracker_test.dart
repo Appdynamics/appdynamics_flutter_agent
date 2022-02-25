@@ -44,6 +44,8 @@ void main() {
         case 'trackPageEnd':
           log.add(methodCall);
           return null;
+        default:
+          return null;
       }
     });
 
@@ -76,6 +78,8 @@ void main() {
         case 'trackPageStart':
           throw PlatformException(
               code: '500', details: exceptionMessage, message: "Message");
+        default:
+          return null;
       }
     });
 
@@ -97,6 +101,8 @@ void main() {
         case 'trackPageEnd':
           throw PlatformException(
               code: '500', details: exceptionMessage, message: "Message");
+        default:
+          return null;
       }
     });
 

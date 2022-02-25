@@ -48,45 +48,49 @@ class _ChangeAppKeyState extends State<ChangeAppKey> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const FlushBeaconsAppBar(title: "Change app key"),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 50),
-          child:
-              Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-            Consumer<AppState>(
-                builder: (context, appState, child) =>
-                    Text('Current app key: ${appState.appKey}')),
-            const SizedBox(height: 35),
-            TextFormField(
-              key: const Key("newKeyTextField"),
-              controller: _newKeyFieldController,
-              decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Enter new app key',
-                  hintText: 'AA-BBB-CCC'),
-            ),
-            const SizedBox(
-              height: 8,
-            ),
-            ElevatedButton(
-              key: const Key("setKeyButton"),
-              child: const Text('Set new key', textAlign: TextAlign.center),
-              onPressed: _setNewKey,
-            ),
-            const SizedBox(
-              height: 8,
-            ),
-            Visibility(
-              child: Text(
-                errorText,
-                key: const Key("errorText"),
-                textAlign: TextAlign.center,
-              ),
-              visible: errorText.isNotEmpty,
-            ),
-          ]),
+      body: ListView(children: <Widget>[
+        Center(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 50),
+            child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Consumer<AppState>(
+                      builder: (context, appState, child) =>
+                          Text('Current app key: ${appState.appKey}')),
+                  const SizedBox(height: 35),
+                  TextFormField(
+                    key: const Key("newKeyTextField"),
+                    controller: _newKeyFieldController,
+                    decoration: const InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: 'Enter new app key',
+                        hintText: 'AA-BBB-CCC'),
+                  ),
+                  const SizedBox(
+                    height: 8,
+                  ),
+                  ElevatedButton(
+                    key: const Key("setKeyButton"),
+                    child:
+                        const Text('Set new key', textAlign: TextAlign.center),
+                    onPressed: _setNewKey,
+                  ),
+                  const SizedBox(
+                    height: 8,
+                  ),
+                  Visibility(
+                    child: Text(
+                      errorText,
+                      key: const Key("errorText"),
+                      textAlign: TextAlign.center,
+                    ),
+                    visible: errorText.isNotEmpty,
+                  ),
+                ]),
+          ),
         ),
-      ),
+      ]),
     );
   }
 }

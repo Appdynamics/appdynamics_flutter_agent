@@ -66,77 +66,80 @@ class _UserDataState extends State<UserData> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const FlushBeaconsAppBar(title: "Custom timers"),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 50),
-          child:
-              Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-            ElevatedButton(
-              key: const Key("setIntButton"),
-              child: Text('Set Int ($intValue)'),
-              onPressed: _setInt,
-            ),
-            ElevatedButton(
-              key: const Key("removeIntButton"),
-              child: const Text('Remove Int'),
-              onPressed: _removeInt,
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            ElevatedButton(
-              key: const Key("setDoubleButton"),
-              child: Text('Set Double ($doubleValue)'),
-              onPressed: _setDouble,
-            ),
-            ElevatedButton(
-              key: const Key("removeDoubleButton"),
-              child: const Text('Remove Double'),
-              onPressed: _removeDouble,
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            ElevatedButton(
-              key: const Key("setBoolButton"),
-              child: Text('Set Bool ($boolValue)'),
-              onPressed: _setBool,
-            ),
-            ElevatedButton(
-              key: const Key("removeBoolButton"),
-              child: const Text('Remove Bool'),
-              onPressed: _removeBool,
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            ElevatedButton(
-              key: const Key("setStringButton"),
-              child: Text('Set string ($stringValue)'),
-              onPressed: _setString,
-            ),
-            ElevatedButton(
-              key: const Key("removeStringButton"),
-              child: const Text('Remove String'),
-              onPressed: _removeString,
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            ElevatedButton(
-              key: const Key("setDateTimeButton"),
-              child: Text('Set DateTime (${dateTimeValue.toString()})',
-                  textAlign: TextAlign.center),
-              onPressed: _setDateTime,
-            ),
-            ElevatedButton(
-              key: const Key("removeDateTimeButton"),
-              child: const Text('Remove DateTime'),
-              onPressed: _removeDateTime,
-            ),
-          ]),
+      body: ListView(children: <Widget>[
+        Center(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 50),
+            child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  ElevatedButton(
+                    key: const Key("setIntButton"),
+                    child: Text('Set Int ($intValue)'),
+                    onPressed: _setInt,
+                  ),
+                  ElevatedButton(
+                    key: const Key("removeIntButton"),
+                    child: const Text('Remove Int'),
+                    onPressed: _removeInt,
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  ElevatedButton(
+                    key: const Key("setDoubleButton"),
+                    child: Text('Set Double ($doubleValue)'),
+                    onPressed: _setDouble,
+                  ),
+                  ElevatedButton(
+                    key: const Key("removeDoubleButton"),
+                    child: const Text('Remove Double'),
+                    onPressed: _removeDouble,
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  ElevatedButton(
+                    key: const Key("setBoolButton"),
+                    child: Text('Set Bool ($boolValue)'),
+                    onPressed: _setBool,
+                  ),
+                  ElevatedButton(
+                    key: const Key("removeBoolButton"),
+                    child: const Text('Remove Bool'),
+                    onPressed: _removeBool,
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  ElevatedButton(
+                    key: const Key("setStringButton"),
+                    child: Text('Set string ($stringValue)'),
+                    onPressed: _setString,
+                  ),
+                  ElevatedButton(
+                    key: const Key("removeStringButton"),
+                    child: const Text('Remove String'),
+                    onPressed: _removeString,
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  ElevatedButton(
+                    key: const Key("setDateTimeButton"),
+                    child: Text('Set DateTime (${dateTimeValue.toString()})',
+                        textAlign: TextAlign.center),
+                    onPressed: _setDateTime,
+                  ),
+                  ElevatedButton(
+                    key: const Key("removeDateTimeButton"),
+                    child: const Text('Remove DateTime'),
+                    onPressed: _removeDateTime,
+                  ),
+                ]),
+          ),
         ),
-      ),
+      ]),
     );
   }
 }

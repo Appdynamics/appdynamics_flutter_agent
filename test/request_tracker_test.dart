@@ -52,6 +52,8 @@ void main() {
         case "getServerCorrelationHeaders":
           log.add(methodCall);
           return {'foo': 'bar'};
+        default:
+          return null;
       }
     });
 
@@ -166,6 +168,8 @@ void main() {
         case "requestTrackerReport":
           throw PlatformException(
               code: '500', details: exceptionMessage, message: "Message");
+        default:
+          return null;
       }
     });
 

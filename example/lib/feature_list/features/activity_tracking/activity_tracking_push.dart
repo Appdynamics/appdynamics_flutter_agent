@@ -23,19 +23,22 @@ class _ActivityTrackingPushState extends State<ActivityTrackingPush> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const FlushBeaconsAppBar(title: "Activity Tracking Push"),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 50),
-          child:
-              Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-            ElevatedButton(
-              key: const Key("backButton"),
-              child: const Text('Back'),
-              onPressed: _goBack,
-            ),
-          ]),
+      body: ListView(children: <Widget>[
+        Center(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 50),
+            child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  ElevatedButton(
+                    key: const Key("backButton"),
+                    child: const Text('Back'),
+                    onPressed: _goBack,
+                  ),
+                ]),
+          ),
         ),
-      ),
+      ]),
     );
   }
 }

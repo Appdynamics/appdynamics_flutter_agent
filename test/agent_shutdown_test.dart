@@ -23,6 +23,8 @@ void main() {
         case 'restartAgent':
           log.add(methodCall);
           return null;
+        default:
+          return null;
       }
     });
 

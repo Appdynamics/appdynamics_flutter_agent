@@ -52,31 +52,33 @@ class _ErrorReportingState extends State<ErrorReporting> {
       appBar: const FlushBeaconsAppBar(
         title: 'Report error',
       ),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(50, 10, 50, 10),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              const SizedBox(
-                height: 10,
-              ),
-              ElevatedButton(
-                  key: const Key("reportErrorButton"),
-                  child: const Text('Report error (critical)'),
-                  onPressed: _sendError),
-              ElevatedButton(
-                  key: const Key("reportExceptionButton"),
-                  child: const Text('Report exception (warning)'),
-                  onPressed: _sendException),
-              ElevatedButton(
-                  key: const Key("reportMessageButton"),
-                  child: const Text('Report message (info)'),
-                  onPressed: _sendMessage),
-            ],
+      body: ListView(children: <Widget>[
+        Center(
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(50, 10, 50, 10),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                const SizedBox(
+                  height: 10,
+                ),
+                ElevatedButton(
+                    key: const Key("reportErrorButton"),
+                    child: const Text('Report error (critical)'),
+                    onPressed: _sendError),
+                ElevatedButton(
+                    key: const Key("reportExceptionButton"),
+                    child: const Text('Report exception (warning)'),
+                    onPressed: _sendException),
+                ElevatedButton(
+                    key: const Key("reportMessageButton"),
+                    child: const Text('Report message (info)'),
+                    onPressed: _sendMessage),
+              ],
+            ),
           ),
         ),
-      ),
+      ]),
     );
   }
 }

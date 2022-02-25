@@ -39,30 +39,32 @@ class _AnrState extends State<Anr> {
       appBar: const FlushBeaconsAppBar(
         title: 'ANR',
       ),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(50, 20, 50, 10),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              ElevatedButton(
-                key: const Key("triggerSleepButton"),
-                child: const Text('Trigger sleep'),
-                onPressed: () {
-                  triggerSleep();
-                },
-              ),
-              Visibility(
-                child: const Text(
-                  "Zzz Zzz.",
-                  textAlign: TextAlign.center,
+      body: ListView(children: <Widget>[
+        Center(
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(50, 20, 50, 10),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                ElevatedButton(
+                  key: const Key("triggerSleepButton"),
+                  child: const Text('Trigger sleep'),
+                  onPressed: () {
+                    triggerSleep();
+                  },
                 ),
-                visible: showSleepText,
-              ),
-            ],
+                Visibility(
+                  child: const Text(
+                    "Zzz Zzz.",
+                    textAlign: TextAlign.center,
+                  ),
+                  visible: showSleepText,
+                ),
+              ],
+            ),
           ),
         ),
-      ),
+      ]),
     );
   }
 }

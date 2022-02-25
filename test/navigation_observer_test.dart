@@ -21,6 +21,8 @@ void main() {
         case 'trackPageStart':
         case 'trackPageEnd':
           return null;
+        default:
+          return null;
       }
     });
 

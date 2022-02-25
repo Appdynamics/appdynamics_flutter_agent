@@ -29,27 +29,30 @@ class _ActivityTrackingState extends State<ActivityTracking> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const FlushBeaconsAppBar(title: "Activity Tracking"),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 50),
-          child:
-              Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-            ElevatedButton(
-              key: const Key("pushScreenButton"),
-              child: const Text('Screen push'),
-              onPressed: _pushScreen,
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            ElevatedButton(
-              key: const Key("replaceScreenButton"),
-              child: const Text('Screen replace'),
-              onPressed: _replaceScreen,
-            ),
-          ]),
+      body: ListView(children: <Widget>[
+        Center(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 50),
+            child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  ElevatedButton(
+                    key: const Key("pushScreenButton"),
+                    child: const Text('Screen push'),
+                    onPressed: _pushScreen,
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  ElevatedButton(
+                    key: const Key("replaceScreenButton"),
+                    child: const Text('Screen replace'),
+                    onPressed: _replaceScreen,
+                  ),
+                ]),
+          ),
         ),
-      ),
+      ]),
     );
   }
 }

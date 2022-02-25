@@ -4,4 +4,4 @@
 # All rights reserved.
 #
 #
-git clone https://github.com/flutter/flutter.git -b stable
+flutter upgrade

@@ -63,34 +63,41 @@ class InfoPoints extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const FlushBeaconsAppBar(title: "Info points"),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 50),
-          child:
-              Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-            ElevatedButton(
-              key: const Key("manualSyncCallButton"),
-              child: const Text('Track manual sync call'),
-              onPressed: _trackManualSyncCall,
-            ),
-            ElevatedButton(
-              key: const Key("manualAsyncCallButton"),
-              child: const Text('Track manual async call'),
-              onPressed: _trackManualAsyncCall,
-            ),
-            ElevatedButton(
-              key: const Key("manualAsyncExceptionButton"),
-              child: const Text('Track manual async exception'),
-              onPressed: _trackManualAsyncException,
-            ),
-            ElevatedButton(
-              key: const Key("manualSyncErrorButton"),
-              child: const Text('Track manual sync error'),
-              onPressed: _trackManualSyncError,
-            ),
-          ]),
+      body: ListView(children: <Widget>[
+        Center(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 50),
+            child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  ElevatedButton(
+                    key: const Key("manualSyncCallButton"),
+                    child: const Text('Track manual sync call',
+                        textAlign: TextAlign.center),
+                    onPressed: _trackManualSyncCall,
+                  ),
+                  ElevatedButton(
+                    key: const Key("manualAsyncCallButton"),
+                    child: const Text('Track manual async call',
+                        textAlign: TextAlign.center),
+                    onPressed: _trackManualAsyncCall,
+                  ),
+                  ElevatedButton(
+                    key: const Key("manualAsyncExceptionButton"),
+                    child: const Text('Track manual async exception',
+                        textAlign: TextAlign.center),
+                    onPressed: _trackManualAsyncException,
+                  ),
+                  ElevatedButton(
+                    key: const Key("manualSyncErrorButton"),
+                    child: const Text('Track manual sync error',
+                        textAlign: TextAlign.center),
+                    onPressed: _trackManualSyncError,
+                  ),
+                ]),
+          ),
         ),
-      ),
+      ]),
     );
   }
 }

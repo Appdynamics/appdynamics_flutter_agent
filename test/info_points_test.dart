@@ -24,6 +24,8 @@ void main() {
         case 'endCallWithSuccess':
           log.add(methodCall);
           return null;
+        default:
+          return null;
       }
     });
 
@@ -61,6 +63,8 @@ void main() {
         case 'beginCall':
         case 'endCallWithError':
           log.add(methodCall);
+          return null;
+        default:
           return null;
       }
     });
@@ -101,6 +105,8 @@ void main() {
         case 'endCallWithSuccess':
           log.add(methodCall);
           return null;
+        default:
+          return null;
       }
     });
 
@@ -139,6 +145,8 @@ void main() {
         case 'beginCall':
         case 'endCallWithError':
           log.add(methodCall);
+          return null;
+        default:
           return null;
       }
     });
@@ -180,6 +188,8 @@ void main() {
       switch (methodCall.method) {
         case 'beginCall':
           log.add(methodCall);
+          return null;
+        default:
           return null;
       }
     });

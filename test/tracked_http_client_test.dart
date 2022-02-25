@@ -33,6 +33,8 @@ void main() {
         case "getServerCorrelationHeaders":
           log.add(methodCall);
           return {"foo": "bar"};
+        default:
+          return null;
       }
     });
 
@@ -100,6 +102,8 @@ void main() {
         case "getServerCorrelationHeaders":
           log.add(methodCall);
           return {"foo": "bar"};
+        default:
+          return null;
       }
     });
 
@@ -146,6 +150,8 @@ void main() {
         case "setRequestTrackerRequestHeaders":
         case "requestTrackerReport":
           log.add(methodCall);
+          return null;
+        default:
           return null;
       }
     });

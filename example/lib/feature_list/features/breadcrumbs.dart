@@ -30,25 +30,29 @@ class _BreadcrumbsState extends State<Breadcrumbs> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const FlushBeaconsAppBar(title: "Breadcrumbs"),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 50),
-          child:
-              Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-            ElevatedButton(
-              key: const Key("leaveBreadcrumbCrashButton"),
-              child: const Text('Leave crashes only breadcrumb'),
-              onPressed: _leaveCrashOnlyBreadcrumbPressed,
-            ),
-            ElevatedButton(
-              key: const Key("leaveBreadcrumbCrashAndSessionButton"),
-              child: const Text('Leave crashes and sessions breadcrumb',
-                  textAlign: TextAlign.center),
-              onPressed: _leaveCrashAndSessionBreadcrumbPressed,
-            ),
-          ]),
+      body: ListView(children: <Widget>[
+        Center(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 50),
+            child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  ElevatedButton(
+                    key: const Key("leaveBreadcrumbCrashButton"),
+                    child: const Text('Leave crashes only breadcrumb',
+                        textAlign: TextAlign.center),
+                    onPressed: _leaveCrashOnlyBreadcrumbPressed,
+                  ),
+                  ElevatedButton(
+                    key: const Key("leaveBreadcrumbCrashAndSessionButton"),
+                    child: const Text('Leave crashes and sessions breadcrumb',
+                        textAlign: TextAlign.center),
+                    onPressed: _leaveCrashAndSessionBreadcrumbPressed,
+                  ),
+                ]),
+          ),
         ),
-      ),
+      ]),
     );
   }
 }

@@ -43,6 +43,8 @@ void main() {
         case 'removeUserDataDate':
           log.add(methodCall);
           return null;
+        default:
+          return null;
       }
     });
 

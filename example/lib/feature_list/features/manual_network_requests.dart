@@ -122,78 +122,81 @@ class _ManualNetworkRequestsState extends State<ManualNetworkRequests> {
       appBar: const FlushBeaconsAppBar(
         title: 'Manual network requests',
       ),
-      body: Center(
-        child: Column(
-          children: [
-            Row(
-              children: [
-                const SizedBox(
-                  width: 10,
-                ),
-                const Text('Add server correlation headers: '),
-                Checkbox(
-                  value: addServerCorrelation,
-                  onChanged: (bool? value) {
-                    setState(() {
-                      addServerCorrelation = value!;
-                    });
-                  },
-                ),
-              ],
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 50),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
+      body: ListView(children: <Widget>[
+        Center(
+          child: Column(
+            children: [
+              Row(
                 children: [
-                  TextFormField(
-                    key: const Key("requestTextField"),
-                    controller: urlFieldController,
-                    decoration: const InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: 'Enter URL to report',
-                        hintText: 'https://www.appdynamics.com'),
-                  ),
                   const SizedBox(
-                    height: 8,
+                    width: 10,
                   ),
-                  Visibility(
-                    child: Text(
-                      responseText,
-                      textAlign: TextAlign.center,
-                    ),
-                    visible: responseText.isNotEmpty,
-                  ),
-                  const SizedBox(
-                    height: 30,
-                  ),
-                  ElevatedButton(
-                      key: const Key("manualGETRequestButton"),
-                      child: const Text(
-                          'Manual track GET request\n(+ user data)',
-                          textAlign: TextAlign.center),
-                      onPressed: _sendGetRequestButtonPressed),
-                  ElevatedButton(
-                      key: const Key("manualPOSTRequestButton"),
-                      child: const Text('Manual track POST request',
-                          textAlign: TextAlign.center),
-                      onPressed: _sendPostRequestButtonPressed),
-                  ElevatedButton(
-                      key: const Key("manualClientGetRequestButton"),
-                      child: const Text(
-                          'TrackedHttpClient GET request\n'
-                          '(has custom header: "foo")',
-                          textAlign: TextAlign.center),
-                      onPressed: _sendClientRequestButtonPressed),
-                  const SizedBox(
-                    height: 30,
+                  const Text('Add server correlation headers: '),
+                  Checkbox(
+                    value: addServerCorrelation,
+                    onChanged: (bool? value) {
+                      setState(() {
+                        addServerCorrelation = value!;
+                      });
+                    },
                   ),
                 ],
               ),
-            )
-          ],
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 20, horizontal: 50),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    TextFormField(
+                      key: const Key("requestTextField"),
+                      controller: urlFieldController,
+                      decoration: const InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: 'Enter URL to report',
+                          hintText: 'https://www.appdynamics.com'),
+                    ),
+                    const SizedBox(
+                      height: 8,
+                    ),
+                    Visibility(
+                      child: Text(
+                        responseText,
+                        textAlign: TextAlign.center,
+                      ),
+                      visible: responseText.isNotEmpty,
+                    ),
+                    const SizedBox(
+                      height: 30,
+                    ),
+                    ElevatedButton(
+                        key: const Key("manualGETRequestButton"),
+                        child: const Text(
+                            'Manual track GET request\n(+ user data)',
+                            textAlign: TextAlign.center),
+                        onPressed: _sendGetRequestButtonPressed),
+                    ElevatedButton(
+                        key: const Key("manualPOSTRequestButton"),
+                        child: const Text('Manual track POST request',
+                            textAlign: TextAlign.center),
+                        onPressed: _sendPostRequestButtonPressed),
+                    ElevatedButton(
+                        key: const Key("manualClientGetRequestButton"),
+                        child: const Text(
+                            'TrackedHttpClient GET request\n'
+                            '(has custom header: "foo")',
+                            textAlign: TextAlign.center),
+                        onPressed: _sendClientRequestButtonPressed),
+                    const SizedBox(
+                      height: 30,
+                    ),
+                  ],
+                ),
+              )
+            ],
+          ),
         ),
-      ),
+      ]),
     );
   }
 }

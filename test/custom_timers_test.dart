@@ -23,6 +23,8 @@ void main() {
         case 'stopTimer':
           log.add(methodCall);
           return null;
+        default:
+          return null;
       }
     });
 

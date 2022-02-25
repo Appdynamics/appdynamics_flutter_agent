@@ -7,18 +7,21 @@ AppdBuildSettings.Builder(AppdBuild.PipeLibType.JAVA_LIB)
     .bitbucketProject("eum")
     .repo("rum-flutter")
     .projectID("EUM_RumFlutter")
-    .testTargets()
     .buildTargets(
         "build",
-        "downloadFlutter",
-        "installPackages",
+        "upgradeFlutter",
         "analyze",
-        "runUnitTests",
-        ":example:buildAndroid"
+        "runUnitTests,
+        "buildAndroid",
+        "buildiOS",
+        ":example:runIntegrationTestsAndroid"
+        ":example:runIntegrationTestsiOS",
+        "generateDocs"
     )
+    .simpleParams()
     .passwordParams()
     .checkboxParams()
-    .agentType("MacOS")
+    .agentType("BigSur")
     .selectParams()
     .projectName("Flutter Agent")
     .build()

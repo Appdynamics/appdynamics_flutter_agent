@@ -19,20 +19,23 @@ class SessionControl extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const FlushBeaconsAppBar(title: "Session control"),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 50),
-          child:
-              Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-            ElevatedButton(
-              key: const Key("startNextSession"),
-              child:
-                  const Text('Start next session', textAlign: TextAlign.center),
-              onPressed: _startNextSession,
-            ),
-          ]),
+      body: ListView(children: <Widget>[
+        Center(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 50),
+            child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  ElevatedButton(
+                    key: const Key("startNextSession"),
+                    child: const Text('Start next session',
+                        textAlign: TextAlign.center),
+                    onPressed: _startNextSession,
+                  ),
+                ]),
+          ),
         ),
-      ),
+      ]),
     );
   }
 }

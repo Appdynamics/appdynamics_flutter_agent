@@ -23,24 +23,27 @@ class CustomTimers extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const FlushBeaconsAppBar(title: "Custom timers"),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 50),
-          child:
-              Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-            ElevatedButton(
-              key: const Key("startTimerButton"),
-              child: const Text('Start timer'),
-              onPressed: _startTimerPressed,
-            ),
-            ElevatedButton(
-              key: const Key("stopTimerButton"),
-              child: const Text('Stop timer'),
-              onPressed: _stopTimerPressed,
-            ),
-          ]),
+      body: ListView(children: <Widget>[
+        Center(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 50),
+            child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  ElevatedButton(
+                    key: const Key("startTimerButton"),
+                    child: const Text('Start timer'),
+                    onPressed: _startTimerPressed,
+                  ),
+                  ElevatedButton(
+                    key: const Key("stopTimerButton"),
+                    child: const Text('Stop timer'),
+                    onPressed: _stopTimerPressed,
+                  ),
+                ]),
+          ),
         ),
-      ),
+      ]),
     );
   }
 }

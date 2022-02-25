@@ -27,6 +27,8 @@ void main() {
         case 'start':
           log.add(methodCall);
           return null;
+        default:
+          return null;
       }
     });
 
