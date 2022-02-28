@@ -7,15 +7,18 @@ AppdBuildSettings.Builder(AppdBuild.PipeLibType.JAVA_LIB)
     .bitbucketProject("eum")
     .repo("rum-flutter")
     .projectID("EUM_RumFlutter")
+    .testTargets(
+        ":example:runIntegrationTestsAndroid",
+        ":example:runIntegrationTestsiOS"
+    )
     .buildTargets(
         "build",
         "upgradeFlutter",
+        "installPackages",
         "analyze",
-        "runUnitTests,
+        "runUnitTests",
         "buildAndroid",
         "buildiOS",
-        ":example:runIntegrationTestsAndroid"
-        ":example:runIntegrationTestsiOS",
         "generateDocs"
     )
     .simpleParams()

@@ -4,5 +4,4 @@
 # All rights reserved.
 #
 #
-flutter upgrade
 flutter analyze

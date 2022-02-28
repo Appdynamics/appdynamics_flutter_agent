@@ -10,7 +10,7 @@ EMULATOR_NAME="AUTOMATION_AVD_x86_64"
 ADB=$ANDROID_HOME/platform-tools/adb
 
 readonly WAIT_LOOP_TIME=5 # seconds
-readonly MAX_EMULATOR_WAIT_TIME=120 # seconds
+readonly MAX_EMULATOR_WAIT_TIME=500 # seconds
 
 echo "Starting Android simulator..."
 flutter emulators --launch "$EMULATOR_NAME"
