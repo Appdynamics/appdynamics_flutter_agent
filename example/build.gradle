@@ -29,8 +29,13 @@ task startAndroidEmulator(type: Exec) {
     commandLine "../scripts/start-android-emulator.sh"
 }
 
+task upgradeFlutter(type: Exec) {
+    commandLine "../scripts/flutter-upgrade.sh"
+}
+
 task runIntegrationTestsiOS {
     dependsOn ordered(
+            "upgradeFlutter",
             "startiOSSimulator",
             "runStartIntegrationTestiOS",
             "runRequestTrackerIntegrationTestiOS",
@@ -52,6 +57,7 @@ task runIntegrationTestsiOS {
 
 task runIntegrationTestsAndroid {
     dependsOn ordered(
+            "upgradeFlutter",
             "startAndroidEmulator",
             "runStartIntegrationTestAndroid",
             "runRequestTrackerIntegrationTestAndroid",

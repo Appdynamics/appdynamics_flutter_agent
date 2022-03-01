@@ -21,7 +21,8 @@ plugins {
 
 // pipelinePlugin
 //
-// Specify CI/CD tasks in order and run `./gradlew pipeline` to generate new .teamcity file.
+// Specify CI/CD tasks in order and run `./gradlew pipeline` to generate new .teamcity folder.
+// Warning: You have to manually set the agent type (e.g. BigSur) in the settings.kts afterwards.
 pipeline {
     teamcityParent = "EUM"
     projectName = "Flutter Agent"
@@ -53,10 +54,6 @@ sonarqube {
         property "sonar.projectName", project.name
         property "sonar.projectVersion", version
     }
-}
-
-task upgradeFlutter(type: Exec) {
-    commandLine "./scripts/flutter-upgrade.sh"
 }
 
 task installPackages(type: Exec) {

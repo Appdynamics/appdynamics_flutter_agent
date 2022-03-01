@@ -12,8 +12,7 @@ AppdBuildSettings.Builder(AppdBuild.PipeLibType.JAVA_LIB)
         ":example:runIntegrationTestsiOS"
     )
     .buildTargets(
-        "build",
-        "upgradeFlutter",
+        ":example:upgradeFlutter",
         "installPackages",
         "analyze",
         "runUnitTests",

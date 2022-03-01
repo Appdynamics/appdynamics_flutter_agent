@@ -5,12 +5,9 @@
 #
 #
 
-## Not working on CI/CD, needs newer macOS than Mojave.
-
 set -e
 set -x
 
-# expecting flutter executable to be downloaded via flutter-download.sh script
 flutter pub global activate dartdoc
 # Running `dartdoc` alone was throwing error and no other solution worked.
 # https://stackoverflow.com/questions/61086384/dartdoc-failed-top-level-package-requires-flutter-but-flutter-root-environment
