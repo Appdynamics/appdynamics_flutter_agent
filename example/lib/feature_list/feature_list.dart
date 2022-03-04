@@ -4,26 +4,25 @@
  *
  */
 
+import 'package:appdynamics_mobilesdk/appdynamics_mobilesdk.dart';
 import 'package:appdynamics_mobilesdk_example/feature_list/utils/flush_beacons_app_bar.dart';
 import 'package:appdynamics_mobilesdk_example/feature_list/utils/sized_button.dart';
 import 'package:appdynamics_mobilesdk_example/routing/route_paths.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 class FeatureList extends StatelessWidget {
-  static const platform = MethodChannel('com.appdynamics.flutter.example');
-
   const FeatureList({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const FlushBeaconsAppBar(
-        key: Key("featureListAppBar"),
-        title: 'Feature list',
-      ),
-      body: Center(
-        child: Padding(
+        appBar: const FlushBeaconsAppBar(
+          automaticallyImplyLeading: false,
+          key: Key("featureListAppBar"),
+          title: 'Feature list',
+        ),
+        body: Center(
+            child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 50),
           child: SingleChildScrollView(
             child: Column(
@@ -103,15 +102,13 @@ class FeatureList extends StatelessWidget {
                   key: const Key("crashAppButton"),
                   child: const Text('Crash app'),
                   style: ElevatedButton.styleFrom(primary: Colors.red),
-                  onPressed: () {
-                    platform.invokeMethod("crash");
+                  onPressed: () async {
+                    await Instrumentation.crash();
                   },
                 ),
               ],
             ),
           ),
-        ),
-      ),
-    );
+        )));
   }
 }

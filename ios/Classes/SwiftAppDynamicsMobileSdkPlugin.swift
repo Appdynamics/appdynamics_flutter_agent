@@ -48,7 +48,8 @@ public class SwiftAppDynamicsMobileSdkPlugin: NSObject, FlutterPlugin {
       
       /// Report error
       "reportError": reportError,
-      
+      "createCrashReport": createCrashReport,
+
       /// Report metric
       "reportMetric": reportMetric,
       
@@ -92,7 +93,11 @@ public class SwiftAppDynamicsMobileSdkPlugin: NSObject, FlutterPlugin {
       
       /// Activity tracking
       "trackPageStart": trackPageStart,
-      "trackPageEnd": trackPageEnd
+      "trackPageEnd": trackPageEnd,
+      
+      /// Utils
+      "sleep": sleep,
+      "crash": crash
     ]
     
     if let method = methods[call.method] {

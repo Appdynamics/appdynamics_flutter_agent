@@ -19,7 +19,6 @@ class CrashCallbackObject(private val channel: MethodChannel) : CrashReportCallb
                 "exceptionReason" to summary.exceptionMessage
             )
         }
-
         channel.invokeMethod("onCrashReported", serializableSummaries)
     }
 }

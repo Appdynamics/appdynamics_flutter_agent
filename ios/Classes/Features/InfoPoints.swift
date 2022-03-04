@@ -4,8 +4,6 @@ import Flutter
 extension SwiftAppDynamicsMobileSdkPlugin {
   func beginCall(result: @escaping FlutterResult, arguments: Any?) {
     let properties = arguments as! Dictionary<String, Any>
-    
-    
     let callId = properties["callId"] as! String
     
     guard let className = properties["className"] as? String else {

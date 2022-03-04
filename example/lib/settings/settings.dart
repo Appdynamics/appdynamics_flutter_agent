@@ -109,7 +109,7 @@ class _SettingsState extends State<Settings> {
         crashReportingEnabled: appState.crashReportingEnabled);
     await Instrumentation.start(config);
 
-    await Navigator.pushReplacementNamed(context, RoutePaths.featureList);
+    await Navigator.pushNamed(context, RoutePaths.featureList);
   }
 
   Future<void> _showExtraConfigurationsDialog(context) async {

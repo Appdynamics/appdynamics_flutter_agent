@@ -4,7 +4,7 @@
  *
  */
 
-/// Captures crash reports on deployment (usually app restart).
+/// Used to receive reports on app crashing natively.
 ///
 /// Typically, the [summaries] will have a size of 1, but if the app is crashing
 /// very early during startup, [summaries] could be more extensive.

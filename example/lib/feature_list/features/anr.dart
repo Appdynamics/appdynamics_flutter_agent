@@ -4,9 +4,9 @@
  *
  */
 
+import 'package:appdynamics_mobilesdk/appdynamics_mobilesdk.dart';
 import 'package:appdynamics_mobilesdk_example/feature_list/utils/flush_beacons_app_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 class Anr extends StatefulWidget {
   const Anr({Key? key}) : super(key: key);
@@ -16,8 +16,6 @@ class Anr extends StatefulWidget {
 }
 
 class _AnrState extends State<Anr> {
-  static const platform = MethodChannel('com.appdynamics.flutter.example');
-
   var showSleepText = false;
 
   void triggerSleep() async {
@@ -26,7 +24,8 @@ class _AnrState extends State<Anr> {
     });
 
     const anrThreshold = 5;
-    await platform.invokeMethod('sleep', anrThreshold + 1);
+    const duration = Duration(seconds: anrThreshold + 1);
+    await Instrumentation.sleep(duration);
 
     setState(() {
       showSleepText = false;

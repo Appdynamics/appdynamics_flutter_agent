@@ -24,6 +24,7 @@
 		9644953E273AE5BA0077FC22 /* ObjcExceptionCatch.m in Sources */ = {isa = PBXBuildFile; fileRef = 9644953C273AE5BA0077FC22 /* ObjcExceptionCatch.m */; };
 		966D065C270B5519009BC639 /* AgentShutdown.swift in Sources */ = {isa = PBXBuildFile; fileRef = 966D065B270B5518009BC639 /* AgentShutdown.swift */; };
 		967CB7A626EFAB7A000987B5 /* CrashReportCallback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 967CB7A526EFAB7A000987B5 /* CrashReportCallback.swift */; };
+		96AF6EFC2796CCE5007C8F12 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96AF6EFB2796CCE5007C8F12 /* Utils.swift */; };
 		96B99D2926AF061100014CA0 /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96B99D2826AF061100014CA0 /* UserData.swift */; };
 		96B99D2C26AF0FBE00014CA0 /* UserDataDouble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96B99D2B26AF0FBE00014CA0 /* UserDataDouble.swift */; };
 		96B99D3026AF104300014CA0 /* UserDataLong.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96B99D2F26AF104300014CA0 /* UserDataLong.swift */; };
@@ -57,6 +58,7 @@
 		9644953C273AE5BA0077FC22 /* ObjcExceptionCatch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ObjcExceptionCatch.m; path = Classes/ObjcExceptionCatch.m; sourceTree = SOURCE_ROOT; };
 		966D065B270B5518009BC639 /* AgentShutdown.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgentShutdown.swift; sourceTree = "<group>"; };
 		967CB7A526EFAB7A000987B5 /* CrashReportCallback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrashReportCallback.swift; sourceTree = "<group>"; };
+		96AF6EFB2796CCE5007C8F12 /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		96B99D2826AF061100014CA0 /* UserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
 		96B99D2B26AF0FBE00014CA0 /* UserDataDouble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDataDouble.swift; sourceTree = "<group>"; };
 		96B99D2F26AF104300014CA0 /* UserDataLong.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDataLong.swift; sourceTree = "<group>"; };
@@ -112,6 +114,7 @@
 				961A30F126CA5450001241E5 /* SessionFrames.swift */,
 				96449534273AE2F60077FC22 /* SessionControl.swift */,
 				961A30F526CE7FFE001241E5 /* Screenshots.swift */,
+				96AF6EFB2796CCE5007C8F12 /* Utils.swift */,
 				96449536273AE3040077FC22 /* InfoPoints.swift */,
 				961A30F326CB9E90001241E5 /* CustomMetrics.swift */,
 				96449528273939F50077FC22 /* ChangeAppKey.swift */,
@@ -304,6 +307,7 @@
 				961A30F226CA5450001241E5 /* SessionFrames.swift in Sources */,
 				9635068326A5E144003713FD /* CustomTimers.swift in Sources */,
 				961A30F426CB9E90001241E5 /* CustomMetrics.swift in Sources */,
+				96AF6EFC2796CCE5007C8F12 /* Utils.swift in Sources */,
 				966D065C270B5519009BC639 /* AgentShutdown.swift in Sources */,
 				96F276F82770E97800468270 /* TrackerUserDataLong.swift in Sources */,
 				9635068226A5E144003713FD /* ManualRequestTracker.swift in Sources */,

@@ -67,6 +67,7 @@ open class AppDynamicsMobileSdkPlugin : FlutterPlugin, MethodCallHandler {
 
             // Report error
             "reportError" to ::reportError,
+            "createCrashReport" to ::createCrashReport,
 
             // Report metric
             "reportMetric" to ::reportMetric,
@@ -111,8 +112,11 @@ open class AppDynamicsMobileSdkPlugin : FlutterPlugin, MethodCallHandler {
 
             // Activity tracking
             "trackPageStart" to ::trackPageStart,
-            "trackPageEnd" to ::trackPageEnd
+            "trackPageEnd" to ::trackPageEnd,
 
+            // Utils
+            "sleep" to ::sleep,
+            "crash" to ::crash
         )
 
         methods[call.method]?.let { method ->

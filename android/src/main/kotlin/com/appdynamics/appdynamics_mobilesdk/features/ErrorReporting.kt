@@ -38,3 +38,18 @@ fun AppDynamicsMobileSdkPlugin.reportError(
     Instrumentation.reportError(Throwable(message), severityLevel)
     result.success(null)
 }
+
+fun AppDynamicsMobileSdkPlugin.createCrashReport(
+    @NonNull result: MethodChannel.Result,
+    arguments: Any?
+) {
+    val properties = arguments as HashMap<*, *>
+
+    val crashDump = properties["crashDump"] as String
+    val type = "clrCrashReport"
+
+    Instrumentation.createCrashReport(crashDump, type)
+
+    result.success(null)
+}
+

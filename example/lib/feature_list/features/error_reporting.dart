@@ -31,19 +31,24 @@ class _ErrorReportingState extends State<ErrorReporting> {
   Future<void> _sendException() async {
     try {
       jsonDecode("invalid/exception/json");
-    } on FormatException catch (e) {
+    } on FormatException catch (e, stackTrace) {
       await Instrumentation.reportException(e,
-          severityLevel: ErrorSeverityLevel.warning);
+          severityLevel: ErrorSeverityLevel.warning, stackTrace: stackTrace);
     }
   }
 
   Future<void> _sendMessage() async {
     try {
       jsonDecode("invalid/message/json");
-    } on FormatException catch (e) {
+    } on FormatException catch (e, stackTrace) {
       await Instrumentation.reportMessage(e.toString(),
-          severityLevel: ErrorSeverityLevel.info);
+          severityLevel: ErrorSeverityLevel.info, stackTrace: stackTrace);
     }
+  }
+
+  // for testing automatic Flutter exception detection
+  void _throwFlutterException() {
+    throw Exception("My Flutter exception");
   }
 
   @override
@@ -55,7 +60,7 @@ class _ErrorReportingState extends State<ErrorReporting> {
       body: ListView(children: <Widget>[
         Center(
           child: Padding(
-            padding: const EdgeInsets.fromLTRB(50, 10, 50, 10),
+            padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 10),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
@@ -74,6 +79,10 @@ class _ErrorReportingState extends State<ErrorReporting> {
                     key: const Key("reportMessageButton"),
                     child: const Text('Report message (info)'),
                     onPressed: _sendMessage),
+                ElevatedButton(
+                    key: const Key("throwFlutterExceptionButton"),
+                    child: const Text('Throw Flutter exception'),
+                    onPressed: _throwFlutterException)
               ],
             ),
           ),

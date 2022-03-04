@@ -15,6 +15,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
+import 'crash_report.dart';
 import 'globals.dart';
 
 enum BreadcrumbVisibility {
@@ -86,7 +87,7 @@ class Instrumentation {
   ///       collectorURL: collectorURL);
   ///   await Instrumentation.start(config);
   /// } catch (e) {
-  ///   // log exception
+  ///   // handle exception
   /// }
   /// ```
   static Future<void> start(AgentConfiguration config) async {
@@ -188,7 +189,7 @@ class Instrumentation {
   ///      BreadcrumbVisibility.crashesAndSessions);
   ///     await pushSignUpScreen();
   ///   } catch (e) {
-  ///     // log error
+  ///     // handle exception
   ///   }
   /// }
   /// ```
@@ -206,7 +207,7 @@ class Instrumentation {
 
   /// Reports an `Exception` that was caught.
   ///
-  /// This can be called in catch blocks to report unexpected exceptions that
+  /// This can be called in [catch] blocks to report unexpected exceptions, that
   /// you want to track.
   ///
   /// Method might throw [Exception].
@@ -214,17 +215,19 @@ class Instrumentation {
   /// ```dart
   /// try {
   ///   await jsonDecode("invalid/exception/json");
-  /// } on NoSuchMethodError catch (e) {
-  ///   await Instrumentation.reportError(e,
-  ///       severityLevel: ErrorSeverityLevel.WARNING);
+  /// } on FormatException catch (e) {
+  ///   await Instrumentation.reportException(e,
+  ///       severityLevel: ErrorSeverityLevel.warning);
   /// }
   /// ```
   static Future<void> reportException(Exception exception,
-      {ErrorSeverityLevel severityLevel = ErrorSeverityLevel.warning}) async {
+      {ErrorSeverityLevel severityLevel = ErrorSeverityLevel.warning,
+      StackTrace? stackTrace}) async {
     try {
       final arguments = {
         "message": exception.toString(),
-        "severity": severityLevel.index
+        "severity": severityLevel.index,
+        "stackTrace": stackTrace?.toString()
       };
       await channel.invokeMethod<void>('reportError', arguments);
     } on PlatformException catch (e) {
@@ -245,7 +248,7 @@ class Instrumentation {
   ///    myMethod();
   ///  } on NoSuchMethodError catch (e) {
   ///    await Instrumentation.reportError(e,
-  ///        severityLevel: ErrorSeverityLevel.CRITICAL);
+  ///        severityLevel: ErrorSeverityLevel.critical);
   ///  }
   /// ```
   static Future<void> reportError(Error error,
@@ -253,7 +256,7 @@ class Instrumentation {
     try {
       final arguments = {
         "message": error.toString(),
-        "stackTrace": error.stackTrace.toString(),
+        "stackTrace": error.stackTrace?.toString(),
         "severity": severityLevel.index
       };
       await channel.invokeMethod<void>('reportError', arguments);
@@ -262,7 +265,8 @@ class Instrumentation {
     }
   }
 
-  /// Reports a custom message with a corresponding severity.
+  /// Reports a custom message with a corresponding severity and sometimes with
+  /// a stack trace.
   ///
   /// Useful in case you are handling errors that don't match [reportError] nor
   /// [reportException].
@@ -271,16 +275,24 @@ class Instrumentation {
   ///
   /// ```dart
   /// try {
-  ///   await customAPI();
-  /// } on CustomError catch (e) {
-  ///   await Instrumentation.reportMessage(e.toString(),
-  ///       severityLevel: ErrorSeverityLevel.info);
+  ///   // Call custom API.
+  /// } on CustomError catch (e, stackTrace) {
+  ///   await Instrumentation.reportMessage(
+  ///     e.toString(),
+  ///     severityLevel: ErrorSeverityLevel.info,
+  ///     stackTrace: stackTrace
+  ///   );
   /// }
   /// ```
   static Future<void> reportMessage(String message,
-      {ErrorSeverityLevel severityLevel = ErrorSeverityLevel.warning}) async {
+      {ErrorSeverityLevel severityLevel = ErrorSeverityLevel.warning,
+      StackTrace? stackTrace}) async {
     try {
-      final arguments = {"message": message, "severity": severityLevel.index};
+      final arguments = {
+        "message": message,
+        "severity": severityLevel.index,
+        "stackTrace": stackTrace?.toString()
+      };
       await channel.invokeMethod<void>('reportError', arguments);
     } on PlatformException catch (e) {
       throw Exception(e.details);
@@ -762,7 +774,7 @@ class Instrumentation {
   ///     final response = http.post("https://server.com/checkout", data);
   ///     await Instrumentation.startNextSession();
   ///   } catch (e) {
-  ///     // log exception
+  ///     // handle exception
   ///   }
   /// }
   /// ```
@@ -864,7 +876,7 @@ class Instrumentation {
   /// try {
   ///   await Instrumentation.changeAppKey("AA-BBB-CCC");
   /// } catch (e) {
-  ///   // log exception
+  ///   // handle exception
   /// }
   /// ```
   static Future<void> changeAppKey(String newKey) async {
@@ -872,9 +884,89 @@ class Instrumentation {
       final args = {
         "newKey": newKey,
       };
-      await channel.invokeMethod<String?>('changeAppKey', args);
+      await channel.invokeMethod<void>('changeAppKey', args);
     } on PlatformException catch (e) {
       throw Exception(e.details);
     }
+  }
+
+  /// Crashes app from the native layer. Useful for testing crash reporting.
+  ///
+  /// Method might throw exception.
+  ///
+  /// ```dart
+  /// try {
+  ///   await Instrumentation.crashNatively();
+  /// } catch (e) {
+  ///   // handle exception
+  /// }
+  /// ```
+  static Future<void> crash() async {
+    try {
+      await channel.invokeMethod<String?>('crash');
+    } on PlatformException catch (e) {
+      throw Exception(e.details);
+    }
+  }
+
+  /// Calls thread sleep on the native layer. Useful for testing ANR reporting.
+  ///
+  /// Method might throw exception.
+  ///
+  /// ```dart
+  /// try {
+  ///   await Instrumentation.sleep(5000);
+  /// } catch (e) {
+  ///   // handle exception
+  /// }
+  /// ```
+  static Future<void> sleep(Duration duration) async {
+    try {
+      final args = {"seconds": duration.inSeconds};
+      await channel.invokeMethod<void>('sleep', args);
+    } on PlatformException catch (e) {
+      throw Exception(e.details);
+    }
+  }
+
+  /// Intercepts Flutter-level errors and reports them to the controller.
+  ///
+  /// ```dart
+  /// import 'package:flutter/material.dart';
+  /// import 'package:appdynamics_mobilesdk/appdynamics_mobilesdk.dart';
+  ///
+  /// void main() {
+  ///   WidgetsFlutterBinding.ensureInitialized();
+  ///   FlutterError.onError = Instrumentation.errorHandler;
+  ///   runApp(MyApp());
+  // }
+  /// ```
+  ///
+  /// For capturing all hybrid-level errors (Flutter & non-Flutter), use zones:
+  ///
+  /// ```dart
+  /// void main() {
+  ///   runZonedGuarded(() {
+  ///     WidgetsFlutterBinding.ensureInitialized();
+  ///     FlutterError.onError = Instrumentation.errorHandler;
+  ///     runApp(MyApp());
+  ///   }, (Object error, StackTrace stack) async {
+  ///     final details = FlutterErrorDetails(
+  ///       exception: error.toString(),
+  ///       stack: stack);
+  //      await Instrumentation.errorHandler(details);
+  ///   });
+  /// }
+  /// ```
+  static Future<void> errorHandler(FlutterErrorDetails details) async {
+    FlutterError.presentError(details);
+
+    final crashReport = CrashReport(
+        message: details.exceptionAsString(), stackTrace: details.stack);
+    final arguments = {
+      "crashDump": crashReport.toString(),
+    };
+
+    return await channel.invokeMethod<void>('createCrashReport', arguments);
   }
 }

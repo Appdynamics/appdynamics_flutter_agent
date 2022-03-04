@@ -6,15 +6,18 @@
 
 import 'package:appdynamics_mobilesdk/appdynamics_mobilesdk.dart';
 import 'package:flutter/material.dart';
+
 import 'loading_indicator.dart';
 
 class FlushBeaconsAppBar extends StatefulWidget with PreferredSizeWidget {
+  final String title;
+  final bool automaticallyImplyLeading;
+
   const FlushBeaconsAppBar({
     Key? key,
     required this.title,
+    this.automaticallyImplyLeading = true,
   }) : super(key: key);
-
-  final String title;
 
   @override
   _FlushBeaconsAppBarState createState() => _FlushBeaconsAppBarState();
@@ -40,6 +43,7 @@ class _FlushBeaconsAppBarState extends State<FlushBeaconsAppBar> {
   Widget build(BuildContext context) {
     return AppBar(
       title: Text(widget.title),
+      automaticallyImplyLeading: widget.automaticallyImplyLeading,
       actions: <Widget>[
         Padding(
             padding: const EdgeInsets.only(right: 20.0),

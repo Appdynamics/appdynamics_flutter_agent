@@ -9,8 +9,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
-import '../../tester_utils.dart';
-import '../../wiremock_utils.dart';
+import '../tester_utils.dart';
+import '../wiremock_utils.dart';
 
 extension on WidgetTester {
   // We need to send the request to a path that the wiremock local server will
@@ -26,7 +26,7 @@ extension on WidgetTester {
     await enterText(requestTextField, successURL);
   }
 
-  assertBeaconSent() async {
+  assertTrackerBeaconSent() async {
     final requestSentLabel = find.text("Success with 200.");
     await ensureVisible(requestSentLabel);
     expect(requestSentLabel, findsOneWidget);
@@ -49,6 +49,48 @@ extension on WidgetTester {
       expect(actualHeaders[key.toLowerCase()], value);
     });
   }
+
+  sendNetworkRequest() async {
+    final requestTextField = find.byKey(const Key("requestTextField"));
+    expect(requestTextField, findsOneWidget);
+
+    final randomSuccessURL = serverRequestsUrl;
+    await enterText(requestTextField, randomSuccessURL);
+    await tapAndSettle("manualPOSTRequestButton");
+  }
+
+  assertBeaconSent() async {
+    final requestSentLabel = find.text("Success with 200.");
+    expect(requestSentLabel, findsOneWidget);
+
+    const intValue = 1234;
+    const doubleValue = 123.456;
+    const boolValue = true;
+    const stringValue = "test string";
+
+    final requests = await findRequestsBy(
+      url: serverRequestsUrl,
+      type: "network-request",
+      hrc: "200",
+      $is: "Manual HttpTracker",
+      userData: {
+        "stringKey": stringValue,
+      },
+      // we can't match date time exactly due to bridging lag
+      userDataDateTime: "<any>",
+      userDataInt: {
+        "intValue": intValue,
+      },
+      userDataBool: {
+        "boolKey": boolValue,
+      },
+      userDataDouble: {
+        "doubleValue": doubleValue,
+      },
+    );
+
+    expect(requests.length, 1);
+  }
 }
 
 void main() {
@@ -61,7 +103,7 @@ void main() {
   final binding = IntegrationTestWidgetsFlutterBinding.ensureInitialized()
       as IntegrationTestWidgetsFlutterBinding;
 
-  testWidgets("TrackedHttpClient beacon same as RequestTracker beacon",
+  testWidgets("Manual request tracking sends beacons",
       (WidgetTester tester) async {
     // Force using test keyboard and don't simulate typing.
     // Needed because `WidgetTester.enterText()` was lagging  and failing test
@@ -71,10 +113,13 @@ void main() {
 
     await tester.jumpstartInstrumentation();
     await tester.tapAndSettle("manualNetworkRequestsButton");
+    await tester.sendNetworkRequest();
+    await tester.flushBeacons();
+    await tester.assertBeaconSent();
     await tester.redirectToLocalhost();
     await tester.tapAndSettle("manualClientGetRequestButton");
     await tester.flushBeacons();
-    await tester.assertBeaconSent();
+    await tester.assertTrackerBeaconSent();
   });
 
   tearDown(() async {

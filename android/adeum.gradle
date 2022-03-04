@@ -9,7 +9,7 @@
  *  Appdynamics android Gradle plugin into the build of that application.
  */
 allprojects {
-    ext.appd_plugin_version = '21.11.1'
+    ext.appd_plugin_version = '22.2.2'
 
     subprojects { project ->
         project.buildscript {

@@ -31,28 +31,41 @@ void main() {
     const message = "test";
     var exception = Exception(message);
     var error = Error();
+    StackTrace randomStackTrace = StackTrace.fromString("""
+#0      State.context.<anonymous closure> (package:flutter/src/widgets/framework.dart:942:9)
+#1      State.context (package:flutter/src/widgets/framework.dart:948:6)
+    """);
 
     const infoLevel = ErrorSeverityLevel.info;
     const warningLevel = ErrorSeverityLevel.warning;
     const criticalLevel = ErrorSeverityLevel.critical;
 
-    await Instrumentation.reportException(exception, severityLevel: infoLevel);
+    await Instrumentation.reportException(exception,
+        severityLevel: infoLevel, stackTrace: randomStackTrace);
     await Instrumentation.reportError(error, severityLevel: warningLevel);
-    await Instrumentation.reportMessage(message, severityLevel: criticalLevel);
+    await Instrumentation.reportMessage(message,
+        severityLevel: criticalLevel, stackTrace: randomStackTrace);
 
     expect(log, hasLength(3));
     expect(log, <Matcher>[
       isMethodCall('reportError', arguments: {
         "message": exception.toString(),
-        "severity": infoLevel.index
+        "severity": infoLevel.index,
+        "stackTrace": randomStackTrace.toString()
       }),
       isMethodCall('reportError', arguments: {
         "message": error.toString(),
-        "stackTrace": null.toString(),
-        "severity": warningLevel.index
+        "severity": warningLevel.index,
+        "stackTrace": error.stackTrace?.toString()
       }),
-      isMethodCall('reportError',
-          arguments: {"message": message, "severity": criticalLevel.index}),
+      isMethodCall(
+        'reportError',
+        arguments: {
+          "message": message,
+          "severity": criticalLevel.index,
+          "stackTrace": randomStackTrace.toString()
+        },
+      ),
     ]);
   });
 

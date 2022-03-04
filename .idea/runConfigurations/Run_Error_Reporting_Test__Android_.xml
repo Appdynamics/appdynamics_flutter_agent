@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="Run Report Errors Test (iOS)" type="GradleRunConfiguration" factoryName="Gradle" folderName="iOS Integration Tests">
+  <configuration default="false" name="Run Error Reporting Test (Android)" type="GradleRunConfiguration" factoryName="Gradle" folderName="Android Integration Tests">
     <ExternalSystemSettings>
       <option name="executionName" />
       <option name="externalProjectPath" value="$PROJECT_DIR$/example" />
@@ -10,7 +10,7 @@
       </option>
       <option name="taskNames">
         <list>
-          <option value="runErrorReportingIntegrationTestiOS" />
+          <option value="runErrorReportingIntegrationTestAndroid" />
         </list>
       </option>
       <option name="vmOptions" value="" />

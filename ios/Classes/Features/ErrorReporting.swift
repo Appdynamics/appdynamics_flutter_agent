@@ -30,5 +30,16 @@ extension SwiftAppDynamicsMobileSdkPlugin {
     ADEumInstrumentation.reportError(error, withSeverity: severity, andStackTrace: false)
     result(nil)
   }
+  
+  func createCrashReport(result: @escaping FlutterResult, arguments: Any?) {
+    guard let properties = arguments as? Dictionary<String, Any> else {
+      return
+    }
+    
+    let crashDump = properties["crashDump"] as! String
+    let type = "clrCrashReport"
+    
+    ADEumInstrumentation.createCrashReport(crashDump, type: type)
+    result(nil)
+  }
 }
-
