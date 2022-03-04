@@ -4,7 +4,7 @@
  *
  */
 
-import 'package:appdynamics_mobilesdk/src/globals.dart';
+import 'package:appdynamics_agent/src/globals.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 

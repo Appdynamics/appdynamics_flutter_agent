@@ -29,10 +29,6 @@ pluginManagement {
     }
 }
 
-// Helps not automatically exclude .gitignore from distribution task in build.gradle.
-import org.apache.tools.ant.DirectoryScanner
-DirectoryScanner.removeDefaultExclude("**/.gitignore")
-
 rootProject.name = 'rum-flutter'
 include 'example'
 

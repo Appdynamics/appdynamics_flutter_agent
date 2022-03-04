@@ -1,7 +1,7 @@
 import ADEUMInstrumentation
 import Flutter
 
-extension SwiftAppDynamicsMobileSdkPlugin {
+extension SwiftAppDynamicsAgentPlugin {
   public func start(result: @escaping FlutterResult, arguments: Any?) {
     let properties = arguments as! Dictionary<String, Any>
     

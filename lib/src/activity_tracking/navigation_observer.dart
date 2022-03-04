@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../../appdynamics_mobilesdk.dart';
+import '../../appdynamics_agent.dart';
 
 /// A class used to detect screen transitions in apps using named routes
 /// automatically.
@@ -12,7 +12,7 @@ import '../../appdynamics_mobilesdk.dart';
 /// If you need more granular control, use [WidgetTracker].
 ///
 /// ```dart
-/// import 'package:appdynamics_mobilesdk/appdynamics_mobilesdk.dart';
+/// import 'package:appdynamics_agent/appdynamics_agent.dart';
 /// import 'package:flutter/cupertino.dart';
 /// import 'package:flutter/material.dart';
 ///

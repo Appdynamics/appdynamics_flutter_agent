@@ -6,7 +6,7 @@
 
 import 'dart:async';
 
-import 'package:appdynamics_mobilesdk/appdynamics_mobilesdk.dart';
+import 'package:appdynamics_agent/appdynamics_agent.dart';
 import 'package:appdynamics_mobilesdk_example/routing/on_generate_route.dart';
 import 'package:appdynamics_mobilesdk_example/routing/route_paths.dart';
 import 'package:flutter/material.dart';

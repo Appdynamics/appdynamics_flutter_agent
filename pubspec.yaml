@@ -1,7 +1,7 @@
-name: appdynamics_mobilesdk
+name: appdynamics_agent
 description: Flutter plugin to integrate AppDynamics Mobile Real User Monitoring with your app.
-version: 0.0.1
-homepage:
+version: 1.0.0-beta.1
+homepage: https://www.appdynamics.com/
 
 environment:
   sdk: ">=2.12.0 <3.0.0"
@@ -31,10 +31,10 @@ flutter:
   plugin:
     platforms:
       android:
-        package: com.appdynamics.appdynamics_mobilesdk
-        pluginClass: AppDynamicsMobileSdkPlugin
+        package: com.appdynamics.appdynamics_agent
+        pluginClass: AppDynamicsAgentPlugin
       ios:
-        pluginClass: SwiftAppDynamicsMobileSdkPlugin
+        pluginClass: SwiftAppDynamicsAgentPlugin
 
   # To add assets to your plugin package, add an assets section, like this:
   # assets:

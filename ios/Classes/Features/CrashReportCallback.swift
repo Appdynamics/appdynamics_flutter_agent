@@ -3,8 +3,8 @@ import Flutter
 
 class CrashCallbackObject: NSObject, ADEumCrashReportCallback {
   func onCrashesReported(_ summaries: [ADEumCrashReportSummary]) {
-    guard let channel = SwiftAppDynamicsMobileSdkPlugin.channel else {
-      print("SwiftAppDynamicsMobileSdkPlugin channel is nil.")
+    guard let channel = SwiftAppDynamicsAgentPlugin.channel else {
+      print("SwiftAppDynamicsAgentPlugin channel is nil.")
       return
     }
     

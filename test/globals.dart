@@ -7,7 +7,7 @@
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-const MethodChannel channel = MethodChannel('appdynamics_mobilesdk');
+const MethodChannel channel = MethodChannel('appdynamics_agent');
 
 void mockPackageInfo() {
   const channel = MethodChannel('dev.fluttercommunity.plus/package_info');
@@ -15,8 +15,8 @@ void mockPackageInfo() {
       .setMockMethodCallHandler(channel, (MethodCall methodCall) async {
     if (methodCall.method == 'getAll') {
       return <String, dynamic>{
-        'appName': 'appdynamics_mobilesdk',
-        'packageName': 'com.appdynamics.eum.appdynamics_mobilesdk',
+        'appName': 'appdynamics_agent',
+        'packageName': 'com.appdynamics.eum.appdynamics_agent',
         'version': '1.0.0',
         'buildNumber': '1'
       };

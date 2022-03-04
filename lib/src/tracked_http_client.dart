@@ -1,8 +1,21 @@
 import 'dart:async';
 
-import 'package:appdynamics_mobilesdk/appdynamics_mobilesdk.dart';
+import 'package:appdynamics_agent/appdynamics_agent.dart';
 import 'package:http/http.dart' as http;
 
+/// To collect metrics on network requests, you can use the HTTP client wrapper:
+///
+/// ```dart
+/// import 'package:http/http.dart' as http;
+///
+/// try {
+///   final client = TrackedHttpClient(http.Client());
+///   final response = await client.get(Uri.parse("https://www.appdynamics.com"));
+///   // handle response
+/// } catch (e) {
+///   // handle error
+/// }
+/// ```
 class TrackedHttpClient extends http.BaseClient {
   final http.Client _httpClient;
   bool addCorrelationHeaders;

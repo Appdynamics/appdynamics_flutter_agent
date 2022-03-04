@@ -6,7 +6,7 @@ This plugin wraps the native SDKs and requires a valid AppDynamics mobile licens
 
 ## Features
 
-The AppDynamics SDK incorporates the following features:
+The Flutter agent incorporates the following features:
   * Network request tracking via the [TrackedHTTPClient]() and [RequestTracker]() classes.
   * Automatic crash reporting and [CrashReportCallback]() for extra crash report configuration.
   * Screen tracking via [NavigationObserver]() and [WidgetTracker]().
@@ -27,38 +27,57 @@ The AppDynamics SDK incorporates the following features:
 You can install the Flutter plugin via `flutter` — more info on the [Installation tab]().
 
 ```
-$ flutter pub add appdynamics_mobilesdk
+$ flutter pub add appdynamics_agent
 ```
 
 ## Extra configuration for Android apps:
 
-1. Add the following permissions to your AndroidManifest.xml (usually in android/src/main/) 
-   to benefit from connection transition events logging:
+1. Add the following changes to `android/build.gradle`:
+
+```kotlin
+dependencies {
+    classpath "com.appdynamics:appdynamics-gradle-plugin:22.2.2"
+    // ... other dependencies
+}
+```
+
+2. Apply the `adeum` plugin to the bottom of the `android/app/build.gradle` file:
+
+```kotlin
+dependencies {
+    // ... project dependencies
+}
+
+// Bottom of file
+apply plugin: 'adeum'
+```
+
+3. Add the following permissions to your AndroidManifest.xml (usually in android/src/main/):
    
 ```xml
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
 package="com.example.myawesomepackage">
-
-   <!-- add these two permissions -->
+    
+    <!-- add these two permissions -->
     <uses-permission android:name="android.permission.INTERNET" /> 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <application>
-       <!-- other settings -->
+    <!-- other settings -->
 ```
 
 ## Start instrumentation
 
-> **_NOTE:_** Replace `<EUM_APP_KEY>` with your app key.
+> **_NOTE:_** Replace `<EUM_LICENSE_KEY>` with your app key.
 
 ```dart
-import 'package:appdynamics_mobilesdk/appdynamics_mobilesdk.dart';
+import 'package:appdynamics_agent/appdynamics_agent.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   
   final config = AgentConfiguration(
-      appKey: <EUM_APP_KEY>,
-      loggingLevel: LoggingLevel.verbose // optional for better debugging.
+      appKey: "<EUM_LICENSE_KEY>",
+      loggingLevel: LoggingLevel.verbose // optional, for better debugging.
   );
   await Instrumentation.start(config);
      

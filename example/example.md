@@ -1,0 +1,56 @@
+```dart
+/*
+* Copyright (c) 2021. AppDynamics LLC and its affiliates.
+* All rights reserved.
+*
+*/
+
+/// Complete example with all Flutter agent's features.
+
+import 'dart:async';
+
+import 'package:appdynamics_agent/appdynamics_agent.dart';
+import 'package:appdynamics_mobilesdk_example/routing/on_generate_route.dart';
+import 'package:appdynamics_mobilesdk_example/routing/route_paths.dart';
+import 'package:flutter/material.dart';
+
+void main() {
+  runZonedGuarded(() async {
+    WidgetsFlutterBinding.ensureInitialized();
+    FlutterError.onError = Instrumentation.errorHandler;
+
+    crashReportCallback(List<CrashReportSummary> summaries) async {
+      // ... handle crash reports
+    }
+
+    AgentConfiguration config = AgentConfiguration(
+        appKey: "<EUM_LICENSE_KEY>",
+        loggingLevel: LoggingLevel.verbose,
+        collectorURL: "https://www.mycollector.com",
+        screenshotURL: "https://www.mycollector.com",
+        crashReportCallback: crashReportCallback,
+        screenshotsEnabled: true,
+        crashReportingEnabled: true
+    );
+    await Instrumentation.start(config);
+
+    runApp(const MyApp());
+  }, (Object error, StackTrace stack) async {
+    final details =
+        FlutterErrorDetails(exception: error.toString(), stack: stack);
+    await Instrumentation.errorHandler(details);
+  });
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+        initialRoute: RoutePaths.settings,
+        onGenerateRoute: onGenerateRoute,
+        navigatorObservers: [NavigationObserver()]);
+  }
+}
+```

@@ -1,4 +1,4 @@
-## 1.0.0 
+# 1.0.0 
 
 🎉🎊 Presenting the new AppDynamics SDK for Flutter: 
 * Allows instrumenting Flutter apps and getting valuable insights in the UI controller.

@@ -1,7 +1,7 @@
 import ADEUMInstrumentation
 import Flutter
 
-extension SwiftAppDynamicsMobileSdkPlugin {
+extension SwiftAppDynamicsAgentPlugin {
   func setUserDataDouble(result: @escaping FlutterResult, arguments: Any?) {
     guard let properties = arguments as? Dictionary<String, Any> else {
       return

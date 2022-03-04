@@ -1,7 +1,7 @@
 import ADEUMInstrumentation
 import Flutter
 
-extension SwiftAppDynamicsMobileSdkPlugin {
+extension SwiftAppDynamicsAgentPlugin {
   func takeScreenshot(result: @escaping FlutterResult, arguments: Any?) {
     ADEumInstrumentation.takeScreenshot()
     result(nil)

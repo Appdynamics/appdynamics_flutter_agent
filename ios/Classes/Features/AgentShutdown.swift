@@ -1,7 +1,7 @@
 import ADEUMInstrumentation
 import Flutter
 
-extension SwiftAppDynamicsMobileSdkPlugin {
+extension SwiftAppDynamicsAgentPlugin {
   func shutdownAgent(result: @escaping FlutterResult, arguments: Any?) {
     ADEumInstrumentation.shutdownAgent()
     result(nil)

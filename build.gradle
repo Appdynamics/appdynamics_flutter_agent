@@ -57,21 +57,21 @@ sonarqube {
 }
 
 task installPackages(type: Exec) {
-    commandLine "./scripts/flutter-get.sh"
+    commandLine "./tool/flutter-get.sh"
 }
 
 task analyze(type: Exec) {
-    commandLine "./scripts/flutter-analyze.sh"
+    commandLine "./tool/flutter-analyze.sh"
 }
 
 task runUnitTests(type: Exec) {
-    commandLine "./scripts/flutter-test.sh"
+    commandLine "./tool/flutter-test.sh"
 }
 
 task generateDocs(type: Exec) {
-    commandLine "./scripts/generate-docs.sh"
+    commandLine "./tool/generate-docs.sh"
 }
 
 task viewDocs(type: Exec) {
-    commandLine "./scripts/view-docs.sh"
+    commandLine "./tool/view-docs.sh"
 }

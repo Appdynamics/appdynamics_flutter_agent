@@ -6,7 +6,7 @@
 
 import 'dart:convert';
 
-import 'package:appdynamics_mobilesdk/appdynamics_mobilesdk.dart';
+import 'package:appdynamics_agent/appdynamics_agent.dart';
 import 'package:appdynamics_mobilesdk_example/feature_list/utils/flush_beacons_app_bar.dart';
 import 'package:flutter/material.dart';
 

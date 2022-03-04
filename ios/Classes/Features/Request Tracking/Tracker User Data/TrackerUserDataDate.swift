@@ -1,7 +1,7 @@
 import ADEUMInstrumentation
 import Flutter
 
-extension SwiftAppDynamicsMobileSdkPlugin {
+extension SwiftAppDynamicsAgentPlugin {
   func setRequestTrackerUserDataDate(result: @escaping FlutterResult, arguments: Any?) {
     let properties = arguments as! Dictionary<String, Any>
     let id = properties["id"] as! String
@@ -13,7 +13,7 @@ extension SwiftAppDynamicsMobileSdkPlugin {
     }
     
     let formatter: DateFormatter = DateFormatter()
-    formatter.dateFormat = SwiftAppDynamicsMobileSdkPlugin.dateFormat
+    formatter.dateFormat = SwiftAppDynamicsAgentPlugin.dateFormat
     guard let value = properties["value"] as? String, let date = formatter.date(from: value) else {
       let error = FlutterError(code: "500", message: "Agent setRequestTrackerUserDataDate() failed.", details: "Please provide a valid DateTime for `value`.")
       result(error)

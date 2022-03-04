@@ -6,7 +6,7 @@
 
 import 'dart:convert';
 
-import 'package:appdynamics_mobilesdk/appdynamics_mobilesdk.dart';
+import 'package:appdynamics_agent/appdynamics_agent.dart';
 import 'package:appdynamics_mobilesdk_example/main.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -20,6 +20,7 @@ extension TestHelpers on WidgetTester {
     await pumpWidget(const MyApp());
     final startButtonFinder =
         find.byKey(const Key("startInstrumentationButton"));
+    await ensureVisible(startButtonFinder);
     expect(startButtonFinder, findsOneWidget);
 
     final featureListBarFinder = find.byKey(const Key("featureListAppBar"));

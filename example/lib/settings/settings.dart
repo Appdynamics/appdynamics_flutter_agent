@@ -6,7 +6,7 @@
 
 import 'dart:convert';
 
-import 'package:appdynamics_mobilesdk/appdynamics_mobilesdk.dart';
+import 'package:appdynamics_agent/appdynamics_agent.dart';
 import 'package:appdynamics_mobilesdk_example/app_state/app_state.dart';
 import 'package:appdynamics_mobilesdk_example/routing/route_paths.dart';
 import 'package:appdynamics_mobilesdk_example/settings/utils/constants.dart';

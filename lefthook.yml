@@ -4,6 +4,8 @@ pre-push:
       run: flutter analyze
     tests:
       run: flutter test
+    teamcity:
+      run: cd .teamcity; mvn verify
 
 pre-commit:
   commands:

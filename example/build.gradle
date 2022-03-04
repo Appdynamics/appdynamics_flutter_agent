@@ -14,23 +14,23 @@
 apply from: "integration_test/tests.gradle"
 
 task buildiOS(type: Exec) {
-    commandLine "../scripts/flutter-build-ios.sh"
+    commandLine "../tool/flutter-build-ios.sh"
 }
 
 task buildAndroid(type: Exec) {
-    commandLine "../scripts/flutter-build-android.sh"
+    commandLine "../tool/flutter-build-android.sh"
 }
 
 task startiOSSimulator(type: Exec) {
-    commandLine "../scripts/start-ios-simulator.sh"
+    commandLine "../tool/start-ios-simulator.sh"
 }
 
 task startAndroidEmulator(type: Exec) {
-    commandLine "../scripts/start-android-emulator.sh"
+    commandLine "../tool/start-android-emulator.sh"
 }
 
 task upgradeFlutter(type: Exec) {
-    commandLine "../scripts/flutter-upgrade.sh"
+    commandLine "../tool/flutter-upgrade.sh"
 }
 
 task runIntegrationTestsiOS {

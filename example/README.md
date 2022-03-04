@@ -1,6 +1,6 @@
 # appdynamics_mobilesdk_example
 
-Demonstrates how to use the appdynamics_mobilesdk plugin.
+Demonstrates how to use the appdynamics_agent plugin.
 
 ## Getting Started
 

@@ -1,7 +1,7 @@
 import ADEUMInstrumentation
 import Flutter
 
-extension SwiftAppDynamicsMobileSdkPlugin {
+extension SwiftAppDynamicsAgentPlugin {
   func trackPageStart(result: @escaping FlutterResult, arguments: Any?) {
     guard let properties = arguments as? Dictionary<String, Any> else {
       return
@@ -17,7 +17,7 @@ extension SwiftAppDynamicsMobileSdkPlugin {
     let uuid = UUID(uuidString: uuidString)!
     
     let formatter = DateFormatter()
-    formatter.dateFormat = SwiftAppDynamicsMobileSdkPlugin.dateFormat
+    formatter.dateFormat = SwiftAppDynamicsAgentPlugin.dateFormat
     
     let startDate = properties["startDate"] as! String
     let start = formatter.date(from: startDate)!
@@ -41,7 +41,7 @@ extension SwiftAppDynamicsMobileSdkPlugin {
     let uuid = UUID(uuidString: uuidString)!
     
     let formatter = DateFormatter()
-    formatter.dateFormat = SwiftAppDynamicsMobileSdkPlugin.dateFormat
+    formatter.dateFormat = SwiftAppDynamicsAgentPlugin.dateFormat
     
     let startDate = properties["startDate"] as! String
     let start = formatter.date(from: startDate)!

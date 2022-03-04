@@ -9,8 +9,8 @@
 
 import 'dart:async';
 
-import 'package:appdynamics_mobilesdk/appdynamics_mobilesdk.dart';
-import 'package:appdynamics_mobilesdk/src/session_frame.dart';
+import 'package:appdynamics_agent/appdynamics_agent.dart';
+import 'package:appdynamics_agent/src/session_frame.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -698,7 +698,7 @@ class Instrumentation {
   /// Method might throw [Exception].
   ///
   /// ```dart
-  /// import 'package:appdynamics_mobilesdk/appdynamics_mobilesdk.dart';
+  /// import 'package:appdynamics_agent/appdynamics_agent.dart';
   /// import 'package:flutter/material.dart';
   ///
   /// class App extends StatelessWidget {
@@ -931,9 +931,11 @@ class Instrumentation {
 
   /// Intercepts Flutter-level errors and reports them to the controller.
   ///
+  /// Warning: Does not report obfuscated apps crash reports (WIP).
+  ///
   /// ```dart
   /// import 'package:flutter/material.dart';
-  /// import 'package:appdynamics_mobilesdk/appdynamics_mobilesdk.dart';
+  /// import 'package:appdynamics_agent/appdynamics_agent.dart';
   ///
   /// void main() {
   ///   WidgetsFlutterBinding.ensureInitialized();

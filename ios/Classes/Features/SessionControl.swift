@@ -1,7 +1,7 @@
 import ADEUMInstrumentation
 import Flutter
 
-extension SwiftAppDynamicsMobileSdkPlugin {
+extension SwiftAppDynamicsAgentPlugin {
   func startNextSession(result: @escaping FlutterResult, arguments: Any?) {
     ADEumInstrumentation.startNextSession()
     result(nil)

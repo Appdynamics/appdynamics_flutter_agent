@@ -1,7 +1,7 @@
 import ADEUMInstrumentation
 import Flutter
 
-extension SwiftAppDynamicsMobileSdkPlugin {
+extension SwiftAppDynamicsAgentPlugin {
   func setUserDataDate(result: @escaping FlutterResult, arguments: Any?) {
     guard let properties = arguments as? Dictionary<String, Any> else {
       return
@@ -20,7 +20,7 @@ extension SwiftAppDynamicsMobileSdkPlugin {
     }
     
     let formatter = DateFormatter()
-    formatter.dateFormat = SwiftAppDynamicsMobileSdkPlugin.dateFormat
+    formatter.dateFormat = SwiftAppDynamicsAgentPlugin.dateFormat
     guard let date = formatter.date(from: value) else {
       let error = FlutterError(code: "500", message: "Agent setUserDataDateTime() failed.", details: "Please provide a valid DateTime for `value`.")
       result(error)

@@ -20,7 +20,7 @@ AppdBuildSettings.Builder(AppdBuild.PipeLibType.JAVA_LIB)
         "buildiOS",
         "generateDocs"
     )
-    .simpleParams()
+    .simpleParams("env.JAVA_HOME" to "/Library/Java/JavaVirtualMachines/jdk-17.0.2.jdk/Contents/Home")
     .passwordParams()
     .checkboxParams()
     .agentType("BigSur")

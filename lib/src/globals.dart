@@ -6,4 +6,4 @@
 
 import 'package:flutter/services.dart';
 
-const MethodChannel channel = MethodChannel('appdynamics_mobilesdk');
+const MethodChannel channel = MethodChannel('appdynamics_agent');

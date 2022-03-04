@@ -4,4 +4,4 @@
  *
  */
 
-rootProject.name = 'appdynamics_mobilesdk'
+rootProject.name = 'appdynamics_agent'
