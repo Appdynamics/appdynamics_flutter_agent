@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021. AppDynamics LLC and its affiliates.
+ * Copyright (c) 2022. AppDynamics LLC and its affiliates.
  * All rights reserved.
  *
  */
@@ -26,9 +26,7 @@ extension on WidgetTester {
     expect(requestSentLabel, findsOneWidget);
 
     final requests = await findRequestsBy(
-        url: serverRequestsUrl,
-        type: "network-request",
-        hrc: "200");
+        url: serverRequestsUrl, type: "network-request", hrc: "200");
     expect(requests.length, 1);
   }
 
@@ -37,9 +35,7 @@ extension on WidgetTester {
     expect(requestSentLabel, findsOneWidget);
 
     final requests = await findRequestsBy(
-        url: serverRequestsUrl,
-        type: "network-request",
-        hrc: "200");
+        url: serverRequestsUrl, type: "network-request", hrc: "200");
     expect(requests.length, 0);
   }
 }

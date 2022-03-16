@@ -1,3 +1,9 @@
+/*
+ * Copyright (c) 2022. AppDynamics LLC and its affiliates.
+ * All rights reserved.
+ *
+ */
+
 // Shared state between entire widgets in the app.
 // Default values for settings are also set here.
 import 'package:flutter/cupertino.dart';

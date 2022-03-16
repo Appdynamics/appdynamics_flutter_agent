@@ -1,1 +1,0 @@
-// TODO: Replace scripts with direct gradle bash tasks. For some reason, this didn't work initially.

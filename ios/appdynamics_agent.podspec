@@ -1,15 +1,15 @@
 #
 # To learn more about a Podspec see http://guides.cocoapods.org/syntax/podspec.html.
-# Run `pod lib lint appdynamics_agent.podspec` to validate before publishing.
+# This pod is not intended to be published, but only integrated on built-time.
 #
 Pod::Spec.new do |s|
   s.name             = 'appdynamics_agent'
-  s.version          = '1.0.0'
+  s.version          = '22.3.0-beta.7'
   s.summary          = 'Flutter plugin to integrate AppDynamics Mobile Real User Monitoring with your app.'
   s.description      = <<-DESC
 Flutter plugin to integrate AppDynamics Mobile Real User Monitoring with your app.
                        DESC
-  s.homepage         = 'http://www.appdynamics.com'
+  s.homepage         = 'http://appdynamics.com'
   s.license          = { :file => '../LICENSE' }
   s.author           = { 'Appdynamics' => 'flutter.agent@appdynamics.com' }
   s.source           = { :path => '.' }

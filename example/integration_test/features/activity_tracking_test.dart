@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021. AppDynamics LLC and its affiliates.
+ * Copyright (c) 2022. AppDynamics LLC and its affiliates.
  * All rights reserved.
  *
  */
@@ -7,9 +7,9 @@
 import 'dart:io';
 
 import 'package:appdynamics_agent/appdynamics_agent.dart';
-import 'package:appdynamics_mobilesdk_example/app_state/app_state.dart';
-import 'package:appdynamics_mobilesdk_example/routing/on_generate_route.dart';
-import 'package:appdynamics_mobilesdk_example/routing/route_paths.dart';
+import 'package:appdynamics_agent_example/app_state/app_state.dart';
+import 'package:appdynamics_agent_example/routing/on_generate_route.dart';
+import 'package:appdynamics_agent_example/routing/route_paths.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';

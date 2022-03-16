@@ -1,6 +1,33 @@
-# 1.0.0 
+# 22.3.0-beta.7
+* Misc README changes.
+
+# 22.3.0-beta.6
+* Changes Github repo link.
+* Fixes outdated links.
+
+# 22.3.0-beta.5
+* Adds Github repo links.
+
+# 22.3.0-beta.4
+* Adds README links to docs.
+
+# 22.3.0-beta.3
+* Changed example project's name.
+* Updated package homepage.
+* Misc changes.
+
+# 22.3.0-beta.2
+* Changed example project's name.
+* Updated package homepage.
+* Misc changes.
+
+# 22.3.0-beta.1
+* Switched to calendar versioning (YY.MM.MINOR_MICRO).
+* Adds example project.
+
+# 1.0.0-beta.1
 
 🎉🎊 Presenting the new AppDynamics SDK for Flutter: 
 * Allows instrumenting Flutter apps and getting valuable insights in the UI controller.
-* Features: request tracking, error/crash reporting, activity tracking, info points and many more.
+* Features: request tracking, error/crash reporting, activity tracking, info points, and many more.
 * Thoroughly maintained and ready for production.

@@ -1,3 +1,9 @@
+/*
+ * Copyright (c) 2022. AppDynamics LLC and its affiliates.
+ * All rights reserved.
+ *
+ */
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 

@@ -1,3 +1,9 @@
+/*
+ * Copyright (c) 2022. AppDynamics LLC and its affiliates.
+ * All rights reserved.
+ *
+ */
+
 import 'dart:async';
 
 import 'package:appdynamics_agent/appdynamics_agent.dart';

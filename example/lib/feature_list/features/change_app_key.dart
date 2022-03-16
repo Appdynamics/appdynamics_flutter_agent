@@ -1,6 +1,12 @@
+/*
+ * Copyright (c) 2022. AppDynamics LLC and its affiliates.
+ * All rights reserved.
+ *
+ */
+
 import 'package:appdynamics_agent/appdynamics_agent.dart';
-import 'package:appdynamics_mobilesdk_example/app_state/app_state.dart';
-import 'package:appdynamics_mobilesdk_example/feature_list/utils/flush_beacons_app_bar.dart';
+import 'package:appdynamics_agent_example/app_state/app_state.dart';
+import 'package:appdynamics_agent_example/feature_list/utils/flush_beacons_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

@@ -1,4 +1,4 @@
-name: appdynamics_mobilesdk_example
+name: appdynamics_agent_example
 description: Demonstrates how to use the appdynamics_agent plugin.
 version: 1.0.0+1
 

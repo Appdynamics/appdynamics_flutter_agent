@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021. AppDynamics LLC and its affiliates.
+ * Copyright (c) 2022. AppDynamics LLC and its affiliates.
  * All rights reserved.
  *
  */
@@ -33,7 +33,7 @@ void main() {
     StackTrace randomStackTrace = StackTrace.fromString("""
 #0      State.context.<anonymous closure> (package:flutter/src/widgets/framework.dart:942:9)
 #1      State.context (package:flutter/src/widgets/framework.dart:948:6)
-#2      _SettingsState._showCrashReportAlert (package:appdynamics_mobilesdk_example/settings/settings.dart82:18)
+#2      _SettingsState._showCrashReportAlert (package:appdynamics_agent_example/settings/settings.dart82:18)
     """);
     final details =
         FlutterErrorDetails(exception: error, stack: randomStackTrace);

@@ -1,6 +1,6 @@
 ```dart
 /*
-* Copyright (c) 2021. AppDynamics LLC and its affiliates.
+* Copyright (c) 2022. AppDynamics LLC and its affiliates.
 * All rights reserved.
 *
 */
@@ -10,8 +10,8 @@
 import 'dart:async';
 
 import 'package:appdynamics_agent/appdynamics_agent.dart';
-import 'package:appdynamics_mobilesdk_example/routing/on_generate_route.dart';
-import 'package:appdynamics_mobilesdk_example/routing/route_paths.dart';
+import 'package:appdynamics_agent_example/routing/on_generate_route.dart';
+import 'package:appdynamics_agent_example/routing/route_paths.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -24,10 +24,10 @@ void main() {
     }
 
     AgentConfiguration config = AgentConfiguration(
-        appKey: "<EUM_LICENSE_KEY>",
+        appKey: "<EUM_APP_KEY>",
         loggingLevel: LoggingLevel.verbose,
-        collectorURL: "https://www.mycollector.com",
-        screenshotURL: "https://www.mycollector.com",
+        collectorURL: "https://www.<collector-url>.com",
+        screenshotURL: "https://www.<screenshots-url>.com",
         crashReportCallback: crashReportCallback,
         screenshotsEnabled: true,
         crashReportingEnabled: true

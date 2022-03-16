@@ -1,4 +1,10 @@
 <?xml version="1.0"?>
+<!--
+  ~ Copyright (c) 2022. AppDynamics LLC and its affiliates.
+  ~ All rights reserved.
+  ~
+  -->
+
 <project>
     <modelVersion>4.0.0</modelVersion>
     <name>Flutter Agent Config DSL Script</name>

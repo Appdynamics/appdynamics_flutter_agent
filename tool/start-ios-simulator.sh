@@ -1,7 +1,8 @@
 #! /bin/sh
 #
-# Copyright (c) 2021. AppDynamics LLC and its affiliates.
+# Copyright (c) 2022. AppDynamics LLC and its affiliates.
 # All rights reserved.
+#
 #
 
 set -x # Show commands as they are run

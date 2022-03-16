@@ -1,3 +1,9 @@
+/*
+ * Copyright (c) 2022. AppDynamics LLC and its affiliates.
+ * All rights reserved.
+ *
+ */
+
 import 'dart:io';
 
 var localServerURL = "http://${Platform.isIOS ? "localhost" : "10.0.2.2"}:9999";

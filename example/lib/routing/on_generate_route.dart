@@ -1,22 +1,28 @@
-import 'package:appdynamics_mobilesdk_example/feature_list/feature_list.dart';
-import 'package:appdynamics_mobilesdk_example/feature_list/features/activity_tracking/activity_tracking.dart';
-import 'package:appdynamics_mobilesdk_example/feature_list/features/activity_tracking/activity_tracking_push.dart';
-import 'package:appdynamics_mobilesdk_example/feature_list/features/activity_tracking/activity_tracking_replace.dart';
-import 'package:appdynamics_mobilesdk_example/feature_list/features/agent_shutdown.dart';
-import 'package:appdynamics_mobilesdk_example/feature_list/features/anr.dart';
-import 'package:appdynamics_mobilesdk_example/feature_list/features/breadcrumbs.dart';
-import 'package:appdynamics_mobilesdk_example/feature_list/features/change_app_key.dart';
-import 'package:appdynamics_mobilesdk_example/feature_list/features/custom_metrics.dart';
-import 'package:appdynamics_mobilesdk_example/feature_list/features/custom_timers.dart';
-import 'package:appdynamics_mobilesdk_example/feature_list/features/error_reporting.dart';
-import 'package:appdynamics_mobilesdk_example/feature_list/features/info_points.dart';
-import 'package:appdynamics_mobilesdk_example/feature_list/features/manual_network_requests.dart';
-import 'package:appdynamics_mobilesdk_example/feature_list/features/screenshots.dart';
-import 'package:appdynamics_mobilesdk_example/feature_list/features/session_control.dart';
-import 'package:appdynamics_mobilesdk_example/feature_list/features/session_frames.dart';
-import 'package:appdynamics_mobilesdk_example/feature_list/features/user_data.dart';
-import 'package:appdynamics_mobilesdk_example/routing/route_paths.dart';
-import 'package:appdynamics_mobilesdk_example/settings/settings.dart';
+/*
+ * Copyright (c) 2022. AppDynamics LLC and its affiliates.
+ * All rights reserved.
+ *
+ */
+
+import 'package:appdynamics_agent_example/feature_list/feature_list.dart';
+import 'package:appdynamics_agent_example/feature_list/features/activity_tracking/activity_tracking.dart';
+import 'package:appdynamics_agent_example/feature_list/features/activity_tracking/activity_tracking_push.dart';
+import 'package:appdynamics_agent_example/feature_list/features/activity_tracking/activity_tracking_replace.dart';
+import 'package:appdynamics_agent_example/feature_list/features/agent_shutdown.dart';
+import 'package:appdynamics_agent_example/feature_list/features/anr.dart';
+import 'package:appdynamics_agent_example/feature_list/features/breadcrumbs.dart';
+import 'package:appdynamics_agent_example/feature_list/features/change_app_key.dart';
+import 'package:appdynamics_agent_example/feature_list/features/custom_metrics.dart';
+import 'package:appdynamics_agent_example/feature_list/features/custom_timers.dart';
+import 'package:appdynamics_agent_example/feature_list/features/error_reporting.dart';
+import 'package:appdynamics_agent_example/feature_list/features/info_points.dart';
+import 'package:appdynamics_agent_example/feature_list/features/manual_network_requests.dart';
+import 'package:appdynamics_agent_example/feature_list/features/screenshots.dart';
+import 'package:appdynamics_agent_example/feature_list/features/session_control.dart';
+import 'package:appdynamics_agent_example/feature_list/features/session_frames.dart';
+import 'package:appdynamics_agent_example/feature_list/features/user_data.dart';
+import 'package:appdynamics_agent_example/routing/route_paths.dart';
+import 'package:appdynamics_agent_example/settings/settings.dart';
 import 'package:flutter/material.dart';
 
 Route<dynamic> onGenerateRoute(RouteSettings settings) {
