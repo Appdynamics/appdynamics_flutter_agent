@@ -32,3 +32,5 @@ pluginManagement {
 rootProject.name = 'rum-flutter'
 include 'example'
 
+import org.apache.tools.ant.DirectoryScanner
+DirectoryScanner.removeDefaultExclude("**/.gitignore")

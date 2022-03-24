@@ -4,7 +4,7 @@
 #
 Pod::Spec.new do |s|
   s.name             = 'appdynamics_agent'
-  s.version          = '22.3.0-beta.7'
+  s.version          = '22.3.0-beta.8'
   s.summary          = 'Flutter plugin to integrate AppDynamics Mobile Real User Monitoring with your app.'
   s.description      = <<-DESC
 Flutter plugin to integrate AppDynamics Mobile Real User Monitoring with your app.

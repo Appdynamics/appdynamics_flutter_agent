@@ -1,4 +1,4 @@
-![Pub Version](https://img.shields.io/pub/v/appdynamics_agent)
+[![Pub Version](https://img.shields.io/pub/v/appdynamics_agent)](https://pub.dev/packages/appdynamics_agent)
 
 # AppDynamics Flutter Plugin
 
@@ -74,7 +74,7 @@ dependencies {
 apply plugin: 'adeum'
 ```
 
-3. Add the following permissions to your AndroidManifest.xml (usually in android/src/main/):
+3. Add the following permissions to your `AndroidManifest.xml` (usually in `android/src/main/`):
 
 ```xml
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"

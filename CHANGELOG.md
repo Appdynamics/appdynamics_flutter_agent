@@ -1,3 +1,7 @@
+# 22.3.0-beta.8
+* Fix agent versions in beacon logs.
+* Add `applicationName` agent configuration parameter.
+
 # 22.3.0-beta.7
 * Misc README changes.
 

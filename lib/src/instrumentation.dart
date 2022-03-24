@@ -13,7 +13,6 @@ import 'package:appdynamics_agent/appdynamics_agent.dart';
 import 'package:appdynamics_agent/src/session_frame.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
-import 'package:package_info_plus/package_info_plus.dart';
 
 import 'crash_report.dart';
 import 'globals.dart';
@@ -91,12 +90,7 @@ class Instrumentation {
   /// }
   /// ```
   static Future<void> start(AgentConfiguration config) async {
-    // Mark private constructor coverage. Doesn't have any other effect.
-    // TODO: Remove when you can test private constructor some other way.
-    Instrumentation._();
-
-    PackageInfo packageInfo = await PackageInfo.fromPlatform();
-    String version = packageInfo.version;
+    String version = "22.3.0-beta.8";
     String type = "Flutter";
 
     final crashCallback = config.crashReportCallback;
@@ -903,7 +897,7 @@ class Instrumentation {
   /// ```
   static Future<void> crash() async {
     try {
-      await channel.invokeMethod<String?>('crash');
+      await channel.invokeMethod<void>('crash');
     } on PlatformException catch (e) {
       throw Exception(e.details);
     }
@@ -961,6 +955,10 @@ class Instrumentation {
   /// }
   /// ```
   static Future<void> errorHandler(FlutterErrorDetails details) async {
+    // Call private constructor for coverage. Doesn't have any other effect.
+    // TODO: Remove when you can test private constructor some other way.
+    Instrumentation._();
+
     FlutterError.presentError(details);
 
     final crashReport = CrashReport(

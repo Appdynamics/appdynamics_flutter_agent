@@ -74,6 +74,19 @@ class AgentConfiguration {
   /// are occurring.
   final bool crashReportingEnabled;
 
+  /// Sets the name of this mobile application. If not set, it will try to be
+  /// inferred.
+  ///
+  /// [applicationName] must follow reverse DNS format, like a bundle ID:
+  /// `com.myapplication.applicationName`.
+  ///
+  /// [applicationName] may contain uppercase or lowercase letters
+  /// ('A' through 'Z'), numbers, and underscores ('_').
+  ///
+  /// If this property is set, all data reported from this application is
+  /// associated with `applicationName` and appears together in dashboards.
+  final String? applicationName;
+
   AgentConfiguration({
     required this.appKey,
     this.collectorURL = "https://mobile.eum-appdynamics.com",
@@ -82,6 +95,7 @@ class AgentConfiguration {
     this.screenshotsEnabled = true,
     this.crashReportingEnabled = true,
     this.crashReportCallback,
+    this.applicationName,
   });
 
   /// Creates a new [AgentConfiguration] with possibility to overwrite existing
@@ -106,7 +120,8 @@ class AgentConfiguration {
       bool? screenshotsEnabled,
       LoggingLevel? loggingLevel,
       CrashReportCallback? crashReportCallback,
-      bool? crashReportingEnabled}) {
+      bool? crashReportingEnabled,
+      String? applicationName}) {
     return AgentConfiguration(
         appKey: appKey ?? this.appKey,
         collectorURL: collectorURL ?? this.collectorURL,
@@ -115,6 +130,7 @@ class AgentConfiguration {
         loggingLevel: loggingLevel ?? this.loggingLevel,
         crashReportCallback: crashReportCallback ?? this.crashReportCallback,
         crashReportingEnabled:
-            crashReportingEnabled ?? this.crashReportingEnabled);
+            crashReportingEnabled ?? this.crashReportingEnabled,
+        applicationName: applicationName ?? this.applicationName);
   }
 }

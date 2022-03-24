@@ -7,7 +7,6 @@
 import 'package:appdynamics_agent/appdynamics_agent.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:package_info_plus/package_info_plus.dart';
 
 import 'globals.dart';
 
@@ -33,8 +32,10 @@ void main() {
     });
 
     const appKey = "AA-BBB-CCC";
-    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+    String version = "22.3.0-beta.8";
+
     AgentConfiguration config = AgentConfiguration(appKey: appKey);
+
     await Instrumentation.start(config);
 
     expect(log, hasLength(1));
@@ -43,7 +44,7 @@ void main() {
         'start',
         arguments: <String, dynamic>{
           "type": "Flutter",
-          "version": packageInfo.version,
+          "version": version,
           "appKey": appKey,
           "loggingLevel": 0,
           "collectorURL": "https://mobile.eum-appdynamics.com",
