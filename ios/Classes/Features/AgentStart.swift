@@ -44,6 +44,10 @@ extension SwiftAppDynamicsAgentPlugin {
     if let crashReportingEnabled = properties["crashReportingEnabled"] as? Bool {
       configuration.crashReportingEnabled = crashReportingEnabled
     }
+
+    if let applicationName = properties["applicationName"] as? String {
+       configuration.applicationName = applicationName
+    }
     
     if crashReportCallback == nil {
       crashReportCallback = CrashCallbackObject()
@@ -51,7 +55,6 @@ extension SwiftAppDynamicsAgentPlugin {
     }
     
     configuration.enableAutoInstrument = false
-    configuration.applicationName = "com.appdynamics.FlutterEveryfeatureiOS"
     ADEumInstrumentation.initWith(configuration, a: type, b: version);
     
     result(nil)
