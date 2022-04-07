@@ -4,4 +4,4 @@
 # All rights reserved.
 #
 #
-flutter upgrade
+flutter upgrade --force

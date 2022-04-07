@@ -3,9 +3,7 @@ import Flutter
 
 extension SwiftAppDynamicsAgentPlugin {
   func reportError(result: @escaping FlutterResult, arguments: Any?) {
-    guard let properties = arguments as? Dictionary<String, Any> else {
-      return
-    }
+    let properties = arguments as! Dictionary<String, Any>
     
     let stackTrace = properties["stackTrace"] as? String
     
@@ -32,14 +30,20 @@ extension SwiftAppDynamicsAgentPlugin {
   }
   
   func createCrashReport(result: @escaping FlutterResult, arguments: Any?) {
-    guard let properties = arguments as? Dictionary<String, Any> else {
-      return
-    }
+    let properties = arguments as! Dictionary<String, Any>
     
-    let crashDump = properties["crashDump"] as! String
     let type = "clrCrashReport"
+    let crashDump = properties["crashDump"] as! String
     
-    ADEumInstrumentation.createCrashReport(crashDump, type: type)
+    let data = crashDump.data(using: String.Encoding.utf8)!
+    let toJson = try! JSONSerialization.jsonObject(with: data, options: .mutableContainers) as! NSMutableDictionary
+    
+    toJson["guid"] = UUID().uuidString
+    
+    let backToData = try! JSONSerialization.data(withJSONObject: toJson, options: .prettyPrinted)
+    let backToString = String.init(data: backToData, encoding: .utf8)!
+    
+    ADEumInstrumentation.createCrashReport(backToString, type: type)
     result(nil)
   }
 }

@@ -6,15 +6,14 @@ extension SwiftAppDynamicsAgentPlugin {
     guard let properties = arguments as? Dictionary<String, Any> else {
       return
     }
-    
+
     guard let pageName = properties["widgetName"] as? String else {
       let error = FlutterError(code: "500", message: "Agent trackPageStart() failed.", details: "Please provide a valid widget name.")
       result(error)
       return
     }
     
-    let uuidString = properties["uuidString"] as! String
-    let uuid = UUID(uuidString: uuidString)!
+    let uuid = UUID()
     
     let formatter = DateFormatter()
     formatter.dateFormat = SwiftAppDynamicsAgentPlugin.dateFormat
@@ -23,7 +22,7 @@ extension SwiftAppDynamicsAgentPlugin {
     let start = formatter.date(from: startDate)!
     
     ADEumInstrumentation.trackPageStart(pageName, uuid: uuid, start: start)
-    result(nil)
+    result(uuid.uuidString)
   }
   
   func trackPageEnd(result: @escaping FlutterResult, arguments: Any?) {

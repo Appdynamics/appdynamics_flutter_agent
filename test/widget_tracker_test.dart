@@ -16,15 +16,12 @@ void main() {
   testWidgets('TrackedWidget converts from and out of JSON correctly',
       (WidgetTester tester) async {
     const widgetName = "foo";
-    const uuidString = "bar";
     final startDate = DateTime.utc(2021).toIso8601String();
     final endDate = DateTime.utc(2022).toIso8601String();
 
     final trackedWidget = TrackedWidget(
-        widgetName: widgetName,
-        uuidString: uuidString,
-        startDate: startDate,
-        endDate: endDate);
+        widgetName: widgetName, startDate: startDate, endDate: endDate);
+    trackedWidget.uuidString = "random-uuid";
 
     final converted = TrackedWidget.fromJson(trackedWidget.toJson());
 
@@ -41,6 +38,7 @@ void main() {
         (MethodCall methodCall) async {
       switch (methodCall.method) {
         case 'trackPageStart':
+          return "random-uuid";
         case 'trackPageEnd':
           log.add(methodCall);
           return null;
@@ -97,7 +95,7 @@ void main() {
         (MethodCall methodCall) async {
       switch (methodCall.method) {
         case 'trackPageStart':
-          return null;
+          return "random-uuid";
         case 'trackPageEnd':
           throw PlatformException(
               code: '500', details: exceptionMessage, message: "Message");

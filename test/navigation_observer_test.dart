@@ -19,8 +19,8 @@ void main() {
         (MethodCall methodCall) async {
       switch (methodCall.method) {
         case 'trackPageStart':
+          return "random-uuid";
         case 'trackPageEnd':
-          return null;
         default:
           return null;
       }

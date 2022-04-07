@@ -8,8 +8,6 @@ import 'dart:convert';
 import 'dart:core';
 import 'dart:isolate';
 
-import 'package:uuid/uuid.dart';
-
 class CrashReport {
   final String message;
   final StackTrace? stackTrace;
@@ -74,12 +72,9 @@ class CrashReport {
     final time = DateTime.now().millisecondsSinceEpoch;
     final targetSite =
         stackFrames.isNotEmpty ? stackFrames.first["method"] : "";
-    final guid = const Uuid().v1();
-
     final dict = {
       "environment": "Flutter",
       "time": time,
-      "guid": guid,
       "stackTrace": {
         "exceptionClassName": "Dart exception",
         "message": message,

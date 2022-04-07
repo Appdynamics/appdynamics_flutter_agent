@@ -8,7 +8,7 @@ group 'com.appdynamics.appdynamics_agent'
 version '1.0-SNAPSHOT'
 
 buildscript {
-    ext.kotlin_version = '1.6.10'
+    ext.kotlin_version = '1.6.20'
     ext.appd_plugin_version = '22.2.2'
 
     repositories {

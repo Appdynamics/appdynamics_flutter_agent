@@ -10,6 +10,9 @@ import androidx.annotation.NonNull
 import com.appdynamics.appdynamics_agent.AppDynamicsAgentPlugin
 import com.appdynamics.eumagent.runtime.Instrumentation
 import io.flutter.plugin.common.MethodChannel
+import org.json.JSONObject
+import java.util.*
+import kotlin.collections.HashMap
 
 fun AppDynamicsAgentPlugin.reportError(
     @NonNull result: MethodChannel.Result,
@@ -45,11 +48,14 @@ fun AppDynamicsAgentPlugin.createCrashReport(
 ) {
     val properties = arguments as HashMap<*, *>
 
-    val crashDump = properties["crashDump"] as String
     val type = "clrCrashReport"
+    val crashDump = properties["crashDump"] as String
 
-    Instrumentation.createCrashReport(crashDump, type)
+    val toJson = JSONObject(crashDump)
+    toJson.put("guid", UUID.randomUUID().toString())
+    val backToString = toJson.toString();
 
+    Instrumentation.createCrashReport(backToString, type)
     result.success(null)
 }
 

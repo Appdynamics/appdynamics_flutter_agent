@@ -24,7 +24,7 @@ import 'package:flutter/services.dart';
 ///    await tracker.setRequestHeaders(response.request.headers);
 ///    await tracker.setResponseHeaders(response.headers);
 ///    await tracker.setResponseStatusCode(response.statusCode);
-///    await tracker.setUserDataBool("secureCheck": false);
+///    await tracker.setUserDataBool("secureCheck", false);
 ///  } catch (error) {
 ///    await tracker.setError(error.toString());
 ///  } finally {

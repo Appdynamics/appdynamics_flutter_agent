@@ -5,6 +5,7 @@
  */
 
 import 'dart:convert';
+import 'dart:io' show Platform;
 
 import 'package:appdynamics_agent/appdynamics_agent.dart';
 import 'package:appdynamics_agent_example/app_state/app_state.dart';
@@ -90,6 +91,13 @@ class _SettingsState extends State<Settings> {
     var collectorURL = _collectorURLFieldController.text;
     var screenshotURL = _screenshotURLFieldController.text;
 
+    var applicationName = "";
+    if (Platform.isAndroid) {
+      applicationName = "com.appdynamics.FlutterEveryfeatureAndroid";
+    } else if (Platform.isIOS) {
+      applicationName = "com.appdynamics.FlutterEveryfeatureiOS";
+    }
+
     if (appKey.trim().isEmpty) {
       return;
     }
@@ -105,6 +113,7 @@ class _SettingsState extends State<Settings> {
         collectorURL: collectorURL,
         screenshotURL: screenshotURL,
         crashReportCallback: crashReportCallback,
+        applicationName: applicationName,
         screenshotsEnabled: appState.screenshotsEnabled,
         crashReportingEnabled: appState.crashReportingEnabled);
     await Instrumentation.start(config);

@@ -19,9 +19,7 @@ fun AppDynamicsAgentPlugin.trackPageStart(
 ) {
     val properties = arguments as HashMap<*, *>
     val pageName = properties["widgetName"] as? String
-
-    val uuidString = properties["uuidString"] as String
-    val uuid = UUID.fromString(uuidString)
+    val uuid = UUID.randomUUID()
 
     val startDate = properties["startDate"] as String
     val start = SimpleDateFormat(
@@ -30,7 +28,7 @@ fun AppDynamicsAgentPlugin.trackPageStart(
     ).parse(startDate)!!.time
 
     Instrumentation.trackPageStart(pageName, uuid, start)
-    result.success(null)
+    result.success(uuid.toString())
 }
 
 fun AppDynamicsAgentPlugin.trackPageEnd(
@@ -40,8 +38,6 @@ fun AppDynamicsAgentPlugin.trackPageEnd(
     val properties = arguments as HashMap<*, *>
     val pageName = properties["widgetName"] as? String
     val uuidString = properties["uuidString"] as String
-
-
     val uuid = UUID.fromString(uuidString)
 
     val startDate = properties["startDate"] as String

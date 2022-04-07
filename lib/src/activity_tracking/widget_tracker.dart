@@ -7,7 +7,6 @@
 import 'package:appdynamics_agent/appdynamics_agent.dart';
 import 'package:appdynamics_agent/src/globals.dart';
 import 'package:flutter/services.dart';
-import 'package:uuid/uuid.dart';
 
 class TrackedWidget {
   late String widgetName;
@@ -20,7 +19,6 @@ class TrackedWidget {
 
   TrackedWidget({
     required this.widgetName,
-    required this.uuidString,
     required this.startDate,
     this.endDate,
   });
@@ -105,13 +103,18 @@ class WidgetTracker {
   /// May throw [Exception] on native platform contingency.
   Future<void> trackWidgetStart(String widgetName) async {
     try {
-      final uuidString = const Uuid().v1();
       final startDate = DateTime.now().toIso8601String();
-      final trackedWidget = TrackedWidget(
-          widgetName: widgetName, uuidString: uuidString, startDate: startDate);
+      final trackedWidget =
+          TrackedWidget(widgetName: widgetName, startDate: startDate);
 
-      await channel.invokeMethod<void>(
-          'trackPageStart', trackedWidget.toJson());
+      final params = {
+        'widgetName': trackedWidget.widgetName,
+        'startDate': trackedWidget.startDate,
+        'endDate': trackedWidget.endDate,
+      };
+
+      final uuid = await channel.invokeMethod<String>('trackPageStart', params);
+      trackedWidget.uuidString = uuid!;
 
       trackedWidgets[trackedWidget.widgetName] = trackedWidget;
     } on PlatformException catch (e) {
