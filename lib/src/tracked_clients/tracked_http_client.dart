@@ -7,9 +7,9 @@
 import 'dart:async';
 
 import 'package:appdynamics_agent/appdynamics_agent.dart';
-import 'package:http/http.dart' as http;
+import 'package:http/http.dart';
 
-/// To collect metrics on network requests, you can use the HTTP client wrapper:
+/// Use this client to track requests made via the `http` package.
 ///
 /// ```dart
 /// import 'package:http/http.dart' as http;
@@ -22,19 +22,22 @@ import 'package:http/http.dart' as http;
 ///   // handle error
 /// }
 /// ```
-class TrackedHttpClient extends http.BaseClient {
-  final http.Client _httpClient;
-  bool addCorrelationHeaders;
+class TrackedHttpClient extends BaseClient {
+  final Client _httpClient;
+  final bool addCorrelationHeaders;
   RequestTracker? tracker;
 
-  TrackedHttpClient(this._httpClient, {this.addCorrelationHeaders = true});
+  TrackedHttpClient(this._httpClient,
+      {this.addCorrelationHeaders = true});
 
   @override
-  Future<http.StreamedResponse> send(http.BaseRequest request) async {
+  Future<StreamedResponse> send(BaseRequest request) async {
     if (addCorrelationHeaders) {
       final correlationHeaders =
           await RequestTracker.getServerCorrelationHeaders();
-      request.headers.addAll(correlationHeaders);
+      final headers =
+          correlationHeaders.map((key, value) => MapEntry(key, value.first));
+      request.headers.addAll(headers);
     }
 
     final urlString = request.url.toString();
@@ -42,10 +45,13 @@ class TrackedHttpClient extends http.BaseClient {
 
     return _httpClient.send(request).then((response) async {
       final headers = response.request?.headers ?? request.headers;
+      final requestHeaders = headers.map((k, v) => MapEntry(k, <String>[v]));
+      final responseHeaders =
+          response.headers.map((k, v) => MapEntry(k, <String>[v]));
 
-      await tracker!.setRequestHeaders(headers);
+      await tracker!.setRequestHeaders(requestHeaders);
       await tracker!.setResponseStatusCode(response.statusCode);
-      await tracker!.setResponseHeaders(response.headers);
+      await tracker!.setResponseHeaders(responseHeaders);
 
       return response;
     }, onError: (e, StackTrace stacktrace) async {

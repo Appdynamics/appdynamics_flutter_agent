@@ -6,6 +6,7 @@
 
 import 'package:appdynamics_agent/appdynamics_agent.dart';
 import 'package:appdynamics_agent_example/feature_list/utils/flush_beacons_app_bar.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -33,10 +34,12 @@ class _ManualNetworkRequestsState extends State<ManualNetworkRequests> {
     if (urlString.trim().isNotEmpty) {
       final url = Uri.parse(urlString);
 
-      Map<String, String> headers = <String, String>{};
+      Map<String, List<String>> listHeaders = {};
       if (addServerCorrelation) {
-        headers = await RequestTracker.getServerCorrelationHeaders();
+        listHeaders = await RequestTracker.getServerCorrelationHeaders();
       }
+      final headers =
+          listHeaders.map((key, value) => MapEntry(key, value.first));
       final request = http.get(url, headers: headers);
       _sendManualReportedRequest(request, urlString);
     }
@@ -47,10 +50,13 @@ class _ManualNetworkRequestsState extends State<ManualNetworkRequests> {
     if (urlString.trim().isNotEmpty) {
       final url = Uri.parse(urlString);
 
-      Map<String, String> headers = <String, String>{};
+      Map<String, List<String>> listHeaders = {};
       if (addServerCorrelation) {
-        headers = await RequestTracker.getServerCorrelationHeaders();
+        listHeaders = await RequestTracker.getServerCorrelationHeaders();
       }
+      final headers =
+          listHeaders.map((key, value) => MapEntry(key, value.first));
+
       final request = http.get(url, headers: headers);
       _sendManualReportedRequest(request, urlString);
     }
@@ -70,9 +76,14 @@ class _ManualNetworkRequestsState extends State<ManualNetworkRequests> {
     final dateTimeValue = DateTime.utc(2021).toLocal();
     try {
       final response = await request;
+      final requestHeaders =
+          response.request!.headers.map((k, v) => MapEntry(k, <String>[v]));
+      final responseHeaders =
+          response.headers.map((k, v) => MapEntry(k, <String>[v]));
+
       await tracker.setResponseStatusCode(response.statusCode)
-        ..setRequestHeaders(response.request!.headers)
-        ..setResponseHeaders(response.headers)
+        ..setRequestHeaders(requestHeaders)
+        ..setResponseHeaders(responseHeaders)
         ..setUserData("stringKey", stringValue)
         ..setUserDataBool("boolKey", boolValue)
         ..setUserDataDateTime("dateTimeValue", dateTimeValue)
@@ -91,7 +102,7 @@ class _ManualNetworkRequestsState extends State<ManualNetworkRequests> {
     }
   }
 
-  Future<void> _sendClientRequestButtonPressed() async {
+  Future<void> _sendHttpClientRequestButtonPressed() async {
     var urlString = urlFieldController.text;
     if (urlString.trim().isEmpty) {
       return;
@@ -104,8 +115,33 @@ class _ManualNetworkRequestsState extends State<ManualNetworkRequests> {
 
       final url = Uri.parse(urlString);
       final client = TrackedHttpClient(http.Client());
+
       final response =
           await client.post(url, body: "[{\"type\": \"trackedhttpclient\"}]");
+      setState(() {
+        responseText = "Success with ${response.statusCode}.";
+      });
+    } catch (e) {
+      setState(() {
+        responseText = "Failed with ${e.toString()}.";
+      });
+    }
+  }
+
+  Future<void> _sendDioClientRequestButtonPressed() async {
+    var urlString = urlFieldController.text;
+    if (urlString.trim().isEmpty) {
+      return;
+    }
+
+    try {
+      setState(() {
+        responseText = "Loading...";
+      });
+
+      final dioClient = TrackedDioClient(Dio());
+      final response = await dioClient.post(urlString,
+          data: "[{\"type\": \"trackeddioclient\"}]");
       setState(() {
         responseText = "Success with ${response.statusCode}.";
       });
@@ -181,12 +217,19 @@ class _ManualNetworkRequestsState extends State<ManualNetworkRequests> {
                             textAlign: TextAlign.center),
                         onPressed: _sendPostRequestButtonPressed),
                     ElevatedButton(
-                        key: const Key("manualClientGetRequestButton"),
+                        key: const Key("manualHttpClientGetRequestButton"),
                         child: const Text(
                             'TrackedHttpClient GET request\n'
                             '(has custom header: "foo")',
                             textAlign: TextAlign.center),
-                        onPressed: _sendClientRequestButtonPressed),
+                        onPressed: _sendHttpClientRequestButtonPressed),
+                    ElevatedButton(
+                        key: const Key("manualDioClientGetRequestButton"),
+                        child: const Text(
+                            'TrackedDioClient GET request\n'
+                            '(has custom header: "foo")',
+                            textAlign: TextAlign.center),
+                        onPressed: _sendDioClientRequestButtonPressed),
                     const SizedBox(
                       height: 30,
                     ),

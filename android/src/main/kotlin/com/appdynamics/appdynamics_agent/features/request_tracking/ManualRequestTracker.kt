@@ -117,7 +117,7 @@ fun AppDynamicsAgentPlugin.setRequestTrackerResponseHeaders(
         return
     }
 
-    val headers = properties["headers"] as? Map<String, String> ?: run {
+    val headers = properties["headers"] as? Map<String, List<String>> ?: run {
         result.error(
             "500",
             "Agent setRequestTrackerResponseHeaders() failed.",
@@ -126,10 +126,7 @@ fun AppDynamicsAgentPlugin.setRequestTrackerResponseHeaders(
         return
     }
 
-    val listHeaders: Map<String, List<String>> =
-        headers.entries.associate { it.key to listOf(it.value) }
-
-    tracker.withResponseHeaderFields(listHeaders)
+    tracker.withResponseHeaderFields(headers)
     result.success(null)
 }
 
@@ -149,7 +146,7 @@ fun AppDynamicsAgentPlugin.setRequestTrackerRequestHeaders(
         return
     }
 
-    val headers = properties["headers"] as? Map<String, String> ?: run {
+    val headers = properties["headers"] as? Map<String, List<String>> ?: run {
         result.error(
             "500",
             "Agent setRequestTrackerRequestHeaders() failed.",
@@ -158,10 +155,7 @@ fun AppDynamicsAgentPlugin.setRequestTrackerRequestHeaders(
         return
     }
 
-    val listHeaders: Map<String, List<String>> =
-        headers.entries.associate { it.key to listOf(it.value) }
-
-    tracker.withRequestHeaderFields(listHeaders)
+    tracker.withRequestHeaderFields(headers)
     result.success(null)
 }
 
@@ -189,7 +183,6 @@ fun AppDynamicsAgentPlugin.getServerCorrelationHeaders(
     @NonNull result: MethodChannel.Result,
     arguments: Any?
 ) {
-    val listHeaders = ServerCorrelationHeaders.generate()
-    val headers: Map<String, String> = listHeaders.entries.associate { it.key to it.value[0] }
+    val headers = ServerCorrelationHeaders.generate()
     result.success(headers)
 }

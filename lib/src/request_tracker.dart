@@ -96,7 +96,7 @@ class RequestTracker {
   ///
   /// Method might throw [Exception].
   Future<RequestTracker> setRequestHeaders(
-      Map<String, dynamic> requestHeaders) async {
+      Map<String, List<String>> requestHeaders) async {
     try {
       final args = {"id": id, "headers": requestHeaders};
       await channel.invokeMethod<void>('setRequestTrackerRequestHeaders', args);
@@ -113,7 +113,7 @@ class RequestTracker {
   ///
   /// Method might throw [Exception].
   Future<RequestTracker> setResponseHeaders(
-      Map<String, String> responseHeaders) async {
+      Map<String, List<String>> responseHeaders) async {
     try {
       final args = {"id": id, "headers": responseHeaders};
       await channel.invokeMethod<void>(
@@ -152,11 +152,12 @@ class RequestTracker {
   /// the [RequestTracker] object itself via [setRequestHeaders].
   ///
   /// Method might throw [Exception].
-  static Future<Map<String, String>> getServerCorrelationHeaders() async {
+  static Future<Map<String, List<String>>> getServerCorrelationHeaders() async {
     try {
       var response = await channel
           .invokeMethod<Map<dynamic, dynamic>>('getServerCorrelationHeaders');
-      return Map<String, String>.from(response!);
+      return response!.map(
+          (key, value) => MapEntry(key.toString(), List<String>.from(value)));
     } on PlatformException catch (e) {
       throw Exception(e.details);
     }

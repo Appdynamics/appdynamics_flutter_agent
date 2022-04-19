@@ -32,7 +32,7 @@ void main() {
           return null;
         case "getServerCorrelationHeaders":
           log.add(methodCall);
-          return {"foo": "bar"};
+          return {"foo": ["bar"]};
         default:
           return null;
       }
@@ -101,7 +101,7 @@ void main() {
           return null;
         case "getServerCorrelationHeaders":
           log.add(methodCall);
-          return {"foo": "bar"};
+          return {"foo": ["bar"]};
         default:
           return null;
       }
@@ -136,7 +136,7 @@ void main() {
     ]);
   });
 
-  testWidgets("TrackedHttpClient doesn't append correlation headers",
+  testWidgets("TrackedHttpClient doesn't call correlation headers method",
       (WidgetTester tester) async {
     final List<MethodCall> log = <MethodCall>[];
 

@@ -26,30 +26,6 @@ extension on WidgetTester {
     await enterText(requestTextField, successURL);
   }
 
-  assertTrackerBeaconSent() async {
-    final requestSentLabel = find.text("Success with 200.");
-    await ensureVisible(requestSentLabel);
-    expect(requestSentLabel, findsOneWidget);
-
-    final trackerRequests = await findRequestsBy(
-      url: successURL,
-      type: "network-request",
-      hrc: "200",
-      $is: "Manual HttpTracker",
-    );
-    expect(trackerRequests.length, 1);
-
-    final actualRequests = await findRequestsBy(type: "trackedhttpclient");
-    expect(actualRequests.length, 1);
-
-    final actualHeaders = actualRequests[0]["request"]["headers"];
-
-    final btHeaders = await RequestTracker.getServerCorrelationHeaders();
-    btHeaders.forEach((key, value) {
-      expect(actualHeaders[key.toLowerCase()], value);
-    });
-  }
-
   sendNetworkRequest() async {
     final requestTextField = find.byKey(const Key("requestTextField"));
     expect(requestTextField, findsOneWidget);
@@ -91,6 +67,55 @@ extension on WidgetTester {
 
     expect(requests.length, 1);
   }
+
+  assertHttpTrackerBeaconSent() async {
+    final requestSentLabel = find.text("Success with 200.");
+    await ensureVisible(requestSentLabel);
+    expect(requestSentLabel, findsOneWidget);
+
+    final trackerRequests = await findRequestsBy(
+      url: successURL,
+      type: "network-request",
+      hrc: "200",
+      $is: "Manual HttpTracker",
+    );
+    expect(trackerRequests.length, 1);
+
+    final actualRequests = await findRequestsBy(type: "trackedhttpclient");
+    expect(actualRequests.length, 1);
+
+    // Also assert correlation headers are added
+    final actualHeaders = actualRequests[0]["request"]["headers"];
+    final btHeaders = await RequestTracker.getServerCorrelationHeaders();
+    btHeaders.forEach((key, value) {
+      expect(actualHeaders[key.toLowerCase()], value.first);
+    });
+  }
+
+  assertDioTrackerBeaconSent() async {
+    final requestSentLabel = find.text("Success with 200.");
+    await ensureVisible(requestSentLabel);
+    expect(requestSentLabel, findsOneWidget);
+
+    final trackerRequests = await findRequestsBy(
+      url: successURL,
+      type: "network-request",
+      hrc: "200",
+      $is: "Manual HttpTracker",
+    );
+    expect(trackerRequests.length, 2);
+
+    final actualRequests = await findRequestsBy(type: "trackeddioclient");
+    expect(actualRequests.length, 1);
+
+    // Also assert correlation headers are added
+    final Map<String, dynamic> actualHeaders =
+        actualRequests[0]["request"]["headers"];
+    final btHeaders = await RequestTracker.getServerCorrelationHeaders();
+    btHeaders.forEach((key, value) {
+      expect(actualHeaders[key.toLowerCase()], value.first);
+    });
+  }
 }
 
 void main() {
@@ -117,9 +142,12 @@ void main() {
     await tester.flushBeacons();
     await tester.assertBeaconSent();
     await tester.redirectToLocalhost();
-    await tester.tapAndSettle("manualClientGetRequestButton");
+    await tester.tapAndSettle("manualHttpClientGetRequestButton");
     await tester.flushBeacons();
-    await tester.assertTrackerBeaconSent();
+    await tester.assertHttpTrackerBeaconSent();
+    await tester.tapAndSettle("manualDioClientGetRequestButton");
+    await tester.flushBeacons();
+    await tester.assertDioTrackerBeaconSent();
   });
 
   tearDown(() async {

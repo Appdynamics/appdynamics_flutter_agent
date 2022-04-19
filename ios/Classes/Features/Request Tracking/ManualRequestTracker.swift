@@ -63,13 +63,17 @@ extension SwiftAppDynamicsAgentPlugin {
       return
     }
     
-    guard let headers = properties["headers"] as? [String: Any] else {
+    guard let headers = properties["headers"] as? [String: [String]] else {
       let error = FlutterError(code: "500", message: "Agent setRequestTrackerResponseHeaders() failed.", details: "Please provide valid response headers.")
       result(error)
       return
     }
     
-    tracker.allHeaderFields = headers
+    let stringValues = headers.mapValues { value in
+      return value.joined(separator: ", ")
+    }
+    
+    tracker.allHeaderFields = stringValues
     result(nil)
   }
   
@@ -83,13 +87,17 @@ extension SwiftAppDynamicsAgentPlugin {
       return
     }
     
-    guard let headers = properties["headers"] as? [String: Any] else {
+    guard let headers = properties["headers"] as? [String: [String]] else {
       let error = FlutterError(code: "500", message: "Agent setRequestTrackerRequestHeaders() failed.", details: "Please provide valid response headers.")
       result(error)
       return
     }
     
-    tracker.allRequestHeaderFields = headers
+    let stringValues = headers.mapValues { value in
+      return value.joined(separator: ", ")
+    }
+    
+    tracker.allRequestHeaderFields = stringValues
     result(nil)
   }
   
@@ -111,6 +119,9 @@ extension SwiftAppDynamicsAgentPlugin {
   
   func getServerCorrelationHeaders(result: @escaping FlutterResult, arguments: Any?) {
     let headers = ADEumServerCorrelationHeaders.generate()
-    result(headers)
+    let listValues = Dictionary(uniqueKeysWithValues:
+                                  headers.map { key, value in (key, [value]) })
+    
+    result(listValues)
   }
 }
