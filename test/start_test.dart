@@ -4,9 +4,12 @@
  *
  */
 
+import 'dart:io';
+
 import 'package:appdynamics_agent/appdynamics_agent.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:yaml/yaml.dart';
 
 import 'globals.dart';
 
@@ -32,7 +35,10 @@ void main() {
     });
 
     const appKey = "AA-BBB-CCC";
-    String version = "22.3.0-beta.8";
+    File file = File("pubspec.yaml");
+    String yamlString = file.readAsStringSync();
+    Map yaml = loadYaml(yamlString);
+    final version = yaml["version"];
 
     AgentConfiguration config = AgentConfiguration(appKey: appKey);
 
