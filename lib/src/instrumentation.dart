@@ -90,7 +90,7 @@ class Instrumentation {
   /// }
   /// ```
   static Future<void> start(AgentConfiguration config) async {
-    String version = "22.3.0-beta.8";
+    String version = "22.5.0-beta.1";
     String type = "Flutter";
 
     final crashCallback = config.crashReportCallback;
@@ -201,7 +201,7 @@ class Instrumentation {
 
   /// Reports an `Exception` that was caught.
   ///
-  /// This can be called in [catch] blocks to report unexpected exceptions, that
+  /// This can be called in catch blocks to report unexpected exceptions, that
   /// you want to track.
   ///
   /// Method might throw [Exception].

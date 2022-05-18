@@ -1,3 +1,7 @@
+# 22.5.0-beta.1
+* `TrackedDioClient` class will now help with automatically tracking `dio` requests.
+* Removing `uuid` dependency for less hassle.
+
 # 22.3.0-beta.8
 * Fix agent versions in beacon logs.
 * Add `applicationName` agent configuration parameter.

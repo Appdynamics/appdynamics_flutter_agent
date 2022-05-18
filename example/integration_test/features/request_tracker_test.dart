@@ -125,8 +125,7 @@ void main() {
     await stubServerResponses();
   });
 
-  final binding = IntegrationTestWidgetsFlutterBinding.ensureInitialized()
-      as IntegrationTestWidgetsFlutterBinding;
+  final binding = IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
   testWidgets("Manual request tracking sends beacons",
       (WidgetTester tester) async {

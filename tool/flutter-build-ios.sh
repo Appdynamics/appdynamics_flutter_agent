@@ -6,7 +6,12 @@
 #
 
 # For debugging purposes
-flutter devices
+flutter devices --device-timeout=500
+flutter emulators
+
+cd ios
+pod repo add-cdn trunk https://github.com/CocoaPods/Specs.git
+cd ..
 
 flutter build ios --simulator
 
