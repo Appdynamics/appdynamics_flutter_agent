@@ -50,11 +50,11 @@ class CrashReport {
           "line": int.parse(line),
           "column": int.parse(column),
           "file": file,
-          "method": "Void " + method + "()",
+          "method": "Void $method()",
         };
 
         if (type != null) {
-          dict["type"] = "\$." + type;
+          dict["type"] = "\$.$type";
         }
 
         return dict;

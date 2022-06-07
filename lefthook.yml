@@ -1,11 +1,12 @@
 pre-push:
   commands:
+    parallel: true
     linter:
       run: flutter analyze
     tests:
       run: flutter test
     teamcity:
-      run: cd .teamcity; mvn verify
+      run: cd .teamcity; mvn verify; cd ..; rm -rf .teamcity/target;
 
 pre-commit:
   commands:

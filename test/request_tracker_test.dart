@@ -51,7 +51,9 @@ void main() {
           return null;
         case "getServerCorrelationHeaders":
           log.add(methodCall);
-          return {'foo': ['bar']};
+          return {
+            'foo': ['bar']
+          };
         default:
           return null;
       }
@@ -155,7 +157,9 @@ void main() {
         (MethodCall methodCall) async {
       switch (methodCall.method) {
         case "getServerCorrelationHeaders":
-          return {'foo': ['bar']};
+          return {
+            'foo': ['bar']
+          };
         case "setRequestTrackerErrorInfo":
         case "setRequestTrackerStatusCode":
         case "setRequestTrackerResponseHeaders":

@@ -32,7 +32,9 @@ void main() {
           return null;
         case "getServerCorrelationHeaders":
           log.add(methodCall);
-          return {"foo": ["bar"]};
+          return {
+            "foo": ["bar"]
+          };
         default:
           return null;
       }
@@ -101,7 +103,9 @@ void main() {
           return null;
         case "getServerCorrelationHeaders":
           log.add(methodCall);
-          return {"foo": ["bar"]};
+          return {
+            "foo": ["bar"]
+          };
         default:
           return null;
       }

@@ -90,7 +90,7 @@ class Instrumentation {
   /// }
   /// ```
   static Future<void> start(AgentConfiguration config) async {
-    String version = "22.5.0-beta.1";
+    String version = "22.6.0-beta.1";
     String type = "Flutter";
 
     final crashCallback = config.crashReportCallback;

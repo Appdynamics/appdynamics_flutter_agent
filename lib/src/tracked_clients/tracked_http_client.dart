@@ -27,8 +27,7 @@ class TrackedHttpClient extends BaseClient {
   final bool addCorrelationHeaders;
   RequestTracker? tracker;
 
-  TrackedHttpClient(this._httpClient,
-      {this.addCorrelationHeaders = true});
+  TrackedHttpClient(this._httpClient, {this.addCorrelationHeaders = true});
 
   @override
   Future<StreamedResponse> send(BaseRequest request) async {
