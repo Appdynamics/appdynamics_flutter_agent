@@ -6,6 +6,7 @@
 
 export 'src/agent_configuration.dart';
 export 'src/crash_report_summary.dart';
+export 'src/dio_interceptors/tracking_interceptor.dart';
 export 'src/instrumentation.dart';
 export 'src/request_tracker.dart';
 export 'src/tracked_clients/tracked_http_client.dart';
