@@ -9,7 +9,8 @@ import 'dart:async';
 import 'package:appdynamics_agent/appdynamics_agent.dart';
 import 'package:http/http.dart';
 
-/// Use this client to track requests made via the `http` package.
+/// Use this client to track requests made via the `http` package. Also check
+/// [TrackedDioInterceptor].
 ///
 /// ```dart
 /// import 'package:http/http.dart' as http;
@@ -27,8 +28,7 @@ class TrackedHttpClient extends BaseClient {
   final bool addCorrelationHeaders;
   RequestTracker? tracker;
 
-  TrackedHttpClient(this._httpClient,
-      {this.addCorrelationHeaders = true});
+  TrackedHttpClient(this._httpClient, {this.addCorrelationHeaders = true});
 
   @override
   Future<StreamedResponse> send(BaseRequest request) async {
