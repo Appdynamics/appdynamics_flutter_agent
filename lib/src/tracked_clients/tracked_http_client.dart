@@ -9,8 +9,7 @@ import 'dart:async';
 import 'package:appdynamics_agent/appdynamics_agent.dart';
 import 'package:http/http.dart';
 
-/// Use this client to track requests made via the `http` package. Also check
-/// [TrackedDioInterceptor].
+/// Use this client to track requests made via the `http` package.
 ///
 /// ```dart
 /// import 'package:http/http.dart' as http;
