@@ -2,21 +2,22 @@ import 'package:appdynamics_agent/appdynamics_agent.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 
-/// Use this Interceptor to track requests made via the `dio` package.
+/// Use this class to create a custom Dio [Interceptor] that tracks requests
+/// automatically. Alternative to [TrackedDioClient].
 ///
 /// ```dart
 /// import 'package:dio/dio.dart';
 ///
 /// try {
 ///   final dio = Dio();
-///   dio.interceptors.add(TrackingInterceptor());
+///   dio.interceptors.add(TrackedDioInterceptor());
 ///   final response = await dio.post(urlString, data: {"foo": "bar"});
 ///   // handle response
 /// } catch (e) {
 ///   // handle error
 /// }
 /// ```
-class TrackingInterceptor implements Interceptor {
+class TrackedDioInterceptor implements Interceptor {
   final bool addCorrelationHeaders;
 
   final Map<RequestOptions, RequestTracker> _activeTrackers = {};
@@ -24,7 +25,7 @@ class TrackingInterceptor implements Interceptor {
   @visibleForTesting
   final List<String> trackedIds = [];
 
-  TrackingInterceptor({this.addCorrelationHeaders = true});
+  TrackedDioInterceptor({this.addCorrelationHeaders = true});
 
   @override
   void onRequest(
@@ -60,8 +61,12 @@ class TrackingInterceptor implements Interceptor {
     try {
       final tracker = _activeTrackers.remove(response.requestOptions);
       if (tracker != null) {
-        await tracker.setResponseStatusCode(response.statusCode!);
-        await _logResponse(response, tracker);
+        await tracker.setResponseStatusCode(response.statusCode ?? 404);
+        await tracker.setRequestHeaders(
+          response.requestOptions.headers
+              .map((k, v) => MapEntry(k, <String>[v])),
+        );
+        await tracker.setResponseHeaders(response.headers.map);
         await tracker.reportDone();
       }
     } finally {
@@ -74,28 +79,11 @@ class TrackingInterceptor implements Interceptor {
     try {
       final tracker = _activeTrackers.remove(err.requestOptions);
       if (tracker != null) {
-        await _logResponse(err.response, tracker);
-
-        final statusCode = err.response?.statusCode;
-        if (statusCode != null) {
-          await tracker.setResponseStatusCode(statusCode);
-        } else {
-          await tracker.setError(err.toString(), err.stackTrace.toString());
-        }
-
+        await tracker.setError(err.toString(), err.stackTrace?.toString());
         await tracker.reportDone();
       }
     } finally {
       handler.next(err);
-    }
-  }
-
-  Future _logResponse(Response? response, RequestTracker tracker) async {
-    if (response != null) {
-      await tracker.setRequestHeaders(
-        response.requestOptions.headers.map((k, v) => MapEntry(k, <String>[v])),
-      );
-      await tracker.setResponseHeaders(response.headers.map);
     }
   }
 }
