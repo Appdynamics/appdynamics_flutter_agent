@@ -109,7 +109,8 @@ class RequestTracker {
   /// Sets a dictionary representing the keys and values from the server
   /// response's headers.
   ///
-  /// If an error occurred and a response was not received, this not be called.
+  /// If an error occurred and a response was not received, this should not be
+  /// called.
   ///
   /// Method might throw [Exception].
   Future<RequestTracker> setResponseHeaders(

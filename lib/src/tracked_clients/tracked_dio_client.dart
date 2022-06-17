@@ -9,7 +9,8 @@ import 'package:dio/native_imp.dart';
 
 import '../../appdynamics_agent.dart';
 
-/// Use this client to track requests made via the `dio` package.
+/// Use this client to track requests made via the `dio` package. Also check
+/// [TrackedDioInterceptor].
 ///
 /// ```dart
 /// import 'package:dio/dio.dart';
