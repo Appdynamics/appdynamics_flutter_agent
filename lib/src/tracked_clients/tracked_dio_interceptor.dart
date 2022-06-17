@@ -61,12 +61,8 @@ class TrackedDioInterceptor implements Interceptor {
     try {
       final tracker = _activeTrackers.remove(response.requestOptions);
       if (tracker != null) {
-        await tracker.setResponseStatusCode(response.statusCode ?? 404);
-        await tracker.setRequestHeaders(
-          response.requestOptions.headers
-              .map((k, v) => MapEntry(k, <String>[v])),
-        );
-        await tracker.setResponseHeaders(response.headers.map);
+        await tracker.setResponseStatusCode(response.statusCode!);
+        await _logResponse(response, tracker);
         await tracker.reportDone();
       }
     } finally {
@@ -79,11 +75,29 @@ class TrackedDioInterceptor implements Interceptor {
     try {
       final tracker = _activeTrackers.remove(err.requestOptions);
       if (tracker != null) {
-        await tracker.setError(err.toString(), err.stackTrace?.toString());
+        final statusCode = err.response?.statusCode;
+
+        if (statusCode != null) {
+          // Errors for when status code is not in accepted range should be recorded as normal
+          await tracker.setResponseStatusCode(statusCode);
+          await _logResponse(err.response, tracker);
+        } else {
+          // If status code is null, it means that the error is not a response, but rather a network error
+          await tracker.setError(err.toString(), err.stackTrace.toString());
+        }
         await tracker.reportDone();
       }
     } finally {
       handler.next(err);
+    }
+  }
+
+  Future _logResponse(Response? response, RequestTracker tracker) async {
+    if (response != null) {
+      await tracker.setRequestHeaders(
+        response.requestOptions.headers.map((k, v) => MapEntry(k, <String>[v])),
+      );
+      await tracker.setResponseHeaders(response.headers.map);
     }
   }
 }
