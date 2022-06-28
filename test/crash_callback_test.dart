@@ -13,10 +13,6 @@ import 'globals.dart';
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
-  setUp(() {
-    mockPackageInfo();
-  });
-
   testWidgets('crash callback works', (WidgetTester tester) async {
     tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(channel,
         (MethodCall methodCall) async {

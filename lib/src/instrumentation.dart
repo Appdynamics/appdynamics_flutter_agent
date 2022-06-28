@@ -12,7 +12,8 @@ import 'dart:async';
 import 'package:appdynamics_agent/appdynamics_agent.dart';
 import 'package:appdynamics_agent/src/session_frame.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter/services.dart'
+    show rootBundle, PlatformException, MethodCall;
 
 import 'crash_report.dart';
 import 'globals.dart';
@@ -90,7 +91,8 @@ class Instrumentation {
   /// }
   /// ```
   static Future<void> start(AgentConfiguration config) async {
-    String version = "22.6.0-beta.1";
+    String version = await rootBundle
+        .loadString('packages/appdynamics_agent/version.txt', cache: false);
     String type = "Flutter";
 
     final crashCallback = config.crashReportCallback;
