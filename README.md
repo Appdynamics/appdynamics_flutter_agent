@@ -105,7 +105,9 @@ Future<void> main() async {
 
   final config = AgentConfiguration(
       appKey: "<EUM_APP_KEY>",
-      loggingLevel: LoggingLevel.verbose // optional, for better debugging.
+      loggingLevel: LoggingLevel.verbose, // optional, for better debugging.
+      collectorURL: "<COLLECTOR_URL>", // optional, mostly on-premises. 
+      screenshotURL: "<SCREENSHOT_URL>" // optional, mostly on-premises.
   );
   await Instrumentation.start(config);
 
