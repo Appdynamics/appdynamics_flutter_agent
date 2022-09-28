@@ -40,7 +40,8 @@ class TrackedHttpClient extends BaseClient {
     }
 
     final urlString = request.url.toString();
-    tracker = await RequestTracker.create(urlString);
+    final requestTracker = await RequestTracker.create(urlString);
+    tracker = requestTracker;
 
     return _httpClient.send(request).then((response) async {
       final headers = response.request?.headers ?? request.headers;
@@ -48,16 +49,16 @@ class TrackedHttpClient extends BaseClient {
       final responseHeaders =
           response.headers.map((k, v) => MapEntry(k, <String>[v]));
 
-      await tracker!.setRequestHeaders(requestHeaders);
-      await tracker!.setResponseStatusCode(response.statusCode);
-      await tracker!.setResponseHeaders(responseHeaders);
+      await requestTracker.setRequestHeaders(requestHeaders);
+      await requestTracker.setResponseStatusCode(response.statusCode);
+      await requestTracker.setResponseHeaders(responseHeaders);
 
       return response;
     }, onError: (e, StackTrace stacktrace) async {
-      await tracker!.setError(e.toString(), stacktrace.toString());
+      await requestTracker.setError(e.toString(), stacktrace.toString());
       throw e;
     }).whenComplete(() async {
-      await tracker!.reportDone();
+      await requestTracker.reportDone();
     });
   }
 }

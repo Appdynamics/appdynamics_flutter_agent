@@ -101,7 +101,7 @@ class FeatureList extends StatelessWidget {
                 ElevatedButton(
                   key: const Key("crashAppButton"),
                   child: const Text('Crash app'),
-                  style: ElevatedButton.styleFrom(primary: Colors.red),
+                  style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
                   onPressed: () async {
                     await Instrumentation.crash();
                   },
