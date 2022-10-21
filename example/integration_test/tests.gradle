@@ -7,7 +7,7 @@
 // TODO: split iOS and Android tests to separate files.
 // WARNING: Possible Gradle duplicate task error if creating shared Gradle file.
 
-// Configure these based on your system's emulator/simulator names.
+// Configure these based on the system's emulator/simulator names.
 def android_device = "Android SDK built for x86"
 def iOS_device = "iPhone 13"
 
