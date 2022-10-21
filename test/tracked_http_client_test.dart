@@ -41,14 +41,19 @@ void main() {
     });
 
     const urlString = "https://www.foo.com";
-    const customHeaders = {"Content-Type": "json"};
+    const customHeaders = {
+      "Content-Type": ["json"]
+    };
     final client = TrackedHttpClient(MockClient((request) async {
-      request.headers.addAll(customHeaders);
+      final toList =
+          customHeaders.map((key, value) => MapEntry(key.toString(), value[0]));
+      request.headers.addAll(toList);
       return Response("{}", 200, request: request);
     }));
     // Also grabbing the headers here just to have what to compare with below.
     final headers = await RequestTracker.getServerCorrelationHeaders();
     final response = await client.get(Uri.parse(urlString));
+    headers.addAll(customHeaders);
 
     expect(log, hasLength(7));
     expect(log, <Matcher>[
@@ -62,12 +67,8 @@ void main() {
       ),
       isMethodCall('getRequestTrackerWithUrl',
           arguments: {"id": client.tracker!.id, "url": urlString}),
-      // TODO: Check also for custom headers when approved and installed:
-      // https://github.com/dart-lang/http/pull/657
-      isMethodCall('setRequestTrackerRequestHeaders', arguments: {
-        "id": client.tracker!.id,
-        "headers": headers // -> headers.addAll(customHeaders)
-      }),
+      isMethodCall('setRequestTrackerRequestHeaders',
+          arguments: {"id": client.tracker!.id, "headers": headers}),
       isMethodCall(
         'setRequestTrackerStatusCode',
         arguments: {
