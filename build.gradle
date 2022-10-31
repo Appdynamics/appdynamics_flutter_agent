@@ -13,7 +13,7 @@
 
 plugins {
     id 'java-library-distribution'
-    id 'com.appdynamics.gradle.plugins.appd-publish' version '2.2.22'
+    id 'com.appdynamics.gradle.plugins.appd-publish' version '2.4.0'
     id 'com.appdynamics.gradle.plugins.pipeline.pipelinePlugin' version '3.5.179'
     id 'com.appdynamics.gradle.plugins.appd-integration-test' version '0.0.7'
     id 'org.sonarqube' version '3.2.0'
@@ -46,7 +46,7 @@ pipeline {
 
 group = 'com.appdynamics.eum'
 appdVersion {
-    baseVersion = '22.6.0-beta.1'
+    baseVersion = new File('lib/version.txt').text
 }
 
 sonarqube {
@@ -58,7 +58,7 @@ sonarqube {
 
 // distribution + appd-publish
 //
-// Specify which files to .zip when publishing to Nexus3.
+// Specify which files to .zip when publishing to Artifactory.
 distributions {
     main {
         distributionBaseName.set("rum-flutter")

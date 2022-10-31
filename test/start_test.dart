@@ -16,10 +16,6 @@ import 'globals.dart';
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
-  setUp(() {
-    mockPackageInfo();
-  });
-
   testWidgets('start() is called natively', (WidgetTester tester) async {
     final List<MethodCall> log = <MethodCall>[];
 
@@ -64,8 +60,11 @@ void main() {
     ]);
   });
 
-  test('start native error is intercepted', () async {
-    channel.setMockMethodCallHandler((MethodCall methodCall) async {
+  testWidgets('start native error is intercepted', (WidgetTester tester) async {
+    TestWidgetsFlutterBinding.ensureInitialized();
+
+    tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(channel,
+        (MethodCall methodCall) async {
       throw PlatformException(
           code: "500", message: "start() threw native error.");
     });

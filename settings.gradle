@@ -18,11 +18,11 @@ pluginManagement {
         // Always prefer a local published version
         mavenLocal()
 
-        nexus3PluginRepos.split().each { repo ->
-            maven { url(nexus3BaseUrl + repo) }
+        artifactoryPluginRepos.split().each { repo ->
+            maven { url(artifactoryBaseUrl + repo) }
         }
-        nexus3BuildRepos.split().each { repo ->
-            maven { url(nexus3BaseUrl + repo) }
+        artifactoryBuildRepos.split().each { repo ->
+            maven { url(artifactoryBaseUrl + repo) }
         }
 
         gradlePluginPortal()

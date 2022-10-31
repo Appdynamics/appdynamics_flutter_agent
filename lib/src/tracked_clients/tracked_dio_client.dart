@@ -55,7 +55,9 @@ class TrackedDioClient extends DioForNative {
       }
     }
 
-    tracker = await RequestTracker.create(path);
+    final requestTracker = await RequestTracker.create(path);
+    tracker = requestTracker;
+
     return _dioClient
         .request<T>(path,
             data: data,
@@ -65,23 +67,23 @@ class TrackedDioClient extends DioForNative {
             onSendProgress: onSendProgress,
             onReceiveProgress: onReceiveProgress)
         .then((response) async {
-      await tracker!.setRequestHeaders(response.requestOptions.headers
+      await requestTracker.setRequestHeaders(response.requestOptions.headers
           .map((k, v) => MapEntry(k, <String>[v])));
-      await tracker!.setResponseStatusCode(response.statusCode ?? 404);
-      await tracker!.setResponseHeaders(response.headers.map);
+      await requestTracker.setResponseStatusCode(response.statusCode ?? 404);
+      await requestTracker.setResponseHeaders(response.headers.map);
       return response;
     }, onError: (e, StackTrace stacktrace) async {
       if (e is DioError) {
-        await tracker!.setError(e.toString(), e.stackTrace.toString());
+        await requestTracker.setError(e.toString(), e.stackTrace.toString());
       } else {
         // All errors seem to be wrapped inside DioError, so we can't force
         // coverage for another type of error, but this case will still be
         // handled, just in case.
-        await tracker!.setError(e.toString(), stacktrace.toString());
+        await requestTracker.setError(e.toString(), stacktrace.toString());
       }
       throw e;
     }).whenComplete(() async {
-      await tracker!.reportDone();
+      await requestTracker.reportDone();
     });
   }
 }

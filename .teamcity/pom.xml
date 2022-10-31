@@ -34,10 +34,10 @@
       </snapshots>
     </repository>
     <repository>
-      <id>nexus3-releases</id>
-      <url>https://nexus3.corp.appdynamics.com/repository/maven-releases</url>
+      <id>maven-releases</id>
+      <url>https://artifactory.bare.appdynamics.com/artifactory/maven-releases</url>
       <snapshots>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
       </snapshots>
     </repository>
   </repositories>
