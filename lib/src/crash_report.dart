@@ -8,83 +8,92 @@ import 'dart:convert';
 import 'dart:core';
 import 'dart:isolate';
 
+import 'package:flutter/foundation.dart';
+
+class AppDynamicsStackFrame {
+  final int line;
+  final int column;
+  final String fileName;
+  final String methodName;
+  String? type;
+
+  AppDynamicsStackFrame(
+      {required this.line,
+      required this.column,
+      required this.fileName,
+      required this.methodName,
+      this.type});
+
+  AppDynamicsStackFrame.fromJson(Map<String, dynamic> json)
+      : line = json['line'],
+        column = json['column'],
+        fileName = json['fileName'],
+        methodName = json['methodName'],
+        type = json['type'];
+
+  Map<String, dynamic> toJson() => {
+        "line": line,
+        "column": column,
+        "fileName": fileName,
+        "methodName": methodName,
+        "type": type
+      };
+}
+
 class CrashReport {
-  final String message;
+  final FlutterErrorDetails errorDetails;
   final StackTrace? stackTrace;
 
   CrashReport({
-    required this.message,
+    required this.errorDetails,
     this.stackTrace,
   });
 
-  List getStackFrames(String stackTrace) {
-    try {
-      final stackFrames = stackTrace
-          .split("\n")
-          .where((row) => row.trim().isNotEmpty)
-          .map((row) {
-        final split = row.split(" (");
-        final left = split[0].replaceAll(RegExp("\\s+"), " ").split(" ");
-        final right = split[1];
+  List<AppDynamicsStackFrame> getStackFrames(StackTrace stackTrace) {
+    List<StackFrame> frames = StackFrame.fromStackTrace(stackTrace);
+    List<AppDynamicsStackFrame> appdFrames = [];
+    for (StackFrame frame in frames) {
+      String fileName = frame.packagePath;
+      String longFileName = "${frame.packageScheme}:${frame.package}/$fileName";
+      String backendAcceptedMethodFormat = "Void ${frame.method}()";
+      final AppDynamicsStackFrame appdFrame = AppDynamicsStackFrame(
+        line: frame.line,
+        column: frame.column,
+        fileName: longFileName,
+        methodName: backendAcceptedMethodFormat,
+      );
 
-        final methodInfo = left[1];
-        final split1 = methodInfo.split(".");
+      if (frame.className.isNotEmpty) {
+        String backendAcceptedClassFormat = "\$.${frame.className}";
+        appdFrame.type = backendAcceptedClassFormat;
+      }
 
-        String? type;
-        String method;
-        if (split1.length == 2) {
-          type = split1[0];
-          method = split1[1];
-        } else {
-          method = split1[0];
-        }
-
-        final fileInfo = right.substring(0, right.length - 1);
-        final split2 = fileInfo.split(":");
-        final file = split2[1];
-        final line = split2[2];
-        final column = split2[3];
-
-        // format imposed by back-end logic.
-        final dict = {
-          "line": int.parse(line),
-          "column": int.parse(column),
-          "file": file,
-          "method": "Void $method()",
-        };
-
-        if (type != null) {
-          dict["type"] = "\$.$type";
-        }
-
-        return dict;
-      });
-      return stackFrames.take(5).toList();
-    } catch (e) {
-      return [];
+      appdFrames.add(appdFrame);
     }
+    return appdFrames;
   }
 
   @override
   String toString() {
-    final stackFrames = getStackFrames(stackTrace.toString());
     final name = Isolate.current.debugName;
     final time = DateTime.now().millisecondsSinceEpoch;
-    final targetSite =
-        stackFrames.isNotEmpty ? stackFrames.first["method"] : "";
     final dict = {
       "environment": "Flutter",
       "time": time,
-      "stackTrace": {
-        "exceptionClassName": "Dart exception",
-        "message": message,
-        "stackFrames": stackFrames,
-      },
-      "targetSite": targetSite,
       "thread": {"background": false, "id": 1, "name": name, "pool": false},
       "source": "SDK",
     };
 
+    if (stackTrace != null) {
+      final stackFrames = getStackFrames(stackTrace!);
+
+      dict["stackTrace"] = {
+        "exceptionClassName": errorDetails.exception.runtimeType.toString(),
+        "message": errorDetails.exceptionAsString(),
+        "stackFrames": stackFrames,
+      };
+      dict["targetSite"] = stackFrames.first.methodName;
+    }
     return jsonEncode(dict);
   }
 }

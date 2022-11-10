@@ -4,7 +4,7 @@
  *
  */
 
-import 'dart:async';
+import 'dart:ui';
 
 import 'package:appdynamics_agent/appdynamics_agent.dart';
 import 'package:appdynamics_agent_example/routing/on_generate_route.dart';
@@ -15,16 +15,15 @@ import 'package:provider/provider.dart';
 import 'app_state/app_state.dart';
 
 void main() {
-  runZonedGuarded(() async {
-    WidgetsFlutterBinding.ensureInitialized();
-    FlutterError.onError = Instrumentation.errorHandler;
-    runApp(ChangeNotifierProvider(
-        create: (context) => AppState(), child: const MyApp()));
-  }, (Object error, StackTrace stack) async {
-    final details =
-        FlutterErrorDetails(exception: error.toString(), stack: stack);
-    await Instrumentation.errorHandler(details);
-  });
+  WidgetsFlutterBinding.ensureInitialized();
+  FlutterError.onError = Instrumentation.errorHandler;
+  PlatformDispatcher.instance.onError = (error, stack) {
+    final details = FlutterErrorDetails(exception: error, stack: stack);
+    Instrumentation.errorHandler(details);
+    return true;
+  };
+  runApp(ChangeNotifierProvider(
+      create: (context) => AppState(), child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
