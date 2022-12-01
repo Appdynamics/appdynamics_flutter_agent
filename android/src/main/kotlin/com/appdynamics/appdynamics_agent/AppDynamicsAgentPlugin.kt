@@ -27,7 +27,6 @@ open class AppDynamicsAgentPlugin : FlutterPlugin, MethodCallHandler {
     /// This local reference serves to register the plugin with the Flutter Engine and unregister it
     /// when the Flutter Engine is detached from the Activity
 
-    internal var dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS"
     internal lateinit var channel: MethodChannel
     internal lateinit var context: android.content.Context
     internal var crashReportCallback: CrashCallbackObject? = null

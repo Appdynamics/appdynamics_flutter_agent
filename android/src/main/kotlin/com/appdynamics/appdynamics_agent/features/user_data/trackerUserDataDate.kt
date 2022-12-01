@@ -10,7 +10,6 @@ import androidx.annotation.NonNull
 import com.appdynamics.appdynamics_agent.AppDynamicsAgentPlugin
 import com.appdynamics.eumagent.runtime.Instrumentation
 import io.flutter.plugin.common.MethodChannel
-import java.text.SimpleDateFormat
 import java.util.*
 
 @Suppress("SpellCheckingInspection")
@@ -29,7 +28,7 @@ fun AppDynamicsAgentPlugin.setUserDataDate(
         return
     }
 
-    val value = properties["value"] as? String ?: run {
+    val value = properties["value"] as? Long ?: run {
         result.error(
             "500",
             "Agent setUserDataDate() failed.",
@@ -38,19 +37,7 @@ fun AppDynamicsAgentPlugin.setUserDataDate(
         return
     }
 
-    val date = SimpleDateFormat(
-        dateFormat,
-        Locale.US
-    ).parse(value) ?: run {
-        result.error(
-            "500",
-            "Agent setUserDataDateTime() failed.",
-            "Please provide a valid DateTime for `value`."
-        )
-        return
-    }
-
-    Instrumentation.setUserDataDate(key, date)
+    Instrumentation.setUserDataDate(key, Date(value))
     result.success(null)
 }
 

@@ -9,7 +9,6 @@ package com.appdynamics.appdynamics_agent.features.request_tracking.tracker_user
 import androidx.annotation.NonNull
 import com.appdynamics.appdynamics_agent.AppDynamicsAgentPlugin
 import io.flutter.plugin.common.MethodChannel
-import java.text.SimpleDateFormat
 import java.util.*
 
 @Suppress("SpellCheckingInspection")
@@ -38,7 +37,7 @@ fun AppDynamicsAgentPlugin.setRequestTrackerUserDataDate(
         return
     }
 
-    val value = properties["value"] as? String ?: run {
+    val value = properties["value"] as? Long ?: run {
         result.error(
             "500",
             "Agent setRequestTrackerUserDataDate() failed.",
@@ -47,18 +46,6 @@ fun AppDynamicsAgentPlugin.setRequestTrackerUserDataDate(
         return
     }
 
-    val date = SimpleDateFormat(
-        dateFormat,
-        Locale.US
-    ).parse(value) ?: run {
-        result.error(
-            "500",
-            "Agent setRequestTrackerUserDataDate() failed.",
-            "Please provide a valid DateTime for `value`."
-        )
-        return
-    }
-
-    tracker.withUserDataDate(key, date)
+    tracker.withUserDataDate(key, Date(value))
     result.success(null)
 }

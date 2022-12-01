@@ -13,19 +13,13 @@ extension SwiftAppDynamicsAgentPlugin {
       return
     }
     
-    guard let value = properties["value"] as? String else {
+    guard let value = properties["value"] as? Double else {
       let error = FlutterError(code: "500", message: "Agent setUserDataDateTime() failed.", details: "Please provide a valid DateTime for `value`.")
       result(error)
       return
     }
     
-    let formatter = DateFormatter()
-    formatter.dateFormat = SwiftAppDynamicsAgentPlugin.dateFormat
-    guard let date = formatter.date(from: value) else {
-      let error = FlutterError(code: "500", message: "Agent setUserDataDateTime() failed.", details: "Please provide a valid DateTime for `value`.")
-      result(error)
-      return
-    }
+    let date = Date(timeIntervalSince1970: value / 1000)
     
     ADEumInstrumentation.setUserDataDate(key, value: date)
     result(nil)

@@ -10,7 +10,6 @@ import androidx.annotation.NonNull
 import com.appdynamics.appdynamics_agent.AppDynamicsAgentPlugin
 import com.appdynamics.eumagent.runtime.Instrumentation
 import io.flutter.plugin.common.MethodChannel
-import java.text.SimpleDateFormat
 import java.util.*
 
 fun AppDynamicsAgentPlugin.trackPageStart(
@@ -19,15 +18,10 @@ fun AppDynamicsAgentPlugin.trackPageStart(
 ) {
     val properties = arguments as HashMap<*, *>
     val pageName = properties["widgetName"] as? String
+    val startDate = properties["startDate"] as Long
     val uuid = UUID.randomUUID()
 
-    val startDate = properties["startDate"] as String
-    val start = SimpleDateFormat(
-        dateFormat,
-        Locale.US
-    ).parse(startDate)!!.time
-
-    Instrumentation.trackPageStart(pageName, uuid, start)
+    Instrumentation.trackPageStart(pageName, uuid, startDate)
     result.success(uuid.toString())
 }
 
@@ -40,18 +34,9 @@ fun AppDynamicsAgentPlugin.trackPageEnd(
     val uuidString = properties["uuidString"] as String
     val uuid = UUID.fromString(uuidString)
 
-    val startDate = properties["startDate"] as String
-    val start = SimpleDateFormat(
-        dateFormat,
-        Locale.US
-    ).parse(startDate)!!.time
+    val startDate = properties["startDate"] as Long
+    val endDate = properties["endDate"] as Long
 
-    val endDate = properties["endDate"] as String
-    val end = SimpleDateFormat(
-        dateFormat,
-        Locale.US
-    ).parse(endDate)!!.time
-
-    Instrumentation.trackPageEnd(pageName, uuid, start, end)
+    Instrumentation.trackPageEnd(pageName, uuid, startDate, endDate)
     result.success(null)
 }

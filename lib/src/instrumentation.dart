@@ -511,7 +511,7 @@ class Instrumentation {
         return;
       }
 
-      final arguments = {"key": key, "value": value.toIso8601String()};
+      final arguments = {"key": key, "value": value.millisecondsSinceEpoch};
       await channel.invokeMethod<void>('setUserDataDate', arguments);
     } on PlatformException catch (e) {
       throw Exception(e.details);

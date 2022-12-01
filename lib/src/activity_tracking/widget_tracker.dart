@@ -13,9 +13,9 @@ class TrackedWidget {
 
   late String uuidString;
 
-  late String startDate;
+  late int startDate;
 
-  String? endDate;
+  int? endDate;
 
   TrackedWidget({
     required this.widgetName,
@@ -103,7 +103,7 @@ class WidgetTracker {
   /// May throw [Exception] on native platform contingency.
   Future<void> trackWidgetStart(String widgetName) async {
     try {
-      final startDate = DateTime.now().toIso8601String();
+      final startDate = DateTime.now().millisecondsSinceEpoch;
       final trackedWidget =
           TrackedWidget(widgetName: widgetName, startDate: startDate);
 
@@ -135,7 +135,7 @@ class WidgetTracker {
         return;
       }
 
-      final endDate = DateTime.now().toIso8601String();
+      final endDate = DateTime.now().millisecondsSinceEpoch;
       trackedWidget.endDate = endDate;
 
       await channel.invokeMethod<void>('trackPageEnd', trackedWidget.toJson());
