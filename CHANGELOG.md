@@ -1,3 +1,9 @@
+# 22.12.0-beta.1
+* Improved crash reporting by grouping exceptions and errors into different categories in the UI 
+* controller.
+* Fixed bug involving screen tracking crashing app on start.
+* Improve RequestTracker class by removing bugs involving force unwrapping the tracker.
+
 # 22.6.0-beta.1
 * Fixed bug regarding running the plugin on iOS 12.4 simulators.
 
