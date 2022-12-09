@@ -7,7 +7,12 @@ version: 1.0.0+1
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
 environment:
-  sdk: ">=2.12.0 <3.0.0"
+  sdk: ">=2.15.0 <3.0.0"
+
+# Find a way to set artifactory_proxy_url globally, without defining it for each dependency.
+# Maybe when pre-build hooks will be added to Dart to force the PUB_HOSTED_URL to ALWAYS be set.
+define_variable: &artifactory_proxy_url
+  https://artifactory.bare.appdynamics.com/artifactory/api/pub/pub-public
 
 dependencies:
   flutter:
@@ -23,11 +28,15 @@ dependencies:
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^1.0.2
-  http: ^0.13.3
-  provider: ^6.0.1
-  flutter_picker: ^2.0.2
-  dio: ^4.0.6
+  cupertino_icons:
+    hosted: *artifactory_proxy_url
+    version: ^1.0.2
+  provider:
+    hosted: *artifactory_proxy_url
+    version: ^6.0.1
+  flutter_picker:
+    hosted: *artifactory_proxy_url
+    version: ^2.0.2
 
 dev_dependencies:
   flutter_test:
@@ -36,7 +45,6 @@ dev_dependencies:
     sdk: flutter
   flutter_driver:
     sdk: flutter
-  flutter_lints: ^1.0.4
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

@@ -3,21 +3,34 @@ description: Flutter plugin to integrate AppDynamics Mobile Real User Monitoring
 version: 22.12.0-beta.1
 homepage: https://github.com/Appdynamics/appdynamics_flutter_agent
 
+# Find a way to set artifactory_proxy_url globally, without defining it for each dependency.
+# Maybe when pre-build hooks will be added to Dart to force the PUB_HOSTED_URL to ALWAYS be set.
+artifactory_proxy_url: &artifactory_proxy_url
+  https://artifactory.bare.appdynamics.com/artifactory/api/pub/pub-public
+
 environment:
-  sdk: ">=2.12.0 <3.0.0"
+  sdk: ">=2.15.0 <3.0.0"
   flutter: ">=1.20.0"
 
 dependencies:
   flutter:
     sdk: flutter
-  http: ^0.13.3
-  dio: ^4.0.6
+  http:
+    hosted: *artifactory_proxy_url
+    version: ^0.13.3
+  dio:
+    hosted: *artifactory_proxy_url
+    version: ^4.0.6
 
 dev_dependencies:
-  flutter_lints: ^2.0.1
   flutter_test:
     sdk: flutter
-  yaml: ^3.1.0
+  flutter_lints:
+    hosted: *artifactory_proxy_url
+    version: ^2.0.1
+  yaml:
+    hosted: *artifactory_proxy_url
+    version: ^3.1.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
