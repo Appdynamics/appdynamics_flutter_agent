@@ -16,8 +16,8 @@ void main() {
   testWidgets('TrackedWidget converts from and out of JSON correctly',
       (WidgetTester tester) async {
     const widgetName = "foo";
-    final startDate = DateTime.utc(2021).toIso8601String();
-    final endDate = DateTime.utc(2022).toIso8601String();
+    final startDate = DateTime.utc(2021).millisecondsSinceEpoch;
+    final endDate = DateTime.utc(2022).millisecondsSinceEpoch;
 
     final trackedWidget = TrackedWidget(
         widgetName: widgetName, startDate: startDate, endDate: endDate);

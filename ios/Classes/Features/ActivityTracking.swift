@@ -14,12 +14,9 @@ extension SwiftAppDynamicsAgentPlugin {
     }
     
     let uuid = UUID()
-    
-    let formatter = DateFormatter()
-    formatter.dateFormat = SwiftAppDynamicsAgentPlugin.dateFormat
-    
-    let startDate = properties["startDate"] as! String
-    let start = formatter.date(from: startDate)!
+
+    let startDate = properties["startDate"] as! Double
+    let start = Date(timeIntervalSince1970: startDate / 1000)
     
     ADEumInstrumentation.trackPageStart(pageName, uuid: uuid, start: start)
     result(uuid.uuidString)
@@ -39,15 +36,12 @@ extension SwiftAppDynamicsAgentPlugin {
     let uuidString = properties["uuidString"] as! String
     let uuid = UUID(uuidString: uuidString)!
     
-    let formatter = DateFormatter()
-    formatter.dateFormat = SwiftAppDynamicsAgentPlugin.dateFormat
+    let startDate = properties["startDate"] as! Double
+    let start = Date(timeIntervalSince1970: startDate / 1000)
     
-    let startDate = properties["startDate"] as! String
-    let start = formatter.date(from: startDate)!
-    
-    let endDate = properties["endDate"] as! String
-    let end = formatter.date(from: endDate)!
-    
+    let endDate = properties["endDate"] as! Double
+    let end = Date(timeIntervalSince1970: endDate / 1000)
+
     ADEumInstrumentation.trackPageEnd(pageName, uuid: uuid, start: start, end: end)
     result(nil)
   }

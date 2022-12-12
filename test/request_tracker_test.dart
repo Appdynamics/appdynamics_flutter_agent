@@ -105,7 +105,7 @@ void main() {
         arguments: {
           "id": tracker.id,
           "key": dateTimeKey,
-          "value": dateTimeValue.toIso8601String()
+          "value": dateTimeValue.millisecondsSinceEpoch
         },
       ),
       isMethodCall(

@@ -6,7 +6,6 @@ typealias ADEumMethodCall = Any
 
 public class SwiftAppDynamicsAgentPlugin: NSObject, FlutterPlugin {
   static var channel: FlutterMethodChannel?
-  static var dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS"
   
   var crashReportCallback: CrashCallbackObject?
   var requestTrackers: [String: ADEumHTTPRequestTracker] = [:]

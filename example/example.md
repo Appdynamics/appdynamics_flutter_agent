@@ -14,32 +14,30 @@ import 'package:appdynamics_agent_example/routing/on_generate_route.dart';
 import 'package:appdynamics_agent_example/routing/route_paths.dart';
 import 'package:flutter/material.dart';
 
-void main() {
-  runZonedGuarded(() async {
-    WidgetsFlutterBinding.ensureInitialized();
-    FlutterError.onError = Instrumentation.errorHandler;
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  FlutterError.onError = Instrumentation.errorHandler;
+  PlatformDispatcher.instance.onError = (error, stack) {
+    final details = FlutterErrorDetails(exception: error, stack: stack);
+    Instrumentation.errorHandler(details);
+    return true;
+  };
+  
+  crashReportCallback(List<CrashReportSummary> summaries) async {
+    // ... handle crash reports
+  }
 
-    crashReportCallback(List<CrashReportSummary> summaries) async {
-      // ... handle crash reports
-    }
-
-    AgentConfiguration config = AgentConfiguration(
-        appKey: "<EUM_APP_KEY>",
-        loggingLevel: LoggingLevel.verbose,
-        collectorURL: "https://www.<collector-url>.com",
-        screenshotURL: "https://www.<screenshots-url>.com",
-        crashReportCallback: crashReportCallback,
-        screenshotsEnabled: true,
-        crashReportingEnabled: true
-    );
-    await Instrumentation.start(config);
-
-    runApp(const MyApp());
-  }, (Object error, StackTrace stack) async {
-    final details =
-        FlutterErrorDetails(exception: error.toString(), stack: stack);
-    await Instrumentation.errorHandler(details);
-  });
+  AgentConfiguration config = AgentConfiguration(
+      appKey: "<EUM_APP_KEY>",
+      loggingLevel: LoggingLevel.verbose,
+      collectorURL: "https://www.<collector-url>.com",
+      screenshotURL: "https://www.<screenshots-url>.com",
+      crashReportCallback: crashReportCallback,
+      screenshotsEnabled: true,
+      crashReportingEnabled: true
+  );
+  await Instrumentation.start(config);
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {

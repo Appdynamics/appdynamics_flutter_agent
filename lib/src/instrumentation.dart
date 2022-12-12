@@ -11,7 +11,7 @@ import 'dart:async';
 
 import 'package:appdynamics_agent/appdynamics_agent.dart';
 import 'package:appdynamics_agent/src/session_frame.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart'
     show rootBundle, PlatformException, MethodCall;
 
@@ -511,7 +511,7 @@ class Instrumentation {
         return;
       }
 
-      final arguments = {"key": key, "value": value.toIso8601String()};
+      final arguments = {"key": key, "value": value.millisecondsSinceEpoch};
       await channel.invokeMethod<void>('setUserDataDate', arguments);
     } on PlatformException catch (e) {
       throw Exception(e.details);
@@ -940,20 +940,19 @@ class Instrumentation {
   // }
   /// ```
   ///
-  /// For capturing all hybrid-level errors (Flutter & non-Flutter), use zones:
+  /// For capturing all hybrid-level errors (Flutter & non-Flutter), use
+  /// PlatformDispatcher:
   ///
   /// ```dart
   /// void main() {
-  ///   runZonedGuarded(() {
-  ///     WidgetsFlutterBinding.ensureInitialized();
-  ///     FlutterError.onError = Instrumentation.errorHandler;
-  ///     runApp(MyApp());
-  ///   }, (Object error, StackTrace stack) async {
-  ///     final details = FlutterErrorDetails(
-  ///       exception: error.toString(),
-  ///       stack: stack);
-  //      await Instrumentation.errorHandler(details);
-  ///   });
+  ///   WidgetsFlutterBinding.ensureInitialized();
+  ///   FlutterError.onError = Instrumentation.errorHandler;
+  ///   PlatformDispatcher.instance.onError = (error, stack) {
+  ///     final details = FlutterErrorDetails(exception: error, stack: stack);
+  ///     Instrumentation.errorHandler(details);
+  ///     return true;
+  ///   };
+  ///   runApp(MyApp());
   /// }
   /// ```
   static Future<void> errorHandler(FlutterErrorDetails details) async {
@@ -961,10 +960,8 @@ class Instrumentation {
     // TODO: Remove when you can test private constructor some other way.
     Instrumentation._();
 
-    FlutterError.presentError(details);
-
-    final crashReport = CrashReport(
-        message: details.exceptionAsString(), stackTrace: details.stack);
+    final crashReport =
+        CrashReport(errorDetails: details, stackTrace: details.stack);
     final arguments = {
       "crashDump": crashReport.toString(),
     };

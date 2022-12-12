@@ -19,26 +19,23 @@ The Flutter agent incorporates the following features:
   for extra crash report configuration.
 * Screen tracking
   via [NavigationObserver](https://pub.dev/documentation/appdynamics_agent/latest/appdynamics_agent/NavigationObserver-class.html)
-  and [WidgetTracker](https://pub.dev/documentation/appdynamics_agent/latest/appdynamics_agent/WidgetTracker-class.html)
-  .
+  and [WidgetTracker](https://pub.dev/documentation/appdynamics_agent/latest/appdynamics_agent/WidgetTracker-class.html).
 * Automatic detection and reporting of the app-is-not-responding cases (ANR).
 * [SessionFrame](https://pub.dev/documentation/appdynamics_agent/latest/appdynamics_agent/SessionFrame-class.html)
   mechanism to track custom user flows in the app.
 * [Errors](https://pub.dev/documentation/appdynamics_agent/latest/appdynamics_agent/Instrumentation/errorHandler.html)
   and [custom metrics](https://pub.dev/documentation/appdynamics_agent/latest/appdynamics_agent/Instrumentation/reportMetric.html)
   reporting.
-* Automatic capture of screenshots and user touch-points. (iOS only)
+* Automatic capture of screenshots and user touch-points (iOS only).
 * Custom user data on network requests, crash reports, or sessions.
 * Report [breadcrumbs](https://pub.dev/documentation/appdynamics_agent/latest/appdynamics_agent/Instrumentation/leaveBreadcrumb.html)
 to track UI widgets or custom user interactions.
 * [Timers](https://pub.dev/documentation/appdynamics_agent/latest/appdynamics_agent/Instrumentation/startTimer.html)
   to track events that span across multiple methods.
 * Mark method execution
-  as [info points](https://pub.dev/documentation/appdynamics_agent/latest/appdynamics_agent/Instrumentation/trackCall.html)
-  .
+  as [info points](https://pub.dev/documentation/appdynamics_agent/latest/appdynamics_agent/Instrumentation/trackCall.html).
 * Split app instrumentation
-  into [multiple sessions](https://pub.dev/documentation/appdynamics_agent/latest/appdynamics_agent/Instrumentation/startNextSession.html)
-  .
+  into [multiple sessions](https://pub.dev/documentation/appdynamics_agent/latest/appdynamics_agent/Instrumentation/startNextSession.html).
 * Automatically report device metrics (memory, storage, battery) and connection transition events.
 
 # Getting started

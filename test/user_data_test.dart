@@ -78,7 +78,7 @@ void main() {
           arguments: <String, dynamic>{"key": stringKey, "value": stringValue}),
       isMethodCall('setUserDataDate', arguments: <String, dynamic>{
         "key": dateTimeKey,
-        "value": dateTimeValue.toIso8601String()
+        "value": dateTimeValue.millisecondsSinceEpoch
       }),
       isMethodCall('removeUserDataLong', arguments: intKey),
       isMethodCall('removeUserDataDouble', arguments: doubleKey),

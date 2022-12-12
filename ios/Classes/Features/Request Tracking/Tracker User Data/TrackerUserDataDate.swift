@@ -12,13 +12,13 @@ extension SwiftAppDynamicsAgentPlugin {
       return
     }
     
-    let formatter: DateFormatter = DateFormatter()
-    formatter.dateFormat = SwiftAppDynamicsAgentPlugin.dateFormat
-    guard let value = properties["value"] as? String, let date = formatter.date(from: value) else {
+    guard let value = properties["value"] as? Double else {
       let error = FlutterError(code: "500", message: "Agent setRequestTrackerUserDataDate() failed.", details: "Please provide a valid DateTime for `value`.")
       result(error)
       return
     }
+      
+    let date = Date(timeIntervalSince1970: value / 1000)
     
     guard let tracker = requestTrackers[id] else {
       let error = FlutterError(code: "500", message: "Agent setRequestTrackerUserDataDate() failed.", details: "Request tracker was not initialized or already reported.")

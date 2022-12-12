@@ -4,8 +4,7 @@ import Flutter
 extension SwiftAppDynamicsAgentPlugin {
   public func start(result: @escaping FlutterResult, arguments: Any?) {
     let properties = arguments as! Dictionary<String, Any>
-    
-    
+
     guard let appKey = properties["appKey"] as? String else {
       let error = FlutterError(code: "500", message: "Agent start() failed.", details: "Please provide an appKey.")
       result(error)
