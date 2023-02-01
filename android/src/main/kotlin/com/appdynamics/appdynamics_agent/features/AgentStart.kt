@@ -35,7 +35,12 @@ fun AppDynamicsAgentPlugin.start(@NonNull result: MethodChannel.Result, argument
                 .withAppKey(appKey)
 
         if (loggingLevel != null) {
-            builder.withLoggingLevel(loggingLevel)
+            val levels = listOf(
+                Instrumentation.LOGGING_LEVEL_NONE,
+                Instrumentation.LOGGING_LEVEL_INFO,
+                Instrumentation.LOGGING_LEVEL_VERBOSE,
+            )
+            builder.withLoggingLevel(levels[loggingLevel])
         }
 
         if (collectorURL != null) {
