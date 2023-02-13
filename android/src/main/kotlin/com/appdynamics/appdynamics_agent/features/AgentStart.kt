@@ -63,7 +63,11 @@ fun AppDynamicsAgentPlugin.start(@NonNull result: MethodChannel.Result, argument
             builder.withCrashCallback(crashReportCallback)
         }
 
-        builder.withAutoInstrument(false).withContext(context)
+        builder
+            .withAutoInstrument(false)
+            .withContext(context)
+            .withJSAgentInjectionEnabled(false)
+            .withJSAgentAjaxEnabled(false)
         Instrumentation.startFromHybrid(builder.build(), agentName, agentVersion)
 
         result.success(null)

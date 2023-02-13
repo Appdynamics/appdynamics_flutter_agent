@@ -54,6 +54,11 @@ extension SwiftAppDynamicsAgentPlugin {
     }
     
     configuration.enableAutoInstrument = false
+    configuration.jsAgentEnabled = false
+    configuration.jsAgentAjaxEnabled = false
+    configuration.jsAgentFetchEnabled = false
+    configuration.jsAgentZonePromiseEnabled = false
+
     ADEumInstrumentation.initWith(configuration, a: type, b: version);
     
     result(nil)
