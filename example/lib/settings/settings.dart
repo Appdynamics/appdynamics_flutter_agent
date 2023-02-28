@@ -61,7 +61,7 @@ class _SettingsState extends State<Settings> {
 
   void _onCollectorTextFieldPress() {
     Picker(
-        adapter: PickerDataAdapter<String>(pickerdata: [
+        adapter: PickerDataAdapter<String>(pickerData: [
           collectors.keys.toList(),
         ], isArray: true),
         changeToFirst: true,

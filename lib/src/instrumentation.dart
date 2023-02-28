@@ -11,7 +11,7 @@ import 'dart:async';
 
 import 'package:appdynamics_agent/appdynamics_agent.dart';
 import 'package:appdynamics_agent/src/session_frame.dart';
-import 'package:flutter/foundation.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart'
     show rootBundle, PlatformException, MethodCall;
 

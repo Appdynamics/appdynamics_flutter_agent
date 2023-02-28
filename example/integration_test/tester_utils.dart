@@ -19,8 +19,16 @@ class BareApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-        initialRoute: RoutePaths.settings, onGenerateRoute: onGenerateRoute);
+    return MaterialApp(
+      initialRoute: RoutePaths.settings,
+      onGenerateRoute: onGenerateRoute,
+      home: Scaffold(
+        body: SizedBox(
+          width: 200, // random values to not generated rendering problems.
+          height: 300,
+        ),
+      ),
+    );
   }
 }
 
