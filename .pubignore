@@ -146,3 +146,5 @@ build
 /ios/Podfile
 /ios/appdynamics_agent.xcodeproj
 /ios/appdynamics_agent.xcworkspace
+
+.teamcity
