@@ -1,4 +1,4 @@
-# 23.2.0
+# 23.3.0
 * Promoting package from beta. 🎊
 * Disabled native WebView instrumentation, which was enabled by default.
 * Fixed `UniqueKey() method not found.` bug with older Flutter projects. 
