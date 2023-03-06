@@ -5,7 +5,7 @@
  */
 
 import 'package:dio/dio.dart';
-import 'package:dio/native_imp.dart';
+import 'package:dio/io.dart';
 
 import '../../appdynamics_agent.dart';
 
