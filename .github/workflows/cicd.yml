@@ -8,7 +8,6 @@ on:
     types: [opened, reopened, synchronize]
 
 jobs:
-  # BEGIN LINTING STAGE
   format:
     runs-on: ubuntu-latest
     steps:
@@ -28,9 +27,7 @@ jobs:
         with:
           fatal-infos: true
           fatal-warnings: true
-  # END LINTING STAGE
 
-  # BEGIN TESTING STAGE
   test:
     runs-on: ubuntu-latest
     steps:
@@ -38,4 +35,3 @@ jobs:
       - uses: subosito/flutter-action@v2
       - run: flutter pub get
       - uses: bluefireteam/spec-action@main
-  # END TESTING STAGE
