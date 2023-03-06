@@ -1,0 +1,38 @@
+name: cicd
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    types: [opened, reopened, synchronize]
+
+jobs:
+  # BEGIN LINTING STAGE
+  format:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: subosito/flutter-action@v2
+      - run: dart format --set-exit-if-changed
+
+  analyze:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: subosito/flutter-action@v2
+      - name: "Analyze"
+        uses: invertase/github-action-dart-analyzer@v1
+        with:
+          fatal-infos: true
+          fatal-warnings: true
+  # END LINTING STAGE
+
+  # BEGIN TESTING STAGE
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: subosito/flutter-action@v2
+      - uses: bluefireteam/spec-action@main
+  # END TESTING STAGE
