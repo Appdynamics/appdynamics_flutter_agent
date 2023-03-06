@@ -14,6 +14,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: subosito/flutter-action@v2
+      - run: flutter pub get
       - run: dart format --set-exit-if-changed
 
   analyze:
@@ -21,6 +22,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: subosito/flutter-action@v2
+      - run: flutter pub get
       - name: "Analyze"
         uses: invertase/github-action-dart-analyzer@v1
         with:
@@ -34,5 +36,6 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: subosito/flutter-action@v2
+      - run: flutter pub get
       - uses: bluefireteam/spec-action@main
   # END TESTING STAGE
