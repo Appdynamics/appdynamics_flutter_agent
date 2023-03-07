@@ -112,7 +112,7 @@ void main() {
 
     const urlString = "https://www.foo.com";
     final error = DioError(
-        type: DioErrorType.other,
+        type: DioErrorType.unknown,
         error: Error(),
         requestOptions: RequestOptions(path: urlString));
 
