@@ -4,7 +4,7 @@ import Flutter
 extension SwiftAppDynamicsAgentPlugin {
   public func start(result: @escaping FlutterResult, arguments: Any?) {
     let properties = arguments as! Dictionary<String, Any>
-
+    
     guard let appKey = properties["appKey"] as? String else {
       let error = FlutterError(code: "500", message: "Agent start() failed.", details: "Please provide an appKey.")
       result(error)
@@ -43,9 +43,9 @@ extension SwiftAppDynamicsAgentPlugin {
     if let crashReportingEnabled = properties["crashReportingEnabled"] as? Bool {
       configuration.crashReportingEnabled = crashReportingEnabled
     }
-
+    
     if let applicationName = properties["applicationName"] as? String {
-       configuration.applicationName = applicationName
+      configuration.applicationName = applicationName
     }
     
     if crashReportCallback == nil {
@@ -58,9 +58,8 @@ extension SwiftAppDynamicsAgentPlugin {
     configuration.jsAgentAjaxEnabled = false
     configuration.jsAgentFetchEnabled = false
     configuration.jsAgentZonePromiseEnabled = false
-
-    ADEumInstrumentation.initWith(configuration, a: type, b: version);
     
+    ADEumInstrumentation.initWith(configuration, a: type, b: version);
     result(nil)
-  }
+    }
 }

@@ -1,7 +1,8 @@
 # 23.3.0
 * Promoting package from beta. 🎊
 * Disabled native WebView instrumentation, which was enabled by default.
-* Fixed `UniqueKey() method not found.` bug with older Flutter projects. 
+* Fixed `UniqueKey() method not found.` bug with older Flutter projects.
+* Fixed native errors not being reported correctly.
 * Fixed incorrect LoggingLevel values on Android.
 
 # 22.12.0-beta.1

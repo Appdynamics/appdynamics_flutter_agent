@@ -30,6 +30,7 @@ class _SettingsState extends State<Settings> {
   final _collectorFieldController = TextEditingController();
   final _collectorURLFieldController = TextEditingController();
   final _screenshotURLFieldController = TextEditingController();
+  String errorMessage = '';
 
   set _currentSelectedCollector(MapEntry collector) {
     final collectorName = collector.key;
@@ -87,38 +88,48 @@ class _SettingsState extends State<Settings> {
   }
 
   Future<void> _onStartPress(context) async {
-    var appKey = _appKeyFieldController.text;
-    var collectorURL = _collectorURLFieldController.text;
-    var screenshotURL = _screenshotURLFieldController.text;
+    try {
+      setState(() {
+        errorMessage = "";
+      });
 
-    var applicationName = "";
-    if (Platform.isAndroid) {
-      applicationName = "com.appdynamics.FlutterEveryfeatureAndroid";
-    } else if (Platform.isIOS) {
-      applicationName = "com.appdynamics.FlutterEveryfeatureiOS";
+      var appKey = _appKeyFieldController.text;
+      var collectorURL = _collectorURLFieldController.text;
+      var screenshotURL = _screenshotURLFieldController.text;
+
+      var applicationName = "";
+      if (Platform.isAndroid) {
+        applicationName = "com.appdynamics.FlutterEveryfeatureAndroid";
+      } else if (Platform.isIOS) {
+        applicationName = "com.appdynamics.FlutterEveryfeatureiOS";
+      }
+
+      if (appKey.trim().isEmpty) {
+        return;
+      }
+
+      crashReportCallback(List<CrashReportSummary> summaries) async {
+        await _showCrashReportAlert(jsonEncode(summaries));
+      }
+
+      final appState = Provider.of<AppState>(context, listen: false);
+      AgentConfiguration config = AgentConfiguration(
+          appKey: appKey,
+          loggingLevel: LoggingLevel.verbose,
+          collectorURL: collectorURL,
+          screenshotURL: screenshotURL,
+          crashReportCallback: crashReportCallback,
+          applicationName: applicationName,
+          screenshotsEnabled: appState.screenshotsEnabled,
+          crashReportingEnabled: appState.crashReportingEnabled);
+      await Instrumentation.start(config);
+
+      await Navigator.pushNamed(context, RoutePaths.featureList);
+    } catch (e) {
+      setState(() {
+        errorMessage = e.toString();
+      });
     }
-
-    if (appKey.trim().isEmpty) {
-      return;
-    }
-
-    crashReportCallback(List<CrashReportSummary> summaries) async {
-      await _showCrashReportAlert(jsonEncode(summaries));
-    }
-
-    final appState = Provider.of<AppState>(context, listen: false);
-    AgentConfiguration config = AgentConfiguration(
-        appKey: appKey,
-        loggingLevel: LoggingLevel.verbose,
-        collectorURL: collectorURL,
-        screenshotURL: screenshotURL,
-        crashReportCallback: crashReportCallback,
-        applicationName: applicationName,
-        screenshotsEnabled: appState.screenshotsEnabled,
-        crashReportingEnabled: appState.crashReportingEnabled);
-    await Instrumentation.start(config);
-
-    await Navigator.pushNamed(context, RoutePaths.featureList);
   }
 
   Future<void> _showExtraConfigurationsDialog(context) async {
@@ -189,6 +200,12 @@ class _SettingsState extends State<Settings> {
                   key: const Key("startInstrumentationButton"),
                   onPressed: () => _onStartPress(context),
                   child: const Text('Start instrumentation')),
+              const SizedBox(height: 20),
+              Text(
+                errorMessage,
+                style: TextStyle(color: Colors.red),
+                textAlign: TextAlign.center,
+              )
             ], mainAxisAlignment: MainAxisAlignment.center),
           ]),
         ),

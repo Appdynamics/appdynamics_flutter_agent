@@ -12,14 +12,7 @@ extension SwiftAppDynamicsAgentPlugin {
       return
     }
     
-    do {
-      try ObjcExceptionCatch.tryExecute {
-        ADEumInstrumentation.changeAppKey(newKey)
-        result(nil)
-      }
-    } catch {
-      let customError = FlutterError(code: "500", message: "Agent changeAppKey() failed.", details: error.localizedDescription)
-      result(customError)
-    }
+    ADEumInstrumentation.changeAppKey(newKey)
+    result(nil)
   }
 }

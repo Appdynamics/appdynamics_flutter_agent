@@ -36,15 +36,7 @@ fun AppDynamicsAgentPlugin.setRequestTrackerUserDataLong(
         return
     }
 
-    try {
-        val value = properties["value"].toString().toLong()
-        tracker.withUserDataLong(key, value)
-        result.success(null)
-    } catch (e: Exception) {
-        result.error(
-            "500",
-            "Agent setRequestTrackerUserDataLong() failed.",
-            e.message
-        )
-    }
+    val value = properties["value"].toString().toLong()
+    tracker.withUserDataLong(key, value)
+    result.success(null)
 }

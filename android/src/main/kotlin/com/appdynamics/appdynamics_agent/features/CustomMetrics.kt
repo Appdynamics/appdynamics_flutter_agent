@@ -27,15 +27,7 @@ fun AppDynamicsAgentPlugin.reportMetric(
         return
     }
 
-    try {
-        val value = properties["value"].toString().toLong()
-        Instrumentation.reportMetric(name, value)
-        result.success(null)
-    } catch (e: Exception) {
-        result.error(
-            "500",
-            "Agent reportMetric() failed.",
-            e.message
-        )
-    }
+    val value = properties["value"].toString().toLong()
+    Instrumentation.reportMetric(name, value)
+    result.success(null)
 }
