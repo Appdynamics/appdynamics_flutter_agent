@@ -282,7 +282,11 @@ class RequestTracker {
     DateTime value,
   ) async {
     try {
-      final args = {"id": id, "key": key, "value": value.millisecondsSinceEpoch};
+      final args = {
+        "id": id,
+        "key": key,
+        "value": value.millisecondsSinceEpoch
+      };
       await channel.invokeMethod<void>('setRequestTrackerUserDataDate', args);
     } on PlatformException catch (e) {
       throw Exception(e.details);
