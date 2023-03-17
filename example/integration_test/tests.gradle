@@ -26,7 +26,9 @@ task startIntegrationTestServer() {
         arg(value: "--port")
         arg(value: '9999')
     }
-    println("Wiremock server started.")
+    doLast {
+        println("Wiremock server started.")
+    }
 }
 
 // iOS tests

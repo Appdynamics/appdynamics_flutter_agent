@@ -30,17 +30,9 @@ fun AppDynamicsAgentPlugin.getRequestTrackerWithUrl(
         return
     }
 
-    try {
-        val url = URL(urlString)
-        requestTrackers[id] = Instrumentation.beginHttpRequest(url)
-        result.success(null)
-    } catch (e: MalformedURLException) {
-        result.error(
-            "500",
-            "Agent setRequestTrackerStatusCode() failed.",
-            e.message
-        )
-    }
+    val url = URL(urlString)
+    requestTrackers[id] = Instrumentation.beginHttpRequest(url)
+    result.success(null)
 }
 
 fun AppDynamicsAgentPlugin.setRequestTrackerErrorInfo(

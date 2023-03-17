@@ -28,10 +28,6 @@ fun AppDynamicsAgentPlugin.changeAppKey(
         return
     }
 
-    try {
-        Instrumentation.changeAppKey(newKey)
-        result.success(null)
-    } catch (e: Exception) {
-        result.error("500", "Agent changeAppKey() failed.", e.message)
-    }
+    Instrumentation.changeAppKey(newKey)
+    result.success(null)
 }
