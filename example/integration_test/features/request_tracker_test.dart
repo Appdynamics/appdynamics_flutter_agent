@@ -130,7 +130,7 @@ void main() {
   testWidgets("Manual request tracking sends beacons",
       (WidgetTester tester) async {
     // Force using test keyboard and don't simulate typing.
-    // Needed because `WidgetTester.enterText()` was lagging  and failing test
+    // Needed because `WidgetTester.enterText()` was lagging and failing test
     // on smaller emulator screens.
     // https://github.com/flutter/flutter/issues/87990
     binding.testTextInput.register();

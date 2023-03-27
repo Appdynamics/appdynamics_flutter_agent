@@ -30,12 +30,14 @@ void main() {
 
     const route1Name = "Route1";
     const route2Name = "Route2";
+    const mockStatelessWidget = SizedBox();
     final route1 = MaterialPageRoute(
-        settings: const RouteSettings(name: route1Name),
-        builder: (BuildContext context) => null as StatelessWidget);
+      settings: const RouteSettings(name: route1Name),
+      builder: (BuildContext context) => mockStatelessWidget,
+    );
     final route2 = MaterialPageRoute(
         settings: const RouteSettings(name: route2Name),
-        builder: (BuildContext context) => null as StatelessWidget);
+        builder: (BuildContext context) => mockStatelessWidget);
 
     await observer.didPush(route1, null);
     await observer.didPush(route2, null);
