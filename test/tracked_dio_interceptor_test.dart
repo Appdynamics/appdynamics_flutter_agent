@@ -38,7 +38,9 @@ void main() {
   // Used to not duplicate logic that has same results but only one different
   // parameter (i.e. request options).
   Future happyPathTestLogic(
-      Options? options, Map<String, List<String>> expectedHeaders) async {
+    Options? options,
+    Map<String, List<String>> expectedHeaders,
+  ) async {
     final dio = Dio();
 
     final trackingInterceptor = TrackedDioInterceptor();
@@ -111,13 +113,12 @@ void main() {
     dio.interceptors.add(trackingInterceptor);
 
     final DioError error = DioError(
-      type: DioErrorType.other,
+      type: DioErrorType.unknown,
       error: Error(),
       requestOptions: RequestOptions(path: urlString),
     );
 
     dio.interceptors.add(InterceptorsWrapper(onRequest: (options, handler) {
-      error.requestOptions = options;
       handler.reject(error, true);
     }));
 
@@ -138,7 +139,7 @@ void main() {
         "id": trackedId,
         "errorDict": {
           "message": error.toString(),
-          "stack": error.stackTrace?.toString()
+          "stack": error.stackTrace.toString()
         }
       }),
       isMethodCall(
@@ -152,8 +153,9 @@ void main() {
     const urlString = "https://www.foo.com";
     final dio = Dio();
 
-    final trackingInterceptor =
-    TrackedDioInterceptor(addCorrelationHeaders: false);
+    final trackingInterceptor = TrackedDioInterceptor(
+      addCorrelationHeaders: false,
+    );
     dio.interceptors.add(trackingInterceptor);
 
     dio.interceptors.add(InterceptorsWrapper(onRequest: (options, handler) {
