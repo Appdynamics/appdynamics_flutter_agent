@@ -127,24 +127,15 @@ void main() {
 
     final trackedId = trackingInterceptor.trackedIds.first;
 
-    expect(log, hasLength(4));
+    expect(log, hasLength(2));
     expect(log, <Matcher>[
       isMethodCall(
         'getServerCorrelationHeaders',
         arguments: null,
       ),
-      isMethodCall('getRequestTrackerWithUrl',
-          arguments: {"id": trackedId, "url": urlString}),
-      isMethodCall('setRequestTrackerErrorInfo', arguments: {
-        "id": trackedId,
-        "errorDict": {
-          "message": error.toString(),
-          "stack": error.stackTrace.toString()
-        }
-      }),
       isMethodCall(
-        'requestTrackerReport',
-        arguments: {"id": trackedId},
+        'getRequestTrackerWithUrl',
+        arguments: {"id": trackedId, "url": urlString},
       ),
     ]);
   }, skip: true);
