@@ -1,0 +1,59 @@
+/*
+ * Copyright (c) 2022. AppDynamics LLC and its affiliates.
+ * All rights reserved.
+ *
+ */
+
+buildscript {
+    ext {
+        artifactoryBaseUrl = "https://artifactory.bare.appdynamics.com/artifactory/"
+        artifactoryBuildRepos = ["maven-central",
+                                 "maven-releases",
+                                 "build-plugins",
+                                 "third-party-lib",
+                                 "atlassian-public"]
+        artifactoryPluginRepos = ["build-plugins",
+                                  "third-party-lib",
+                                  "gradle-plugins"]
+    }
+
+    repositories {
+        mavenLocal()
+        artifactoryPluginRepos.each { repo -> maven { url(artifactoryBaseUrl + repo) }
+        }
+        artifactoryBuildRepos.each { repo -> maven { url(artifactoryBaseUrl + repo) }
+        }
+    }
+
+    dependencies {
+        classpath 'com.appdynamics.gradle.plugins.pipeline:pipelinePlugin:3.6.209'
+        classpath 'com.appdynamics.gradle.plugins:publish-plugin:2.4.0'
+    }
+}
+
+apply plugin: com.appdynamics.gradle.plugins.pipeline.PipelinePlugin
+apply plugin: com.appdynamics.gradle.plugins.publish.AppDynamicsPublishPlugin
+
+group = 'com.appdynamics.eum'
+appdVersion {
+    baseVersion = new File('lib/version.txt').text
+}
+
+// Specify CI/CD tasks in order and run `./gradlew pipeline` to generate new .teamcity folder.
+pipeline {
+    teamcityParent = "EUM"
+    projectName = "Flutter Agent"
+    agentType = "BigSur"
+
+    buildTasks = ["build",
+                  "upgradeFlutter",
+                  "installPackages",
+                  "analyze",
+                  "runUnitTests",
+                  "buildAndroid",
+                  "buildiOS",
+                  "generateDocs"]
+
+    integrationTestTasks = [":example:runIntegrationTestsAndroid",
+                            ":example:runIntegrationTestsiOS"]
+}

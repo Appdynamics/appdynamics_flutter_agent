@@ -125,7 +125,11 @@ open class AppDynamicsAgentPlugin : FlutterPlugin, MethodCallHandler {
         )
 
         methods[call.method]?.let { method ->
-            method(result, call.arguments)
+            try {
+                method(result, call.arguments)
+            } catch (e: RuntimeException) {
+                result.error("500", "Native method call failed.", e.message)
+            }
         } ?: run {
             result.notImplemented()
         }

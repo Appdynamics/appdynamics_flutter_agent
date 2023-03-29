@@ -100,7 +100,14 @@ public class SwiftAppDynamicsAgentPlugin: NSObject, FlutterPlugin {
     ]
     
     if let method = methods[call.method] {
-      method(result, call.arguments)
+      do {
+        try ObjcExceptionCatch.tryExecute {
+          method(result, call.arguments)
+        }
+      } catch {
+        let customError = FlutterError(code: "500", message: "Native method call failed.", details: error.localizedDescription)
+        result(customError)
+      }
     } else {
       result(FlutterMethodNotImplemented)
     }

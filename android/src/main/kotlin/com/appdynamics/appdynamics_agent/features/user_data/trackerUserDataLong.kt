@@ -27,19 +27,11 @@ fun AppDynamicsAgentPlugin.setUserDataLong(
         return
     }
 
-    try {
-        val value = properties["value"].toString().toLong()
-        Instrumentation.setUserDataLong(key, value)
-        result.success(null)
-    } catch (e: Exception) {
-        result.error(
-            "500",
-            "Agent setUserDataLong() failed.",
-            e.message
-        )
-    }
-}
+    val value = properties["value"].toString().toLong()
+    Instrumentation.setUserDataLong(key, value)
+    result.success(null)
 
+}
 
 fun AppDynamicsAgentPlugin.removeUserDataLong(
     @NonNull result: MethodChannel.Result,
