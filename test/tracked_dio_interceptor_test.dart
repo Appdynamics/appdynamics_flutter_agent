@@ -54,7 +54,7 @@ void main() {
 
     const urlString = "https://www.foo.com";
     final response = await dio.get(urlString, options: options);
-    final trackedId = trackingInterceptor.trackedIds.first;
+    final trackedId = response.requestOptions.extra["trackerId"];
 
     expect(log, hasLength(7));
     expect(log, <Matcher>[
@@ -112,73 +112,79 @@ void main() {
     final trackingInterceptor = TrackedDioInterceptor();
     dio.interceptors.add(trackingInterceptor);
 
-    final DioError error = DioError(
-      type: DioErrorType.unknown,
-      error: Error(),
-      requestOptions: RequestOptions(path: urlString),
-    );
-
     dio.interceptors.add(InterceptorsWrapper(onRequest: (options, handler) {
+      final DioError error = DioError(
+          type: DioErrorType.unknown,
+          error: Error(),
+          requestOptions: options);
       handler.reject(error, true);
     }));
 
-    await expectLater(() async => await dio.request(urlString),
-        throwsA(predicate((e) => e is DioError)));
-
-    final trackedId = trackingInterceptor.trackedIds.first;
-
-    expect(log, hasLength(2));
-    expect(log, <Matcher>[
-      isMethodCall(
-        'getServerCorrelationHeaders',
-        arguments: null,
-      ),
-      isMethodCall(
-        'getRequestTrackerWithUrl',
-        arguments: {"id": trackedId, "url": urlString},
-      ),
-    ]);
-  }, skip: true);
-
-  test("TrackingInterceptor doesn't call correlation headers method", () async {
-    const urlString = "https://www.foo.com";
-    final dio = Dio();
-
-    final trackingInterceptor = TrackedDioInterceptor(
-      addCorrelationHeaders: false,
-    );
-    dio.interceptors.add(trackingInterceptor);
-
-    dio.interceptors.add(InterceptorsWrapper(onRequest: (options, handler) {
-      final response =
-          Response(requestOptions: options, data: "{}", statusCode: 200);
-      handler.resolve(response, true);
-    }));
-
-    final response = await dio.request(urlString);
-
-    final trackedId = trackingInterceptor.trackedIds.first;
-
-    expect(log, hasLength(5));
-    expect(log, <Matcher>[
-      isMethodCall('getRequestTrackerWithUrl',
-          arguments: {"id": trackedId, "url": urlString}),
-      isMethodCall(
-        'setRequestTrackerStatusCode',
-        arguments: {"id": trackedId, "statusCode": response.statusCode},
-      ),
-      isMethodCall('setRequestTrackerRequestHeaders', arguments: {
-        "id": trackedId,
-        "headers": {},
-      }),
-      isMethodCall(
-        'setRequestTrackerResponseHeaders',
-        arguments: {"id": trackedId, "headers": {}},
-      ),
-      isMethodCall(
-        'requestTrackerReport',
-        arguments: {"id": trackedId},
-      )
-    ]);
+    try {
+      await dio.request(urlString);
+    } catch (e) {
+      final trackerId = (e as DioError).requestOptions.extra["trackerId"];
+      expect(log, hasLength(4));
+      expect(log, <Matcher>[
+        isMethodCall(
+          'getServerCorrelationHeaders',
+          arguments: null,
+        ),
+        isMethodCall('getRequestTrackerWithUrl',
+            arguments: {"id": trackerId, "url": urlString}),
+        isMethodCall('setRequestTrackerErrorInfo', arguments: {
+          "id": trackerId,
+          "errorDict": {
+            "message": e.toString(),
+            "stack": e.stackTrace.toString()
+          }
+        }),
+        isMethodCall(
+          'requestTrackerReport',
+          arguments: {"id": trackerId},
+        ),
+      ]);
+    }
   });
+
+test("TrackingInterceptor doesn't call correlation headers method", () async {
+  const urlString = "https://www.foo.com";
+  final dio = Dio();
+
+  final trackingInterceptor = TrackedDioInterceptor(
+    addCorrelationHeaders: false,
+  );
+  dio.interceptors.add(trackingInterceptor);
+
+  dio.interceptors.add(InterceptorsWrapper(onRequest: (options, handler) {
+    final response =
+        Response(requestOptions: options, data: "{}", statusCode: 200);
+    handler.resolve(response, true);
+  }));
+
+  final response = await dio.request(urlString);
+  final trackedId = response.requestOptions.extra["trackerId"];
+
+  expect(log, hasLength(5));
+  expect(log, <Matcher>[
+    isMethodCall('getRequestTrackerWithUrl',
+        arguments: {"id": trackedId, "url": urlString}),
+    isMethodCall(
+      'setRequestTrackerStatusCode',
+      arguments: {"id": trackedId, "statusCode": response.statusCode},
+    ),
+    isMethodCall('setRequestTrackerRequestHeaders', arguments: {
+      "id": trackedId,
+      "headers": {},
+    }),
+    isMethodCall(
+      'setRequestTrackerResponseHeaders',
+      arguments: {"id": trackedId, "headers": {}},
+    ),
+    isMethodCall(
+      'requestTrackerReport',
+      arguments: {"id": trackedId},
+    )
+  ]);
+});
 }

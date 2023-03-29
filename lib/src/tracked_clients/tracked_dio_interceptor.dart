@@ -20,10 +20,7 @@ import 'package:flutter/cupertino.dart';
 class TrackedDioInterceptor implements Interceptor {
   final bool addCorrelationHeaders;
 
-  final Map<RequestOptions, RequestTracker> _activeTrackers = {};
-
-  @visibleForTesting
-  final List<String> trackedIds = [];
+  final Map<String, RequestTracker> _activeTrackers = {};
 
   TrackedDioInterceptor({this.addCorrelationHeaders = true});
 
@@ -36,18 +33,16 @@ class TrackedDioInterceptor implements Interceptor {
       if (addCorrelationHeaders) {
         final correlationHeaders =
             await RequestTracker.getServerCorrelationHeaders();
-
         final headers = correlationHeaders.map(
           (key, value) => MapEntry(key, value.first),
         );
-
         options.headers.addAll(headers);
       }
 
       var url = options.uri.toString();
       final tracker = await RequestTracker.create(url);
-      trackedIds.add(tracker.id);
-      _activeTrackers[options] = tracker;
+      _activeTrackers[tracker.id] = tracker;
+      options.extra['trackerId'] = tracker.id;
     } finally {
       handler.next(options);
     }
@@ -59,9 +54,9 @@ class TrackedDioInterceptor implements Interceptor {
     ResponseInterceptorHandler handler,
   ) async {
     try {
-      final tracker = _activeTrackers.remove(response.requestOptions);
+      final tracker = _activeTrackers.remove(response.requestOptions.extra["trackerId"]);
       if (tracker != null) {
-        await tracker.setResponseStatusCode(response.statusCode!);
+        await tracker.setResponseStatusCode(response.statusCode ?? 404);
         await _logResponse(response, tracker);
         await tracker.reportDone();
       }
@@ -73,11 +68,11 @@ class TrackedDioInterceptor implements Interceptor {
   @override
   void onError(DioError err, ErrorInterceptorHandler handler) async {
     try {
-      final tracker = _activeTrackers.remove(err.requestOptions);
+      final tracker = _activeTrackers.remove(err.requestOptions.extra["trackerId"]);
       if (tracker != null) {
         final statusCode = err.response?.statusCode;
-
         if (statusCode != null) {
+          // TODO: Find a way to test this (coverage).
           // Errors for when status code is not in accepted range should be recorded as normal
           await tracker.setResponseStatusCode(statusCode);
           await _logResponse(err.response, tracker);
