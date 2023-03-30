@@ -55,8 +55,9 @@ class TrackedDioInterceptor implements Interceptor {
     ResponseInterceptorHandler handler,
   ) async {
     try {
-      final tracker =
-          _activeTrackers.remove(response.requestOptions.extra[_trackerId]);
+      final tracker = _activeTrackers.remove(
+        response.requestOptions.extra[_trackerId],
+      );
       if (tracker != null) {
         await tracker.setResponseStatusCode(response.statusCode ?? 404);
         await _logResponse(response, tracker);
