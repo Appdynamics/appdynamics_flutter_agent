@@ -56,7 +56,6 @@ class TrackedDioClient extends DioForNative {
     }
 
     final requestTracker = await RequestTracker.create(path);
-    tracker = requestTracker;
 
     return _dioClient
         .request<T>(path,
@@ -83,6 +82,7 @@ class TrackedDioClient extends DioForNative {
       }
       throw e;
     }).whenComplete(() async {
+      tracker = requestTracker;
       await requestTracker.reportDone();
     });
   }
