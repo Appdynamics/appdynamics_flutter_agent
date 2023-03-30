@@ -1,6 +1,5 @@
 import 'package:appdynamics_agent/appdynamics_agent.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter/cupertino.dart';
 
 /// Use this class to create a custom Dio [Interceptor] that tracks requests
 /// automatically. Alternative to [TrackedDioClient].
@@ -24,6 +23,8 @@ class TrackedDioInterceptor implements Interceptor {
 
   TrackedDioInterceptor({this.addCorrelationHeaders = true});
 
+  static const _trackerId = 'trackerId';
+
   @override
   void onRequest(
     RequestOptions options,
@@ -42,7 +43,7 @@ class TrackedDioInterceptor implements Interceptor {
       var url = options.uri.toString();
       final tracker = await RequestTracker.create(url);
       _activeTrackers[tracker.id] = tracker;
-      options.extra['trackerId'] = tracker.id;
+      options.extra[_trackerId] = tracker.id;
     } finally {
       handler.next(options);
     }
@@ -54,7 +55,8 @@ class TrackedDioInterceptor implements Interceptor {
     ResponseInterceptorHandler handler,
   ) async {
     try {
-      final tracker = _activeTrackers.remove(response.requestOptions.extra["trackerId"]);
+      final tracker =
+          _activeTrackers.remove(response.requestOptions.extra[_trackerId]);
       if (tracker != null) {
         await tracker.setResponseStatusCode(response.statusCode ?? 404);
         await _logResponse(response, tracker);
@@ -68,7 +70,9 @@ class TrackedDioInterceptor implements Interceptor {
   @override
   void onError(DioError err, ErrorInterceptorHandler handler) async {
     try {
-      final tracker = _activeTrackers.remove(err.requestOptions.extra["trackerId"]);
+      final tracker = _activeTrackers.remove(
+        err.requestOptions.extra[_trackerId],
+      );
       if (tracker != null) {
         final statusCode = err.response?.statusCode;
         if (statusCode != null) {
