@@ -39,7 +39,7 @@ void main() {
 
   // Used to not duplicate logic that has same results but only one different
   // parameter (i.e. request options).
-  void happyPathTestLogic(
+  Future happyPathTestLogic(
       Options? options, Map<String, List<String>> expectedHeaders) async {
     final dio = Dio();
     dio.interceptors.add(InterceptorsWrapper(onRequest: (options, handler) {
@@ -91,20 +91,20 @@ void main() {
     final headers = await RequestTracker.getServerCorrelationHeaders();
     headers.addAll(
         customHeaders.map((key, value) => MapEntry(key, <String>[value])));
-    happyPathTestLogic(Options(headers: customHeaders), headers);
+    await happyPathTestLogic(Options(headers: customHeaders), headers);
   });
 
   test('TrackedDioClient happy path works with `null` options', () async {
     log = [];
     final headers = await RequestTracker.getServerCorrelationHeaders();
-    happyPathTestLogic(null, headers);
+    await happyPathTestLogic(null, headers);
   });
 
   test('TrackedDioClient happy path works with `null` option headers',
       () async {
     log = [];
     final headers = await RequestTracker.getServerCorrelationHeaders();
-    happyPathTestLogic(Options(headers: null), headers);
+    await happyPathTestLogic(Options(headers: null), headers);
   });
 
   test('TrackedDioClient error-path methods are called correctly', () async {

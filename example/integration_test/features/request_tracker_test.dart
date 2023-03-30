@@ -116,6 +116,31 @@ extension on WidgetTester {
       expect(actualHeaders[key.toLowerCase()], value.first);
     });
   }
+
+  assertDioInterceptorBeaconSent() async {
+    final requestSentLabel = find.text("Success with 200.");
+    await ensureVisible(requestSentLabel);
+    expect(requestSentLabel, findsOneWidget);
+
+    final trackerRequests = await findRequestsBy(
+      url: successURL,
+      type: "network-request",
+      hrc: "200",
+      $is: "Manual HttpTracker",
+    );
+    expect(trackerRequests.length, 3);
+
+    final actualRequests = await findRequestsBy(type: "trackeddiointerceptor");
+    expect(actualRequests.length, 1);
+
+    // Also assert correlation headers are added
+    final Map<String, dynamic> actualHeaders =
+        actualRequests[0]["request"]["headers"];
+    final btHeaders = await RequestTracker.getServerCorrelationHeaders();
+    btHeaders.forEach((key, value) {
+      expect(actualHeaders[key.toLowerCase()], value.first);
+    });
+  }
 }
 
 void main() {
@@ -147,6 +172,9 @@ void main() {
     await tester.tapAndSettle("manualDioClientGetRequestButton");
     await tester.flushBeacons();
     await tester.assertDioTrackerBeaconSent();
+    await tester.tapAndSettle("manualDioInterceptorGetRequestButton");
+    await tester.flushBeacons();
+    await tester.assertDioInterceptorBeaconSent();
   });
 
   tearDown(() async {
