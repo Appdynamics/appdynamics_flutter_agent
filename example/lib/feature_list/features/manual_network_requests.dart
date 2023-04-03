@@ -152,6 +152,32 @@ class _ManualNetworkRequestsState extends State<ManualNetworkRequests> {
     }
   }
 
+  Future<void> _sendDioInterceptorRequestButtonPressed() async {
+    var urlString = urlFieldController.text;
+    if (urlString.trim().isEmpty) {
+      return;
+    }
+
+    try {
+      setState(() {
+        responseText = "Loading...";
+      });
+
+      final dioClient = Dio();
+      dioClient.interceptors.add(TrackedDioInterceptor());
+
+      final response = await dioClient.post(urlString,
+          data: "[{\"type\": \"trackeddiointerceptor\"}]");
+      setState(() {
+        responseText = "Success with ${response.statusCode}.";
+      });
+    } catch (e) {
+      setState(() {
+        responseText = "Failed with ${e.toString()}.";
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -218,18 +244,19 @@ class _ManualNetworkRequestsState extends State<ManualNetworkRequests> {
                         onPressed: _sendPostRequestButtonPressed),
                     ElevatedButton(
                         key: const Key("manualHttpClientGetRequestButton"),
-                        child: const Text(
-                            'TrackedHttpClient GET request\n'
-                            '(has custom header: "foo")',
+                        child: const Text('TrackedHttpClient GET request',
                             textAlign: TextAlign.center),
                         onPressed: _sendHttpClientRequestButtonPressed),
                     ElevatedButton(
                         key: const Key("manualDioClientGetRequestButton"),
-                        child: const Text(
-                            'TrackedDioClient GET request\n'
-                            '(has custom header: "foo")',
+                        child: const Text('TrackedDioClient GET request',
                             textAlign: TextAlign.center),
                         onPressed: _sendDioClientRequestButtonPressed),
+                    ElevatedButton(
+                        key: const Key("manualDioInterceptorGetRequestButton"),
+                        child: const Text('TrackedDioInterceptor GET request',
+                            textAlign: TextAlign.center),
+                        onPressed: _sendDioInterceptorRequestButtonPressed),
                     const SizedBox(
                       height: 30,
                     ),
