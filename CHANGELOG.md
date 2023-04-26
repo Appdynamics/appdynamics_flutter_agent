@@ -5,6 +5,7 @@
 * Fixed native errors not being reported correctly.
 * Fixed incorrect LoggingLevel values on Android.
 
+
 # 22.12.0-beta.1
 * Improved crash reporting by grouping exceptions and errors into different categories in the UI 
 * controller.

@@ -1,10 +1,4 @@
 <?xml version="1.0"?>
-<!--
-  ~ Copyright (c) 2022. AppDynamics LLC and its affiliates.
-  ~ All rights reserved.
-  ~
-  -->
-
 <project>
     <modelVersion>4.0.0</modelVersion>
     <name>Flutter Agent Config DSL Script</name>
@@ -34,10 +28,10 @@
       </snapshots>
     </repository>
     <repository>
-      <id>maven-releases</id>
+      <id>artifactory-releases</id>
       <url>https://artifactory.bare.appdynamics.com/artifactory/maven-releases</url>
       <snapshots>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
       </snapshots>
     </repository>
   </repositories>
