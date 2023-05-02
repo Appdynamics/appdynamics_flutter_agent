@@ -38,10 +38,10 @@ task createDummyReport(type: Exec) {
 }
 
 task runInstallationTest(type: Exec) {
+    dependsOn upgradeFlutter
     workingDir = file('installation_test')
     commandLine "./install-agent-new-project.sh"
 }
-
 runInstallationTest.finalizedBy createDummyReport
 
 task runIntegrationTestsiOS {
