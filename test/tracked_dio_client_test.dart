@@ -16,7 +16,7 @@ void main() {
 
   List<MethodCall> log = <MethodCall>[];
 
-  TestDefaultBinaryMessengerBinding.instance!.defaultBinaryMessenger
+  TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
       .setMockMethodCallHandler(channel, (MethodCall methodCall) async {
     switch (methodCall.method) {
       case 'getRequestTrackerWithUrl':

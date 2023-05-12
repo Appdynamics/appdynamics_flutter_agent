@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 
 import 'loading_indicator.dart';
 
-class FlushBeaconsAppBar extends StatefulWidget with PreferredSizeWidget {
+class FlushBeaconsAppBar extends StatefulWidget implements PreferredSizeWidget {
   final String title;
   final bool automaticallyImplyLeading;
 
@@ -30,7 +30,7 @@ class _FlushBeaconsAppBarState extends State<FlushBeaconsAppBar> {
   void _flushBeaconsPressed(BuildContext context) async {
     showLoadingIndicator(context);
 
-    final tracker = await RequestTracker.create("http://flush-beacons.com");
+    final tracker = await RequestTracker.create("http://send-beacons.com");
     tracker.setResponseStatusCode(200);
     tracker.reportDone();
 

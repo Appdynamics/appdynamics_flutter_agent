@@ -6,7 +6,6 @@
 
 import 'dart:convert';
 
-import 'package:appdynamics_agent/appdynamics_agent.dart';
 import 'package:appdynamics_agent_example/main.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -43,12 +42,6 @@ Future<void> stubServerResponses() async {
   });
 }
 
-// Force beacons to be sent.
-Future<void> flushBeacons() async {
-  final tracker = await RequestTracker.create("http://flush-beacons.com");
-  tracker.setResponseStatusCode(200);
-  tracker.reportDone();
-}
 
 Map<String, dynamic>? getBeaconRequestBody(Map<String, dynamic> request) {
   try {

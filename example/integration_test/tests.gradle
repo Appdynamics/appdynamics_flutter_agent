@@ -24,7 +24,7 @@ task startIntegrationTestServer() {
         arg(value: "-jar")
         arg(value: wiremock_path)
         arg(value: "--port")
-        arg(value: '9999')
+        arg(value: '9001')
     }
     doLast {
         println("Wiremock server started.")

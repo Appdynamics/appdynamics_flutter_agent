@@ -48,11 +48,11 @@ extension TestHelpers on WidgetTester {
 
   // Force beacons to be sent.
   Future<void> flushBeacons() async {
-    final tracker = await RequestTracker.create("http://flush-beacons.com");
-    await tracker.setResponseStatusCode(200);
-    await tracker.reportDone();
-
-    await pumpAndSettle(const Duration(seconds: 2));
+    // send-beacons.com instantly flushes the beacons on the Android agent.
+    final tracker = await RequestTracker.create("http://send-beacons.com");
+    tracker.setResponseStatusCode(200);
+    tracker.reportDone();
+    await pumpAndSettle(const Duration(seconds: 6));
   }
 
   Future<void> tapAndSettle(String key) async {

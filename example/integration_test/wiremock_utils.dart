@@ -8,7 +8,9 @@ import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:flutter_test/flutter_test.dart';
 
-final serverUrl = "http://${Platform.isIOS ? "localhost" : "10.0.2.2"}:9999";
+// We need to use port 9001 as this is also the one used by the Android agent
+// to be used in component tests and is not filtered.
+final serverUrl = "http://${Platform.isIOS ? "localhost" : "10.0.2.2"}:9001";
 final serverRequestsUrl = "$serverUrl/__admin/requests";
 final serverMappingsUrl = "$serverUrl/__admin/mappings";
 

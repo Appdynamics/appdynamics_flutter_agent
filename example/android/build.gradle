@@ -6,7 +6,7 @@
 
 buildscript {
     ext.kotlin_version = '1.6.10'
-    ext.appd_plugin_version = '22.2.2'
+    ext.appd_plugin_version = '23.4.1'
 
     repositories {
         mavenLocal()
@@ -37,6 +37,6 @@ subprojects {
     project.evaluationDependsOn(':app')
 }
 
-task clean(type: Delete) {
+tasks.register("clean", Delete) {
     delete rootProject.buildDir
 }

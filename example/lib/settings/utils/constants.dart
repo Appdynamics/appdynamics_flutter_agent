@@ -6,7 +6,7 @@
 
 import 'dart:io';
 
-var localServerURL = "http://${Platform.isIOS ? "localhost" : "10.0.2.2"}:9999";
+var localServerURL = "http://${Platform.isIOS ? "localhost" : "10.0.2.2"}:9001";
 
 final collectors = {
   "Local": {"url": localServerURL, "screenshotURL": localServerURL},

@@ -54,3 +54,6 @@ build
 
 # Custom
 latest_version_flutter_project
+
+# Android Agent
+/android/buildId.txt
