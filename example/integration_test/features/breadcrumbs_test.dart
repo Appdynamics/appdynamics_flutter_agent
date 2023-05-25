@@ -36,7 +36,7 @@ void main() {
     await tester.assertCrashAndSessionBeaconSent();
   });
 
-  // TODO: Add Check Crash Only breadcrumbs when we will be able to crash
+  // CDM-7728 TODO: Add Check Crash Only breadcrumbs when we will be able to crash
   // flutter driver and still restart the app
 
   tearDown(() async {

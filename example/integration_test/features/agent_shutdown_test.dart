@@ -52,9 +52,7 @@ void main() {
   testWidgets(
       "Agent shutdown blocks sending requests and agent restart will reset it",
       (WidgetTester tester) async {
-    // TODO: Switch to cascading `await`'s after proposals:
-    // https://github.com/dart-lang/language/issues/25
-    // https://github.com/dart-lang/sdk/issues/25986
+    // CDM-9402 TODO: Switch to cascading `await`'s.
     await tester.jumpstartInstrumentation();
     await tester.tapAndSettle("agentShutdownButton");
     await tester.tapAndSettle("shutdownAgentButton");
