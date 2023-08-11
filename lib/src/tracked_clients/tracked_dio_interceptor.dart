@@ -69,7 +69,7 @@ class TrackedDioInterceptor implements Interceptor {
   }
 
   @override
-  void onError(DioError err, ErrorInterceptorHandler handler) async {
+  void onError(DioException err, ErrorInterceptorHandler handler) async {
     try {
       final tracker = _activeTrackers.remove(
         err.requestOptions.extra[_trackerId],

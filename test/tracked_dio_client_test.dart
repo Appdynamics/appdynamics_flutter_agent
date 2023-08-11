@@ -111,8 +111,8 @@ void main() {
     log = [];
 
     const urlString = "https://www.foo.com";
-    final error = DioError(
-        type: DioErrorType.unknown,
+    final error = DioException(
+        type: DioExceptionType.unknown,
         error: Error(),
         requestOptions: RequestOptions(path: urlString));
 
@@ -124,7 +124,7 @@ void main() {
     final client = TrackedDioClient(dio);
 
     await expectLater(() async => await client.request(urlString),
-        throwsA(predicate((e) => e is DioError)));
+        throwsA(predicate((e) => e is DioException)));
 
     expect(log, hasLength(4));
     expect(log, <Matcher>[

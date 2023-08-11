@@ -73,10 +73,10 @@ class TrackedDioClient extends DioForNative {
       await requestTracker.setResponseHeaders(response.headers.map);
       return response;
     }, onError: (e, StackTrace stacktrace) async {
-      if (e is DioError) {
+      if (e is DioException) {
         await requestTracker.setError(e.toString(), e.stackTrace.toString());
       } else {
-        // All errors seem to be wrapped inside DioError, so we can't force
+        // All errors seem to be wrapped inside DioException, so we can't force
         // coverage for another type of error, but this case will still be
         // handled, just in case.
         await requestTracker.setError(e.toString(), stacktrace.toString());
