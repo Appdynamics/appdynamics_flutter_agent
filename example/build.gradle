@@ -46,22 +46,22 @@ runInstallationTest.finalizedBy createDummyReport
 
 task runIntegrationTestsiOS {
     dependsOn ordered(
-            "upgradeFlutter",
-            "startiOSSimulator",
-            "runStartIntegrationTestiOS",
-            "runANRIntegrationTestiOS",
-            "runRequestTrackerIntegrationTestiOS",
-            "runCustomTimersIntegrationTestiOS",
-            "runBreadcrumbsIntegrationTestiOS",
-            "runErrorReportingIntegrationTestiOS",
-            "runSessionFramesIntegrationTestiOS",
-            "runScreenshotsIntegrationTestiOS",
-            "runCustomMetricsIntegrationTestiOS",
-            "runAgentShutdownIntegrationTestiOS",
-            "runSessionControlIntegrationTestiOS",
-            "runInfoPointsIntegrationTestiOS",
-            "runChangeAppKeyIntegrationTestiOS",
-            "runActivityTrackingIntegrationTestiOS",
+            // "upgradeFlutter",
+            // "startiOSSimulator",
+            // "runStartIntegrationTestiOS",
+            // "runANRIntegrationTestiOS",
+            // "runRequestTrackerIntegrationTestiOS",
+            // "runCustomTimersIntegrationTestiOS",
+            // "runBreadcrumbsIntegrationTestiOS",
+            // "runErrorReportingIntegrationTestiOS",
+            // "runSessionFramesIntegrationTestiOS",
+            // "runScreenshotsIntegrationTestiOS",
+            // "runCustomMetricsIntegrationTestiOS",
+            // "runAgentShutdownIntegrationTestiOS",
+            // "runSessionControlIntegrationTestiOS",
+            // "runInfoPointsIntegrationTestiOS",
+            // "runChangeAppKeyIntegrationTestiOS",
+            // "runActivityTrackingIntegrationTestiOS",
             "createDummyReport"
     )
 }

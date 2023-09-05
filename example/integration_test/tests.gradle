@@ -9,7 +9,7 @@
 
 // Configure these based on the system's emulator/simulator names.
 def android_device = "Android SDK built for x86"
-def iOS_device = "iPhone 13"
+def iOS_device = "iPhone 14"
 
 def test_driver_path = "integration_test/test_driver/integration_test.dart"
 def integration_tests_path = "integration_test/features/"
