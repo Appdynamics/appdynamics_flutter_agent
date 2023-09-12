@@ -1,3 +1,7 @@
+# 23.9.0
+* Resolved compatibility issues with Dio version 5.1.0.
+
+
 # 23.3.0
 * Promoting package from beta. 🎊
 * Disabled native WebView instrumentation, which was enabled by default.
@@ -7,7 +11,7 @@
 
 
 # 22.12.0-beta.1
-* Improved crash reporting by grouping exceptions and errors into different categories in the UI 
+* Improved crash reporting by grouping exceptions and errors into different categories in the UI
 * controller.
 * Fixed bug involving screen tracking crashing app on start.
 * Improve RequestTracker class by removing bugs involving force unwrapping the tracker.
@@ -52,7 +56,7 @@
 
 # 1.0.0-beta.1
 
-🎉🎊 Presenting the new AppDynamics SDK for Flutter: 
+🎉🎊 Presenting the new AppDynamics SDK for Flutter:
 * Allows instrumenting Flutter apps and getting valuable insights in the UI controller.
 * Features: request tracking, error/crash reporting, activity tracking, info points, and many more.
 * Thoroughly maintained and ready for production.
