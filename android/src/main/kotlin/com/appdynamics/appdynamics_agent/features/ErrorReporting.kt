@@ -20,16 +20,16 @@ fun AppDynamicsAgentPlugin.reportError(
 ) {
     val properties = arguments as HashMap<*, *>
 
-    val message = properties["message"] as? String ?: run {
+    val hybridExceptionData = properties["hed"] as? String ?: run {
         result.error(
             "500",
             "reportError() failed.",
-            "Please provide a valid message string."
+            "Please send hybridExceptionData as string."
         )
         return
     }
 
-    val severityLevel = properties["severity"] as? Int ?: run {
+    val severityLevel = properties["sev"] as? Int ?: run {
         result.error(
             "500",
             "reportError() failed.",
@@ -38,7 +38,7 @@ fun AppDynamicsAgentPlugin.reportError(
         return
     }
 
-    Instrumentation.reportError(Throwable(message), severityLevel)
+    Instrumentation.reportRawError(hybridExceptionData, severityLevel)
     result.success(null)
 }
 
@@ -48,14 +48,16 @@ fun AppDynamicsAgentPlugin.createCrashReport(
 ) {
     val properties = arguments as HashMap<*, *>
 
-    val type = "clrCrashReport"
-    val crashDump = properties["crashDump"] as String
+    val hed = properties["hed"] as? String ?: run {
+        result.error(
+            "500",
+            "reportError() failed.",
+            "Please send hybridExceptionData as string."
+        )
+        return
+    }
 
-    val toJson = JSONObject(crashDump)
-    toJson.put("guid", UUID.randomUUID().toString())
-    val backToString = toJson.toString();
-
-    Instrumentation.createCrashReport(backToString, type)
+    Instrumentation.createRawCrashReport(hed)
     result.success(null)
 }
 

@@ -8,6 +8,7 @@
 // https://github.com/dart-lang/language/issues/723
 
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:appdynamics_agent/appdynamics_agent.dart';
 import 'package:appdynamics_agent/src/session_frame.dart';
@@ -220,11 +221,18 @@ class Instrumentation {
       {ErrorSeverityLevel severityLevel = ErrorSeverityLevel.warning,
       StackTrace? stackTrace}) async {
     try {
-      final arguments = {
-        "message": exception.toString(),
-        "severity": severityLevel.index,
-        "stackTrace": stackTrace?.toString()
+      final hed = {
+        "rst": stackTrace?.toString(),
+        "crt": DateTime.now().toIso8601String(),
+        "env": 'Flutter',
+        "em": exception.toString(),
       };
+
+      final arguments = {
+        "hed": jsonEncode(hed),
+        "sev": severityLevel.index,
+      };
+
       await channel.invokeMethod<void>('reportError', arguments);
     } on PlatformException catch (e) {
       throw Exception(e.details);
@@ -250,11 +258,14 @@ class Instrumentation {
   static Future<void> reportError(Error error,
       {ErrorSeverityLevel severityLevel = ErrorSeverityLevel.warning}) async {
     try {
-      final arguments = {
-        "message": error.toString(),
-        "stackTrace": error.stackTrace?.toString(),
-        "severity": severityLevel.index
+      final hed = {
+        "rst": error.stackTrace.toString(),
+        "crt": DateTime.now().toIso8601String(),
+        "env": 'Flutter',
+        "em": error.toString()
       };
+
+      final arguments = {"hed": jsonEncode(hed), "sev": severityLevel.index};
       await channel.invokeMethod<void>('reportError', arguments);
     } on PlatformException catch (e) {
       throw Exception(e.details);
@@ -284,11 +295,18 @@ class Instrumentation {
       {ErrorSeverityLevel severityLevel = ErrorSeverityLevel.warning,
       StackTrace? stackTrace}) async {
     try {
-      final arguments = {
-        "message": message,
-        "severity": severityLevel.index,
-        "stackTrace": stackTrace?.toString()
+      final hed = {
+        "rst": stackTrace?.toString(),
+        "crt": DateTime.now().toIso8601String(),
+        "env": 'Flutter',
+        "em": message,
       };
+
+      final arguments = {
+        "hed": jsonEncode(hed),
+        "sev": severityLevel.index,
+      };
+
       await channel.invokeMethod<void>('reportError', arguments);
     } on PlatformException catch (e) {
       throw Exception(e.details);
@@ -963,7 +981,7 @@ class Instrumentation {
     final crashReport =
         CrashReport(errorDetails: details, stackTrace: details.stack);
     final arguments = {
-      "crashDump": crashReport.toString(),
+      "hed": crashReport.toString(),
     };
 
     return await channel.invokeMethod<void>('createCrashReport', arguments);
