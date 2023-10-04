@@ -4,6 +4,8 @@
  *
  */
 
+import 'dart:convert';
+
 import 'package:appdynamics_agent/appdynamics_agent.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -46,27 +48,57 @@ void main() {
     await Instrumentation.reportMessage(message,
         severityLevel: criticalLevel, stackTrace: randomStackTrace);
 
+    // Removed CRT due to potential time variations during test runs.
+    int crtCnt = 0;
+    List<MethodCall> newData = [];
+    for (var methodCall in log) {
+      var hed = methodCall.arguments["hed"];
+      Map<String, dynamic> hedMap = json.decode(hed);
+      if (hedMap.containsKey("crt") && hedMap["crt"] is String) {
+        hedMap.remove("crt");
+        crtCnt++;
+      }
+
+      MethodCall newMethodCall = MethodCall(
+        methodCall.method,
+        {
+          ...methodCall.arguments,
+          "hed": hedMap,
+        },
+      );
+      newData.add(newMethodCall);
+    }
+
+    // Test Case Validations
+    expect(crtCnt, 3);
     expect(log, hasLength(3));
-    // expect(log, <Matcher>[
-    //   isMethodCall('reportError', arguments: {
-    //     "message": exception.toString(),
-    //     "severity": infoLevel.index,
-    //     "stackTrace": randomStackTrace.toString()
-    //   }),
-    //   isMethodCall('reportError', arguments: {
-    //     "message": error.toString(),
-    //     "severity": warningLevel.index,
-    //     "stackTrace": error.stackTrace?.toString()
-    //   }),
-    //   isMethodCall(
-    //     'reportError',
-    //     arguments: {
-    //       "message": message,
-    //       "severity": criticalLevel.index,
-    //       "stackTrace": randomStackTrace.toString()
-    //     },
-    //   ),
-    // ]);
+    expect(newData, <Matcher>[
+      isMethodCall('reportError', arguments: {
+        "hed": {
+          "rst":
+              "#0      State.context.<anonymous closure> (package:flutter/src/widgets/framework.dart:942:9)\n#1      State.context (package:flutter/src/widgets/framework.dart:948:6)\n    ",
+          "env": "Flutter",
+          "em": "Exception: test"
+        },
+        "sev": 0
+      }),
+      isMethodCall('reportError', arguments: {
+        "hed": {"rst": "null", "env": "Flutter", "em": "Instance of 'Error'"},
+        "sev": 1
+      }),
+      isMethodCall(
+        'reportError',
+        arguments: {
+          "hed": {
+            "rst":
+                "#0      State.context.<anonymous closure> (package:flutter/src/widgets/framework.dart:942:9)\n#1      State.context (package:flutter/src/widgets/framework.dart:948:6)\n    ",
+            "env": "Flutter",
+            "em": "test"
+          },
+          "sev": 2
+        },
+      ),
+    ]);
   });
 
   testWidgets('error reporting native error is converted to exception',
