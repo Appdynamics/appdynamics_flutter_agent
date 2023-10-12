@@ -19,6 +19,8 @@ import 'package:flutter/services.dart'
 import 'crash_report.dart';
 import 'globals.dart';
 
+import 'package:appdynamics_agent/src/utils/date_utils.dart';
+
 enum BreadcrumbVisibility {
   crashesOnly,
   crashesAndSessions,
@@ -217,13 +219,14 @@ class Instrumentation {
   ///       severityLevel: ErrorSeverityLevel.warning);
   /// }
   /// ```
+
   static Future<void> reportException(Exception exception,
       {ErrorSeverityLevel severityLevel = ErrorSeverityLevel.warning,
       StackTrace? stackTrace}) async {
     try {
       final hed = {
         "rst": stackTrace?.toString(),
-        "crt": DateTime.now().toIso8601String(),
+        "crt": DateUtils.convertDateTimeToLong(DateTime.now()),
         "env": 'Flutter',
         "em": exception.toString(),
       };
@@ -260,7 +263,7 @@ class Instrumentation {
     try {
       final hed = {
         "rst": error.stackTrace.toString(),
-        "crt": DateTime.now().toIso8601String(),
+        "crt": DateUtils.convertDateTimeToLong(DateTime.now()),
         "env": 'Flutter',
         "em": error.toString()
       };
@@ -297,7 +300,7 @@ class Instrumentation {
     try {
       final hed = {
         "rst": stackTrace?.toString(),
-        "crt": DateTime.now().toIso8601String(),
+        "crt": DateUtils.convertDateTimeToLong(DateTime.now()),
         "env": 'Flutter',
         "em": message,
       };

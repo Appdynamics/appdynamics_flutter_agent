@@ -8,6 +8,7 @@ import 'dart:convert';
 import 'dart:core';
 
 import 'package:flutter/foundation.dart';
+import 'package:appdynamics_agent/src/utils/date_utils.dart';
 
 class CrashReport {
   final FlutterErrorDetails errorDetails;
@@ -18,12 +19,11 @@ class CrashReport {
     this.stackTrace,
   });
 
-
   @override
   String toString() {
     final hed = {
       "rst": stackTrace.toString(),
-      "crt": DateTime.now().toIso8601String(),
+      "crt": DateUtils.convertDateTimeToLong(DateTime.now()),
       "env": 'Flutter',
       "em": errorDetails.exception.toString()
     };
