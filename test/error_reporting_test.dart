@@ -54,7 +54,7 @@ void main() {
     for (var methodCall in log) {
       var hed = methodCall.arguments["hed"];
       Map<String, dynamic> hedMap = json.decode(hed);
-      if (hedMap.containsKey("crt") && hedMap["crt"] is String) {
+      if (hedMap.containsKey("crt") && hedMap["crt"] is int) {
         hedMap.remove("crt");
         crtCnt++;
       }

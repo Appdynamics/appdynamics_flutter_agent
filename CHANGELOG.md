@@ -1,3 +1,8 @@
+# 23.11.0
+* Features: Added Handling Error Implemented
+* Added Analytics for Flutter Crash Reporting
+
+
 # 23.9.0
 * Resolved compatibility issues with Dio version 5.1.0.
 
