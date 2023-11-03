@@ -29,4 +29,16 @@ extension SwiftAppDynamicsAgentPlugin {
     ADEumInstrumentation.createRawCrashReport(hed)
     result(nil)
   }
+
+  func createNativeCrashReport(result: @escaping FlutterResult, arguments: Any?) {
+    guard let properties = arguments as? Dictionary<String, Any>,
+    let crashData = properties["crashData"] as? String else {
+      let error = FlutterError(code: "500", message: "createNativeCrashReport() failed.", details: "Please provide a valid message string.")
+      result(error)
+      return
+    }
+    
+    ADEumInstrumentation.createCrashReport(crashData, type: "clrCrashReport")
+    result(nil)
+  }
 }

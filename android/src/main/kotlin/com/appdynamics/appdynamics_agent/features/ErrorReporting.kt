@@ -61,3 +61,22 @@ fun AppDynamicsAgentPlugin.createCrashReport(
     result.success(null)
 }
 
+fun AppDynamicsAgentPlugin.createNativeCrashReport(
+    @NonNull result: MethodChannel.Result,
+    arguments: Any?
+) {
+    val properties = arguments as HashMap<*, *>
+
+    val crashData = properties["crashData"] as? String ?: run {
+        result.error(
+            "500",
+            "reportError() failed.",
+            "Please send hybridExceptionData as string."
+        )
+        return
+    }
+
+    Instrumentation.createCrashReport(crashData, "androidCrashReport")
+    result.success(null)
+}
+

@@ -73,6 +73,7 @@ open class AppDynamicsAgentPlugin : FlutterPlugin, MethodCallHandler {
             // Report error
             "reportError" to ::reportError,
             "createCrashReport" to ::createCrashReport,
+            "createNativeCrashReport" to ::createNativeCrashReport,
 
             // Report metric
             "reportMetric" to ::reportMetric,

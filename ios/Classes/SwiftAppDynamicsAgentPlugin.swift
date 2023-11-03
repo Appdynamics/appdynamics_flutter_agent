@@ -48,6 +48,7 @@ public class SwiftAppDynamicsAgentPlugin: NSObject, FlutterPlugin {
       /// Report error
       "reportError": reportError,
       "createCrashReport": createCrashReport,
+      "createNativeCrashReport": createNativeCrashReport,
 
       /// Report metric
       "reportMetric": reportMetric,

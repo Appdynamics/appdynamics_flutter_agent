@@ -4,6 +4,7 @@
  *
  */
 
+import 'dart:io';
 import 'dart:ui';
 
 import 'package:appdynamics_agent/appdynamics_agent.dart';
@@ -17,11 +18,13 @@ import 'app_state/app_state.dart';
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   FlutterError.onError = Instrumentation.errorHandler;
-  PlatformDispatcher.instance.onError = (error, stack) {
-    final details = FlutterErrorDetails(exception: error, stack: stack);
-    Instrumentation.errorHandler(details);
-    return true;
-  };
+  if (Platform.isIOS) {
+    PlatformDispatcher.instance.onError = (error, stack) {
+      final details = FlutterErrorDetails(exception: error, stack: stack);
+      Instrumentation.nativeErrorHandler(details);
+      return true;
+    };
+  }
   runApp(ChangeNotifierProvider(
       create: (context) => AppState(), child: const MyApp()));
 }

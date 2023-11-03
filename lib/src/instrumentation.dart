@@ -11,6 +11,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:appdynamics_agent/appdynamics_agent.dart';
+import 'package:appdynamics_agent/src/native_crash_report.dart';
 import 'package:appdynamics_agent/src/session_frame.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart'
@@ -976,6 +977,19 @@ class Instrumentation {
   ///   runApp(MyApp());
   /// }
   /// ```
+  static Future<void> nativeErrorHandler(FlutterErrorDetails details) async {
+    Instrumentation._();
+
+    final crashReport =
+        NativeCrashReport(errorDetails: details, stackTrace: details.stack);
+    final arguments = {
+      "crashData": crashReport.toString(),
+    };
+
+    return await channel.invokeMethod<void>(
+        'createNativeCrashReport', arguments);
+  }
+
   static Future<void> errorHandler(FlutterErrorDetails details) async {
     // Call private constructor for coverage. Doesn't have any other effect.
     // TODO: Remove when you can test private constructor some other way.

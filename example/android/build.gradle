@@ -6,7 +6,7 @@
 
 buildscript {
     ext.kotlin_version = '1.6.10'
-    ext.appd_plugin_version = '23.7.1'
+    ext.appd_plugin_version = '23.7.2'
 
     repositories {
         mavenLocal()
