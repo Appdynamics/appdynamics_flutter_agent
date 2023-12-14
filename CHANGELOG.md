@@ -1,3 +1,6 @@
+# 23.12.0
+* Resolved the integration problem with Google Fonts.
+
 # 23.11.0
 * Features: Added Handling Error Implemented
 * Added Analytics for Flutter Crash Reporting
