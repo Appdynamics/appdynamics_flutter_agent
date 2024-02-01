@@ -4,7 +4,7 @@ import Flutter
 extension SwiftAppDynamicsAgentPlugin {
   public func start(result: @escaping FlutterResult, arguments: Any?) {
     let properties = arguments as! Dictionary<String, Any>
-    
+
     guard let appKey = properties["appKey"] as? String else {
       let error = FlutterError(code: "500", message: "Agent start() failed.", details: "Please provide an appKey.")
       result(error)
@@ -53,12 +53,16 @@ extension SwiftAppDynamicsAgentPlugin {
       configuration.crashReportCallback = crashReportCallback
     }
     
+    if let enableLoggingInVSCode = properties["enableLoggingInVSCode"] as? Bool {
+      configuration.enableLoggingInVSCode = enableLoggingInVSCode
+    }
+    
     configuration.enableAutoInstrument = false
     configuration.jsAgentEnabled = false
     configuration.jsAgentAjaxEnabled = false
     configuration.jsAgentFetchEnabled = false
     configuration.jsAgentZonePromiseEnabled = false
-    
+
     ADEumInstrumentation.initWith(configuration, a: type, b: version);
     result(nil)
     }

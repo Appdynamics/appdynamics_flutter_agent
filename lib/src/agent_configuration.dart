@@ -87,6 +87,8 @@ class AgentConfiguration {
   /// associated with `applicationName` and appears together in dashboards.
   final String? applicationName;
 
+  final bool enableLoggingInVSCode;
+
   AgentConfiguration({
     required this.appKey,
     this.collectorURL = "https://mobile.eum-appdynamics.com",
@@ -96,6 +98,7 @@ class AgentConfiguration {
     this.crashReportingEnabled = true,
     this.crashReportCallback,
     this.applicationName,
+    this.enableLoggingInVSCode = false,
   });
 
   /// Creates a new [AgentConfiguration] with possibility to overwrite existing
@@ -121,7 +124,8 @@ class AgentConfiguration {
       LoggingLevel? loggingLevel,
       CrashReportCallback? crashReportCallback,
       bool? crashReportingEnabled,
-      String? applicationName}) {
+      String? applicationName,
+      bool? enableLoggingInVSCode}) {
     return AgentConfiguration(
         appKey: appKey ?? this.appKey,
         collectorURL: collectorURL ?? this.collectorURL,
@@ -131,6 +135,8 @@ class AgentConfiguration {
         crashReportCallback: crashReportCallback ?? this.crashReportCallback,
         crashReportingEnabled:
             crashReportingEnabled ?? this.crashReportingEnabled,
-        applicationName: applicationName ?? this.applicationName);
+        applicationName: applicationName ?? this.applicationName,
+        enableLoggingInVSCode:
+            enableLoggingInVSCode ?? this.enableLoggingInVSCode);
   }
 }

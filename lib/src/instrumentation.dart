@@ -117,6 +117,7 @@ class Instrumentation {
           true, // hardcoded until it's implemented on Android agent too
       "version": version,
       "type": type,
+      "enableLoggingInVSCode": config.enableLoggingInVSCode,
     }..removeWhere((key, value) => value == null);
 
     try {

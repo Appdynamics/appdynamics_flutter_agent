@@ -5,7 +5,7 @@ flutter create latest_version_flutter_project
 cd latest_version_flutter_project
 
 pathToAgent="../../.."
-dart pub add "appdynamics_agent:{'path':${pathToAgent}}"
+flutter pub add "appdynamics_agent:{'path':${pathToAgent}}" --directory=.
 
 # We run the fastest command that would build the projects and validates the installation.
 flutter build apk --debug

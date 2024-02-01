@@ -55,6 +55,7 @@ void main() {
           "anrDetectionEnabled": true,
           "anrStackTraceEnabled": true,
           "crashReportingEnabled": true,
+          "enableLoggingInVSCode": false
         },
       ),
     ]);

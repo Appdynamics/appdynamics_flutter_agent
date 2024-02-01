@@ -121,7 +121,8 @@ class _SettingsState extends State<Settings> {
           crashReportCallback: crashReportCallback,
           applicationName: applicationName,
           screenshotsEnabled: appState.screenshotsEnabled,
-          crashReportingEnabled: appState.crashReportingEnabled);
+          crashReportingEnabled: appState.crashReportingEnabled,
+          enableLoggingInVSCode: true);
       await Instrumentation.start(config);
 
       await Navigator.pushNamed(context, RoutePaths.featureList);
