@@ -1,3 +1,6 @@
+# 23.12.1
+* Added enableLoggingInVSCode property (default: false) for logging within VSCode environment.
+
 # 23.12.0
 * Resolved the integration problem with Google Fonts.
 
