@@ -3,6 +3,6 @@ target 'appdynamics_agent' do
   # use_frameworks!
 
   # Pods for appdynamics_agent
-  pod 'AppDynamicsAgent', '~> 2023.12.1'
+  pod 'AppDynamicsAgent', '~> 2024.2.0'
   pod 'Flutter'
 end

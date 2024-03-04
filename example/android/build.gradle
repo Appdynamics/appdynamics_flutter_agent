@@ -4,22 +4,16 @@
  *
  */
 
-buildscript {
-    ext.kotlin_version = '1.6.10'
-    ext.appd_plugin_version = '24.1.0'
+ buildscript {
+     ext.appd_plugin_version = '24.1.0'
+     repositories{
+         mavenCentral()
+     }
 
-    repositories {
-        mavenLocal()
-        google()
-        mavenCentral()
-    }
-
-    dependencies {
-        classpath 'com.android.tools.build:gradle:7.1.2'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        classpath "com.appdynamics:appdynamics-gradle-plugin:$appd_plugin_version"
-    }
-}
+     dependencies {
+         classpath "com.appdynamics:appdynamics-gradle-plugin:$appd_plugin_version"
+     }
+ }
 
 allprojects {
     repositories {
