@@ -14,6 +14,9 @@ Flutter plugin to integrate AppDynamics Mobile Real User Monitoring with your ap
   s.author           = { 'Appdynamics' => 'flutter.agent@appdynamics.com' }
   s.source           = { :path => '.' }
   s.source_files = 'Classes/**/*'
+  s.resource_bundles = {
+    'ADEUM_Flutter_Privacy' => ['PrivacyInfo.xcprivacy'],
+  }
 
   s.dependency 'Flutter'
   s.dependency 'AppDynamicsAgent', '~> 2024.2.0'

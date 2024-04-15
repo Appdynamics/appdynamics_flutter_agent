@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		53F6CA542BCCE68600B21BED /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 53F6CA532BCCE68600B21BED /* PrivacyInfo.xcprivacy */; };
 		61B4CD964CB704C0BC1422F8 /* libPods-appdynamics_agent.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BE156DF76BB66707D01AF24F /* libPods-appdynamics_agent.a */; };
 		961A30F226CA5450001241E5 /* SessionFrames.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961A30F126CA5450001241E5 /* SessionFrames.swift */; };
 		961A30F426CB9E90001241E5 /* CustomMetrics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961A30F326CB9E90001241E5 /* CustomMetrics.swift */; };
@@ -42,6 +43,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		53F6CA532BCCE68600B21BED /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		961A30F126CA5450001241E5 /* SessionFrames.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionFrames.swift; sourceTree = "<group>"; };
 		961A30F326CB9E90001241E5 /* CustomMetrics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomMetrics.swift; sourceTree = "<group>"; };
 		961A30F526CE7FFE001241E5 /* Screenshots.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Screenshots.swift; sourceTree = "<group>"; };
@@ -151,6 +153,7 @@
 		96EAFA262665218500A3CFC5 = {
 			isa = PBXGroup;
 			children = (
+				53F6CA532BCCE68600B21BED /* PrivacyInfo.xcprivacy */,
 				9635067E26A5E144003713FD /* Features */,
 				96EAFA3D266521AB00A3CFC5 /* SwiftAppdynamicsAgentPlugin.swift */,
 				96AC791E268217E20035C226 /* Utils */,
@@ -269,6 +272,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				53F6CA542BCCE68600B21BED /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
