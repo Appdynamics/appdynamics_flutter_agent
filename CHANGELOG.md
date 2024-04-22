@@ -1,4 +1,5 @@
-# 23.12.1
+# 24.4.0
+* Included a PrivacyInfo.xcprivacy file containing the Apple privacy guidelines.
 * Added enableLoggingInVSCode property (default: false) for logging within VSCode environment.
 
 # 23.12.0
@@ -6,8 +7,7 @@
 
 # 23.11.0
 * Features: Added Handling Error Implemented
-* Added Analytics for Flutter Crash Reporting
-
+* Display Flutter (Dart) level stacktrace in Crash Detail dashboard [Release Notes](https://docs.appdynamics.com/appd/23.x/23.11/en/product-and-release-announcements/release-notes#id-.ReleaseNotesv23.12-agent-enhancements-23-12AgentEnhancements)
 
 # 23.9.0
 * Resolved compatibility issues with Dio version 5.1.0.
