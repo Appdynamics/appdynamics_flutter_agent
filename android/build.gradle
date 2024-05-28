@@ -9,7 +9,7 @@ version '1.0-SNAPSHOT'
 
 buildscript {
     ext.kotlin_version = '1.6.21'
-    ext.appd_plugin_version = '24.1.0'
+    ext.appd_plugin_version = '24.4.0'
 
     repositories {
         mavenLocal()

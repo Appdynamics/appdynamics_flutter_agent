@@ -13,7 +13,7 @@ import 'package:appdynamics_agent_example/routing/route_paths.dart';
 import 'package:appdynamics_agent_example/settings/utils/constants.dart';
 import 'package:appdynamics_agent_example/settings/utils/crash_report_dialog.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_picker/flutter_picker.dart';
+// import 'package:flutter_picker/flutter_picker.dart';
 import 'package:provider/provider.dart';
 
 import 'utils/extra_configuration_dialog.dart';
@@ -60,20 +60,20 @@ class _SettingsState extends State<Settings> {
     super.dispose();
   }
 
-  void _onCollectorTextFieldPress() {
-    Picker(
-        adapter: PickerDataAdapter<String>(pickerData: [
-          collectors.keys.toList(),
-        ], isArray: true),
-        changeToFirst: true,
-        hideHeader: false,
-        onConfirm: (Picker picker, List value) {
-          final collector = collectors.entries.elementAt(value[0]);
-          _currentSelectedCollector = collector;
-          _collectorFieldController.selection =
-              TextSelection.fromPosition(const TextPosition(offset: 0));
-        }).showModal(context);
-  }
+  // void _onCollectorTextFieldPress() {
+  //   Picker(
+  //       adapter: PickerDataAdapter<String>(pickerData: [
+  //         collectors.keys.toList(),
+  //       ], isArray: true),
+  //       changeToFirst: true,
+  //       hideHeader: false,
+  //       onConfirm: (Picker picker, List value) {
+  //         final collector = collectors.entries.elementAt(value[0]);
+  //         _currentSelectedCollector = collector;
+  //         _collectorFieldController.selection =
+  //             TextSelection.fromPosition(const TextPosition(offset: 0));
+  //       }).showModal(context);
+  // }
 
   void _setCustomCollector(String _) {
     _collectorFieldController.text = "Custom";
@@ -169,15 +169,15 @@ class _SettingsState extends State<Settings> {
                     hintText: 'AA-BBB-CCC'),
               ),
               const SizedBox(height: 20),
-              TextFormField(
-                controller: _collectorFieldController,
-                onTap: _onCollectorTextFieldPress,
-                readOnly: true,
-                decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'Select collector',
-                    hintText: 'https://my-custom-collector.com'),
-              ),
+              // TextFormField(
+              //   controller: _collectorFieldController,
+              //   onTap: _onCollectorTextFieldPress,
+              //   readOnly: true,
+              //   decoration: const InputDecoration(
+              //       border: OutlineInputBorder(),
+              //       labelText: 'Select collector',
+              //       hintText: 'https://my-custom-collector.com'),
+              // ),
               const SizedBox(height: 10),
               TextFormField(
                 controller: _collectorURLFieldController,
