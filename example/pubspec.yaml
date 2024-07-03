@@ -4,10 +4,10 @@ version: 1.0.0+1
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `pub publish`. This is preferred for private packages.
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
 environment:
-  sdk: ">=2.15.0 <3.0.0"
+  sdk: ">=3.3.4 <4.0.0"
 
 dependencies:
   flutter:
@@ -21,7 +21,7 @@ dependencies:
     # the parent directory to use the current plugin's version.
     path: ../
 
-  cupertino_icons: ^1.0.2
+  cupertino_icons: ^1.0.6
   provider: ^6.0.1
   flutter_picker: ^2.1.0
 
