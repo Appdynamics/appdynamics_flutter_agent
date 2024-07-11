@@ -50,7 +50,7 @@ class _FlushBeaconsAppBarState extends State<FlushBeaconsAppBar> {
             child: GestureDetector(
               key: const Key("flushBeaconButton"),
               onTap: () => _flushBeaconsPressed(context),
-              child: const Icon(Icons.refresh),
+              child: const Icon(Icons.refresh, semanticLabel: 'Flush'),
             )),
       ],
     );

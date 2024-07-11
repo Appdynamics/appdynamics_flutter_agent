@@ -12,10 +12,12 @@ import 'package:appdynamics_agent_example/routing/on_generate_route.dart';
 import 'package:appdynamics_agent_example/routing/route_paths.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_driver/driver_extension.dart';
 
 import 'app_state/app_state.dart';
 
 void main() {
+  enableFlutterDriverExtension();
   WidgetsFlutterBinding.ensureInitialized();
   FlutterError.onError = Instrumentation.errorHandler;
   if (Platform.isIOS) {
