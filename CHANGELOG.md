@@ -1,3 +1,7 @@
+# 24.7.0
+* Support for Flutter 3.22.2
+* Bug Fixes: Resolved the issue causing black screenshots on Android devices.
+
 # 24.4.0
 * Included a PrivacyInfo.xcprivacy file containing the Apple privacy guidelines.
 * Added enableLoggingInVSCode property (default: false) for logging within VSCode environment.

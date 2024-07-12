@@ -19,7 +19,7 @@ Flutter plugin to integrate AppDynamics Mobile Real User Monitoring with your ap
   }
 
   s.dependency 'Flutter'
-  s.dependency 'AppDynamicsAgent', '~> 2024.4.0'
+  s.dependency 'AppDynamicsAgent', '~> 2024.6.0'
 
   s.platform = :ios, '11.0'
 
