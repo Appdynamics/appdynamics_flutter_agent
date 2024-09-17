@@ -119,8 +119,6 @@ void main() {
     dio.interceptors.add(trackingInterceptor);
 
     dio.interceptors.add(InterceptorsWrapper(onRequest: (options, handler) {
-      final DioException error = DioException(
-        type: DioExceptionType.unknown,
         error: Error(),
         requestOptions: options,
       );
@@ -130,7 +128,6 @@ void main() {
     try {
       await dio.request(urlString);
     } catch (e) {
-      final trackerId = (e as DioException).requestOptions.extra["trackerId"];
       expect(log, hasLength(4));
       expect(log, <Matcher>[
         isMethodCall(
