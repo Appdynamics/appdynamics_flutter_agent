@@ -11,10 +11,10 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class ManualNetworkRequests extends StatefulWidget {
-  const ManualNetworkRequests({Key? key}) : super(key: key);
+  const ManualNetworkRequests({super.key});
 
   @override
-  _ManualNetworkRequestsState createState() => _ManualNetworkRequestsState();
+  State<ManualNetworkRequests> createState() => _ManualNetworkRequestsState();
 }
 
 class _ManualNetworkRequestsState extends State<ManualNetworkRequests> {
@@ -222,41 +222,41 @@ class _ManualNetworkRequestsState extends State<ManualNetworkRequests> {
                       height: 8,
                     ),
                     Visibility(
+                      visible: responseText.isNotEmpty,
                       child: Text(
                         responseText,
                         textAlign: TextAlign.center,
                       ),
-                      visible: responseText.isNotEmpty,
                     ),
                     const SizedBox(
                       height: 30,
                     ),
                     ElevatedButton(
                         key: const Key("manualGETRequestButton"),
+                        onPressed: _sendGetRequestButtonPressed,
                         child: const Text(
                             'Manual track GET request\n(+ user data)',
-                            textAlign: TextAlign.center),
-                        onPressed: _sendGetRequestButtonPressed),
+                            textAlign: TextAlign.center)),
                     ElevatedButton(
                         key: const Key("manualPOSTRequestButton"),
+                        onPressed: _sendPostRequestButtonPressed,
                         child: const Text('Manual track POST request',
-                            textAlign: TextAlign.center),
-                        onPressed: _sendPostRequestButtonPressed),
+                            textAlign: TextAlign.center)),
                     ElevatedButton(
                         key: const Key("manualHttpClientGetRequestButton"),
+                        onPressed: _sendHttpClientRequestButtonPressed,
                         child: const Text('TrackedHttpClient GET request',
-                            textAlign: TextAlign.center),
-                        onPressed: _sendHttpClientRequestButtonPressed),
+                            textAlign: TextAlign.center)),
                     ElevatedButton(
                         key: const Key("manualDioClientGetRequestButton"),
+                        onPressed: _sendDioClientRequestButtonPressed,
                         child: const Text('TrackedDioClient GET request',
-                            textAlign: TextAlign.center),
-                        onPressed: _sendDioClientRequestButtonPressed),
+                            textAlign: TextAlign.center)),
                     ElevatedButton(
                         key: const Key("manualDioInterceptorGetRequestButton"),
+                        onPressed: _sendDioInterceptorRequestButtonPressed,
                         child: const Text('TrackedDioInterceptor GET request',
-                            textAlign: TextAlign.center),
-                        onPressed: _sendDioInterceptorRequestButtonPressed),
+                            textAlign: TextAlign.center)),
                     const SizedBox(
                       height: 30,
                     ),

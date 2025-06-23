@@ -11,7 +11,7 @@ import '../tester_utils.dart';
 import '../wiremock_utils.dart';
 
 extension on WidgetTester {
-  assertManualSyncCallBeaconSent() async {
+  Future<void> assertManualSyncCallBeaconSent() async {
     final methodInfo = {
       "cls": "InfoPoints",
       "icm": false,
@@ -26,7 +26,7 @@ extension on WidgetTester {
     expect(requests.length, 1);
   }
 
-  assertManualAsyncCallBeaconSent() async {
+  Future<void> assertManualAsyncCallBeaconSent() async {
     final methodInfo = {
       "icm": false,
       "cls": "InfoPoints",
@@ -41,7 +41,7 @@ extension on WidgetTester {
     expect(requests.length, 1);
   }
 
-  assertManualAsyncExceptionBeaconSent() async {
+  Future<void> assertManualAsyncExceptionBeaconSent() async {
     final methodInfo = {
       "icm": false,
       "cls": "InfoPoints",
@@ -57,7 +57,7 @@ extension on WidgetTester {
     expect(requests.length, 1);
   }
 
-  assertManualSyncErrorBeaconSent() async {
+  Future<void> assertManualSyncErrorBeaconSent() async {
     final methodInfo = {
       "cls": "InfoPoints",
       "mth": "_trackManualSyncError",

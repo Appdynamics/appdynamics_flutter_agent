@@ -4,4 +4,8 @@
 # All rights reserved.
 #
 #
+ls -1 /Applications | grep -i xcode
+xcrun simctl list runtimes
+xcodebuild -showsdks
+xcode-select --print-path
 flutter analyze

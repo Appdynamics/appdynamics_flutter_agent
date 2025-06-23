@@ -14,13 +14,13 @@ class FlushBeaconsAppBar extends StatefulWidget implements PreferredSizeWidget {
   final bool automaticallyImplyLeading;
 
   const FlushBeaconsAppBar({
-    Key? key,
+    super.key,
     required this.title,
     this.automaticallyImplyLeading = true,
-  }) : super(key: key);
+  });
 
   @override
-  _FlushBeaconsAppBarState createState() => _FlushBeaconsAppBarState();
+  State<FlushBeaconsAppBar> createState() => _FlushBeaconsAppBarState();
 
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
@@ -35,6 +35,7 @@ class _FlushBeaconsAppBarState extends State<FlushBeaconsAppBar> {
     tracker.reportDone();
 
     Future.delayed(const Duration(milliseconds: 200), () {
+      if (!context.mounted) return;
       hideLoadingIndicator(context);
     });
   }

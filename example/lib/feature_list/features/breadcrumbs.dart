@@ -9,10 +9,10 @@ import 'package:appdynamics_agent_example/feature_list/utils/flush_beacons_app_b
 import 'package:flutter/material.dart';
 
 class Breadcrumbs extends StatefulWidget {
-  const Breadcrumbs({Key? key}) : super(key: key);
+  const Breadcrumbs({super.key});
 
   @override
-  _BreadcrumbsState createState() => _BreadcrumbsState();
+  State<Breadcrumbs> createState() => _BreadcrumbsState();
 }
 
 class _BreadcrumbsState extends State<Breadcrumbs> {
@@ -39,15 +39,15 @@ class _BreadcrumbsState extends State<Breadcrumbs> {
                 children: [
                   ElevatedButton(
                     key: const Key("leaveBreadcrumbCrashButton"),
+                    onPressed: _leaveCrashOnlyBreadcrumbPressed,
                     child: const Text('Leave crashes only breadcrumb',
                         textAlign: TextAlign.center),
-                    onPressed: _leaveCrashOnlyBreadcrumbPressed,
                   ),
                   ElevatedButton(
                     key: const Key("leaveBreadcrumbCrashAndSessionButton"),
+                    onPressed: _leaveCrashAndSessionBreadcrumbPressed,
                     child: const Text('Leave crashes and sessions breadcrumb',
                         textAlign: TextAlign.center),
-                    onPressed: _leaveCrashAndSessionBreadcrumbPressed,
                   ),
                 ]),
           ),

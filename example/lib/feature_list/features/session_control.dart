@@ -9,7 +9,7 @@ import 'package:appdynamics_agent_example/feature_list/utils/flush_beacons_app_b
 import 'package:flutter/material.dart';
 
 class SessionControl extends StatelessWidget {
-  const SessionControl({Key? key}) : super(key: key);
+  const SessionControl({super.key});
 
   Future<void> _startNextSession() async {
     await Instrumentation.startNextSession();
@@ -28,9 +28,9 @@ class SessionControl extends StatelessWidget {
                 children: [
                   ElevatedButton(
                     key: const Key("startNextSession"),
+                    onPressed: _startNextSession,
                     child: const Text('Start next session',
                         textAlign: TextAlign.center),
-                    onPressed: _startNextSession,
                   ),
                 ]),
           ),

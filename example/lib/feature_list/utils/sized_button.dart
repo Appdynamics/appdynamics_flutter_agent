@@ -18,12 +18,11 @@ class SizedButton extends StatelessWidget {
       );
 
   const SizedButton(
-      {Key? key,
+      {super.key,
       required this.context,
       required this.title,
       required this.keyString,
-      required this.screenRoute})
-      : super(key: key);
+      required this.screenRoute});
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +30,7 @@ class SizedButton extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         ElevatedButton(
-            key: Key(keyString), child: Text(title), onPressed: onPressed),
+            key: Key(keyString), onPressed: onPressed, child: Text(title)),
         const SizedBox(height: 10),
       ],
     );

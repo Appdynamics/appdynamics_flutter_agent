@@ -15,26 +15,26 @@ extension on WidgetTester {
   static String validKey = "AA-BBB-CCC";
   static String invalidKey = "123456";
 
-  enterInvalidKey() async {
+  Future<void> enterInvalidKey() async {
     final requestTextField = find.byKey(const Key("newKeyTextField"));
     expect(requestTextField, findsOneWidget);
 
     await enterText(requestTextField, invalidKey);
   }
 
-  enterValidKey() async {
+  Future<void> enterValidKey() async {
     final requestTextField = find.byKey(const Key("newKeyTextField"));
     expect(requestTextField, findsOneWidget);
 
     await enterText(requestTextField, validKey);
   }
 
-  assertExceptionCaught() async {
+  Future<void> assertExceptionCaught() async {
     final errorText = find.byKey(const Key("errorText"));
     expect(errorText, findsOneWidget);
   }
 
-  assertBeaconSent() async {
+  Future<void> assertBeaconSent() async {
     final errorText = find.byKey(const Key("errorText"));
     expect(errorText, findsNothing);
 

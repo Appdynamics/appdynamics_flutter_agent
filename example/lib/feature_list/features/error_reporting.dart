@@ -11,10 +11,10 @@ import 'package:appdynamics_agent_example/feature_list/utils/flush_beacons_app_b
 import 'package:flutter/material.dart';
 
 class ErrorReporting extends StatefulWidget {
-  const ErrorReporting({Key? key}) : super(key: key);
+  const ErrorReporting({super.key});
 
   @override
-  _ErrorReportingState createState() => _ErrorReportingState();
+  State<ErrorReporting> createState() => _ErrorReportingState();
 }
 
 class _ErrorReportingState extends State<ErrorReporting> {
@@ -69,20 +69,20 @@ class _ErrorReportingState extends State<ErrorReporting> {
                 ),
                 ElevatedButton(
                     key: const Key("reportErrorButton"),
-                    child: const Text('Report error (critical)'),
-                    onPressed: _sendError),
+                    onPressed: _sendError,
+                    child: const Text('Report error (critical)')),
                 ElevatedButton(
                     key: const Key("reportExceptionButton"),
-                    child: const Text('Report exception (warning)'),
-                    onPressed: _sendException),
+                    onPressed: _sendException,
+                    child: const Text('Report exception (warning)')),
                 ElevatedButton(
                     key: const Key("reportMessageButton"),
-                    child: const Text('Report message (info)'),
-                    onPressed: _sendMessage),
+                    onPressed: _sendMessage,
+                    child: const Text('Report message (info)')),
                 ElevatedButton(
                     key: const Key("throwFlutterExceptionButton"),
-                    child: const Text('Throw Flutter exception'),
-                    onPressed: _throwFlutterException)
+                    onPressed: _throwFlutterException,
+                    child: const Text('Throw Flutter exception'))
               ],
             ),
           ),

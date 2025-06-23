@@ -9,10 +9,10 @@ import 'package:appdynamics_agent_example/feature_list/utils/flush_beacons_app_b
 import 'package:flutter/material.dart';
 
 class Anr extends StatefulWidget {
-  const Anr({Key? key}) : super(key: key);
+  const Anr({super.key});
 
   @override
-  _AnrState createState() => _AnrState();
+  State<Anr> createState() => _AnrState();
 }
 
 class _AnrState extends State<Anr> {
@@ -53,11 +53,11 @@ class _AnrState extends State<Anr> {
                   },
                 ),
                 Visibility(
+                  visible: showSleepText,
                   child: const Text(
                     "Zzz Zzz.",
                     textAlign: TextAlign.center,
                   ),
-                  visible: showSleepText,
                 ),
               ],
             ),

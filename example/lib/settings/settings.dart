@@ -13,16 +13,14 @@ import 'package:appdynamics_agent_example/routing/route_paths.dart';
 import 'package:appdynamics_agent_example/settings/utils/constants.dart';
 import 'package:appdynamics_agent_example/settings/utils/crash_report_dialog.dart';
 import 'package:flutter/material.dart';
-// import 'package:flutter_picker/flutter_picker.dart';
 import 'package:provider/provider.dart';
-
 import 'utils/extra_configuration_dialog.dart';
 
 class Settings extends StatefulWidget {
-  const Settings({Key? key}) : super(key: key);
+  const Settings({super.key});
 
   @override
-  _SettingsState createState() => _SettingsState();
+  State<Settings> createState() => _SettingsState();
 }
 
 class _SettingsState extends State<Settings> {
@@ -60,20 +58,31 @@ class _SettingsState extends State<Settings> {
     super.dispose();
   }
 
-  // void _onCollectorTextFieldPress() {
-  //   Picker(
-  //       adapter: PickerDataAdapter<String>(pickerData: [
-  //         collectors.keys.toList(),
-  //       ], isArray: true),
-  //       changeToFirst: true,
-  //       hideHeader: false,
-  //       onConfirm: (Picker picker, List value) {
-  //         final collector = collectors.entries.elementAt(value[0]);
-  //         _currentSelectedCollector = collector;
-  //         _collectorFieldController.selection =
-  //             TextSelection.fromPosition(const TextPosition(offset: 0));
-  //       }).showModal(context);
-  // }
+ void _onCollectorTextFieldPress() {
+   List<String> keys = collectors.keys.toList();
+   showDialog( context: context,  builder: (BuildContext context) {
+      return SimpleDialog(
+        title: const Text('Select Environment'),
+        children: keys.map((key) {
+          return SimpleDialogOption(
+            onPressed: () {
+              final collector = MapEntry(key, collectors[key]!);
+              setState(() {
+                _currentSelectedCollector = collector;
+                _collectorFieldController.text = key;
+                _collectorFieldController.selection = TextSelection.fromPosition(
+                  TextPosition(offset: key.length),
+                );
+              });
+              Navigator.pop(context);
+            },
+            child: Text(key),
+          );
+        }).toList(),
+      );
+    },
+  );
+  }
 
   void _setCustomCollector(String _) {
     _collectorFieldController.text = "Custom";
@@ -87,7 +96,7 @@ class _SettingsState extends State<Settings> {
         });
   }
 
-  Future<void> _onStartPress(context) async {
+  Future<void> _onStartPress(BuildContext context) async {
     try {
       setState(() {
         errorMessage = "";
@@ -125,7 +134,7 @@ class _SettingsState extends State<Settings> {
           enableLoggingInVSCode: true);
       await Instrumentation.start(config);
 
-      await Navigator.pushNamed(context, RoutePaths.featureList);
+      if (context.mounted) await Navigator.pushNamed(context, RoutePaths.featureList);
     } catch (e) {
       setState(() {
         errorMessage = e.toString();
@@ -133,7 +142,7 @@ class _SettingsState extends State<Settings> {
     }
   }
 
-  Future<void> _showExtraConfigurationsDialog(context) async {
+  Future<void> _showExtraConfigurationsDialog(BuildContext context) async {
     await showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -160,7 +169,7 @@ class _SettingsState extends State<Settings> {
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 50),
           child: ListView(shrinkWrap: true, children: <Widget>[
-            Column(children: [
+            Column(mainAxisAlignment: MainAxisAlignment.center, children: [
               TextFormField(
                 controller: _appKeyFieldController,
                 decoration: const InputDecoration(
@@ -169,15 +178,15 @@ class _SettingsState extends State<Settings> {
                     hintText: 'AA-BBB-CCC'),
               ),
               const SizedBox(height: 20),
-              // TextFormField(
-              //   controller: _collectorFieldController,
-              //   onTap: _onCollectorTextFieldPress,
-              //   readOnly: true,
-              //   decoration: const InputDecoration(
-              //       border: OutlineInputBorder(),
-              //       labelText: 'Select collector',
-              //       hintText: 'https://my-custom-collector.com'),
-              // ),
+              TextFormField(
+                controller: _collectorFieldController,
+                onTap: _onCollectorTextFieldPress,
+                readOnly: true,
+                decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Select collector',
+                    hintText: 'https://my-custom-collector.com'),
+              ),
               const SizedBox(height: 10),
               TextFormField(
                 controller: _collectorURLFieldController,
@@ -204,10 +213,10 @@ class _SettingsState extends State<Settings> {
               const SizedBox(height: 20),
               Text(
                 errorMessage,
-                style: TextStyle(color: Colors.red),
+                style: const TextStyle(color: Colors.red),
                 textAlign: TextAlign.center,
               )
-            ], mainAxisAlignment: MainAxisAlignment.center),
+            ]),
           ]),
         ),
       ),

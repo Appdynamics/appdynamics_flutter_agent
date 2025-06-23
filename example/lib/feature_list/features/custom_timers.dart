@@ -9,7 +9,7 @@ import 'package:appdynamics_agent_example/feature_list/utils/flush_beacons_app_b
 import 'package:flutter/material.dart';
 
 class CustomTimers extends StatelessWidget {
-  const CustomTimers({Key? key}) : super(key: key);
+  const CustomTimers({super.key});
 
   Future<void> _startTimerPressed() async {
     await Instrumentation.startTimer("My timer");
@@ -32,13 +32,13 @@ class CustomTimers extends StatelessWidget {
                 children: [
                   ElevatedButton(
                     key: const Key("startTimerButton"),
-                    child: const Text('Start timer'),
                     onPressed: _startTimerPressed,
+                    child: const Text('Start timer'),
                   ),
                   ElevatedButton(
                     key: const Key("stopTimerButton"),
-                    child: const Text('Stop timer'),
                     onPressed: _stopTimerPressed,
+                    child: const Text('Stop timer'),
                   ),
                 ]),
           ),

@@ -9,10 +9,10 @@ import 'package:appdynamics_agent_example/feature_list/utils/flush_beacons_app_b
 import 'package:flutter/material.dart';
 
 class Screenshots extends StatefulWidget {
-  const Screenshots({Key? key}) : super(key: key);
+  const Screenshots({super.key});
 
   @override
-  _ScreenshotsState createState() => _ScreenshotsState();
+  State<Screenshots> createState() => _ScreenshotsState();
 }
 
 class _ScreenshotsState extends State<Screenshots> {
@@ -58,32 +58,32 @@ class _ScreenshotsState extends State<Screenshots> {
                 children: [
                   ElevatedButton(
                     key: const Key("takeScreenshotButton"),
-                    child: const Text('Take screenshot'),
                     onPressed: _takeScreenshot,
+                    child: const Text('Take screenshot'),
                   ),
                   const SizedBox(
                     height: 10,
                   ),
                   ElevatedButton(
                     key: const Key("blockScreenshotsButton"),
-                    child: const Text('Block screenshots'),
                     onPressed: _blockScreenshots,
+                    child: const Text('Block screenshots'),
                   ),
                   const SizedBox(
                     height: 10,
                   ),
                   ElevatedButton(
                     key: const Key("unblockScreenshotsButton"),
-                    child: const Text('Unblock screenshots'),
                     onPressed: _unblockScreenshots,
+                    child: const Text('Unblock screenshots'),
                   ),
                   const SizedBox(
                     height: 10,
                   ),
                   ElevatedButton(
                     key: const Key("checkScreenshotsStatusButton"),
-                    child: const Text('Check screenshots status'),
                     onPressed: _checkScreenshotsStatus,
+                    child: const Text('Check screenshots status'),
                   ),
                   Text(
                     () {

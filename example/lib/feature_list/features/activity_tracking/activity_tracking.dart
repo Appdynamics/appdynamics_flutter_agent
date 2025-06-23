@@ -9,18 +9,18 @@ import 'package:appdynamics_agent_example/routing/route_paths.dart';
 import 'package:flutter/material.dart';
 
 class ActivityTracking extends StatefulWidget {
-  const ActivityTracking({Key? key}) : super(key: key);
+  const ActivityTracking({super.key});
 
   @override
-  _ActivityTrackingState createState() => _ActivityTrackingState();
+  State<ActivityTracking> createState() => _ActivityTrackingState();
 }
 
 class _ActivityTrackingState extends State<ActivityTracking> {
-  _pushScreen() async {
+  Future<void> _pushScreen() async {
     await Navigator.pushNamed(context, RoutePaths.activityTrackingPush);
   }
 
-  _replaceScreen() async {
+  Future<void> _replaceScreen() async {
     await Navigator.pushReplacementNamed(
         context, RoutePaths.activityTrackingReplace);
   }
@@ -38,16 +38,16 @@ class _ActivityTrackingState extends State<ActivityTracking> {
                 children: [
                   ElevatedButton(
                     key: const Key("pushScreenButton"),
-                    child: const Text('Screen push'),
                     onPressed: _pushScreen,
+                    child: const Text('Screen push'),
                   ),
                   const SizedBox(
                     height: 10,
                   ),
                   ElevatedButton(
                     key: const Key("replaceScreenButton"),
-                    child: const Text('Screen replace'),
                     onPressed: _replaceScreen,
+                    child: const Text('Screen replace'),
                   ),
                 ]),
           ),

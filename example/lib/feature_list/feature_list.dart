@@ -11,7 +11,7 @@ import 'package:appdynamics_agent_example/routing/route_paths.dart';
 import 'package:flutter/material.dart';
 
 class FeatureList extends StatelessWidget {
-  const FeatureList({Key? key}) : super(key: key);
+  const FeatureList({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -100,11 +100,11 @@ class FeatureList extends StatelessWidget {
                     screenRoute: RoutePaths.activityTracking),
                 ElevatedButton(
                   key: const Key("crashAppButton"),
-                  child: const Text('Crash app'),
                   style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
                   onPressed: () async {
                     await Instrumentation.crash();
                   },
+                  child: const Text('Crash app'),
                 ),
               ],
             ),

@@ -26,7 +26,9 @@ if (flutterVersionName == null) {
 
 
 android {
-    compileSdkVersion 34
+    namespace 'com.appdynamics.appdynamics_agent_example'
+    compileSdkVersion 36
+    ndkVersion = flutter.ndkVersion
 
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
@@ -35,9 +37,18 @@ android {
     defaultConfig {
         applicationId "com.appdynamics.appdynamics_agent_example"
         minSdkVersion flutter.minSdkVersion
-        targetSdkVersion 30
+        targetSdkVersion 36
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
+    }
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_17.toString()
     }
 
     buildTypes {

@@ -59,7 +59,7 @@ class RequestTracker {
   /// Additional [stackTrace] can be added.
   ///
   /// Method might throw [Exception].
-  setError(String message, [String? stackTrace]) async {
+  Future<RequestTracker> setError(String message, [String? stackTrace]) async {
     try {
       final errorDict = {
         "message": message,

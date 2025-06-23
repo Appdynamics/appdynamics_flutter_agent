@@ -15,11 +15,11 @@ import 'package:provider/provider.dart';
 // App without any custom features (e.g. navigation observers) used to speed up
 // testing.
 class BareApp extends StatelessWidget {
-  const BareApp({Key? key}) : super(key: key);
+  const BareApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       initialRoute: RoutePaths.settings,
       onGenerateRoute: onGenerateRoute,
       home: Scaffold(

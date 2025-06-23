@@ -12,7 +12,7 @@ class CustomMetrics extends StatelessWidget {
   final customMetricName = "myCustomMetric";
   final customMetricValue = 123;
 
-  const CustomMetrics({Key? key}) : super(key: key);
+  const CustomMetrics({super.key});
 
   Future<void> _reportMetric() async {
     await Instrumentation.reportMetric(
@@ -32,10 +32,10 @@ class CustomMetrics extends StatelessWidget {
                 children: [
                   ElevatedButton(
                     key: const Key("reportMetricButton"),
+                    onPressed: _reportMetric,
                     child: Text(
                         'Report metric \n(name: $customMetricName, value: $customMetricValue)',
                         textAlign: TextAlign.center),
-                    onPressed: _reportMetric,
                   ),
                 ]),
           ),

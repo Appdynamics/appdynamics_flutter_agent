@@ -10,7 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class InfoPoints extends StatelessWidget {
-  const InfoPoints({Key? key}) : super(key: key);
+  const InfoPoints({super.key});
   static const platform = MethodChannel('com.appdynamics.flutter.example');
 
   Future<void> _trackManualSyncCall() async {
@@ -72,27 +72,27 @@ class InfoPoints extends StatelessWidget {
                 children: [
                   ElevatedButton(
                     key: const Key("manualSyncCallButton"),
+                    onPressed: _trackManualSyncCall,
                     child: const Text('Track manual sync call',
                         textAlign: TextAlign.center),
-                    onPressed: _trackManualSyncCall,
                   ),
                   ElevatedButton(
                     key: const Key("manualAsyncCallButton"),
+                    onPressed: _trackManualAsyncCall,
                     child: const Text('Track manual async call',
                         textAlign: TextAlign.center),
-                    onPressed: _trackManualAsyncCall,
                   ),
                   ElevatedButton(
                     key: const Key("manualAsyncExceptionButton"),
+                    onPressed: _trackManualAsyncException,
                     child: const Text('Track manual async exception',
                         textAlign: TextAlign.center),
-                    onPressed: _trackManualAsyncException,
                   ),
                   ElevatedButton(
                     key: const Key("manualSyncErrorButton"),
+                    onPressed: _trackManualSyncError,
                     child: const Text('Track manual sync error',
                         textAlign: TextAlign.center),
-                    onPressed: _trackManualSyncError,
                   ),
                 ]),
           ),
