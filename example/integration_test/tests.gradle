@@ -13,21 +13,45 @@ def iOS_device = "iPhone 14"
 
 def test_driver_path = "integration_test/test_driver/integration_test.dart"
 def integration_tests_path = "integration_test/features/"
-def wiremock_path = "integration_test/wiremock/wiremock-jre8-standalone-2.29.0.jar"
+def wiremockVersion = '3.0.1'
+def wiremockJar = "wiremock-standalone-${wiremockVersion}.jar"
+def wiremockDir = "${project.rootDir}/example/integration_test/wiremock"
+def wiremockJarPath = "${wiremockDir}/${wiremockJar}"
 
 task startIntegrationTestServer() {
+    dependsOn 'downloadWireMock'
     description 'Open a mock server in background that will be used in the integration tests.'
     ant.exec(
             executable: 'java',
             spawn: true
     ) {
         arg(value: "-jar")
-        arg(value: wiremock_path)
+        arg(value: wiremockJarPath)
         arg(value: "--port")
         arg(value: '9001')
     }
     doLast {
         println("Wiremock server started.")
+    }
+}
+
+task downloadWireMock {
+    description = 'Downloads WireMock standalone jar if not already present'
+    doLast {
+        def jarFile = file(wiremockJarPath)
+        if (!jarFile.exists()) {
+            println "Downloading WireMock..."
+            file(wiremockDir).mkdirs()
+            def url = "https://repo1.maven.org/maven2/org/wiremock/wiremock-standalone/${wiremockVersion}/${wiremockJar}"
+            new URL(url).withInputStream { input ->
+                jarFile.withOutputStream { output ->
+                    output << input
+                }
+            }
+            println "Downloaded to ${jarFile.absolutePath}"
+        } else {
+            println "WireMock already exists at ${jarFile.absolutePath}"
+        }
     }
 }
 
