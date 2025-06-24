@@ -55,7 +55,7 @@ $ flutter pub add appdynamics_agent
 
 ```groovy
 dependencies {
-    classpath "com.appdynamics:appdynamics-gradle-plugin:22.2.2"
+    classpath "com.appdynamics:appdynamics-gradle-plugin:24.12.0"
     // ... other dependencies
 }
 ```

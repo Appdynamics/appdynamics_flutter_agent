@@ -1,3 +1,6 @@
+# 25.7.0
+* Support for Flutter 3.32.4
+
 # 24.7.0
 * Support for Flutter 3.22.2
 * Bug Fixes: Resolved the issue causing black screenshots on Android devices.
