@@ -9,10 +9,10 @@ import 'package:appdynamics_agent_example/feature_list/utils/flush_beacons_app_b
 import 'package:flutter/material.dart';
 
 class UserData extends StatefulWidget {
-  const UserData({Key? key}) : super(key: key);
+  const UserData({super.key});
 
   @override
-  _UserDataState createState() => _UserDataState();
+  State<UserData> createState() => _UserDataState();
 }
 
 class _UserDataState extends State<UserData> {
@@ -75,66 +75,66 @@ class _UserDataState extends State<UserData> {
                 children: [
                   ElevatedButton(
                     key: const Key("setIntButton"),
-                    child: Text('Set Int ($intValue)'),
                     onPressed: _setInt,
+                    child: Text('Set Int ($intValue)'),
                   ),
                   ElevatedButton(
                     key: const Key("removeIntButton"),
-                    child: const Text('Remove Int'),
                     onPressed: _removeInt,
+                    child: const Text('Remove Int'),
                   ),
                   const SizedBox(
                     height: 10,
                   ),
                   ElevatedButton(
                     key: const Key("setDoubleButton"),
-                    child: Text('Set Double ($doubleValue)'),
                     onPressed: _setDouble,
+                    child: Text('Set Double ($doubleValue)'),
                   ),
                   ElevatedButton(
                     key: const Key("removeDoubleButton"),
-                    child: const Text('Remove Double'),
                     onPressed: _removeDouble,
+                    child: const Text('Remove Double'),
                   ),
                   const SizedBox(
                     height: 10,
                   ),
                   ElevatedButton(
                     key: const Key("setBoolButton"),
-                    child: Text('Set Bool ($boolValue)'),
                     onPressed: _setBool,
+                    child: Text('Set Bool ($boolValue)'),
                   ),
                   ElevatedButton(
                     key: const Key("removeBoolButton"),
-                    child: const Text('Remove Bool'),
                     onPressed: _removeBool,
+                    child: const Text('Remove Bool'),
                   ),
                   const SizedBox(
                     height: 10,
                   ),
                   ElevatedButton(
                     key: const Key("setStringButton"),
-                    child: Text('Set string ($stringValue)'),
                     onPressed: _setString,
+                    child: Text('Set string ($stringValue)'),
                   ),
                   ElevatedButton(
                     key: const Key("removeStringButton"),
-                    child: const Text('Remove String'),
                     onPressed: _removeString,
+                    child: const Text('Remove String'),
                   ),
                   const SizedBox(
                     height: 10,
                   ),
                   ElevatedButton(
                     key: const Key("setDateTimeButton"),
+                    onPressed: _setDateTime,
                     child: Text('Set DateTime (${dateTimeValue.toString()})',
                         textAlign: TextAlign.center),
-                    onPressed: _setDateTime,
                   ),
                   ElevatedButton(
                     key: const Key("removeDateTimeButton"),
-                    child: const Text('Remove DateTime'),
                     onPressed: _removeDateTime,
+                    child: const Text('Remove DateTime'),
                   ),
                 ]),
           ),

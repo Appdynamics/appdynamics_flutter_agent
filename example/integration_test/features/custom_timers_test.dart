@@ -11,7 +11,7 @@ import '../tester_utils.dart';
 import '../wiremock_utils.dart';
 
 extension on WidgetTester {
-  assertBeaconSent() async {
+  Future<void> assertBeaconSent() async {
     final requests =
         await findRequestsBy(timerName: "My timer", type: "timer-event");
     expect(requests.length, 1);

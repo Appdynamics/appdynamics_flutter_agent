@@ -52,7 +52,7 @@ class Instrumentation {
 
   static const maxUserDataStringLength = 2048;
 
-  static _initializeCrashCallback(CrashReportCallback callback) {
+  static void _initializeCrashCallback(CrashReportCallback callback) {
     Future<dynamic> crashReportingHandler(MethodCall methodCall) async {
       switch (methodCall.method) {
         case 'onCrashReported':

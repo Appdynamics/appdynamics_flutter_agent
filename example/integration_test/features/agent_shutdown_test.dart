@@ -12,7 +12,7 @@ import '../tester_utils.dart';
 import '../wiremock_utils.dart';
 
 extension on WidgetTester {
-  sendNetworkRequest() async {
+  Future<void> sendNetworkRequest() async {
     final requestTextField = find.byKey(const Key("requestTextField"));
     expect(requestTextField, findsOneWidget);
 
@@ -21,7 +21,7 @@ extension on WidgetTester {
     await tapAndSettle("manualPOSTRequestButton");
   }
 
-  assertBeaconSent() async {
+  Future<void> assertBeaconSent() async {
     final requestSentLabel = find.text("Success with 200.");
     expect(requestSentLabel, findsOneWidget);
 
@@ -30,7 +30,7 @@ extension on WidgetTester {
     expect(requests.length, 1);
   }
 
-  assertBeaconNotSent() async {
+  Future<void> assertBeaconNotSent() async {
     final requestSentLabel = find.text("Success with 200.");
     expect(requestSentLabel, findsOneWidget);
 

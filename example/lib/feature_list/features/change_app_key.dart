@@ -11,10 +11,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class ChangeAppKey extends StatefulWidget {
-  const ChangeAppKey({Key? key}) : super(key: key);
+  const ChangeAppKey({super.key});
 
   @override
-  _ChangeAppKeyState createState() => _ChangeAppKeyState();
+  State<ChangeAppKey> createState() => _ChangeAppKeyState();
 }
 
 class _ChangeAppKeyState extends State<ChangeAppKey> {
@@ -30,7 +30,7 @@ class _ChangeAppKeyState extends State<ChangeAppKey> {
 
     try {
       await Instrumentation.changeAppKey(newKey);
-
+      if (!mounted) return;
       final appState = Provider.of<AppState>(context, listen: false);
       appState.appKey = newKey;
 
@@ -78,20 +78,20 @@ class _ChangeAppKeyState extends State<ChangeAppKey> {
                   ),
                   ElevatedButton(
                     key: const Key("setKeyButton"),
+                    onPressed: _setNewKey,
                     child:
                         const Text('Set new key', textAlign: TextAlign.center),
-                    onPressed: _setNewKey,
                   ),
                   const SizedBox(
                     height: 8,
                   ),
                   Visibility(
+                    visible: errorText.isNotEmpty,
                     child: Text(
                       errorText,
                       key: const Key("errorText"),
                       textAlign: TextAlign.center,
                     ),
-                    visible: errorText.isNotEmpty,
                   ),
                 ]),
           ),

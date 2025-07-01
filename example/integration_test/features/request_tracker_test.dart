@@ -18,7 +18,7 @@ extension on WidgetTester {
   // in setUp().
   static final successURL = "$serverUrl/eumcollector/mobileMetrics?version=2";
 
-  redirectToLocalhost() async {
+  Future<void> redirectToLocalhost() async {
     final requestTextField = find.byKey(const Key("requestTextField"));
     await ensureVisible(requestTextField);
     expect(requestTextField, findsOneWidget);
@@ -26,7 +26,7 @@ extension on WidgetTester {
     await enterText(requestTextField, successURL);
   }
 
-  sendNetworkRequest() async {
+  Future<void> sendNetworkRequest() async {
     final requestTextField = find.byKey(const Key("requestTextField"));
     expect(requestTextField, findsOneWidget);
 
@@ -35,7 +35,7 @@ extension on WidgetTester {
     await tapAndSettle("manualPOSTRequestButton");
   }
 
-  assertBeaconSent() async {
+  Future<void> assertBeaconSent() async {
     final requestSentLabel = find.text("Success with 200.");
     expect(requestSentLabel, findsOneWidget);
 
@@ -68,7 +68,7 @@ extension on WidgetTester {
     expect(requests.length, 1);
   }
 
-  assertHttpTrackerBeaconSent() async {
+  Future<void> assertHttpTrackerBeaconSent() async {
     final requestSentLabel = find.text("Success with 200.");
     await ensureVisible(requestSentLabel);
     expect(requestSentLabel, findsOneWidget);
@@ -92,7 +92,7 @@ extension on WidgetTester {
     });
   }
 
-  assertDioTrackerBeaconSent() async {
+  Future<void> assertDioTrackerBeaconSent() async {
     final requestSentLabel = find.text("Success with 200.");
     await ensureVisible(requestSentLabel);
     expect(requestSentLabel, findsOneWidget);
@@ -117,7 +117,7 @@ extension on WidgetTester {
     });
   }
 
-  assertDioInterceptorBeaconSent() async {
+  Future<void> assertDioInterceptorBeaconSent() async {
     final requestSentLabel = find.text("Success with 200.");
     await ensureVisible(requestSentLabel);
     expect(requestSentLabel, findsOneWidget);

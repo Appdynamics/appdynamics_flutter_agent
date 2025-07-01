@@ -9,8 +9,7 @@ import 'package:flutter/material.dart';
 class CrashReportDialog extends StatelessWidget {
   final String crashReports;
 
-  const CrashReportDialog({required this.crashReports, Key? key})
-      : super(key: key);
+  const CrashReportDialog({required this.crashReports, super.key});
 
   @override
   Widget build(BuildContext context) {

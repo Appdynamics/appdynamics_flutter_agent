@@ -19,7 +19,7 @@ import '../tester_utils.dart';
 import '../wiremock_utils.dart';
 
 class NavigationObserverApp extends StatelessWidget {
-  const NavigationObserverApp({Key? key}) : super(key: key);
+  const NavigationObserverApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -31,13 +31,13 @@ class NavigationObserverApp extends StatelessWidget {
 }
 
 extension on WidgetTester {
-  startInstrumentationWithObserver() async {
+  Future<void> startInstrumentationWithObserver() async {
     await pumpWidget(ChangeNotifierProvider(
         create: (context) => AppState(), child: const NavigationObserverApp()));
     await tapAndSettle("startInstrumentationButton");
   }
 
-  assertPushStartBeaconSent() async {
+  Future<void> assertPushStartBeaconSent() async {
     List<Map<String, dynamic>> requests;
     if (Platform.isIOS) {
       requests = await findRequestsBy(
@@ -53,7 +53,7 @@ extension on WidgetTester {
     expect(requests.length, 1);
   }
 
-  assertPushEndBeaconSent() async {
+  Future<void> assertPushEndBeaconSent() async {
     List<Map<String, dynamic>> requests;
     if (Platform.isIOS) {
       requests = await findRequestsBy(
@@ -69,7 +69,7 @@ extension on WidgetTester {
     expect(requests.length, 1);
   }
 
-  assertReplaceStartBeaconSent() async {
+  Future<void> assertReplaceStartBeaconSent() async {
     List<Map<String, dynamic>> requests;
     if (Platform.isIOS) {
       requests = await findRequestsBy(
@@ -85,7 +85,7 @@ extension on WidgetTester {
     expect(requests.length, 1);
   }
 
-  assertReplaceEndBeaconSent() async {
+  Future<void> assertReplaceEndBeaconSent() async {
     List<Map<String, dynamic>> requests;
     if (Platform.isIOS) {
       requests = await findRequestsBy(

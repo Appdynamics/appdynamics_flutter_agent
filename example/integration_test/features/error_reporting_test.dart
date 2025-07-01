@@ -15,7 +15,7 @@ import '../tester_utils.dart';
 import '../wiremock_utils.dart';
 
 extension on WidgetTester {
-  assertBeaconSent(String severity) async {
+  Future<void> assertBeaconSent(String severity) async {
     if (Platform.isAndroid) {
       final requests = await findRequestsBy(
           type: "error", sev: severity, javaThrowable: "<any>");
@@ -37,7 +37,7 @@ extension on WidgetTester {
     }
   }
 
-  assertCrashReported() async {
+  Future<void> assertCrashReported() async {
     final requests =
         await findRequestsBy(type: "crash-report", clrCrashReport: "<any>");
     expect(requests.length, 1);

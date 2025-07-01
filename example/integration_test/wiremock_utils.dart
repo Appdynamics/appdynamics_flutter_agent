@@ -85,7 +85,7 @@ Map<String, dynamic> getBeaconRequestHeaders(Map<String, dynamic> request) {
 
 /// Checks request's bodies for specific parameters and values.
 ///
-/// Can be used also to check the i.f key exists in body by specifying "<any>"
+/// Can be used also to check the i.f key exists in body by specifying `<any>`
 /// as parameter the value.
 Future<List<Map<String, dynamic>>> findRequestsBy({
   dynamic url,

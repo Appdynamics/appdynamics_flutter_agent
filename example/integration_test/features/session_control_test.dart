@@ -11,7 +11,7 @@ import '../tester_utils.dart';
 import '../wiremock_utils.dart';
 
 extension on WidgetTester {
-  assertSessionIncrement() async {
+  Future<void> assertSessionIncrement() async {
     final preSessionIncrementRequests =
         await findRequestsBy(type: "system-event");
     final postSessionIncrementRequests =

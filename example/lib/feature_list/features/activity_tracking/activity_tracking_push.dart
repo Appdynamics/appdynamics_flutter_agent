@@ -8,14 +8,14 @@ import 'package:appdynamics_agent_example/feature_list/utils/flush_beacons_app_b
 import 'package:flutter/material.dart';
 
 class ActivityTrackingPush extends StatefulWidget {
-  const ActivityTrackingPush({Key? key}) : super(key: key);
+  const ActivityTrackingPush({super.key});
 
   @override
-  _ActivityTrackingPushState createState() => _ActivityTrackingPushState();
+  State<ActivityTrackingPush> createState() => _ActivityTrackingPushState();
 }
 
 class _ActivityTrackingPushState extends State<ActivityTrackingPush> {
-  _goBack() {
+  void _goBack() {
     Navigator.pop(context);
   }
 
@@ -32,8 +32,8 @@ class _ActivityTrackingPushState extends State<ActivityTrackingPush> {
                 children: [
                   ElevatedButton(
                     key: const Key("backButton"),
-                    child: const Text('Back'),
                     onPressed: _goBack,
+                    child: const Text('Back'),
                   ),
                 ]),
           ),

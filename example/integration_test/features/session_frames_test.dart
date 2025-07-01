@@ -13,7 +13,7 @@ import '../wiremock_utils.dart';
 extension on WidgetTester {
   static const updatedSessionFrameName = "updatedSessionFrame";
 
-  assertSessionStartBeaconSent() async {
+  Future<void> assertSessionStartBeaconSent() async {
     final startRequests = await findRequestsBy(
         type: "ui",
         event: "Session Frame Start",
@@ -22,7 +22,7 @@ extension on WidgetTester {
     expect(startRequests.length, 1);
   }
 
-  assertSessionUpdateBeaconSent() async {
+  Future<void> assertSessionUpdateBeaconSent() async {
     final updateRequests = await findRequestsBy(
       type: "ui",
       event: "Session Frame Update",
@@ -32,7 +32,7 @@ extension on WidgetTester {
     expect(updateRequests.length, 1);
   }
 
-  assertSessionEndBeaconSent() async {
+  Future<void> assertSessionEndBeaconSent() async {
     final endRequests = await findRequestsBy(
       type: "ui",
       event: "Session Frame End",

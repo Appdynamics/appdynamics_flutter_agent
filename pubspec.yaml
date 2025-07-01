@@ -1,6 +1,6 @@
 name: appdynamics_agent
 description: Flutter plugin to integrate AppDynamics Mobile Real User Monitoring with your app.
-version: 24.7.0
+version: 25.7.0
 homepage: https://github.com/Appdynamics/appdynamics_flutter_agent
 
 environment:
@@ -10,14 +10,14 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  http: ^1.2.1
-  dio: ^5.5.0
+  http: ^1.4.0
+  dio: ^5.7.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^3.0.0
-  yaml: ^3.1.0
+  flutter_lints: ^6.0.0
+  yaml: ^3.1.3
 
 flutter:
   plugin:

@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class ExtraConfigurationsDialog extends StatelessWidget {
-  const ExtraConfigurationsDialog({Key? key}) : super(key: key);
+  const ExtraConfigurationsDialog({super.key});
 
   @override
   Widget build(BuildContext context) {

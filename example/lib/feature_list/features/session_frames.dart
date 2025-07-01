@@ -9,10 +9,10 @@ import 'package:appdynamics_agent_example/feature_list/utils/flush_beacons_app_b
 import 'package:flutter/material.dart';
 
 class SessionFrames extends StatefulWidget {
-  const SessionFrames({Key? key}) : super(key: key);
+  const SessionFrames({super.key});
 
   @override
-  _SessionFramesState createState() => _SessionFramesState();
+  State<SessionFrames> createState() => _SessionFramesState();
 }
 
 class _SessionFramesState extends State<SessionFrames> {
@@ -49,23 +49,23 @@ class _SessionFramesState extends State<SessionFrames> {
                 children: [
                   ElevatedButton(
                     key: const Key("startSessionFrameButton"),
+                    onPressed: _startSessionFrame,
                     child: Text(
                         'Start session frame \n(named: "$newSessionFrameName")',
                         textAlign: TextAlign.center),
-                    onPressed: _startSessionFrame,
                   ),
                   ElevatedButton(
                     key: const Key("updateSessionFrameButton"),
+                    onPressed: _updateSessionFrame,
                     child: Text(
                         'Update session frame \n(named: "$updatedSessionFrameName")',
                         textAlign: TextAlign.center),
-                    onPressed: _updateSessionFrame,
                   ),
                   ElevatedButton(
                     key: const Key("endSessionFrameButton"),
+                    onPressed: _endSessionFrame,
                     child: const Text('End session frame',
                         textAlign: TextAlign.center),
-                    onPressed: _endSessionFrame,
                   ),
                 ]),
           ),

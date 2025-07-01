@@ -9,13 +9,13 @@ import 'package:appdynamics_agent_example/feature_list/utils/flush_beacons_app_b
 import 'package:flutter/material.dart';
 
 class AgentShutdown extends StatelessWidget {
-  const AgentShutdown({Key? key}) : super(key: key);
+  const AgentShutdown({super.key});
 
-  _shutdownAgent() async {
+  Future<void> _shutdownAgent() async {
     await Instrumentation.shutdownAgent();
   }
 
-  _restartAgent() async {
+  Future<void> _restartAgent() async {
     await Instrumentation.restartAgent();
   }
 
@@ -32,15 +32,15 @@ class AgentShutdown extends StatelessWidget {
                 children: [
                   ElevatedButton(
                     key: const Key("shutdownAgentButton"),
+                    onPressed: _shutdownAgent,
                     child: const Text('Shutdown agent',
                         textAlign: TextAlign.center),
-                    onPressed: _shutdownAgent,
                   ),
                   ElevatedButton(
                     key: const Key("restartAgentButton"),
+                    onPressed: _restartAgent,
                     child: const Text('Restart agent',
                         textAlign: TextAlign.center),
-                    onPressed: _restartAgent,
                   ),
                 ]),
           ),

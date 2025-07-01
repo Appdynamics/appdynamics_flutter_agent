@@ -11,7 +11,7 @@ import '../tester_utils.dart';
 import '../wiremock_utils.dart';
 
 extension on WidgetTester {
-  assertCrashAndSessionBeaconSent() async {
+  Future<void> assertCrashAndSessionBeaconSent() async {
     final requests = await findRequestsBy(
         text: "A crash and session breadcrumb.", type: "breadcrumb");
     expect(requests.length, 1);

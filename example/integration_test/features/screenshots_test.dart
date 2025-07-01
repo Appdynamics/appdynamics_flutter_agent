@@ -11,13 +11,13 @@ import '../wiremock_utils.dart';
 import '../tester_utils.dart';
 
 extension on WidgetTester {
-  assertNoBeaconsSent() async {
+  Future<void> assertNoBeaconsSent() async {
     final screenshotRequests =
         await findRequestsBy(type: "screenshot", tiles: "<any>");
     expect(screenshotRequests.length, 0);
   }
 
-  assertBeaconsSent() async {
+  Future<void> assertBeaconsSent() async {
     final newScreenshotRequests =
         await findRequestsBy(type: "screenshot", tiles: "<any>");
     expect(newScreenshotRequests.length, 1);
