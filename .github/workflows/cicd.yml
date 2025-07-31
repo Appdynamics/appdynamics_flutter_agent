@@ -1,37 +1,13 @@
-name: cicd
+# cicd.yml is redundant with the updated dart.yml for Flutter CI. Recommend deprecating this file.
+# Optionally, you may keep specialized jobs here if needed, but for now, disable all jobs.
+
+name: cicd (deprecated)
 
 on:
-  push:
-    branches:
-      - master
-  pull_request:
-    types: [opened, reopened, synchronize]
+  workflow_dispatch:
 
 jobs:
-  format:
+  skip:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: subosito/flutter-action@v2
-      - run: flutter pub get
-      - run: dart format . --set-exit-if-changed
-
-  analyze:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: subosito/flutter-action@v2
-      - run: flutter pub get
-      - name: "Analyze"
-        uses: invertase/github-action-dart-analyzer@v1
-        with:
-          fatal-infos: true
-          fatal-warnings: true
-
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: subosito/flutter-action@v2
-      - run: flutter pub get
-      - uses: bluefireteam/spec-action@main
+      - run: echo "This workflow is deprecated. Use dart.yml for CI."

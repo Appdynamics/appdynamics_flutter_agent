@@ -58,30 +58,33 @@ class _SettingsState extends State<Settings> {
     super.dispose();
   }
 
- void _onCollectorTextFieldPress() {
-   List<String> keys = collectors.keys.toList();
-   showDialog( context: context,  builder: (BuildContext context) {
-      return SimpleDialog(
-        title: const Text('Select Environment'),
-        children: keys.map((key) {
-          return SimpleDialogOption(
-            onPressed: () {
-              final collector = MapEntry(key, collectors[key]!);
-              setState(() {
-                _currentSelectedCollector = collector;
-                _collectorFieldController.text = key;
-                _collectorFieldController.selection = TextSelection.fromPosition(
-                  TextPosition(offset: key.length),
-                );
-              });
-              Navigator.pop(context);
-            },
-            child: Text(key),
-          );
-        }).toList(),
-      );
-    },
-  );
+  void _onCollectorTextFieldPress() {
+    List<String> keys = collectors.keys.toList();
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return SimpleDialog(
+          title: const Text('Select Environment'),
+          children: keys.map((key) {
+            return SimpleDialogOption(
+              onPressed: () {
+                final collector = MapEntry(key, collectors[key]!);
+                setState(() {
+                  _currentSelectedCollector = collector;
+                  _collectorFieldController.text = key;
+                  _collectorFieldController.selection =
+                      TextSelection.fromPosition(
+                    TextPosition(offset: key.length),
+                  );
+                });
+                Navigator.pop(context);
+              },
+              child: Text(key),
+            );
+          }).toList(),
+        );
+      },
+    );
   }
 
   void _setCustomCollector(String _) {
@@ -134,7 +137,9 @@ class _SettingsState extends State<Settings> {
           enableLoggingInVSCode: true);
       await Instrumentation.start(config);
 
-      if (context.mounted) await Navigator.pushNamed(context, RoutePaths.featureList);
+      if (context.mounted) {
+        await Navigator.pushNamed(context, RoutePaths.featureList);
+      }
     } catch (e) {
       setState(() {
         errorMessage = e.toString();

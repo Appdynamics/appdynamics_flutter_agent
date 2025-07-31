@@ -42,7 +42,6 @@ Future<void> stubServerResponses() async {
   });
 }
 
-
 Map<String, dynamic>? getBeaconRequestBody(Map<String, dynamic> request) {
   try {
     final List<dynamic> bodyList = jsonDecode(request["request"]["body"]);

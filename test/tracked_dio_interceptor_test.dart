@@ -119,15 +119,23 @@ void main() {
     dio.interceptors.add(trackingInterceptor);
 
     dio.interceptors.add(InterceptorsWrapper(onRequest: (options, handler) {
-        error: Error(),
+      final error = DioException(
         requestOptions: options,
+        error: 'Test error',
       );
       handler.reject(error, true);
     }));
 
+    String? trackerId;
     try {
       await dio.request(urlString);
-    } catch (e) {
+    } catch (e, stack) {
+      // Get trackerId from the logged method calls
+      final trackerCall = log.firstWhere(
+        (call) => call.method == 'getRequestTrackerWithUrl',
+      );
+      trackerId = trackerCall.arguments['id'];
+
       expect(log, hasLength(4));
       expect(log, <Matcher>[
         isMethodCall(
@@ -140,10 +148,7 @@ void main() {
         ),
         isMethodCall('setRequestTrackerErrorInfo', arguments: {
           "id": trackerId,
-          "errorDict": {
-            "message": e.toString(),
-            "stack": e.stackTrace.toString()
-          }
+          "errorDict": {"message": e.toString(), "stack": stack.toString()}
         }),
         isMethodCall(
           'requestTrackerReport',
