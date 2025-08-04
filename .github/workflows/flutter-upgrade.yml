@@ -48,12 +48,60 @@ jobs:
             echo "Flutter is already up to date"
           fi
 
+      - name: Check for dependency updates
+        id: check-deps
+        run: |
+          echo "Checking for dependency updates..."
+          
+          # Check dio version
+          DIO_CURRENT=$(grep "dio:" pubspec.yaml | sed 's/.*: \^//')
+          echo "Current dio version: $DIO_CURRENT"
+          DIO_LATEST=$(curl -s https://pub.dev/api/packages/dio | jq -r '.latest.version')
+          echo "Latest dio version: $DIO_LATEST"
+          
+          # Check http version  
+          HTTP_CURRENT=$(grep "http:" pubspec.yaml | sed 's/.*: \^//')
+          echo "Current http version: $HTTP_CURRENT"
+          HTTP_LATEST=$(curl -s https://pub.dev/api/packages/http | jq -r '.latest.version')
+          echo "Latest http version: $HTTP_LATEST"
+          
+          # Set outputs
+          echo "dio_current=$DIO_CURRENT" >> $GITHUB_OUTPUT
+          echo "dio_latest=$DIO_LATEST" >> $GITHUB_OUTPUT
+          echo "http_current=$HTTP_CURRENT" >> $GITHUB_OUTPUT
+          echo "http_latest=$HTTP_LATEST" >> $GITHUB_OUTPUT
+          
+          # Check if dependency updates are available
+          DEPS_AVAILABLE=false
+          if [ "$DIO_CURRENT" != "$DIO_LATEST" ]; then
+            echo "Dio update available: $DIO_CURRENT -> $DIO_LATEST"
+            DEPS_AVAILABLE=true
+          fi
+          if [ "$HTTP_CURRENT" != "$HTTP_LATEST" ]; then
+            echo "HTTP update available: $HTTP_CURRENT -> $HTTP_LATEST"
+            DEPS_AVAILABLE=true
+          fi
+          
+          echo "deps_available=$DEPS_AVAILABLE" >> $GITHUB_OUTPUT
+          
+          if [ "$DEPS_AVAILABLE" = "true" ]; then
+            echo "Dependency updates are available"
+          else
+            echo "All dependencies are up to date"
+          fi
+
       - name: Create upgrade branch
-        if: steps.check-upgrade.outputs.upgrade_available == 'true'
+        if: steps.check-upgrade.outputs.upgrade_available == 'true' || steps.check-deps.outputs.deps_available == 'true'
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          BRANCH_NAME="flutter/auto-upgrade-${{ steps.check-upgrade.outputs.latest }}"
+          
+          if [ "${{ steps.check-upgrade.outputs.upgrade_available }}" == "true" ]; then
+            BRANCH_NAME="flutter/auto-upgrade-${{ steps.check-upgrade.outputs.latest }}"
+          else
+            BRANCH_NAME="deps/auto-update-$(date +%Y%m%d)"
+          fi
+          
           git checkout -b "$BRANCH_NAME"
           echo "BRANCH_NAME=$BRANCH_NAME" >> $GITHUB_ENV
 
@@ -74,8 +122,28 @@ jobs:
             # Note: This is a basic approach - you might need more sophisticated version handling
           fi
 
+      - name: Update dependencies
+        if: steps.check-deps.outputs.deps_available == 'true'
+        run: |
+          echo "Updating dependencies..."
+          
+          # Update dio if newer version available
+          if [ "${{ steps.check-deps.outputs.dio_current }}" != "${{ steps.check-deps.outputs.dio_latest }}" ]; then
+            echo "Updating dio from ${{ steps.check-deps.outputs.dio_current }} to ${{ steps.check-deps.outputs.dio_latest }}"
+            sed -i.bak "s/dio: \^${{ steps.check-deps.outputs.dio_current }}/dio: ^${{ steps.check-deps.outputs.dio_latest }}/" pubspec.yaml
+          fi
+          
+          # Update http if newer version available
+          if [ "${{ steps.check-deps.outputs.http_current }}" != "${{ steps.check-deps.outputs.http_latest }}" ]; then
+            echo "Updating http from ${{ steps.check-deps.outputs.http_current }} to ${{ steps.check-deps.outputs.http_latest }}"
+            sed -i.bak "s/http: \^${{ steps.check-deps.outputs.http_current }}/http: ^${{ steps.check-deps.outputs.http_latest }}/" pubspec.yaml
+          fi
+          
+          # Clean up backup files
+          rm -f pubspec.yaml.bak
+
       - name: Apply automatic fixes
-        if: steps.check-upgrade.outputs.upgrade_available == 'true'
+        if: steps.check-upgrade.outputs.upgrade_available == 'true' || steps.check-deps.outputs.deps_available == 'true'
         run: |
           echo "Applying automatic Dart fixes for deprecations and lint issues..."
           
@@ -88,7 +156,7 @@ jobs:
           dart fix --apply || echo "No fixes applied or apply failed"
 
       - name: Install dependencies and test
-        if: steps.check-upgrade.outputs.upgrade_available == 'true'
+        if: steps.check-upgrade.outputs.upgrade_available == 'true' || steps.check-deps.outputs.deps_available == 'true'
         run: |
           flutter pub get
           
@@ -103,7 +171,7 @@ jobs:
           flutter test || echo "Tests failed - upgrade may need manual review"
 
       - name: Check for changes
-        if: steps.check-upgrade.outputs.upgrade_available == 'true'
+        if: steps.check-upgrade.outputs.upgrade_available == 'true' || steps.check-deps.outputs.deps_available == 'true'
         id: check-changes
         run: |
           git add .
@@ -116,33 +184,33 @@ jobs:
           fi
 
       - name: Commit changes
-        if: steps.check-upgrade.outputs.upgrade_available == 'true' && steps.check-changes.outputs.has_changes == 'true'
+        if: steps.check-upgrade.outputs.upgrade_available == 'true' && steps.check-changes.outputs.has_changes == 'true' || steps.check-deps.outputs.deps_available == 'true' && steps.check-changes.outputs.has_changes == 'true'
         run: |
-          git commit -m "chore: upgrade Flutter to ${{ steps.check-upgrade.outputs.latest }}
+          git commit -m "chore: upgrade Flutter to ${{ steps.check-upgrade.outputs.latest }} and dependencies"
 
           - Automated Flutter upgrade from ${{ steps.current-version.outputs.current }} to ${{ steps.check-upgrade.outputs.latest }}
           - Updated dependencies with flutter pub get
           - Verified with flutter analyze and flutter test"
 
       - name: Push changes
-        if: steps.check-upgrade.outputs.upgrade_available == 'true' && steps.check-changes.outputs.has_changes == 'true'
+        if: steps.check-upgrade.outputs.upgrade_available == 'true' && steps.check-changes.outputs.has_changes == 'true' || steps.check-deps.outputs.deps_available == 'true' && steps.check-changes.outputs.has_changes == 'true'
         run: |
           git push origin "$BRANCH_NAME"
 
       - name: Create Pull Request
-        if: steps.check-upgrade.outputs.upgrade_available == 'true' && steps.check-changes.outputs.has_changes == 'true'
+        if: steps.check-upgrade.outputs.upgrade_available == 'true' && steps.check-changes.outputs.has_changes == 'true' || steps.check-deps.outputs.deps_available == 'true' && steps.check-changes.outputs.has_changes == 'true'
         uses: actions/github-script@v7
         with:
           script: |
             const { data: pullRequest } = await github.rest.pulls.create({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              title: 'chore: upgrade Flutter to ' + ${{ steps.check-upgrade.outputs.latest }},
+              title: 'chore: upgrade Flutter to ' + ${{ steps.check-upgrade.outputs.latest }} + ' and dependencies',
               head: process.env.BRANCH_NAME,
               base: 'master', // Change to 'main' if that's your default branch
               body: '## Flutter Auto Upgrade
 
-            This PR was automatically created to upgrade Flutter from **' + ${{ steps.current-version.outputs.current }} + '** to **' + ${{ steps.check-upgrade.outputs.latest }} + '**.
+            This PR was automatically created to upgrade Flutter from **' + ${{ steps.current-version.outputs.current }} + '** to **' + ${{ steps.check-upgrade.outputs.latest }} + '** and update dependencies.
 
             ### Changes Made:
             - Upgraded Flutter to the latest stable version
@@ -168,7 +236,7 @@ jobs:
             console.log('Created PR #' + pullRequest.number);
 
       - name: Add labels to PR
-        if: steps.check-upgrade.outputs.upgrade_available == 'true' && steps.check-changes.outputs.has_changes == 'true'
+        if: steps.check-upgrade.outputs.upgrade_available == 'true' && steps.check-changes.outputs.has_changes == 'true' || steps.check-deps.outputs.deps_available == 'true' && steps.check-changes.outputs.has_changes == 'true'
         uses: actions/github-script@v7
         with:
           script: |
@@ -198,6 +266,12 @@ jobs:
               echo "Upgraded from ${{ steps.current-version.outputs.current }} to ${{ steps.check-upgrade.outputs.latest }}"
             else
               echo "Flutter upgrade available, but no changes detected"
+            fi
+          elif [ "${{ steps.check-deps.outputs.deps_available }}" == "true" ]; then
+            if [ "${{ steps.check-changes.outputs.has_changes }}" == "true" ]; then
+              echo "Dependency updates available, changes detected, and PR created!"
+            else
+              echo "Dependency updates available, but no changes detected"
             fi
           else
             echo "Flutter is already up to date (${{ steps.current-version.outputs.current }})"
