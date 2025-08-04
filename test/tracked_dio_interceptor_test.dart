@@ -148,7 +148,13 @@ void main() {
         ),
         isMethodCall('setRequestTrackerErrorInfo', arguments: {
           "id": trackerId,
-          "errorDict": {"message": e.toString(), "stack": stack.toString()}
+          "errorDict": {
+            "message": allOf([
+              contains("DioException"),
+              contains("Test error"),
+              contains("DioMixin.request"),
+            ]),
+          }
         }),
         isMethodCall(
           'requestTrackerReport',

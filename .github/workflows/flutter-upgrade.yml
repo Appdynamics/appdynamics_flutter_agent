@@ -102,47 +102,55 @@ jobs:
           echo "Running tests..."
           flutter test || echo "Tests failed - upgrade may need manual review"
 
-      - name: Commit changes
+      - name: Check for changes
         if: steps.check-upgrade.outputs.upgrade_available == 'true'
+        id: check-changes
         run: |
           git add .
           if git diff --staged --quiet; then
-            echo "No changes to commit"
+            echo "has_changes=false" >> $GITHUB_OUTPUT
+            echo "No changes detected after Flutter upgrade"
           else
-            git commit -m "chore: upgrade Flutter to ${{ steps.check-upgrade.outputs.latest }}
-
-            - Automated Flutter upgrade from ${{ steps.current-version.outputs.current }} to ${{ steps.check-upgrade.outputs.latest }}
-            - Updated dependencies with flutter pub get
-            - Verified with flutter analyze and flutter test"
+            echo "has_changes=true" >> $GITHUB_OUTPUT
+            echo "Changes detected after Flutter upgrade"
           fi
 
+      - name: Commit changes
+        if: steps.check-upgrade.outputs.upgrade_available == 'true' && steps.check-changes.outputs.has_changes == 'true'
+        run: |
+          git commit -m "chore: upgrade Flutter to ${{ steps.check-upgrade.outputs.latest }}
+
+          - Automated Flutter upgrade from ${{ steps.current-version.outputs.current }} to ${{ steps.check-upgrade.outputs.latest }}
+          - Updated dependencies with flutter pub get
+          - Verified with flutter analyze and flutter test"
+
       - name: Push changes
-        if: steps.check-upgrade.outputs.upgrade_available == 'true'
+        if: steps.check-upgrade.outputs.upgrade_available == 'true' && steps.check-changes.outputs.has_changes == 'true'
         run: |
           git push origin "$BRANCH_NAME"
 
       - name: Create Pull Request
-        if: steps.check-upgrade.outputs.upgrade_available == 'true'
+        if: steps.check-upgrade.outputs.upgrade_available == 'true' && steps.check-changes.outputs.has_changes == 'true'
         uses: actions/github-script@v7
         with:
           script: |
             const { data: pullRequest } = await github.rest.pulls.create({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              title: `chore: upgrade Flutter to ${{ steps.check-upgrade.outputs.latest }}`,
+              title: 'chore: upgrade Flutter to ' + ${{ steps.check-upgrade.outputs.latest }},
               head: process.env.BRANCH_NAME,
               base: 'master', // Change to 'main' if that's your default branch
-              body: `## Flutter Auto Upgrade
+              body: '## Flutter Auto Upgrade
 
-            This PR was automatically created to upgrade Flutter from **${{ steps.current-version.outputs.current }}** to **${{ steps.check-upgrade.outputs.latest }}**.
+            This PR was automatically created to upgrade Flutter from **' + ${{ steps.current-version.outputs.current }} + '** to **' + ${{ steps.check-upgrade.outputs.latest }} + '**.
 
             ### Changes Made:
-            - 🚀 Upgraded Flutter to the latest stable version
-            - 📦 Updated dependencies with \`flutter pub get\`
-            - 🔧 Applied automatic fixes for deprecations with \`dart fix --apply\`
-            - 💪 Used force upgrade fallback if normal upgrade failed
-            - ✅ Verified with \`flutter analyze\`
-            - 🧪 Ran \`flutter test\` (check CI results)
+            - Upgraded Flutter to the latest stable version
+            - Updated dependencies with `flutter pub get`
+            - Applied automatic fixes for deprecations with `dart fix --apply`
+            - Used force upgrade fallback if normal upgrade failed
+            - Verified with `flutter analyze`
+            - Ran `flutter test` (check CI results)
 
             ### Review Checklist:
             - [ ] Verify all tests pass in CI
@@ -151,16 +159,16 @@ jobs:
             - [ ] Review any dependency conflicts
 
             ### Flutter Release Notes:
-            Check the [Flutter releases page](https://github.com/flutter/flutter/releases/tag/${{ steps.check-upgrade.outputs.latest }}) for detailed information about this version.
+            Check the [Flutter releases page](https://github.com/flutter/flutter/releases/tag/' + ${{ steps.check-upgrade.outputs.latest }} + ') for detailed information about this version.
 
             ---
-            *This PR was created automatically by the Flutter Auto Upgrade workflow.*`
+            *This PR was created automatically by the Flutter Auto Upgrade workflow.*'
             });
             
-            console.log(\`Created PR #\${pullRequest.number}\`);
+            console.log('Created PR #' + pullRequest.number);
 
       - name: Add labels to PR
-        if: steps.check-upgrade.outputs.upgrade_available == 'true'
+        if: steps.check-upgrade.outputs.upgrade_available == 'true' && steps.check-changes.outputs.has_changes == 'true'
         uses: actions/github-script@v7
         with:
           script: |
@@ -168,7 +176,7 @@ jobs:
             const prs = await github.rest.pulls.list({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              head: \`\${context.repo.owner}:\${process.env.BRANCH_NAME}\`,
+              head: context.repo.owner + ':' + process.env.BRANCH_NAME,
               state: 'open'
             });
             
@@ -185,8 +193,12 @@ jobs:
       - name: Summary
         run: |
           if [ "${{ steps.check-upgrade.outputs.upgrade_available }}" == "true" ]; then
-            echo "✅ Flutter upgrade available and PR created!"
-            echo "📋 Upgraded from ${{ steps.current-version.outputs.current }} to ${{ steps.check-upgrade.outputs.latest }}"
+            if [ "${{ steps.check-changes.outputs.has_changes }}" == "true" ]; then
+              echo "Flutter upgrade available, changes detected, and PR created!"
+              echo "Upgraded from ${{ steps.current-version.outputs.current }} to ${{ steps.check-upgrade.outputs.latest }}"
+            else
+              echo "Flutter upgrade available, but no changes detected"
+            fi
           else
-            echo "✅ Flutter is already up to date (${{ steps.current-version.outputs.current }})"
+            echo "Flutter is already up to date (${{ steps.current-version.outputs.current }})"
           fi
