@@ -249,23 +249,26 @@ jobs:
         uses: actions/github-script@v7
         with:
           script: |
+            const latestVersion = '${{ steps.check-upgrade.outputs.latest }}';
+            const trackedVersion = '${{ steps.current-version.outputs.tracked }}';
+            
             const { data: pullRequest } = await github.rest.pulls.create({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              title: 'chore: upgrade Flutter to ' + '${{ steps.check-upgrade.outputs.latest }}' + ' and dependencies',
+              title: `chore: upgrade Flutter to ${latestVersion} and dependencies`,
               head: process.env.BRANCH_NAME,
               base: 'master', // Change to 'main' if that's your default branch
-              body: '## Flutter Auto Upgrade
+              body: `## Flutter Auto Upgrade
 
-            This PR was automatically created to upgrade Flutter from **' + '${{ steps.current-version.outputs.tracked }}' + '** to **' + '${{ steps.check-upgrade.outputs.latest }}' + '** and update dependencies.
+            This PR was automatically created to upgrade Flutter from **${trackedVersion}** to **${latestVersion}** and update dependencies.
 
             ### Changes Made:
             - Upgraded Flutter to the latest stable version
-            - Updated dependencies with `flutter pub get`
-            - Applied automatic fixes for deprecations with `dart fix --apply`
+            - Updated dependencies with \`flutter pub get\`
+            - Applied automatic fixes for deprecations with \`dart fix --apply\`
             - Used force upgrade fallback if normal upgrade failed
-            - Verified with `flutter analyze`
-            - Ran `flutter test` (check CI results)
+            - Verified with \`flutter analyze\`
+            - Ran \`flutter test\` (check CI results)
 
             ### Review Checklist:
             - [ ] Verify all tests pass in CI
@@ -274,10 +277,10 @@ jobs:
             - [ ] Review any dependency conflicts
 
             ### Flutter Release Notes:
-            Check the [Flutter releases page](https://github.com/flutter/flutter/releases/tag/' + ${{ steps.check-upgrade.outputs.latest }} + ') for detailed information about this version.
+            Check the [Flutter releases page](https://github.com/flutter/flutter/releases/tag/${latestVersion}) for detailed information about this version.
 
             ---
-            *This PR was created automatically by the Flutter Auto Upgrade workflow.*'
+            *This PR was created automatically by the Flutter Auto Upgrade workflow.*`
             });
             
             console.log('Created PR #' + pullRequest.number);
