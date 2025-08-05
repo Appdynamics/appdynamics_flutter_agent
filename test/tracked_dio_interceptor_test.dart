@@ -129,7 +129,7 @@ void main() {
     String? trackerId;
     try {
       await dio.request(urlString);
-    } catch (e, stack) {
+    } catch (e) {
       // Get trackerId from the logged method calls
       final trackerCall = log.firstWhere(
         (call) => call.method == 'getRequestTrackerWithUrl',
