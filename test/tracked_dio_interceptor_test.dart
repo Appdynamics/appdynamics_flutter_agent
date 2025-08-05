@@ -126,24 +126,18 @@ void main() {
       handler.reject(error, true);
     }));
 
-    String? trackerId;
     try {
       await dio.request(urlString);
     } catch (e) {
       // Get trackerId from the logged method calls
-      final trackerCall = log.firstWhere(
+      log.firstWhere(
         (call) => call.method == 'getRequestTrackerWithUrl',
       );
-      trackerId = trackerCall.arguments['id'];
 
       expect(log, hasLength(4));
 
       // Debug: Print the actual error message to understand the format
-      final errorCall =
-          log.firstWhere((call) => call.method == 'setRequestTrackerErrorInfo');
-      print(
-          'Actual error message: ${errorCall.arguments['errorDict']['message']}');
-      print('Full errorDict: ${errorCall.arguments['errorDict']}');
+      log.firstWhere((call) => call.method == 'setRequestTrackerErrorInfo');
 
       expect(log, [
         isMethodCall('getServerCorrelationHeaders', arguments: null),
