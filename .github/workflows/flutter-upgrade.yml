@@ -116,12 +116,18 @@ jobs:
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           
+          # Create unique branch name with timestamp to avoid conflicts
+          TIMESTAMP=$(date +%Y%m%d-%H%M%S)
           if [ "${{ steps.check-upgrade.outputs.upgrade_available }}" == "true" ]; then
-            BRANCH_NAME="flutter/auto-upgrade-${{ steps.check-upgrade.outputs.latest }}"
+            BRANCH_NAME="flutter/auto-upgrade-${{ steps.check-upgrade.outputs.latest }}-$TIMESTAMP"
           else
-            BRANCH_NAME="deps/auto-update-$(date +%Y%m%d)"
+            BRANCH_NAME="deps/auto-update-$TIMESTAMP"
           fi
           
+          # Delete remote branch if it exists (cleanup from previous runs)
+          git push origin --delete "$BRANCH_NAME" 2>/dev/null || echo "Remote branch doesn't exist, continuing..."
+          
+          # Create and checkout new branch
           git checkout -b "$BRANCH_NAME"
           echo "BRANCH_NAME=$BRANCH_NAME" >> $GITHUB_ENV
 
@@ -242,7 +248,11 @@ jobs:
       - name: Push changes
         if: steps.check-changes.outputs.has_changes == 'true'
         run: |
-          git push origin "$BRANCH_NAME"
+          # Try normal push first, then force push if it fails
+          if ! git push origin "$BRANCH_NAME"; then
+            echo "Normal push failed, attempting force push..."
+            git push --force origin "$BRANCH_NAME"
+          fi
 
       - name: Create Pull Request
         if: steps.check-changes.outputs.has_changes == 'true'
@@ -287,25 +297,37 @@ jobs:
 
       - name: Add labels to PR
         if: steps.check-changes.outputs.has_changes == 'true'
+        continue-on-error: true
         uses: actions/github-script@v7
         with:
           script: |
-            // Get the PR number from the previous step
-            const prs = await github.rest.pulls.list({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              head: context.repo.owner + ':' + process.env.BRANCH_NAME,
-              state: 'open'
-            });
-            
-            if (prs.data.length > 0) {
-              const prNumber = prs.data[0].number;
-              await github.rest.issues.addLabels({
+            try {
+              // Get the PR number from the previous step
+              const prs = await github.rest.pulls.list({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
-                issue_number: prNumber,
-                labels: ['dependencies', 'flutter', 'automated', 'upgrade']
+                head: context.repo.owner + ':' + process.env.BRANCH_NAME,
+                state: 'open'
               });
+              
+              if (prs.data.length > 0) {
+                const prNumber = prs.data[0].number;
+                console.log(`Attempting to add labels to PR #${prNumber}`);
+                
+                await github.rest.issues.addLabels({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: prNumber,
+                  labels: ['dependencies', 'flutter', 'automated', 'upgrade']
+                });
+                
+                console.log('Successfully added labels to PR');
+              } else {
+                console.log('No PR found to add labels to');
+              }
+            } catch (error) {
+              console.log('Failed to add labels to PR (this is non-critical):', error.message);
+              console.log('The PR was created successfully, labels can be added manually if needed');
             }
 
       - name: Summary
@@ -314,12 +336,14 @@ jobs:
             if [ "${{ steps.check-changes.outputs.has_changes }}" == "true" ]; then
               echo "Flutter upgrade available, changes detected, and PR created!"
               echo "Upgraded from ${{ steps.current-version.outputs.tracked }} to ${{ steps.check-upgrade.outputs.latest }}"
+              echo "Branch created: $BRANCH_NAME"
             else
               echo "Flutter upgrade available, but no changes detected"
             fi
           elif [ "${{ steps.check-deps.outputs.deps_available }}" == "true" ]; then
             if [ "${{ steps.check-changes.outputs.has_changes }}" == "true" ]; then
               echo "Dependency updates available, changes detected, and PR created!"
+              echo "Branch created: $BRANCH_NAME"
             else
               echo "Dependency updates available, but no changes detected"
             fi
